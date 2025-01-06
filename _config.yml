@@ -96,9 +96,11 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
+# 设置 theme 为 nil，表示不使用 Gem 包形式的主题
 theme: nil
-remote_theme: ./oranges
 
+# 使用 remote_theme 指向本地主题目录
+remote_theme: ./oranges
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
