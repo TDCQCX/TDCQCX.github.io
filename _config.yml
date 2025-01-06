@@ -98,7 +98,7 @@ ignore:
 ## Themes: https://hexo.io/themes/
 
 # 使用 remote_theme 指向本地主题目录
-remote_theme: themes/oranges
+remote_theme: https://github.com/zchengsite/hexo-theme-oranges.git
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
