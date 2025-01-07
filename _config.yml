@@ -96,8 +96,8 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: async
-#remote_theme: /themes/hexo-theme-async
+#theme: async
+remote_theme: MaLuns/hexo-theme-async
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
