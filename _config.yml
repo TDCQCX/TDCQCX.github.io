@@ -96,8 +96,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: nil
-remote_theme: TDCQCX/oranges
+theme: oranges
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
