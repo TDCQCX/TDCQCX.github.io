@@ -20,15 +20,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1' # 或者你希望使用的任何版本
+          bundler-cache: true # 启用 bundler 缓存
+
       - name: Install dependencies
         run: bundle install
+
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
