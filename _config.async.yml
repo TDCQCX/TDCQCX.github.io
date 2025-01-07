@@ -4,12 +4,12 @@
 
 # Site
 title: TDCQCX's Blog
-subtitle: ''
+subtitle: '个人博客'
 description: ''
 keywords:
 author: TDCQCX
 language: zh-CN
-timezone: ''
+timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -131,7 +131,7 @@ user:
   first_name: ’s BLOG
   last_name: TDCQCX
   email: tdcqcx@gmail.com
-  domain: blog.tdcqcx.com
+  domain: blog.tdcqcx.top
   avatar: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/img/avatar.jpg
   describe: 这是我的个人博客，分享一些学习笔记和一些有趣的东西。
   rule_text: 暂不接受个人博客以外的友链申请，确保您的网站内容积极向上，文章至少30篇，原创70%以上，部署HTTPS。
@@ -140,8 +140,12 @@ top_bars:
   - title: 首页
     url: /
     children:
-      - title: archives2
+      - title: 分类1（测试中）
         url: /archives2/
+      - title: 分类2
+        url: /archives3/
+      - title: 分类3
+        url: /archives4/
   - title: 归档
     url: /archives/
     noswup: true
@@ -336,7 +340,7 @@ wordcount:
 
 # Blog search | 搜索
 search:
-  enable: false # 启用
+  enable: true # 启用
   type: engine # 搜索类型 <[local,engine]>
   href: "https://www.bing.com/search?q=site:" # 搜索引擎地址, type 为 engine 时填写
   domain: # 域名地址, type 为 engine 时填写
@@ -401,6 +405,6 @@ not_found:
 
 links:
   - name: TDCQCX’s Blog
-    url: blog.TDCQCX.top
+    url: blog.TDCQCX.top:8081
     image: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/img/avatar.jpg
     desc: 醒，亦在人间；梦，亦在人间
