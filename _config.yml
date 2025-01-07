@@ -97,7 +97,7 @@ ignore:
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 #theme: async
-remote_theme: https://github.com/zchengsite/hexo-theme-oranges
+remote_theme: /themes/hexo-theme-async
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
