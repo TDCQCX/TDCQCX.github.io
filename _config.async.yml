@@ -105,7 +105,7 @@ footer:
     enable: false
   beian:
     enable: true
-    icp:
+    icp: 川ICP备87583212号
   copyright_year: 2024
   custom_text: Hosted by <a href="https://github.com/TDCQCX/TDCQCX.github.io" rel="noopener" target="_blank">Github Pages</a>
 toc:
