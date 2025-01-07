@@ -6,6 +6,14 @@ categories:
 tags:
   - java
   - 技术分享
+keywords: java, 速记, 语法, 速查, 备忘录
+cover: [https://www.logosc.cn/uploads/resources/2018/11/29/1543459457_thumb.jpg]
+sticky: 10
+banner:
+  type: img
+  bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
+  banner_text: Java 速记
+toc: true # 无需显示目录
 ---
 Java 备忘清单
 ===
