@@ -25,6 +25,9 @@ top_bars:
   - title: 友链
     url: /links/
     noswup: true
+  - title: 其他
+    url: /other/
+    noswup: true
 
 sidebar:
   social: # 社交地址
@@ -101,13 +104,9 @@ footer:
   powered:
     enable: false
   beian:
-    enable: false
+    enable: true
     icp:
   copyright_year: 2024
-  live_time:
-    enable: true
-    prefix: footer.tips
-    start_time: 30/12/2022 17:00:00
   custom_text: Hosted by <a href="https://github.com/TDCQCX/TDCQCX.github.io" rel="noopener" target="_blank">Github Pages</a>
 toc:
     enable: true
