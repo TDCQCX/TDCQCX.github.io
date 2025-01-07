@@ -1,10 +1,12 @@
+# Open Graph protocol | OG 协议
+open_graph: true # 启用
 user:
   name: TDCQCX
   first_name: ’s BLOG
   last_name: TDCQCX
   email: tdcqcx@gmail.com
   domain: blog.tdcqcx.com
-  avatar: https://TDCQCX.github.io/img/avatar.jpg
+  avatar: https://github.com/TDCQCX/TDCQCX.github.io/tree/main/img/avatar.jpg
   describe: 这是一条完美的简介。
   rule_text: 暂不接受个人博客以外的友链申请，确保您的网站内容积极向上，文章至少30篇，原创70%以上，部署HTTPS。
 
@@ -25,12 +27,17 @@ sidebar:
       url: https://github.com/TDCQCX
     - typed_text_prefix: Hello
       typed_text: ["Web Developer"]
-      info: # 个人信息
-        - key: 地址
-          val: China SiChuan
-        - key: 年龄
-          val: 21
+  info: # 个人信息
+    - key: 地址
+      val: China Sichuan Chengdu
 
+# About page settings | 关于页
+about:
+  insert: none #  插入规则  <[before,after,none]>
+  title: 如果一切都是镜花水月，那就让这万物走向终结。如果一切皆是命中注定，那就让这世界消失殆尽。 # 标题
+  introduction: 大家好，我是 <strong>Async</strong>，很高兴您能在浩瀚如烟的互联网世界里发现这个博客，更感谢您能够饶有兴致地浏览这个页面。建立这个 Blog 是出于兴趣爱好，我将在此分会分享一些学习笔记，可能还会分享少许图片、视频以及其他有趣东西的链接。 # 个人简单描述
+  blog: <ul class="trm-list"><li>程序：Hexo </li><li>主题：Hexo-theme-async </li></ul>  # 博客信息
+  privacy: 本网站不会追踪访客行为，且不要求访客提供任何敏感信息（比如真实姓名、身份证号码、手机号等），因而也不存在任何隐私泄漏问题。访客参与评论，必须遵守法律法规和基本道德规范，文明礼貌。严禁发布任何有关淫秽、反动、暴力、博彩、恐吓、低俗的内容或违法信息，在尊重言论自由的同时请保持和平与理性。请勿对他人采取不友好的评论或其它过激行为。 # 隐私权说明
 #横幅
 #每个页面横幅都可以自定义不同背景图、标语等，当您需要视频背景的时候，您的视频格式需要为 MP4、WebM 、Ogg 等格式。
 #
@@ -54,6 +61,18 @@ banner:
     bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg?source=1940ef5c
     banner_title: 花开花落花无悔，<br>缘来缘去缘如水。
     banner_text: Welcome to here👋,This is TDCQCX's Blog.
+  archive: ## 归档页横幅
+    banner_title: 云间连下榻，<br>天上接行杯。
+    banner_text: The article archive
+  links: ## 友链页横幅
+    banner_title: 莫愁前路无知己，<br>天下谁人不识君。
+    banner_text: A link to a friend's website
+  comment: ## 评论页横幅
+    banner_title: 醉后不知天在水，<br>满船清梦压星河。
+    banner_text: The magic tree hole
+  about: ## 关于页横幅
+    banner_title: 醉后不知天在水，<br>满船清梦压星河。
+    banner_text: About me
 #    弹幕动画
   #danmu
   #enable：是否开启弹幕动画插件
@@ -112,3 +131,145 @@ notice_outdate:
   style: flat
   limit_day: 365
   position: top
+
+  categorie_card:
+    enable: true
+    len: 2
+    list: [ "分类1", "分类2" ]
+
+rightside:
+  readmode: true
+  aside: true
+
+datetime_foramt:
+  post_card:
+    date: YY/MM/DD
+    time: HH:mm
+  post_info:
+    type: updated
+    date: MM/DD
+    time: HH:mm
+  archive:
+    date: MM/DD
+    time: HH:mm
+
+highlight:
+  theme: true
+  title: default
+  copy: true
+  lang: false
+  code_word_wrap: true
+  height_limit: 200 # 超出时，显示折叠按钮
+
+  icons:
+    # 主题切换图标
+    sun: far fa-sun
+    moon: far fa-moon
+    # 首页视频播放
+    play: fas fa-play
+    # 邮箱
+    email: far fa-envelope
+    # 分类进入图标
+    next: fas fa-arrow-right
+    # 文章详情 日期
+    calendar: far fa-calendar-alt
+    # 文章详情 时间
+    clock: far fa-clock
+    # 文章详情 作者
+    user: far fa-user
+    # 返回顶部 v1.1.3+
+    back_top: fas fa-arrow-up
+    # 查询 v1.1.5+
+    search: fas fa-search
+    # 关闭 v1.1.5+
+    close: fas fa-times
+    # 打赏 v1.1.7+
+    reward: fas fa-hand-holding-usd
+    # 用户信息和文章目录切换 v1.2.10+
+    user_tag: fas fa-user-alt
+    toc_tag: fas fa-th-list
+    # 右下角固定按钮 v1.2.11+
+    read: fas fa-book-reader
+    arrows: fas fa-arrows-alt-h
+    # 代码高亮折叠 v2.0.0+
+    double_arrows: fas fa-angle-double-down
+    # 代码复制
+    copy: fas fa-copy
+
+# https://github.com/willin/hexo-wordcount
+# Post wordcount | 字数统计
+wordcount:
+  enable: true # enable | 开启
+  count: true # count | 显示字数
+  time: true # read time | 显示阅读时间
+
+# Blog search | 搜索
+search:
+  enable: false # 启用
+  type: engine # 搜索类型 <[local,engine]>
+  href: "https://www.bing.com/search?q=site:" # 搜索引擎地址, type 为 engine 时填写
+  domain: # 域名地址, type 为 engine 时填写
+  # href: "https://www.baidu.com/s?wd=site:"
+  # href: "https://www.bing.com/search?q=site:"
+
+# Customize the template path | 自定义模块
+layout:
+  path: layout # Folder path | 模板存放目录
+  # layout
+  main: _partial/main # 整体布局结构模板
+  header: _partial/header # 顶部菜单栏模板
+  banner: _partial/banner # 顶部横幅模板
+  sidebar: _partial/sidebar/index # 侧栏模板
+  footer: _partial/footer # 页脚模板
+  # post
+  post_info: _partial/post/post-info # 文章信息模板
+  post_content: _partial/post/post-content # 文章内容模板
+  reward: _partial/post/reward # 文章信息里打赏模板
+  post_copyright: _partial/post/post-copyright # 文章详情版权信息模板
+  post_next_prev: _partial/post/post-next-prev # 文章详情上下篇文章模板
+  post_card: _partial/post/post-card # 文章卡片信息模板
+  post_card_mini: _partial/post/post-card-mini # 文章卡片信息模板
+  # widget
+  header_logo: _widget/header-logo # 顶部菜单-logo部分
+  header_menu: _widget/header-menu # 顶部菜单-菜单部分
+  header_theme: _widget/header-theme # 顶部菜单-主题切换部分
+  header_search: _widget/header-search # 顶部菜单-查询部分
+  categorie: _widget/categorie # 分类卡片模板
+  paginator: _widget/paginator # 分页模板
+  fixed_btn: _widget/fixed-btn # 固定按钮模板
+  post_toc: _widget/post-toc # 文章目录
+  about_card: _widget/about-card # 关于页面配置卡片模板
+  search: _widget/search # 搜索卡片模板 v2.1.11 +
+  sidebar_user: _partial/sidebar/card/user # 侧栏 - 用户头像模板
+  sidebar_social: _partial/sidebar/card/social # 侧栏 - 社交图标模块
+  sidebar_info: _partial/sidebar/card/info # 侧栏 - 用户信息模块
+  sidebar_email: _partial/sidebar/card/email # 侧栏 - 邮件模块
+  # third-party
+  comment: _third-party/comment/index # 评论插件模板
+  analytics: _third-party/web-analytics # 统计模板
+  # animation
+  page_loading: _partial/preloader/page-preloader # 页面切换动画模板
+  mode_change: _partial/preloader/change-mode-preloader # 主题切换动画模板
+  # page
+  page_about: _partial/page/about # 关于页面模块
+  page_archive: _partial/page/archive # 归档页面模块
+  page_category: _partial/page/category # 分类页面模块
+  page_index: _partial/page/index # 首页页面模块
+  page_links: _partial/page/links # 友链页面模块
+  page_post: _partial/page/post # 文章详情页面模块
+  page_tag: _partial/page/tag # 标签页面模块
+  # other
+  script: _partial/script # 脚本块 v2.1.11 +
+  head: _partial/head # head块 v2.1.11 +
+
+# 404 config | 404 配置
+not_found:
+  path: / # Return path | 返回路径
+  name: not_found.name # Button text 按钮显示文案
+  text: not_found.text # Tips | 提示文案
+
+links:
+  - name: TDCQCX
+    url: blog.TDCQCX.top
+    image: https://github.com/TDCQCX/TDCQCX.github.io/tree/main/img/avatar.jpg
+    desc: 醒，亦在人间；梦，亦在人间

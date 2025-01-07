@@ -1,7 +1,5 @@
 ---
-title: tags
-date: 2019-05-03 12:03:35
-type: "categories"
-categories:
-tags:
+title: 分类
+date: 2019-11-16 10:46:27
+layout: category
 ---
