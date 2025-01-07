@@ -1,9 +1,11 @@
 ---
-title: java语法速记
+title: Java语法速记
 date: 2025-01-08 07:42:54
 categories:
   - 技术分享
-tags: [java] [技术分享]
+tags:
+  - java
+  - 技术分享
 ---
 Java 备忘清单
 ===
