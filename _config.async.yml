@@ -58,6 +58,13 @@ sidebar:
       val: 3290264220
 
 # About page settings | 关于页
+other:
+  insert: none #  插入规则  <[before,after,none]>
+  title: 最近发生了一些事，想说一些事，想做一些事，想推翻一件事
+  introduction: 江城如画里，山晚望晴空。日落群鸦乱，澄江静如练。
+  blog: <ul class="trm-list"><li>写作于：2025/1/08 16:00:00 </li><li>作者：TDCQCX </li></ul>
+  privacy: 其他说明
+
 about:
   insert: none #  插入规则  <[before,after,none]>
   title: 如果一切都是镜花水月，那就让这万物走向终结。如果一切皆是命中注定，那就让这世界消失殆尽。 # 标题
@@ -100,6 +107,12 @@ banner:
   about: ## 关于页横幅
     banner_title: 醉后不知天在水，<br>满船清梦压星河。
     banner_text: About me
+  other: ## 其他页横幅
+    banner_title: 一些想说的话
+    banner_text: Let me talk about something
+
+
+
 #    弹幕动画
   #danmu
   #enable：是否开启弹幕动画插件
