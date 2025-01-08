@@ -1,11 +1,7 @@
 ---
-title: 一些想说的话
-date: 2025-01-08 15:29:00
-banner:
-  type: img
-  bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
-  banner_text: 一些想说的话
+title: 其他
+lazyout: about
 ---
 
 
-测试一段话
+
