@@ -12,7 +12,7 @@ user:
   last_name: TDCQCX
   email: tdcqcx@gmail.com
   domain: blog.tdcqcx.top
-  avatar: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/img/avatar.jpg
+  avatar: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/avatar.jpg
   describe: 这是我的个人博客，分享一些学习笔记和一些有趣的东西。
   rule_text: 暂不接受个人博客以外的友链申请，确保您的网站内容积极向上，文章至少30篇，原创70%以上，部署HTTPS。
 
@@ -82,9 +82,10 @@ about:
 #comment：评论页 (属性字段和上面保持一致)
 #about：关于 (属性字段和上面保持一致)
 banner:
+  use_cover: true
   index:
     type: img
-    bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg?source=1940ef5c
+    bgurl: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/bg.jpg
     banner_title: 花开花落花无悔，<br>缘来缘去缘如水。
     banner_text: Welcome to here👋,This is TDCQCX's Blog.
   archive: ## 归档页横幅
@@ -287,5 +288,5 @@ not_found:
 links:
   - name: TDCQCX’s Blog
     url: blog.TDCQCX.top:8081
-    image: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/img/avatar.jpg
+    image: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/avatar.jpg
     desc: 醒，亦在人间；梦，亦在人间
