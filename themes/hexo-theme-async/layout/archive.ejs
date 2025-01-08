@@ -6,12 +6,5 @@
         ...theme.banner.archive,
         ...banner
     }),
-    content: partial(theme.layout.page_archive, {
-        posts: page.posts.data.map(post => {
-            return {
-                ...post,
-                cover: post.cover || theme.banner.default.cover // 使用文章的 cover 图片，如果没有则使用默认图片
-            };
-        })
-    })
+    content: partial(theme.layout.page_archive)
 }) %>

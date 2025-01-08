@@ -85,7 +85,7 @@ banner:
   use_cover: true
   index:
     type: img
-    bgurl: https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/bg.jpg
+    bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
     banner_title: 花开花落花无悔，<br>缘来缘去缘如水。
     banner_text: Welcome to here👋,This is TDCQCX's Blog.
   archive: ## 归档页横幅
