@@ -7,7 +7,7 @@ tags:
     - Vue3
     - 前端技术
 keywords: Vue3, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: [https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/image%20(11).png]
+cover: [https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg]
 banner:
       type: img
       bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg

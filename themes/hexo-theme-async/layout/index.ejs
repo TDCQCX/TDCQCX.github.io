@@ -2,7 +2,14 @@
     banner: partial(theme.layout.banner,  {
         ...theme.banner.default,
         banner_title: page.title,
-        ...theme.banner.index 
+        ...theme.banner.index
     }),
-    content: partial(theme.layout.page_index)
+    content: partial(theme.layout.page_index, {
+        posts: page.posts.data.map(post => {
+            return {
+                ...post,
+                cover: post.cover || theme.banner.default.cover // 使用文章的 cover 图片，如果没有则使用默认图片
+            };
+        })
+    })
 }) %>
