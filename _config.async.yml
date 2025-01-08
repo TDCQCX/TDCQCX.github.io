@@ -160,7 +160,7 @@ sidebar:
       icon: fab fa-github
       url: https://github.com/TDCQCX
     - name: bilibili
-      icon: fab fa-bilibili
+      icon: fa-brands fa-bilibili
       url: https://space.bilibili.com/441870366
     - name: weibo
       icon: fab fa-weibo
