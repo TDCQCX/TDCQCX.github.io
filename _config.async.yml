@@ -161,7 +161,10 @@ sidebar:
       url: https://github.com/TDCQCX
     - name: bilibili
       icon: fab fa-bilibili
-      url: https://space.bilibili.com/TDCQCX
+      url: https://space.bilibili.com/441870366
+    - name: weibo
+      icon: fab fa-weibo
+      url: https://weibo.com/u/7495045812
     - typed_text_prefix: Hello
       typed_text: ["Web Developer"]
   info: # 个人信息
