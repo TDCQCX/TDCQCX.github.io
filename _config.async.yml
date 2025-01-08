@@ -15,7 +15,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: blog.tdcqcx.top:8081
+url: http://blog.tdcqcx.top
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -119,13 +119,6 @@ deploy:
     icon: icon.png
     autodiscovery: true
     template:
-
-
-  search:
-    path: search.xml
-    field: post
-    content: true
-
 # Open Graph protocol | OG 协议
 open_graph: true # 启用
 user:
@@ -166,11 +159,20 @@ sidebar:
     - name: github
       icon: fab fa-github
       url: https://github.com/TDCQCX
+    - name: bilibili
+      icon: fab fa-bilibili
+      url: https://space.bilibili.com/TDCQCX
     - typed_text_prefix: Hello
       typed_text: ["Web Developer"]
   info: # 个人信息
     - key: 地址
       val: China Sichuan Chengdu
+    - key: 邮箱1
+      val: 3290264220@qq.com
+    - key: 邮箱2
+      val: tdcqcx@gmail.com
+    - key: QQ
+      val: 3290264220
 
 # About page settings | 关于页
 about:
@@ -342,13 +344,8 @@ wordcount:
 
 # Blog search | 搜索
 search:
-  enable: true # 启用
-  type: engine # 搜索类型 <[local,engine]>
-  href: "https://www.bing.com/search?q=site:" # 搜索引擎地址, type 为 engine 时填写
-  domain: # 域名地址, type 为 engine 时填写
-  # href: "https://www.baidu.com/s?wd=site:"
-  # href: "https://www.bing.com/search?q=site:"
-
+  enable: true
+  type: local
 # Customize the template path | 自定义模块
 layout:
   path: layout # Folder path | 模板存放目录
