@@ -14,6 +14,7 @@ banner:
   bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
   banner_text: Java 速记
 toc: true # 无需显示目录
+comments: true
 ---
 Java 备忘清单
 ===
