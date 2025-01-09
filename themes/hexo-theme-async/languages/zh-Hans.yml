@@ -15,7 +15,7 @@ sidebar:
 footer:
   powered: '由 %s 驱动'
   theme: 主题
-  tips: '博客已萌萌哒运行 %s 天'
+  tips: '博客已运行 %s 天啦！'
   day: 天
   hour: 时
   minute: 分

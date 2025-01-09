@@ -16,7 +16,7 @@ zh-hans:
   footer:
     powered: '由 %s 驱动'
     theme: 主题
-    tips: '博客已萌萌哒运行 %s 天'
+    tips: '博客已运行 %s 天 %s 时 %s 分 %s 秒啦！'
     day: 天
     hour: 时
     minute: 分
@@ -31,7 +31,7 @@ zh-hans:
     privacy: 隐私权及评论
     more: 查看分类
     all_archives: 所有归档
-    year_archives: '%s 年的归档'
+    year_archives: '%s 年 %s 月的归档'
     other_articles: 其他文章
     unclassified: 未分类
 
@@ -40,6 +40,7 @@ zh-hans:
     archives: 归档
     links: 友链
     about: 关于
+    other: 其他
 
   favicon:
     show_text: (/≧▽≦/)咦！又好了！
