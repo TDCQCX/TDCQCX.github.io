@@ -6,33 +6,28 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          submodules: recursive  # 关键！拉取子模块
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'  # 需与本地环境一致[2,5](@ref)
-
-      - name: Install Hexo CLI
-        run: npm install -g hexo-cli --force  # 强制覆盖旧版本[7,9](@ref)
+          node-version: '18'
 
       - name: Install dependencies
         run: |
+          npm install -g hexo-cli
           npm install
-          npm install hexo-deployer-git --save  # 显式安装部署插件[7,10](@ref)
 
-      - name: Clean & Generate
+      - name: Generate files
         run: |
           hexo clean
-          hexo generate  # 生成静态文件到/public目录[6,10](@ref)
+          hexo generate
+          touch ./public/.nojekyll  # 禁用 Jekyll 处理[4,6](@ref)
 
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
-      - name: Start temporary server
-        run: |
-          hexo server &
-          sleep 10  # 等待服务启动
-          curl --retry 5 --retry-delay 5 http://localhost:4000  # 验证可访问性
