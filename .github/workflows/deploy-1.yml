@@ -1,24 +1,30 @@
 name: Deploy Hexo
 on: [push]
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '18'  # 需与本地版本一致[2,5](@ref)
+
+      - name: Install Hexo CLI
+        run: npm install -g hexo-cli  # 全局安装核心工具[5,7](@ref)
 
       - name: Install dependencies
-        run: npm install
+        run: npm install  # 安装 package.json 中的依赖[2,7](@ref)
 
-      - name: Generate files
-        run: hexo clean && hexo generate
+      - name: Clean cache
+        run: hexo clean  # 单独执行清理[6](@ref)
 
-      - name: Deploy
+      - name: Generate static files
+        run: hexo generate  # 单独执行生成[6](@ref)
+
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
