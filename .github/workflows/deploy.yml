@@ -1,0 +1,29 @@
+name: Deploy to GitHub Pages
+on:
+  push:
+    branches: [hexo]  # 触发分支（存放源码的分支）
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # 与本地 Node 版本一致
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate static files
+        run: hexo clean && hexo generate
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          publish_branch: gh-pages  # 部署分支

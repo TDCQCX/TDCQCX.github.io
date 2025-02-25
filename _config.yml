@@ -101,8 +101,8 @@ plugins:
   js:
     - /js/plugins/wechat-qrcode.js
 ## Themes: https://hexo.io/themes/
-#theme: async
-remote_theme: Maluns/hexo-theme-async
+theme: async
+#remote_theme: Maluns/hexo-theme-async
 
 
 # Deployment
