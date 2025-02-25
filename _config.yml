@@ -97,9 +97,6 @@ ignore:
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
-plugins:
-  js:
-    - /js/plugins/wechat-qrcode.js
 ## Themes: https://hexo.io/themes/
 theme: async
 #remote_theme: Maluns/hexo-theme-async
