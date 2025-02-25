@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="PHP 备忘清单这份 PHP 备忘单为快速查找最常用代码的正确语法提供了参考 入门hello.php1234&lt;?php &#x2F;&#x2F; 以 PHP 开放标签开头echo &quot;Hello World\n&quot;;print(&quot;Hello jaywcjlove.github.io&quot;);?&gt;  PHP 运行命令 1$ php hello.php  变量 Variable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP 备忘录">
+<meta property="og:url" content="https://tdcqcx.github.io/blog/2025/01/08/php/index.html">
+<meta property="og:site_name" content="TDCQCX&#39;s Blog">
+<meta property="og:description" content="PHP 备忘清单这份 PHP 备忘单为快速查找最常用代码的正确语法提供了参考 入门hello.php1234&lt;?php &#x2F;&#x2F; 以 PHP 开放标签开头echo &quot;Hello World\n&quot;;print(&quot;Hello jaywcjlove.github.io&quot;);?&gt;  PHP 运行命令 1$ php hello.php  变量 Variable">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-01-08T02:35:26.000Z">
+<meta property="article:modified_time" content="2025-02-25T05:33:17.690Z">
+<meta property="article:author" content="TDCQCX">
+<meta property="article:tag" content="后端编程">
+<meta property="article:tag" content="PHP">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="PHP, 速记, 语法, 速查, 备忘录，速查表，速记手册">
+
+
+<title >PHP 备忘录</title>
+
+<!-- Favicon -->
+
+    <link href='/blog/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/blog/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/blog/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/blog/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"tdcqcx.github.io","author":"TDCQCX","root":"/blog/","typed_text":null,"theme_version":"2.2.4","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":false,"title":"default","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"04/01/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top","categorie_card":{"enable":true,"len":4,"list":["后端编程","前端技术","配置框架","其他"]}},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-02-25 13:33:17"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/blog/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/blog/atom.xml" title="TDCQCX's Blog" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/blog/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/blog/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            TDCQCX<span>’s BLOG</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/blog/" target="">
+                    首页
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/blog/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/blog/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/other/" target="">
+                    其他
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            PHP 备忘录
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            PHP 备忘录
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/blog/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2025
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX&#39;s BLOG
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="javascript:;" title="微信" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weixin"></i>
+        </a>
+
+    
+        <a href="/blog/" title="" rel="nofollow" target="_blank">
+            <i class="iconfont "></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                China Sichuan Chengdu
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/25
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            13:33
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            TDCQCX
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="PHP-备忘清单"><a href="#PHP-备忘清单" class="headerlink" title="PHP 备忘清单"></a>PHP 备忘清单</h1><p>这份 <a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/index.php">PHP</a> 备忘单为快速查找最常用代码的正确语法提供了参考</p>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="hello-php"><a href="#hello-php" class="headerlink" title="hello.php"></a>hello.php</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="comment">// 以 PHP 开放标签开头</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;Hello World\n&quot;</span>;</span><br><span class="line"><span class="keyword">print</span>(<span class="string">&quot;Hello jaywcjlove.github.io&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>PHP 运行命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">$ </span><span class="language-bash">php hello.php</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="变量-Variables"><a href="#变量-Variables" class="headerlink" title="变量 Variables"></a>变量 Variables</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$boolean1</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable">$boolean2</span> = True;</span><br><span class="line"><span class="variable">$int</span> = <span class="number">12</span>;</span><br><span class="line"><span class="variable">$float</span> = <span class="number">3.1415926</span>;</span><br><span class="line"><span class="keyword">unset</span>(<span class="variable">$float</span>);  <span class="comment">// 删除变量</span></span><br><span class="line"><span class="variable">$str1</span> = <span class="string">&quot;How are you?&quot;</span>;</span><br><span class="line"><span class="variable">$str2</span> = <span class="string">&#x27;Fine, thanks&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E7%B1%BB%E5%9E%8B">Types</a></p>
+<h3 id="字符串-Strings"><a href="#字符串-Strings" class="headerlink" title="字符串 Strings"></a>字符串 Strings</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$url</span> = <span class="string">&quot;jaywcjlove.github.io&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;I&#x27;m learning PHP at <span class="subst">$url</span>&quot;</span>;</span><br><span class="line"><span class="comment">// 连接字符串</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;I&#x27;m learning PHP at &quot;</span> . <span class="variable">$url</span>;</span><br><span class="line"><span class="variable">$hello</span> = <span class="string">&quot;Hello, &quot;</span>;</span><br><span class="line"><span class="variable">$hello</span> .= <span class="string">&quot;World!&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$hello</span>;   <span class="comment"># =&gt; Hello, World!</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E5%AD%97%E7%AC%A6%E4%B8%B2">Strings</a></p>
+<h3 id="数组-Arrays"><a href="#数组-Arrays" class="headerlink" title="数组 Arrays"></a>数组 Arrays</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$num</span> = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">7</span>, <span class="number">9</span>];</span><br><span class="line"><span class="variable">$num</span>[<span class="number">5</span>] = <span class="number">11</span>;</span><br><span class="line"><span class="keyword">unset</span>(<span class="variable">$num</span>[<span class="number">2</span>]);    <span class="comment">// 删除变量</span></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="variable">$num</span>);     <span class="comment"># =&gt; 1 3 7 9 11</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">count</span>(<span class="variable">$num</span>);  <span class="comment"># =&gt; 5</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E6%95%B0%E7%BB%84">Arrays</a></p>
+<h3 id="运算符-Operators"><a href="#运算符-Operators" class="headerlink" title="运算符 Operators"></a>运算符 Operators</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$x</span> = <span class="number">1</span>;</span><br><span class="line"><span class="variable">$y</span> = <span class="number">2</span>;</span><br><span class="line"><span class="variable">$sum</span> = <span class="variable">$x</span> + <span class="variable">$y</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$sum</span>;   <span class="comment"># =&gt; 3</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E8%BF%90%E7%AE%97%E7%AC%A6">Operators</a></p>
+<h3 id="Include"><a href="#Include" class="headerlink" title="Include"></a>Include</h3><!--rehype:wrap-class=row-span-3-->
+
+<h4 id="vars-php"><a href="#vars-php" class="headerlink" title="vars.php"></a>vars.php</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="comment">// 以 PHP 开放标签开头。</span></span><br><span class="line"><span class="variable">$fruit</span> = <span class="string">&#x27;apple&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&quot;I was imported&quot;</span>;</span><br><span class="line"><span class="keyword">return</span> <span class="string">&#x27;Anything you like.&#x27;</span>;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="test-php"><a href="#test-php" class="headerlink" title="test.php"></a>test.php</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;vars.php&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$fruit</span> . <span class="string">&quot;\n&quot;</span>;   <span class="comment"># =&gt; apple</span></span><br><span class="line"><span class="comment">/* 与 include 相同，</span></span><br><span class="line"><span class="comment">如果不能包含则导致错误*/</span></span><br><span class="line"><span class="keyword">require</span> <span class="string">&#x27;vars.php&#x27;</span>;</span><br><span class="line"><span class="comment">// 也有效</span></span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;vars.php&#x27;</span>);</span><br><span class="line"><span class="keyword">require</span>(<span class="string">&#x27;vars.php&#x27;</span>);</span><br><span class="line"><span class="comment">// 通过 HTTP 包含</span></span><br><span class="line"><span class="keyword">include</span> <span class="string">&#x27;http://x.com/file.php&#x27;</span>;</span><br><span class="line"><span class="comment">// 包含和返回语句</span></span><br><span class="line"><span class="variable">$result</span> = <span class="keyword">include</span> <span class="string">&#x27;vars.php&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$result</span>;  <span class="comment"># =&gt; Anything you like.</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="功能-Functions"><a href="#功能-Functions" class="headerlink" title="功能 Functions"></a>功能 Functions</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params"><span class="variable">$num1</span>, <span class="variable">$num2</span> = <span class="number">1</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$num1</span> + <span class="variable">$num2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">add</span>(<span class="number">10</span>);    <span class="comment"># =&gt; 11</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">add</span>(<span class="number">10</span>, <span class="number">5</span>); <span class="comment"># =&gt; 15</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E5%87%BD%E6%95%B0">Functions</a></p>
+<h3 id="注释-Comments"><a href="#注释-Comments" class="headerlink" title="注释 Comments"></a>注释 Comments</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是一个单行 shell 样式的注释</span></span><br><span class="line"><span class="comment">// 这是一行 c++ 风格的注释</span></span><br><span class="line"><span class="comment">/* 这是一个多行注释</span></span><br><span class="line"><span class="comment">    另一行注释 */</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常数-Constants"><a href="#常数-Constants" class="headerlink" title="常数 Constants"></a>常数 Constants</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">MY_CONST</span> = <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> MY_CONST;   <span class="comment"># =&gt; hello</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># =&gt; MY_CONST is: hello</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;MY_CONST is: &#x27;</span> . MY_CONST; </span><br></pre></td></tr></table></figure>
+
+<h3 id="类-Classes"><a href="#类-Classes" class="headerlink" title="类 Classes"></a>类 Classes</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>) </span>&#123;</span><br><span class="line">      <span class="variable language_">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$alex</span> = <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;Alex&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E7%B1%BB">Classes</a></p>
+<h2 id="PHP-类型"><a href="#PHP-类型" class="headerlink" title="PHP 类型"></a>PHP 类型</h2><h3 id="布尔值-Boolean"><a href="#布尔值-Boolean" class="headerlink" title="布尔值 Boolean"></a>布尔值 Boolean</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$boolean1</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable">$boolean2</span> = <span class="literal">TRUE</span>;</span><br><span class="line"><span class="variable">$boolean3</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="variable">$boolean4</span> = <span class="literal">FALSE</span>;</span><br><span class="line"><span class="variable">$boolean5</span> = (<span class="keyword">boolean</span>) <span class="number">1</span>;   <span class="comment"># =&gt; true</span></span><br><span class="line"><span class="variable">$boolean6</span> = (<span class="keyword">boolean</span>) <span class="number">0</span>;   <span class="comment"># =&gt; false</span></span><br></pre></td></tr></table></figure>
+
+<p>布尔值不区分大小写</p>
+<h3 id="整数-Integer"><a href="#整数-Integer" class="headerlink" title="整数 Integer"></a>整数 Integer</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$int1</span> = <span class="number">28</span>;    <span class="comment"># =&gt; 28</span></span><br><span class="line"><span class="variable">$int2</span> = -<span class="number">32</span>;   <span class="comment"># =&gt; -32</span></span><br><span class="line"><span class="variable">$int3</span> = <span class="number">012</span>;   <span class="comment"># =&gt; 10 (octal)</span></span><br><span class="line"><span class="variable">$int4</span> = <span class="number">0x0F</span>;  <span class="comment"># =&gt; 15 (hex)</span></span><br><span class="line"><span class="variable">$int5</span> = <span class="number">0b101</span>; <span class="comment"># =&gt; 5  (binary)</span></span><br><span class="line"><span class="comment"># =&gt; 2000100000 (decimal, PHP 7.4.0)</span></span><br><span class="line"><span class="variable">$int6</span> = <span class="number">2_000_100_000</span>;</span><br></pre></td></tr></table></figure>
+
+<p>另见: <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/language.types.integer.php">Integers</a></p>
+<h3 id="字符串-Strings-1"><a href="#字符串-Strings-1" class="headerlink" title="字符串 Strings"></a>字符串 Strings</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;this is a simple string&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E5%AD%97%E7%AC%A6%E4%B8%B2">Strings</a></p>
+<h3 id="数组-Arrays-1"><a href="#数组-Arrays-1" class="headerlink" title="数组 Arrays"></a>数组 Arrays</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$arr</span> = <span class="keyword">array</span>(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>, <span class="string">&quot;!&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#php-%E6%95%B0%E7%BB%84">Arrays</a></p>
+<h3 id="浮点数-Float-Double"><a href="#浮点数-Float-Double" class="headerlink" title="浮点数 Float (Double)"></a>浮点数 Float (Double)</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$float1</span> = <span class="number">1.234</span>;</span><br><span class="line"><span class="variable">$float2</span> = <span class="number">1.2e7</span>;</span><br><span class="line"><span class="variable">$float3</span> = <span class="number">7E-10</span>;</span><br><span class="line"><span class="variable">$float4</span> = <span class="number">1_234.567</span>;  <span class="comment">// as of PHP 7.4.0</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$float4</span>);    <span class="comment">// float(1234.567)</span></span><br><span class="line"><span class="variable">$float5</span> = <span class="number">1</span> + <span class="string">&quot;10.5&quot;</span>;   <span class="comment"># =&gt; 11.5</span></span><br><span class="line"><span class="variable">$float6</span> = <span class="number">1</span> + <span class="string">&quot;-1.3e3&quot;</span>; <span class="comment"># =&gt; -1299</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Null"><a href="#Null" class="headerlink" title="Null"></a>Null</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="variable">$b</span> = <span class="string">&#x27;Hello php!&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a</span> ?? <span class="string">&#x27;a is unset&#x27;</span>; <span class="comment"># =&gt; a is unset</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$b</span> ?? <span class="string">&#x27;b is unset&#x27;</span>; <span class="comment"># =&gt; Hello php</span></span><br><span class="line"><span class="variable">$a</span> = <span class="keyword">array</span>();</span><br><span class="line"><span class="variable">$a</span> == <span class="literal">null</span>    <span class="comment"># =&gt; true</span></span><br><span class="line"><span class="variable">$a</span> === <span class="literal">null</span>   <span class="comment"># =&gt; false</span></span><br><span class="line"><span class="title function_ invoke__">is_null</span>(<span class="variable">$a</span>)   <span class="comment"># =&gt; false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="可迭代对象-Iterables"><a href="#可迭代对象-Iterables" class="headerlink" title="可迭代对象 Iterables"></a>可迭代对象 Iterables</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>): <span class="title">iterable</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">gen</span>(<span class="params"></span>): <span class="title">iterable</span> </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">2</span>;</span><br><span class="line">  <span class="keyword">yield</span> <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">foreach</span> (<span class="title function_ invoke__">bar</span>() <span class="keyword">as</span> <span class="variable">$value</span>) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="variable">$value</span>;   <span class="comment"># =&gt; 123</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h2 id="PHP-字符串"><a href="#PHP-字符串" class="headerlink" title="PHP 字符串"></a>PHP 字符串</h2><h3 id="字符串-String"><a href="#字符串-String" class="headerlink" title="字符串 String"></a>字符串 String</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># =&gt; &#x27;$String&#x27;</span></span><br><span class="line"><span class="variable">$sgl_quotes</span> = <span class="string">&#x27;$String&#x27;</span>;</span><br><span class="line"><span class="comment"># =&gt; &#x27;This is a $String.&#x27;</span></span><br><span class="line"><span class="variable">$dbl_quotes</span> = <span class="string">&quot;This is a <span class="subst">$sgl_quotes</span>.&quot;</span>;</span><br><span class="line"><span class="comment"># =&gt; a    tab character.</span></span><br><span class="line"><span class="variable">$escaped</span>   = <span class="string">&quot;a \t tab character.&quot;</span>;</span><br><span class="line"><span class="comment"># =&gt; a slash and a t: \t</span></span><br><span class="line"><span class="variable">$unescaped</span> = <span class="string">&#x27;a slash and a t: \t&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="多行-Multi-line"><a href="#多行-Multi-line" class="headerlink" title="多行 Multi-line"></a>多行 Multi-line</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$str</span> = <span class="string">&quot;foo&quot;</span>;</span><br><span class="line"><span class="comment">// 未插值的多行</span></span><br><span class="line"><span class="variable">$nowdoc</span> = <span class="string">&lt;&lt;&lt;&#x27;END&#x27;</span></span><br><span class="line"><span class="string">Multi line string</span></span><br><span class="line"><span class="string">$str</span></span><br><span class="line"><span class="string">END</span>;</span><br><span class="line"><span class="comment">// 将执行字符串插值</span></span><br><span class="line"><span class="variable">$heredoc</span> = <span class="string">&lt;&lt;&lt;END</span></span><br><span class="line"><span class="string">Multi line</span></span><br><span class="line"><span class="string"><span class="subst">$str</span></span></span><br><span class="line"><span class="string">END</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="操作-Manipulation"><a href="#操作-Manipulation" class="headerlink" title="操作 Manipulation"></a>操作 Manipulation</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$s</span> = <span class="string">&quot;Hello Phper&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">strlen</span>(<span class="variable">$s</span>);       <span class="comment"># =&gt; 11</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">substr</span>(<span class="variable">$s</span>, <span class="number">0</span>, <span class="number">3</span>); <span class="comment"># =&gt; Hel</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">substr</span>(<span class="variable">$s</span>, <span class="number">1</span>);    <span class="comment"># =&gt; ello Phper</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">substr</span>(<span class="variable">$s</span>, -<span class="number">4</span>, <span class="number">3</span>);<span class="comment"># =&gt; hpe</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">strtoupper</span>(<span class="variable">$s</span>);   <span class="comment"># =&gt; HELLO PHPER</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">strtolower</span>(<span class="variable">$s</span>);   <span class="comment"># =&gt; hello phper</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">strpos</span>(<span class="variable">$s</span>, <span class="string">&quot;l&quot;</span>);      <span class="comment"># =&gt; 2</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">strpos</span>(<span class="variable">$s</span>, <span class="string">&quot;L&quot;</span>)); <span class="comment"># =&gt; false</span></span><br></pre></td></tr></table></figure>
+
+<p>另见: <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/ref.strings.php">字符串函数</a></p>
+<h2 id="PHP-数组"><a href="#PHP-数组" class="headerlink" title="PHP 数组"></a>PHP 数组</h2><h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a1</span> = [<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>, <span class="string">&quot;!&quot;</span>]</span><br><span class="line"><span class="variable">$a2</span> = <span class="keyword">array</span>(<span class="string">&quot;hello&quot;</span>, <span class="string">&quot;world&quot;</span>, <span class="string">&quot;!&quot;</span>);</span><br><span class="line"><span class="variable">$a3</span> = <span class="title function_ invoke__">explode</span>(<span class="string">&quot;,&quot;</span>, <span class="string">&quot;apple,pear,peach&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="混合-int-和-string-键"><a href="#混合-int-和-string-键" class="headerlink" title="混合 int 和 string 键"></a>混合 int 和 string 键</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$array</span> = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">&quot;foo&quot;</span> =&gt; <span class="string">&quot;bar&quot;</span>,</span><br><span class="line">    <span class="string">&quot;bar&quot;</span> =&gt; <span class="string">&quot;foo&quot;</span>,</span><br><span class="line">    <span class="number">100</span>   =&gt; -<span class="number">100</span>,</span><br><span class="line">    -<span class="number">100</span>  =&gt; <span class="number">100</span>,</span><br><span class="line">);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$array</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="短数组语法"><a href="#短数组语法" class="headerlink" title="短数组语法"></a>短数组语法</h4><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$array</span> = [</span><br><span class="line">    <span class="string">&quot;foo&quot;</span> =&gt; <span class="string">&quot;bar&quot;</span>,</span><br><span class="line">    <span class="string">&quot;bar&quot;</span> =&gt; <span class="string">&quot;foo&quot;</span>,</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<h3 id="多阵列"><a href="#多阵列" class="headerlink" title="多阵列"></a>多阵列</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$multiArray</span> = [ </span><br><span class="line">    [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">    [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>],</span><br><span class="line">    [<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>],</span><br><span class="line">];</span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="variable">$multiArray</span>[<span class="number">0</span>][<span class="number">0</span>]) <span class="comment"># =&gt; 1</span></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="variable">$multiArray</span>[<span class="number">0</span>][<span class="number">1</span>]) <span class="comment"># =&gt; 2</span></span><br><span class="line"><span class="title function_ invoke__">print_r</span>(<span class="variable">$multiArray</span>[<span class="number">0</span>][<span class="number">2</span>]) <span class="comment"># =&gt; 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="多类型"><a href="#多类型" class="headerlink" title="多类型"></a>多类型</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$array</span> = <span class="keyword">array</span>(</span><br><span class="line">    <span class="string">&quot;foo&quot;</span> =&gt; <span class="string">&quot;bar&quot;</span>,</span><br><span class="line">    <span class="number">42</span>    =&gt; <span class="number">24</span>,</span><br><span class="line">    <span class="string">&quot;multi&quot;</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">         <span class="string">&quot;dim&quot;</span> =&gt; <span class="keyword">array</span>(</span><br><span class="line">             <span class="string">&quot;a&quot;</span> =&gt; <span class="string">&quot;foo&quot;</span></span><br><span class="line">         )</span><br><span class="line">    )</span><br><span class="line">);</span><br><span class="line"><span class="comment"># =&gt; string(3) &quot;bar&quot;</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$array</span>[<span class="string">&quot;foo&quot;</span>]);</span><br><span class="line"><span class="comment"># =&gt; int(24)</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$array</span>[<span class="number">42</span>]);    </span><br><span class="line"><span class="comment"># =&gt;  string(3) &quot;foo&quot;</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$array</span>[<span class="string">&quot;multi&quot;</span>][<span class="string">&quot;dim&quot;</span>][<span class="string">&quot;a&quot;</span>]);</span><br></pre></td></tr></table></figure>
+
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$arr</span> = <span class="keyword">array</span>(<span class="number">5</span> =&gt; <span class="number">1</span>, <span class="number">12</span> =&gt; <span class="number">2</span>);</span><br><span class="line"><span class="variable">$arr</span>[] = <span class="number">56</span>;      <span class="comment">// 附加</span></span><br><span class="line"><span class="variable">$arr</span>[<span class="string">&quot;x&quot;</span>] = <span class="number">42</span>;   <span class="comment">// 用键添加</span></span><br><span class="line"><span class="title function_ invoke__">sort</span>(<span class="variable">$arr</span>);       <span class="comment">// 排序</span></span><br><span class="line"><span class="keyword">unset</span>(<span class="variable">$arr</span>[<span class="number">5</span>]);   <span class="comment">// 消除</span></span><br><span class="line"><span class="keyword">unset</span>(<span class="variable">$arr</span>);      <span class="comment">// 移除所有</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/ref.array.php">数组函数</a></p>
+<h3 id="索引迭代"><a href="#索引迭代" class="headerlink" title="索引迭代"></a>索引迭代</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$array</span> = <span class="keyword">array</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>);</span><br><span class="line"><span class="variable">$count</span> = <span class="title function_ invoke__">count</span>(<span class="variable">$array</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">0</span>; <span class="variable">$i</span> &lt; <span class="variable">$count</span>; <span class="variable">$i</span>++) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;i:<span class="subst">&#123;$i&#125;</span>, v:<span class="subst">&#123;$array[$i]&#125;</span>\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="价值迭代"><a href="#价值迭代" class="headerlink" title="价值迭代"></a>价值迭代</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$colors</span> = <span class="keyword">array</span>(<span class="string">&#x27;red&#x27;</span>, <span class="string">&#x27;blue&#x27;</span>, <span class="string">&#x27;green&#x27;</span>);</span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$colors</span> <span class="keyword">as</span> <span class="variable">$color</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Do you like <span class="subst">$color</span>?\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关键迭代"><a href="#关键迭代" class="headerlink" title="关键迭代"></a>关键迭代</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$arr</span> = [<span class="string">&quot;foo&quot;</span> =&gt; <span class="string">&quot;bar&quot;</span>, <span class="string">&quot;bar&quot;</span> =&gt; <span class="string">&quot;foo&quot;</span>];</span><br><span class="line"><span class="keyword">foreach</span> ( <span class="variable">$arr</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span> )</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;key: &quot;</span> . <span class="variable">$key</span> . <span class="string">&quot;\n&quot;</span>;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;val: <span class="subst">&#123;$arr[$key]&#125;</span>\n&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="串联阵列"><a href="#串联阵列" class="headerlink" title="串联阵列"></a>串联阵列</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="variable">$b</span> = [<span class="number">3</span>, <span class="number">4</span>];</span><br><span class="line"><span class="comment">// PHP 7.4 以后</span></span><br><span class="line"><span class="comment"># =&gt; [1, 2, 3, 4]</span></span><br><span class="line"><span class="variable">$result</span> = [...<span class="variable">$a</span>, ...<span class="variable">$b</span>];</span><br></pre></td></tr></table></figure>
+
+<h3 id="Into-函数"><a href="#Into-函数" class="headerlink" title="Into 函数"></a>Into 函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$array</span> = [<span class="number">1</span>, <span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"><span class="keyword">int</span> <span class="variable">$a</span>, <span class="keyword">int</span> <span class="variable">$b</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="variable">$a</span>; <span class="comment"># =&gt; 1</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$b</span>; <span class="comment"># =&gt; 2</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">foo</span>(...<span class="variable">$array</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Splat运算符"><a href="#Splat运算符" class="headerlink" title="Splat运算符"></a>Splat运算符</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"><span class="variable">$first</span>, ...<span class="variable">$other</span></span>) </span>&#123;</span><br><span class="line">  <span class="title function_ invoke__">var_dump</span>(<span class="variable">$first</span>); <span class="comment"># =&gt; a</span></span><br><span class="line">    <span class="title function_ invoke__">var_dump</span>(<span class="variable">$other</span>); <span class="comment"># =&gt; [&#x27;b&#x27;, &#x27;c&#x27;]</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">foo</span>(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span> <span class="comment">/*, ...*/</span> );</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"><span class="variable">$first</span>, <span class="keyword">string</span> ...<span class="variable">$other</span></span>)</span>&#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="PHP-运算符"><a href="#PHP-运算符" class="headerlink" title="PHP 运算符"></a>PHP 运算符</h2><h3 id="算术"><a href="#算术" class="headerlink" title="算术"></a>算术</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>+</code></td>
+<td>添加</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td>减法</td>
+</tr>
+<tr>
+<td align="left"><code>*</code></td>
+<td>乘法</td>
+</tr>
+<tr>
+<td align="left"><code>/</code></td>
+<td>分配</td>
+</tr>
+<tr>
+<td align="left"><code>%</code></td>
+<td>取模</td>
+</tr>
+<tr>
+<td align="left"><code>**</code></td>
+<td>求幂</td>
+</tr>
+</tbody></table>
+<h3 id="分配"><a href="#分配" class="headerlink" title="分配"></a>分配</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>a += b</code></td>
+<td>如同 <code>a = a + b</code></td>
+</tr>
+<tr>
+<td align="left"><code>a -= b</code></td>
+<td>如同 <code>a = a – b</code></td>
+</tr>
+<tr>
+<td align="left"><code>a *= b</code></td>
+<td>如同 <code>a = a * b</code></td>
+</tr>
+<tr>
+<td align="left"><code>a /= b</code></td>
+<td>如同 <code>a = a / b</code></td>
+</tr>
+<tr>
+<td align="left"><code>a %= b</code></td>
+<td>如同 <code>a = a % b</code></td>
+</tr>
+</tbody></table>
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>==</code></td>
+<td>平等的</td>
+</tr>
+<tr>
+<td align="left"><code>===</code></td>
+<td>完全相同的</td>
+</tr>
+<tr>
+<td align="left"><code>!=</code></td>
+<td>不相等</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;&gt;</code></td>
+<td>不相等</td>
+</tr>
+<tr>
+<td align="left"><code>!==</code></td>
+<td>不相同</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;</code></td>
+<td>少于</td>
+</tr>
+<tr>
+<td align="left"><code>&gt;</code></td>
+<td>比…更棒</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;=</code></td>
+<td>小于或等于</td>
+</tr>
+<tr>
+<td align="left"><code>&gt;=</code></td>
+<td>大于或等于</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;=&gt;</code></td>
+<td>小于&#x2F;等于&#x2F;大于</td>
+</tr>
+</tbody></table>
+<h3 id="逻辑的"><a href="#逻辑的" class="headerlink" title="逻辑的"></a>逻辑的</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>and</code></td>
+<td>和</td>
+</tr>
+<tr>
+<td align="left"><code>or</code></td>
+<td>或者</td>
+</tr>
+<tr>
+<td align="left"><code>xor</code></td>
+<td>独家或</td>
+</tr>
+<tr>
+<td align="left"><code>!</code></td>
+<td>不是</td>
+</tr>
+<tr>
+<td align="left"><code>&amp;&amp;</code></td>
+<td>和</td>
+</tr>
+<tr>
+<td align="left"><code>||</code></td>
+<td>或者</td>
+</tr>
+</tbody></table>
+<h3 id="算术-1"><a href="#算术-1" class="headerlink" title="算术"></a>算术</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 算术</span></span><br><span class="line"><span class="variable">$sum</span>        = <span class="number">1</span> + <span class="number">1</span>; <span class="comment">// 2</span></span><br><span class="line"><span class="variable">$difference</span> = <span class="number">2</span> - <span class="number">1</span>; <span class="comment">// 1</span></span><br><span class="line"><span class="variable">$product</span>    = <span class="number">2</span> * <span class="number">2</span>; <span class="comment">// 4</span></span><br><span class="line"><span class="variable">$quotient</span>   = <span class="number">2</span> / <span class="number">1</span>; <span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 速记算术</span></span><br><span class="line"><span class="variable">$num</span> = <span class="number">0</span>;</span><br><span class="line"><span class="variable">$num</span> += <span class="number">1</span>;       <span class="comment">// 将 $num 增加 1</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$num</span>++;     <span class="comment">// 打印 1（评估后的增量）</span></span><br><span class="line"><span class="keyword">echo</span> ++<span class="variable">$num</span>;     <span class="comment">// 打印 3（评估前的增量）</span></span><br><span class="line"><span class="variable">$num</span> /= <span class="variable">$float</span>;  <span class="comment">// 将商除并分配给 $num</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按位"><a href="#按位" class="headerlink" title="按位"></a>按位</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&amp;</code></td>
+<td>和</td>
+</tr>
+<tr>
+<td align="left">&#96;</td>
+<td>&#96;</td>
+</tr>
+<tr>
+<td align="left"><code>^</code></td>
+<td>异或（异或）</td>
+</tr>
+<tr>
+<td align="left"><code>~</code></td>
+<td>不是</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;&lt;</code></td>
+<td>左移</td>
+</tr>
+<tr>
+<td align="left"><code>&gt;&gt;</code></td>
+<td>右移</td>
+</tr>
+</tbody></table>
+<h2 id="PHP-条件"><a href="#PHP-条件" class="headerlink" title="PHP 条件"></a>PHP 条件</h2><h3 id="If-elseif-else"><a href="#If-elseif-else" class="headerlink" title="If elseif else"></a>If elseif else</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = <span class="number">10</span>;</span><br><span class="line"><span class="variable">$b</span> = <span class="number">20</span>;</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$a</span> &gt; <span class="variable">$b</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;a is bigger than b&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">elseif</span> (<span class="variable">$a</span> == <span class="variable">$b</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;a is equal to b&quot;</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;a is smaller than b&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Switch"><a href="#Switch" class="headerlink" title="Switch"></a>Switch</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$x</span> = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">switch</span> (<span class="variable">$x</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">&quot;it&#x27;s zero&quot;</span>;</span><br><span class="line">        <span class="keyword">break</span>; </span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;two&#x27;</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;three&#x27;</span>:</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三元运算符"><a href="#三元运算符" class="headerlink" title="三元运算符"></a>三元运算符</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># =&gt; Does</span></span><br><span class="line"><span class="keyword">print</span> (<span class="literal">false</span> ? <span class="string">&#x27;Not&#x27;</span> : <span class="string">&#x27;Does&#x27;</span>);</span><br><span class="line"><span class="variable">$x</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="comment"># =&gt; Does</span></span><br><span class="line"><span class="keyword">print</span>(<span class="variable">$x</span> ?: <span class="string">&#x27;Does&#x27;</span>);</span><br><span class="line"><span class="variable">$a</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="variable">$b</span> = <span class="string">&#x27;Does print&#x27;</span>;</span><br><span class="line"><span class="comment"># =&gt; a is unsert</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$a</span> ?? <span class="string">&#x27;a is unset&#x27;</span>;</span><br><span class="line"><span class="comment"># =&gt; print</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$b</span> ?? <span class="string">&#x27;b is unset&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$statusCode</span> = <span class="number">500</span>;</span><br><span class="line"><span class="variable">$message</span> = <span class="keyword">match</span>(<span class="variable">$statusCode</span>) &#123;</span><br><span class="line">  <span class="number">200</span>, <span class="number">300</span> =&gt; <span class="literal">null</span>,</span><br><span class="line">  <span class="number">400</span> =&gt; <span class="string">&#x27;未找到&#x27;</span>,</span><br><span class="line">  <span class="number">500</span> =&gt; <span class="string">&#x27;服务器错误&#x27;</span>,</span><br><span class="line">  <span class="keyword">default</span> =&gt; <span class="string">&#x27;已知状态码&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$message</span>; <span class="comment"># =&gt; 服务器错误</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/control-structures.match.php">Match</a></p>
+<h3 id="匹配表达式"><a href="#匹配表达式" class="headerlink" title="匹配表达式"></a>匹配表达式</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$age</span> = <span class="number">23</span>;</span><br><span class="line"><span class="variable">$result</span> = <span class="keyword">match</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="variable">$age</span> &gt;= <span class="number">65</span> =&gt; <span class="string">&#x27;senior&#x27;</span>,</span><br><span class="line">    <span class="variable">$age</span> &gt;= <span class="number">25</span> =&gt; <span class="string">&#x27;adult&#x27;</span>,</span><br><span class="line">    <span class="variable">$age</span> &gt;= <span class="number">18</span> =&gt; <span class="string">&#x27;young adult&#x27;</span>,</span><br><span class="line">    <span class="keyword">default</span> =&gt; <span class="string">&#x27;kid&#x27;</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$result</span>; <span class="comment"># =&gt; young adult</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="PHP-循环"><a href="#PHP-循环" class="headerlink" title="PHP 循环"></a>PHP 循环</h2><h3 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$i</span> = <span class="number">1</span>;</span><br><span class="line"><span class="comment"># =&gt; 12345</span></span><br><span class="line"><span class="keyword">while</span> (<span class="variable">$i</span> &lt;= <span class="number">5</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$i</span>++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="do-while-循环"><a href="#do-while-循环" class="headerlink" title="do while 循环"></a>do while 循环</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$i</span> = <span class="number">1</span>;</span><br><span class="line"><span class="comment"># =&gt; 12345</span></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$i</span>++;</span><br><span class="line">&#125; <span class="keyword">while</span> (<span class="variable">$i</span> &lt;= <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="for-i-循环"><a href="#for-i-循环" class="headerlink" title="for i 循环"></a>for i 循环</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># =&gt; 12345</span></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">1</span>; <span class="variable">$i</span> &lt;= <span class="number">5</span>; <span class="variable">$i</span>++) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$i</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="break-跳出循环"><a href="#break-跳出循环" class="headerlink" title="break 跳出循环"></a>break 跳出循环</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># =&gt; 123</span></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">1</span>; <span class="variable">$i</span> &lt;= <span class="number">5</span>; <span class="variable">$i</span>++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$i</span> === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$i</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="continue-继续"><a href="#continue-继续" class="headerlink" title="continue 继续"></a>continue 继续</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># =&gt; 1235</span></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$i</span> = <span class="number">1</span>; <span class="variable">$i</span> &lt;= <span class="number">5</span>; <span class="variable">$i</span>++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$i</span> === <span class="number">4</span>) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$i</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="foreach-循环"><a href="#foreach-循环" class="headerlink" title="foreach 循环"></a>foreach 循环</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$a</span> = [<span class="string">&#x27;foo&#x27;</span> =&gt; <span class="number">1</span>, <span class="string">&#x27;bar&#x27;</span> =&gt; <span class="number">2</span>];</span><br><span class="line"><span class="comment"># =&gt; 12</span></span><br><span class="line"><span class="keyword">foreach</span> (<span class="variable">$a</span> <span class="keyword">as</span> <span class="variable">$k</span>) &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="variable">$k</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="#%E5%85%B3%E9%94%AE%E8%BF%AD%E4%BB%A3">Array iteration</a></p>
+<h2 id="PHP-函数"><a href="#PHP-函数" class="headerlink" title="PHP 函数"></a>PHP 函数</h2><h3 id="返回值"><a href="#返回值" class="headerlink" title="返回值"></a>返回值</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">square</span>(<span class="params"><span class="variable">$x</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$x</span> * <span class="variable">$x</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">square</span>(<span class="number">4</span>);  <span class="comment"># =&gt; 16</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="返回类型"><a href="#返回类型" class="headerlink" title="返回类型"></a>返回类型</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基本返回类型声明</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params"><span class="variable">$a</span>, <span class="variable">$b</span></span>): <span class="title">float</span> </span>&#123;<span class="comment">/*...*/</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_item</span>(<span class="params"></span>): <span class="title">string</span> </span>&#123;<span class="comment">/*...*/</span>&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span> </span>&#123;&#125;</span><br><span class="line"><span class="comment">// 返回一个对象</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getC</span>(<span class="params"></span>): <span class="title">C</span> </span>&#123; <span class="keyword">return</span> <span class="keyword">new</span> C; &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="可空返回类型"><a href="#可空返回类型" class="headerlink" title="可空返回类型"></a>可空返回类型</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 PHP 7.1 中可用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">nullOrString</span>(<span class="params"><span class="keyword">int</span> <span class="variable">$v</span></span>) : ?<span class="title">string</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$v</span> % <span class="number">2</span> ? <span class="string">&quot;odd&quot;</span> : <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">nullOrString</span>(<span class="number">3</span>);       <span class="comment"># =&gt; odd</span></span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="title function_ invoke__">nullOrString</span>(<span class="number">4</span>));  <span class="comment"># =&gt; NULL</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a target="_blank" rel="noopener" href="https://www.php.net/manual/en/migration71.new-features.php">Nullable types</a></p>
+<h3 id="无效函数"><a href="#无效函数" class="headerlink" title="无效函数"></a>无效函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在 PHP 7.1 中可用</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">voidFunction</span>(<span class="params"></span>): <span class="title">void</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&#x27;Hello&#x27;</span>;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">voidFunction</span>();  <span class="comment"># =&gt; Hello</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="变量函数"><a href="#变量函数" class="headerlink" title="变量函数"></a>变量函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"><span class="variable">$arg</span> = <span class="string">&#x27;&#x27;</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;In bar(); arg: &#x27;<span class="subst">$arg</span>&#x27;.\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$func</span> = <span class="string">&#x27;bar&#x27;</span>;</span><br><span class="line"><span class="variable">$func</span>(<span class="string">&#x27;test&#x27;</span>); <span class="comment"># =&gt; In bar(); arg: test</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$greet</span> = <span class="function"><span class="keyword">function</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="title function_ invoke__">printf</span>(<span class="string">&quot;Hello %s\r\n&quot;</span>, <span class="variable">$name</span>);</span><br><span class="line">&#125;;</span><br><span class="line"><span class="variable">$greet</span>(<span class="string">&#x27;World&#x27;</span>); <span class="comment"># =&gt; Hello World</span></span><br><span class="line"><span class="variable">$greet</span>(<span class="string">&#x27;PHP&#x27;</span>);   <span class="comment"># =&gt; Hello PHP</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="递归函数"><a href="#递归函数" class="headerlink" title="递归函数"></a>递归函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">recursion</span>(<span class="params"><span class="variable">$x</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$x</span> &lt; <span class="number">5</span>) &#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;<span class="subst">$x</span>&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">recursion</span>(<span class="variable">$x</span> + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_ invoke__">recursion</span>(<span class="number">1</span>);  <span class="comment"># =&gt; 1234</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="默认参数"><a href="#默认参数" class="headerlink" title="默认参数"></a>默认参数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">coffee</span>(<span class="params"><span class="variable">$type</span> = <span class="string">&quot;cappuccino&quot;</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Making a cup of <span class="subst">$type</span>.\n&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># =&gt; 制作一杯卡布奇诺</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">coffee</span>();</span><br><span class="line"><span class="comment"># =&gt; 制作一杯</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">coffee</span>(<span class="literal">null</span>);</span><br><span class="line"><span class="comment"># =&gt; 制作一杯浓缩咖啡</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">coffee</span>(<span class="string">&quot;espresso&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$y</span> = <span class="number">1</span>;</span><br><span class="line"> </span><br><span class="line"><span class="variable">$fn1</span> = <span class="function"><span class="keyword">fn</span>(<span class="params"><span class="variable">$x</span></span>) =&gt;</span> <span class="variable">$x</span> + <span class="variable">$y</span>;</span><br><span class="line"><span class="comment">// 相当于按值使用 $y：</span></span><br><span class="line"><span class="variable">$fn2</span> = <span class="function"><span class="keyword">function</span> (<span class="params"><span class="variable">$x</span></span>) <span class="keyword">use</span> (<span class="params"><span class="variable">$y</span></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable">$x</span> + <span class="variable">$y</span>;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$fn1</span>(<span class="number">5</span>);   <span class="comment"># =&gt; 6</span></span><br><span class="line"><span class="keyword">echo</span> <span class="variable">$fn2</span>(<span class="number">5</span>);   <span class="comment"># =&gt; 6</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="PHP-类"><a href="#PHP-类" class="headerlink" title="PHP 类"></a>PHP 类</h2><h3 id="构造函数-Constructor"><a href="#构造函数-Constructor" class="headerlink" title="构造函数 Constructor"></a>构造函数 Constructor</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;Name: &quot;</span> . <span class="variable language_">$this</span>-&gt;name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$alex</span> = <span class="keyword">new</span> <span class="title class_">Student</span>(<span class="string">&quot;Alex&quot;</span>);</span><br><span class="line"><span class="variable">$alex</span>-&gt;<span class="keyword">print</span>();    <span class="comment"># =&gt; Name: Alex</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="继承-Inheritance"><a href="#继承-Inheritance" class="headerlink" title="继承 Inheritance"></a>继承 Inheritance</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExtendClass</span> <span class="keyword">extends</span> <span class="title">SimpleClass</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 重新定义父方法</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">displayVar</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;Extending class\n&quot;</span>;</span><br><span class="line">        <span class="built_in">parent</span>::<span class="title function_ invoke__">displayVar</span>();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable">$extended</span> = <span class="keyword">new</span> <span class="title class_">ExtendClass</span>();</span><br><span class="line"><span class="variable">$extended</span>-&gt;<span class="title function_ invoke__">displayVar</span>();</span><br></pre></td></tr></table></figure>
+
+<h3 id="类变量-Classes-variables"><a href="#类变量-Classes-variables" class="headerlink" title="类变量 Classes variables"></a>类变量 Classes variables</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="variable constant_">MY_CONST</span>         = <span class="string">&#x27;value&#x27;</span>;</span><br><span class="line">    <span class="built_in">static</span> <span class="variable">$staticVar</span>      = <span class="string">&#x27;static&#x27;</span>;</span><br><span class="line">    <span class="comment">// 可见度</span></span><br><span class="line">    <span class="keyword">public</span> <span class="built_in">static</span> <span class="variable">$var1</span>    = <span class="string">&#x27;pubs&#x27;</span>;</span><br><span class="line">    <span class="comment">// 仅限类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">static</span> <span class="variable">$var2</span>   = <span class="string">&#x27;pris&#x27;</span>;</span><br><span class="line">    <span class="comment">// 类和子类</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="built_in">static</span> <span class="variable">$var3</span> = <span class="string">&#x27;pros&#x27;</span>;</span><br><span class="line">    <span class="comment">// 类和子类</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$var6</span>        = <span class="string">&#x27;pro&#x27;</span>;</span><br><span class="line">    <span class="comment">// 仅限类</span></span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$var7</span>          = <span class="string">&#x27;pri&#x27;</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>静态访问</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">echo</span> <span class="title class_">MyClass</span>::<span class="variable constant_">MY_CONST</span>;   <span class="comment"># =&gt; value</span></span><br><span class="line"><span class="keyword">echo</span> <span class="title class_">MyClass</span>::<span class="variable">$staticVar</span>; <span class="comment"># =&gt; static</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="魔术方法"><a href="#魔术方法" class="headerlink" title="魔术方法"></a>魔术方法</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">// 对象被视为字符串</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__toString</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable">$property</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 与 __construct() 相反</span></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__destruct</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">print</span> <span class="string">&quot;Destroying&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Foo</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Bar</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">doSomethingElse</span>(<span class="params"></span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cls</span> <span class="keyword">implements</span> <span class="title">Foo</span>, <span class="title">Bar</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">doSomething</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">doSomethingElse</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="各种各样的"><a href="#各种各样的" class="headerlink" title="各种各样的"></a>各种各样的</h2><h3 id="基本错误处理"><a href="#基本错误处理" class="headerlink" title="基本错误处理"></a>基本错误处理</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">// 做一点事</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (<span class="built_in">Exception</span> <span class="variable">$e</span>) &#123;</span><br><span class="line">    <span class="comment">// 处理异常</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;Always print!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PHP-8-0-中的异常"><a href="#PHP-8-0-中的异常" class="headerlink" title="PHP 8.0 中的异常"></a>PHP 8.0 中的异常</h3><!--rehype:wrap-class=col-span-2-->
+<figure class="highlight php"><figcaption><span>&#123;.wrap&#125;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$nullableValue</span> = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  <span class="variable">$value</span> = <span class="variable">$nullableValue</span> ?? <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">InvalidArgumentException</span>();</span><br><span class="line">&#125; <span class="keyword">catch</span> (<span class="built_in">InvalidArgumentException</span>) &#123; <span class="comment">// 变量是可选的</span></span><br><span class="line">    <span class="comment">// 处理我的异常</span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">&quot;print me!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义异常"><a href="#自定义异常" class="headerlink" title="自定义异常"></a>自定义异常</h3><!--rehype:wrap-class=row-span-2-->
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">Exception</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 做一点事</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用法</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="variable">$condition</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="variable">$condition</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">MyException</span>(<span class="string">&#x27;bala&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (MyException <span class="variable">$e</span>) &#123;</span><br><span class="line">    <span class="comment">// 处理我的异常</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Nullsafe-运算符"><a href="#Nullsafe-运算符" class="headerlink" title="Nullsafe 运算符"></a>Nullsafe 运算符</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从 PHP 8.0.0 开始，这一行：</span></span><br><span class="line"><span class="variable">$result</span> = <span class="variable">$repo</span>?-&gt;<span class="title function_ invoke__">getUser</span>(<span class="number">5</span>)?-&gt;name;</span><br><span class="line"><span class="comment">// 相当于下面的代码：</span></span><br><span class="line"><span class="keyword">if</span> (<span class="title function_ invoke__">is_null</span>(<span class="variable">$repo</span>)) &#123;</span><br><span class="line">    <span class="variable">$result</span> = <span class="literal">null</span>;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$user</span> = <span class="variable">$repository</span>-&gt;<span class="title function_ invoke__">getUser</span>(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_ invoke__">is_null</span>(<span class="variable">$user</span>)) &#123;</span><br><span class="line">        <span class="variable">$result</span> = <span class="literal">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="variable">$result</span> = <span class="variable">$user</span>-&gt;name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另见: <a target="_blank" rel="noopener" href="https://wiki.php.net/rfc/nullsafe_operator">Nullsafe 运算符</a></p>
+<h3 id="常用表达"><a href="#常用表达" class="headerlink" title="常用表达"></a>常用表达</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$str</span> = <span class="string">&quot;Visit jaywcjlove.github.io&quot;</span>;</span><br><span class="line"><span class="keyword">echo</span> <span class="title function_ invoke__">preg_match</span>(<span class="string">&quot;/qu/i&quot;</span>, <span class="variable">$str</span>); <span class="comment"># =&gt; 1</span></span><br></pre></td></tr></table></figure>
+
+<p>查看: <a href="./regex.md#php%E4%B8%AD%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F">PHP中的正则表达式</a></p>
+<h3 id="fopen-模式"><a href="#fopen-模式" class="headerlink" title="fopen() 模式"></a>fopen() 模式</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th>-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>r</code></td>
+<td>读</td>
+</tr>
+<tr>
+<td align="left"><code>r+</code></td>
+<td>读写，前置</td>
+</tr>
+<tr>
+<td align="left"><code>w</code></td>
+<td>写入，截断</td>
+</tr>
+<tr>
+<td align="left"><code>w+</code></td>
+<td>读写，截断</td>
+</tr>
+<tr>
+<td align="left"><code>a</code></td>
+<td>写，追加</td>
+</tr>
+<tr>
+<td align="left"><code>a+</code></td>
+<td>读写，追加</td>
+</tr>
+</tbody></table>
+<h3 id="运行时定义的常量"><a href="#运行时定义的常量" class="headerlink" title="运行时定义的常量"></a>运行时定义的常量</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">define</span>(<span class="string">&quot;CURRENT_DATE&quot;</span>, <span class="title function_ invoke__">date</span>(<span class="string">&#x27;Y-m-d&#x27;</span>));</span><br><span class="line"><span class="comment">// 一种可能的表示</span></span><br><span class="line"><span class="keyword">echo</span> CURRENT_DATE;   <span class="comment"># =&gt; 2021-01-05</span></span><br><span class="line"><span class="comment"># =&gt; CURRENT_DATE is: 2021-01-05</span></span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;CURRENT_DATE is: &#x27;</span> . CURRENT_DATE; </span><br></pre></td></tr></table></figure>
+
+<h2 id="另见"><a href="#另见" class="headerlink" title="另见"></a>另见</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.php.net/manual/zh/index.php">PHP 官方中文文档</a> <em>(php.net)</em></li>
+<li><a target="_blank" rel="noopener" href="https://learnxinyminutes.com/docs/zh-cn/php-cn/">Learn X in Y minutes</a> <em>(learnxinyminutes.com)</em></li>
+</ul>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            <a class="trm-op-top trm-anima-link" href="/blog/2025/01/08/jquery/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+                </span>
+                <h6 class="trm-op-title">JQuery 备忘录</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/01/08</li>
+                <li>10:35</li>
+                <li>前端技术</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            <a class="trm-op-top trm-anima-link" href="/blog/2025/01/08/pyhton%E5%A4%87%E5%BF%98%E5%BD%95/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+                </span>
+                <h6 class="trm-op-title">Pyhton备忘录</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/01/08</li>
+                <li>10:35</li>
+                <li>后端编程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2024 - 2025</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX's BLOG</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="PHP 备忘清单"><a rel="nofollow" class="trm-toc-link" href="#PHP-备忘清单"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">PHP 备忘清单</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="入门"><a rel="nofollow" class="trm-toc-link" href="#入门"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">入门</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="hello.php"><a rel="nofollow" class="trm-toc-link" href="#hello-php"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">hello.php</span></a></li><li class="trm-toc-item trm-toc-level-3" title="变量 Variables"><a rel="nofollow" class="trm-toc-link" href="#变量-Variables"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">变量 Variables</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符串 Strings"><a rel="nofollow" class="trm-toc-link" href="#字符串-Strings"><span class="trm-toc-number">1.1.3.</span> <span class="trm-toc-text">字符串 Strings</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数组 Arrays"><a rel="nofollow" class="trm-toc-link" href="#数组-Arrays"><span class="trm-toc-number">1.1.4.</span> <span class="trm-toc-text">数组 Arrays</span></a></li><li class="trm-toc-item trm-toc-level-3" title="运算符 Operators"><a rel="nofollow" class="trm-toc-link" href="#运算符-Operators"><span class="trm-toc-number">1.1.5.</span> <span class="trm-toc-text">运算符 Operators</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Include"><a rel="nofollow" class="trm-toc-link" href="#Include"><span class="trm-toc-number">1.1.6.</span> <span class="trm-toc-text">Include</span></a></li><li class="trm-toc-item trm-toc-level-3" title="功能 Functions"><a rel="nofollow" class="trm-toc-link" href="#功能-Functions"><span class="trm-toc-number">1.1.7.</span> <span class="trm-toc-text">功能 Functions</span></a></li><li class="trm-toc-item trm-toc-level-3" title="注释 Comments"><a rel="nofollow" class="trm-toc-link" href="#注释-Comments"><span class="trm-toc-number">1.1.8.</span> <span class="trm-toc-text">注释 Comments</span></a></li><li class="trm-toc-item trm-toc-level-3" title="常数 Constants"><a rel="nofollow" class="trm-toc-link" href="#常数-Constants"><span class="trm-toc-number">1.1.9.</span> <span class="trm-toc-text">常数 Constants</span></a></li><li class="trm-toc-item trm-toc-level-3" title="类 Classes"><a rel="nofollow" class="trm-toc-link" href="#类-Classes"><span class="trm-toc-number">1.1.10.</span> <span class="trm-toc-text">类 Classes</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 类型"><a rel="nofollow" class="trm-toc-link" href="#PHP-类型"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">PHP 类型</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="布尔值 Boolean"><a rel="nofollow" class="trm-toc-link" href="#布尔值-Boolean"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">布尔值 Boolean</span></a></li><li class="trm-toc-item trm-toc-level-3" title="整数 Integer"><a rel="nofollow" class="trm-toc-link" href="#整数-Integer"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">整数 Integer</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符串 Strings"><a rel="nofollow" class="trm-toc-link" href="#字符串-Strings-1"><span class="trm-toc-number">1.2.3.</span> <span class="trm-toc-text">字符串 Strings</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数组 Arrays"><a rel="nofollow" class="trm-toc-link" href="#数组-Arrays-1"><span class="trm-toc-number">1.2.4.</span> <span class="trm-toc-text">数组 Arrays</span></a></li><li class="trm-toc-item trm-toc-level-3" title="浮点数 Float (Double)"><a rel="nofollow" class="trm-toc-link" href="#浮点数-Float-Double"><span class="trm-toc-number">1.2.5.</span> <span class="trm-toc-text">浮点数 Float (Double)</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Null"><a rel="nofollow" class="trm-toc-link" href="#Null"><span class="trm-toc-number">1.2.6.</span> <span class="trm-toc-text">Null</span></a></li><li class="trm-toc-item trm-toc-level-3" title="可迭代对象 Iterables"><a rel="nofollow" class="trm-toc-link" href="#可迭代对象-Iterables"><span class="trm-toc-number">1.2.7.</span> <span class="trm-toc-text">可迭代对象 Iterables</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 字符串"><a rel="nofollow" class="trm-toc-link" href="#PHP-字符串"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">PHP 字符串</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="字符串 String"><a rel="nofollow" class="trm-toc-link" href="#字符串-String"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">字符串 String</span></a></li><li class="trm-toc-item trm-toc-level-3" title="多行 Multi-line"><a rel="nofollow" class="trm-toc-link" href="#多行-Multi-line"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">多行 Multi-line</span></a></li><li class="trm-toc-item trm-toc-level-3" title="操作 Manipulation"><a rel="nofollow" class="trm-toc-link" href="#操作-Manipulation"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">操作 Manipulation</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 数组"><a rel="nofollow" class="trm-toc-link" href="#PHP-数组"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">PHP 数组</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="定义"><a rel="nofollow" class="trm-toc-link" href="#定义"><span class="trm-toc-number">1.4.1.</span> <span class="trm-toc-text">定义</span></a></li><li class="trm-toc-item trm-toc-level-3" title="多阵列"><a rel="nofollow" class="trm-toc-link" href="#多阵列"><span class="trm-toc-number">1.4.2.</span> <span class="trm-toc-text">多阵列</span></a></li><li class="trm-toc-item trm-toc-level-3" title="多类型"><a rel="nofollow" class="trm-toc-link" href="#多类型"><span class="trm-toc-number">1.4.3.</span> <span class="trm-toc-text">多类型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="操作"><a rel="nofollow" class="trm-toc-link" href="#操作"><span class="trm-toc-number">1.4.4.</span> <span class="trm-toc-text">操作</span></a></li><li class="trm-toc-item trm-toc-level-3" title="索引迭代"><a rel="nofollow" class="trm-toc-link" href="#索引迭代"><span class="trm-toc-number">1.4.5.</span> <span class="trm-toc-text">索引迭代</span></a></li><li class="trm-toc-item trm-toc-level-3" title="价值迭代"><a rel="nofollow" class="trm-toc-link" href="#价值迭代"><span class="trm-toc-number">1.4.6.</span> <span class="trm-toc-text">价值迭代</span></a></li><li class="trm-toc-item trm-toc-level-3" title="关键迭代"><a rel="nofollow" class="trm-toc-link" href="#关键迭代"><span class="trm-toc-number">1.4.7.</span> <span class="trm-toc-text">关键迭代</span></a></li><li class="trm-toc-item trm-toc-level-3" title="串联阵列"><a rel="nofollow" class="trm-toc-link" href="#串联阵列"><span class="trm-toc-number">1.4.8.</span> <span class="trm-toc-text">串联阵列</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Into 函数"><a rel="nofollow" class="trm-toc-link" href="#Into-函数"><span class="trm-toc-number">1.4.9.</span> <span class="trm-toc-text">Into 函数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Splat运算符"><a rel="nofollow" class="trm-toc-link" href="#Splat运算符"><span class="trm-toc-number">1.4.10.</span> <span class="trm-toc-text">Splat运算符</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 运算符"><a rel="nofollow" class="trm-toc-link" href="#PHP-运算符"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">PHP 运算符</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="算术"><a rel="nofollow" class="trm-toc-link" href="#算术"><span class="trm-toc-number">1.5.1.</span> <span class="trm-toc-text">算术</span></a></li><li class="trm-toc-item trm-toc-level-3" title="分配"><a rel="nofollow" class="trm-toc-link" href="#分配"><span class="trm-toc-number">1.5.2.</span> <span class="trm-toc-text">分配</span></a></li><li class="trm-toc-item trm-toc-level-3" title="比较"><a rel="nofollow" class="trm-toc-link" href="#比较"><span class="trm-toc-number">1.5.3.</span> <span class="trm-toc-text">比较</span></a></li><li class="trm-toc-item trm-toc-level-3" title="逻辑的"><a rel="nofollow" class="trm-toc-link" href="#逻辑的"><span class="trm-toc-number">1.5.4.</span> <span class="trm-toc-text">逻辑的</span></a></li><li class="trm-toc-item trm-toc-level-3" title="算术"><a rel="nofollow" class="trm-toc-link" href="#算术-1"><span class="trm-toc-number">1.5.5.</span> <span class="trm-toc-text">算术</span></a></li><li class="trm-toc-item trm-toc-level-3" title="按位"><a rel="nofollow" class="trm-toc-link" href="#按位"><span class="trm-toc-number">1.5.6.</span> <span class="trm-toc-text">按位</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 条件"><a rel="nofollow" class="trm-toc-link" href="#PHP-条件"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">PHP 条件</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="If elseif else"><a rel="nofollow" class="trm-toc-link" href="#If-elseif-else"><span class="trm-toc-number">1.6.1.</span> <span class="trm-toc-text">If elseif else</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Switch"><a rel="nofollow" class="trm-toc-link" href="#Switch"><span class="trm-toc-number">1.6.2.</span> <span class="trm-toc-text">Switch</span></a></li><li class="trm-toc-item trm-toc-level-3" title="三元运算符"><a rel="nofollow" class="trm-toc-link" href="#三元运算符"><span class="trm-toc-number">1.6.3.</span> <span class="trm-toc-text">三元运算符</span></a></li><li class="trm-toc-item trm-toc-level-3" title="匹配"><a rel="nofollow" class="trm-toc-link" href="#匹配"><span class="trm-toc-number">1.6.4.</span> <span class="trm-toc-text">匹配</span></a></li><li class="trm-toc-item trm-toc-level-3" title="匹配表达式"><a rel="nofollow" class="trm-toc-link" href="#匹配表达式"><span class="trm-toc-number">1.6.5.</span> <span class="trm-toc-text">匹配表达式</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 循环"><a rel="nofollow" class="trm-toc-link" href="#PHP-循环"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">PHP 循环</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="while 循环"><a rel="nofollow" class="trm-toc-link" href="#while-循环"><span class="trm-toc-number">1.7.1.</span> <span class="trm-toc-text">while 循环</span></a></li><li class="trm-toc-item trm-toc-level-3" title="do while 循环"><a rel="nofollow" class="trm-toc-link" href="#do-while-循环"><span class="trm-toc-number">1.7.2.</span> <span class="trm-toc-text">do while 循环</span></a></li><li class="trm-toc-item trm-toc-level-3" title="for i 循环"><a rel="nofollow" class="trm-toc-link" href="#for-i-循环"><span class="trm-toc-number">1.7.3.</span> <span class="trm-toc-text">for i 循环</span></a></li><li class="trm-toc-item trm-toc-level-3" title="break 跳出循环"><a rel="nofollow" class="trm-toc-link" href="#break-跳出循环"><span class="trm-toc-number">1.7.4.</span> <span class="trm-toc-text">break 跳出循环</span></a></li><li class="trm-toc-item trm-toc-level-3" title="continue 继续"><a rel="nofollow" class="trm-toc-link" href="#continue-继续"><span class="trm-toc-number">1.7.5.</span> <span class="trm-toc-text">continue 继续</span></a></li><li class="trm-toc-item trm-toc-level-3" title="foreach 循环"><a rel="nofollow" class="trm-toc-link" href="#foreach-循环"><span class="trm-toc-number">1.7.6.</span> <span class="trm-toc-text">foreach 循环</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 函数"><a rel="nofollow" class="trm-toc-link" href="#PHP-函数"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">PHP 函数</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="返回值"><a rel="nofollow" class="trm-toc-link" href="#返回值"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">返回值</span></a></li><li class="trm-toc-item trm-toc-level-3" title="返回类型"><a rel="nofollow" class="trm-toc-link" href="#返回类型"><span class="trm-toc-number">1.8.2.</span> <span class="trm-toc-text">返回类型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="可空返回类型"><a rel="nofollow" class="trm-toc-link" href="#可空返回类型"><span class="trm-toc-number">1.8.3.</span> <span class="trm-toc-text">可空返回类型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="无效函数"><a rel="nofollow" class="trm-toc-link" href="#无效函数"><span class="trm-toc-number">1.8.4.</span> <span class="trm-toc-text">无效函数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="变量函数"><a rel="nofollow" class="trm-toc-link" href="#变量函数"><span class="trm-toc-number">1.8.5.</span> <span class="trm-toc-text">变量函数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="匿名函数"><a rel="nofollow" class="trm-toc-link" href="#匿名函数"><span class="trm-toc-number">1.8.6.</span> <span class="trm-toc-text">匿名函数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="递归函数"><a rel="nofollow" class="trm-toc-link" href="#递归函数"><span class="trm-toc-number">1.8.7.</span> <span class="trm-toc-text">递归函数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="默认参数"><a rel="nofollow" class="trm-toc-link" href="#默认参数"><span class="trm-toc-number">1.8.8.</span> <span class="trm-toc-text">默认参数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="箭头函数"><a rel="nofollow" class="trm-toc-link" href="#箭头函数"><span class="trm-toc-number">1.8.9.</span> <span class="trm-toc-text">箭头函数</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="PHP 类"><a rel="nofollow" class="trm-toc-link" href="#PHP-类"><span class="trm-toc-number">1.9.</span> <span class="trm-toc-text">PHP 类</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="构造函数 Constructor"><a rel="nofollow" class="trm-toc-link" href="#构造函数-Constructor"><span class="trm-toc-number">1.9.1.</span> <span class="trm-toc-text">构造函数 Constructor</span></a></li><li class="trm-toc-item trm-toc-level-3" title="继承 Inheritance"><a rel="nofollow" class="trm-toc-link" href="#继承-Inheritance"><span class="trm-toc-number">1.9.2.</span> <span class="trm-toc-text">继承 Inheritance</span></a></li><li class="trm-toc-item trm-toc-level-3" title="类变量 Classes variables"><a rel="nofollow" class="trm-toc-link" href="#类变量-Classes-variables"><span class="trm-toc-number">1.9.3.</span> <span class="trm-toc-text">类变量 Classes variables</span></a></li><li class="trm-toc-item trm-toc-level-3" title="魔术方法"><a rel="nofollow" class="trm-toc-link" href="#魔术方法"><span class="trm-toc-number">1.9.4.</span> <span class="trm-toc-text">魔术方法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="接口"><a rel="nofollow" class="trm-toc-link" href="#接口"><span class="trm-toc-number">1.9.5.</span> <span class="trm-toc-text">接口</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="各种各样的"><a rel="nofollow" class="trm-toc-link" href="#各种各样的"><span class="trm-toc-number">1.10.</span> <span class="trm-toc-text">各种各样的</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="基本错误处理"><a rel="nofollow" class="trm-toc-link" href="#基本错误处理"><span class="trm-toc-number">1.10.1.</span> <span class="trm-toc-text">基本错误处理</span></a></li><li class="trm-toc-item trm-toc-level-3" title="PHP 8.0 中的异常"><a rel="nofollow" class="trm-toc-link" href="#PHP-8-0-中的异常"><span class="trm-toc-number">1.10.2.</span> <span class="trm-toc-text">PHP 8.0 中的异常</span></a></li><li class="trm-toc-item trm-toc-level-3" title="自定义异常"><a rel="nofollow" class="trm-toc-link" href="#自定义异常"><span class="trm-toc-number">1.10.3.</span> <span class="trm-toc-text">自定义异常</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Nullsafe 运算符"><a rel="nofollow" class="trm-toc-link" href="#Nullsafe-运算符"><span class="trm-toc-number">1.10.4.</span> <span class="trm-toc-text">Nullsafe 运算符</span></a></li><li class="trm-toc-item trm-toc-level-3" title="常用表达"><a rel="nofollow" class="trm-toc-link" href="#常用表达"><span class="trm-toc-number">1.10.5.</span> <span class="trm-toc-text">常用表达</span></a></li><li class="trm-toc-item trm-toc-level-3" title="fopen() 模式"><a rel="nofollow" class="trm-toc-link" href="#fopen-模式"><span class="trm-toc-number">1.10.6.</span> <span class="trm-toc-text">fopen() 模式</span></a></li><li class="trm-toc-item trm-toc-level-3" title="运行时定义的常量"><a rel="nofollow" class="trm-toc-link" href="#运行时定义的常量"><span class="trm-toc-number">1.10.7.</span> <span class="trm-toc-text">运行时定义的常量</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="另见"><a rel="nofollow" class="trm-toc-link" href="#另见"><span class="trm-toc-number">1.11.</span> <span class="trm-toc-text">另见</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+        
+<script src="https://unpkg.com/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+
+        <script src="/blog/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/blog/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/blog/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

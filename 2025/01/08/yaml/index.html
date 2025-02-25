@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。 入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写  YAML 不允许使用制表符 元素部分之间必须有空间 YAML 区分大小写 以 .yaml 或 .yml 扩展名结束您的 YAML 文件 YAML 是 JSON 的超集 Ansible playbook 是 YAML 文件    标量类型  1234567n1:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yaml 备忘录">
+<meta property="og:url" content="https://tdcqcx.github.io/blog/2025/01/08/yaml/index.html">
+<meta property="og:site_name" content="TDCQCX&#39;s Blog">
+<meta property="og:description" content="YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。 入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写  YAML 不允许使用制表符 元素部分之间必须有空间 YAML 区分大小写 以 .yaml 或 .yml 扩展名结束您的 YAML 文件 YAML 是 JSON 的超集 Ansible playbook 是 YAML 文件    标量类型  1234567n1:">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-01-08T02:35:26.000Z">
+<meta property="article:modified_time" content="2025-02-25T05:33:17.691Z">
+<meta property="article:author" content="TDCQCX">
+<meta property="article:tag" content="Yaml">
+<meta property="article:tag" content="配置框架">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Yaml, 速记, 语法, 速查, 备忘录，速查表，速记手册">
+
+
+<title >Yaml 备忘录</title>
+
+<!-- Favicon -->
+
+    <link href='/blog/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/blog/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/blog/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/blog/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"tdcqcx.github.io","author":"TDCQCX","root":"/blog/","typed_text":null,"theme_version":"2.2.4","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":false,"title":"default","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"04/01/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top","categorie_card":{"enable":true,"len":4,"list":["后端编程","前端技术","配置框架","其他"]}},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-02-25 13:33:17"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/blog/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/blog/atom.xml" title="TDCQCX's Blog" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/blog/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/blog/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            TDCQCX<span>’s BLOG</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/blog/" target="">
+                    首页
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/blog/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/blog/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/other/" target="">
+                    其他
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            Yaml 备忘录
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            Yaml 备忘录
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/blog/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2025
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX&#39;s BLOG
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="javascript:;" title="微信" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weixin"></i>
+        </a>
+
+    
+        <a href="/blog/" title="" rel="nofollow" target="_blank">
+            <i class="iconfont "></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                China Sichuan Chengdu
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/25
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            13:33
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            TDCQCX
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="YAML-备忘清单"><a href="#YAML-备忘清单" class="headerlink" title="YAML 备忘清单"></a>YAML 备忘清单</h1><p>这是理解和编写 YAML 格式配置文件的快速参考备忘单。</p>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p><a target="_blank" rel="noopener" href="https://yaml.org/">YAML</a> 是一种数据序列化语言，旨在供人类直接读写</p>
+<ul>
+<li>YAML 不允许使用制表符</li>
+<li>元素部分之间必须有空间</li>
+<li>YAML 区分大小写</li>
+<li>以 <code>.yaml</code> 或 <code>.yml</code> 扩展名结束您的 YAML 文件</li>
+<li>YAML 是 JSON 的超集</li>
+<li>Ansible playbook 是 YAML 文件</li>
+</ul>
+<!--rehype:className=style-round-->
+
+<h3 id="标量类型"><a href="#标量类型" class="headerlink" title="标量类型"></a>标量类型</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">n1:</span> <span class="number">1</span>            <span class="comment"># 整数</span></span><br><span class="line"><span class="attr">n2:</span> <span class="number">1.234</span>        <span class="comment"># 浮点</span></span><br><span class="line"><span class="attr">s1:</span> <span class="string">&#x27;abc&#x27;</span>        <span class="comment"># 字符串</span></span><br><span class="line"><span class="attr">s2:</span> <span class="string">&quot;abc&quot;</span>        <span class="comment"># 字符串</span></span><br><span class="line"><span class="attr">s3:</span> <span class="string">abc</span>          <span class="comment"># 字符串</span></span><br><span class="line"><span class="attr">b:</span> <span class="literal">false</span>         <span class="comment"># 布尔类型</span></span><br><span class="line"><span class="attr">d:</span> <span class="number">2015-04-05</span>    <span class="comment"># 日期类型</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON"><a href="#↓-等效的-JSON" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;n1&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;n2&quot;</span><span class="punctuation">:</span> <span class="number">1.234</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;s1&quot;</span><span class="punctuation">:</span> <span class="string">&quot;abc&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;s2&quot;</span><span class="punctuation">:</span> <span class="string">&quot;abc&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;s3&quot;</span><span class="punctuation">:</span> <span class="string">&quot;abc&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;b&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;d&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2015-04-05&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用空格缩进。 元素部分之间必须有空间。</p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">some_thing:</span> <span class="string">&amp;VAR_NAME</span> <span class="string">foobar</span></span><br><span class="line"><span class="attr">other_thing:</span> <span class="meta">*VAR_NAME</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-1"><a href="#↓-等效的-JSON-1" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;some_thing&quot;</span><span class="punctuation">:</span> <span class="string">&quot;foobar&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;other_thing&quot;</span><span class="punctuation">:</span> <span class="string">&quot;foobar&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># A single line comment example</span></span><br><span class="line"><span class="comment"># block level comment example</span></span><br><span class="line"><span class="comment"># comment line 1</span></span><br><span class="line"><span class="comment"># comment line 2</span></span><br><span class="line"><span class="comment"># comment line 3</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="多行字符串"><a href="#多行字符串" class="headerlink" title="多行字符串"></a>多行字符串</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">description:</span> <span class="string">|</span></span><br><span class="line"><span class="string">  hello</span></span><br><span class="line"><span class="string">  world</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-2"><a href="#↓-等效的-JSON-2" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hello\nworld\n&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">parent:</span> <span class="meta">&amp;defaults</span></span><br><span class="line">  <span class="attr">a:</span> <span class="number">2</span></span><br><span class="line">  <span class="attr">b:</span> <span class="number">3</span></span><br><span class="line"><span class="attr">child:</span></span><br><span class="line">  <span class="string">&lt;&lt;:</span> <span class="meta">*defaults</span></span><br><span class="line">  <span class="attr">b:</span> <span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-3"><a href="#↓-等效的-JSON-3" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;parent&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;a&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;b&quot;</span><span class="punctuation">:</span> <span class="number">3</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;child&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;a&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;b&quot;</span><span class="punctuation">:</span> <span class="number">4</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><!--rehype:wrap-class=row-span-2-->
+
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">values:</span> <span class="meta">&amp;ref</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">Will</span> <span class="string">be</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">reused</span> <span class="string">below</span></span><br><span class="line">  </span><br><span class="line"><span class="attr">other_values:</span></span><br><span class="line">  <span class="attr">i_am_ref:</span> <span class="meta">*ref</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-4"><a href="#↓-等效的-JSON-4" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;values&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;Will be&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="string">&quot;reused below&quot;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;other_values&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;i_am_ref&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">      <span class="string">&quot;Will be&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="string">&quot;reused below&quot;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="折叠的字符串"><a href="#折叠的字符串" class="headerlink" title="折叠的字符串"></a>折叠的字符串</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">description:</span> <span class="string">&gt;</span></span><br><span class="line"><span class="string">  hello</span></span><br><span class="line"><span class="string">  world</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-5"><a href="#↓-等效的-JSON-5" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;hello world\n&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="两份文件"><a href="#两份文件" class="headerlink" title="两份文件"></a>两份文件</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">document:</span> <span class="string">this</span> <span class="string">is</span> <span class="string">doc</span> <span class="number">1</span></span><br><span class="line"><span class="meta">---</span></span><br><span class="line"><span class="attr">document:</span> <span class="string">this</span> <span class="string">is</span> <span class="string">doc</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p>YAML使用<code>---</code>将指令与文档内容分开。</p>
+<h2 id="YAML-Collections"><a href="#YAML-Collections" class="headerlink" title="YAML Collections"></a>YAML Collections</h2><h3 id="序列"><a href="#序列" class="headerlink" title="序列"></a>序列</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="string">Mark</span> <span class="string">McGwire</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Sammy</span> <span class="string">Sosa</span></span><br><span class="line"><span class="bullet">-</span> <span class="string">Ken</span> <span class="string">Griffey</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-6"><a href="#↓-等效的-JSON-6" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="string">&quot;Mark McGwire&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;Sammy Sosa&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="string">&quot;Ken Griffey&quot;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="映射"><a href="#映射" class="headerlink" title="映射"></a>映射</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hr:</span>  <span class="number">65</span>       <span class="comment"># Home runs</span></span><br><span class="line"><span class="attr">avg:</span> <span class="number">0.278</span>    <span class="comment"># Batting average</span></span><br><span class="line"><span class="attr">rbi:</span> <span class="number">147</span>      <span class="comment"># Runs Batted In</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-7"><a href="#↓-等效的-JSON-7" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;hr&quot;</span><span class="punctuation">:</span> <span class="number">65</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;avg&quot;</span><span class="punctuation">:</span> <span class="number">0.278</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;rbi&quot;</span><span class="punctuation">:</span> <span class="number">147</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="映射到序列"><a href="#映射到序列" class="headerlink" title="映射到序列"></a>映射到序列</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">attributes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">a1</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">a2</span></span><br><span class="line"><span class="attr">methods:</span> [<span class="string">getter</span>, <span class="string">setter</span>]</span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-8"><a href="#↓-等效的-JSON-8" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;attributes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;a1&quot;</span><span class="punctuation">,</span> <span class="string">&quot;a2&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;getter&quot;</span><span class="punctuation">,</span> <span class="string">&quot;setter&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="映射序列"><a href="#映射序列" class="headerlink" title="映射序列"></a>映射序列</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">children:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Jimmy</span> <span class="string">Smith</span></span><br><span class="line">    <span class="attr">age:</span> <span class="number">15</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">Jimmy</span> <span class="string">Smith</span></span><br><span class="line">    <span class="attr">age:</span> <span class="number">15</span></span><br><span class="line">  <span class="bullet">-</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">Sammy</span> <span class="string">Sosa</span></span><br><span class="line">    <span class="attr">age:</span> <span class="number">12</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-9"><a href="#↓-等效的-JSON-9" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;children&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Jimmy Smith&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">15</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Jimmy Smith&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">15</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Sammy Sosa&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">12</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="序列的序列"><a href="#序列的序列" class="headerlink" title="序列的序列"></a>序列的序列</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">my_sequences:</span></span><br><span class="line">  <span class="bullet">-</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">  <span class="bullet">-</span> [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]</span><br><span class="line">  <span class="bullet">-</span>  </span><br><span class="line">    <span class="bullet">-</span> <span class="number">7</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">8</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">9</span></span><br><span class="line">    <span class="bullet">-</span> <span class="number">0</span> </span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-10"><a href="#↓-等效的-JSON-10" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;my_sequences&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span> <span class="number">5</span><span class="punctuation">,</span> <span class="number">6</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">[</span><span class="number">7</span><span class="punctuation">,</span> <span class="number">8</span><span class="punctuation">,</span> <span class="number">9</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="映射的映射"><a href="#映射的映射" class="headerlink" title="映射的映射"></a>映射的映射</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Mark McGwire:</span> &#123;<span class="attr">hr:</span> <span class="number">65</span>, <span class="attr">avg:</span> <span class="number">0.278</span>&#125;</span><br><span class="line"><span class="attr">Sammy Sosa:</span> &#123;</span><br><span class="line">    <span class="attr">hr:</span> <span class="number">63</span>,</span><br><span class="line">    <span class="attr">avg:</span> <span class="number">0.288</span></span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-11"><a href="#↓-等效的-JSON-11" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Mark McGwire&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;hr&quot;</span><span class="punctuation">:</span> <span class="number">65</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;avg&quot;</span><span class="punctuation">:</span> <span class="number">0.278</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Sammy Sosa&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;hr&quot;</span><span class="punctuation">:</span> <span class="number">63</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;avg&quot;</span><span class="punctuation">:</span> <span class="number">0.288</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套集合"><a href="#嵌套集合" class="headerlink" title="嵌套集合"></a>嵌套集合</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Jack:</span></span><br><span class="line">  <span class="attr">id:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">Franc</span></span><br><span class="line">  <span class="attr">salary:</span> <span class="number">25000</span></span><br><span class="line">  <span class="attr">hobby:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">a</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">b</span></span><br><span class="line">  <span class="attr">location:</span> &#123;<span class="attr">country:</span> <span class="string">&quot;A&quot;</span>, <span class="attr">city:</span> <span class="string">&quot;A-A&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-12"><a href="#↓-等效的-JSON-12" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Jack&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Franc&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;salary&quot;</span><span class="punctuation">:</span> <span class="number">25000</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;hobby&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;a&quot;</span><span class="punctuation">,</span> <span class="string">&quot;b&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;country&quot;</span><span class="punctuation">:</span> <span class="string">&quot;A&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span> <span class="string">&quot;A-A&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="无序集"><a href="#无序集" class="headerlink" title="无序集"></a>无序集</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">set1:</span> <span class="type">!!set</span></span><br><span class="line">  <span class="string">?</span> <span class="string">one</span></span><br><span class="line">  <span class="string">?</span> <span class="string">two</span></span><br><span class="line"><span class="attr">set2:</span> <span class="type">!!set</span> &#123;<span class="string">&#x27;one&#x27;</span>, <span class="string">&quot;two&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-13"><a href="#↓-等效的-JSON-13" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;set1&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="attr">&quot;one&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">,</span> <span class="attr">&quot;two&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;set2&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="attr">&quot;one&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">,</span> <span class="attr">&quot;two&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">null</span></span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>集合表示为一个映射，其中每个键都与一个空值相关联</p>
+<h3 id="有序映射"><a href="#有序映射" class="headerlink" title="有序映射"></a>有序映射</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">ordered:</span> <span class="type">!!omap</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">Mark McGwire:</span> <span class="number">65</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">Sammy Sosa:</span> <span class="number">63</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">Ken Griffy:</span> <span class="number">58</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="↓-等效的-JSON-14"><a href="#↓-等效的-JSON-14" class="headerlink" title="↓ 等效的 JSON"></a>↓ 等效的 JSON</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;ordered&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">     <span class="punctuation">&#123;</span><span class="attr">&quot;Mark McGwire&quot;</span><span class="punctuation">:</span> <span class="number">65</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">     <span class="punctuation">&#123;</span><span class="attr">&quot;Sammy Sosa&quot;</span><span class="punctuation">:</span> <span class="number">63</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">     <span class="punctuation">&#123;</span><span class="attr">&quot;Ken Griffy&quot;</span><span class="punctuation">:</span> <span class="number">58</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="YAML-参考"><a href="#YAML-参考" class="headerlink" title="YAML 参考"></a>YAML 参考</h2><h3 id="条款"><a href="#条款" class="headerlink" title="条款"></a>条款</h3><ul>
+<li>序列又名数组或列表</li>
+<li>标量又名字符串或数字</li>
+<li>映射又名哈希或字典</li>
+</ul>
+<!--rehype:className=style-round-->
+
+<p>基于 YAML.org <a target="_blank" rel="noopener" href="https://yaml.org/refcard.html">refcard</a>。</p>
+<h3 id="文档指标"><a href="#文档指标" class="headerlink" title="文档指标"></a>文档指标</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th align="left">:-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>%</code></td>
+<td align="left">指令指标</td>
+</tr>
+<tr>
+<td align="left"><code>---</code></td>
+<td align="left">文档标题</td>
+</tr>
+<tr>
+<td align="left"><code>...</code></td>
+<td align="left">文档终结者</td>
+</tr>
+</tbody></table>
+<h3 id="收集指标"><a href="#收集指标" class="headerlink" title="收集指标"></a>收集指标</h3><!--rehype:wrap-class=row-span-2-->
+
+<table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th align="left">:-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>?</code></td>
+<td align="left">关键指标</td>
+</tr>
+<tr>
+<td align="left"><code>:</code></td>
+<td align="left">价值指标</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">嵌套系列条目指示器</td>
+</tr>
+<tr>
+<td align="left"><code>,</code></td>
+<td align="left">单独的内联分支条目</td>
+</tr>
+<tr>
+<td align="left"><code>[]</code></td>
+<td align="left">环绕串联系列分支</td>
+</tr>
+<tr>
+<td align="left"><code>&#123;&#125;</code></td>
+<td align="left">环绕在线键控分支</td>
+</tr>
+</tbody></table>
+<h3 id="别名指标"><a href="#别名指标" class="headerlink" title="别名指标"></a>别名指标</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th align="left">:-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&amp;</code></td>
+<td align="left">锚属性</td>
+</tr>
+<tr>
+<td align="left"><code>*</code></td>
+<td align="left">别名指示符</td>
+</tr>
+</tbody></table>
+<h3 id="特殊键"><a href="#特殊键" class="headerlink" title="特殊键"></a>特殊键</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th align="left">:-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>=</code></td>
+<td align="left">默认“值”映射键</td>
+</tr>
+<tr>
+<td align="left"><code>&lt;&lt;</code></td>
+<td align="left">合并来自另一个映射的键</td>
+</tr>
+</tbody></table>
+<h3 id="标量指标"><a href="#标量指标" class="headerlink" title="标量指标"></a>标量指标</h3><table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th align="left">:-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>&#39;&#39;</code></td>
+<td align="left">环绕内联未转义标量</td>
+</tr>
+<tr>
+<td align="left"><code>&quot;</code></td>
+<td align="left">环绕内嵌转义标量</td>
+</tr>
+<tr>
+<td align="left">&#96;</td>
+<td align="left">&#96;</td>
+</tr>
+<tr>
+<td align="left"><code>&gt;</code></td>
+<td align="left">折叠标量指示器</td>
+</tr>
+<tr>
+<td align="left"><code>-</code></td>
+<td align="left">剥离 chomp 修饰符（<code>|-</code> 或 <code>&gt;-</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>+</code></td>
+<td align="left">保留 chomp 修饰符（<code>|+</code> 或 <code>&gt;+</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>1-9</code></td>
+<td align="left">显式缩进修饰符（<code>|1</code> 或 <code>&gt;2</code>）。 <br/> 修饰符可以组合（<code>|2-</code>, <code>&gt;+1</code>）</td>
+</tr>
+</tbody></table>
+<h3 id="标签属性（通常未指定）"><a href="#标签属性（通常未指定）" class="headerlink" title="标签属性（通常未指定）"></a>标签属性（通常未指定）</h3><!--rehype:wrap-class=col-span-2-->
+
+<table>
+<thead>
+<tr>
+<th align="left">:-</th>
+<th align="left">:-</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>none</code></td>
+<td align="left">未指定的标签（由应用程序自动解析）</td>
+</tr>
+<tr>
+<td align="left"><code>!</code></td>
+<td align="left">非特定标签（默认情况下，<code>!!map</code>&#x2F;<code>!!seq</code>&#x2F;<code>!!str</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>!foo</code></td>
+<td align="left">主要（按照惯例，表示本地 <code>!foo</code> 标记）</td>
+</tr>
+<tr>
+<td align="left"><code>!!foo</code></td>
+<td align="left">次要的（按照惯例，表示 <code>tag:yaml.org,2002:foo</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>!h!foo</code></td>
+<td align="left">需要 <code>%TAG !h! &lt;prefix&gt;</code>（然后表示 <code>&lt;prefix&gt;foo</code>）</td>
+</tr>
+<tr>
+<td align="left"><code>!&lt;foo&gt;</code></td>
+<td align="left">逐字标记（始终表示“foo”）</td>
+</tr>
+</tbody></table>
+<!--rehype:class=auto-wrap-->
+
+<h3 id="杂项指标"><a href="#杂项指标" class="headerlink" title="杂项指标"></a>杂项指标</h3><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>#</code></td>
+<td>一次性评论指示器</td>
+</tr>
+<tr>
+<td><code>`@</code></td>
+<td>两者都保留供将来使用</td>
+</tr>
+</tbody></table>
+<h3 id="核心类型（默认自动标签）"><a href="#核心类型（默认自动标签）" class="headerlink" title="核心类型（默认自动标签）"></a>核心类型（默认自动标签）</h3><!--rehype:wrap-class=row-span-2-->
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>!!map</code></td>
+<td><code>&#123;Hash table, dictionary, mapping&#125;</code></td>
+</tr>
+<tr>
+<td><code>!!seq</code></td>
+<td><code>&#123;List, array, tuple, vector, sequence&#125;</code></td>
+</tr>
+<tr>
+<td><code>!!str</code></td>
+<td>Unicode 字符串</td>
+</tr>
+</tbody></table>
+<h3 id="转义码"><a href="#转义码" class="headerlink" title="转义码"></a>转义码</h3><!--rehype:wrap-class=row-span-3-->
+
+<h4 id="Numeric"><a href="#Numeric" class="headerlink" title="Numeric"></a>Numeric</h4><ul>
+<li><code>\x12</code> (8-bit)</li>
+<li><code>\u1234</code> (16-bit)</li>
+<li><code>\U00102030</code> (32-bit)</li>
+</ul>
+<!--rehype:className=cols-2 style-none-->
+
+<h4 id="Protective"><a href="#Protective" class="headerlink" title="Protective"></a>Protective</h4><ul>
+<li><code>\\</code> (\)</li>
+<li><code>\&quot;</code> (“)</li>
+<li><code>\</code> ( )</li>
+<li><code>\&lt;TAB&gt;</code> (TAB)</li>
+</ul>
+<!--rehype:className=cols-3 style-none-->
+
+<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><ul>
+<li><code>\0</code> (NUL)</li>
+<li><code>\a</code> (BEL)</li>
+<li><code>\b</code> (BS)</li>
+<li><code>\f</code> (FF)</li>
+<li><code>\n</code> (LF)</li>
+<li><code>\r</code> (CR)</li>
+<li><code>\t</code> (TAB)</li>
+<li><code>\v</code> (VTAB)</li>
+</ul>
+<!--rehype:className=cols-3 style-none-->
+
+<h4 id="额外的"><a href="#额外的" class="headerlink" title="额外的"></a>额外的</h4><ul>
+<li><code>\e</code> (ESC)</li>
+<li><code>\_</code> (NBSP)</li>
+<li><code>\N</code> (NEL)</li>
+<li><code>\L</code> (LS)</li>
+<li><code>\P</code> (PS)</li>
+</ul>
+<!--rehype:className=cols-3 style-none-->
+<h3 id="更多类型"><a href="#更多类型" class="headerlink" title="更多类型"></a>更多类型</h3><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>!!set</code></td>
+<td><code>&#123;cherries, plums, apples&#125;</code></td>
+</tr>
+<tr>
+<td><code>!!omap</code></td>
+<td><code>[one: 1, two: 2]</code></td>
+</tr>
+</tbody></table>
+<h3 id="与语言无关的标量类型"><a href="#与语言无关的标量类型" class="headerlink" title="与语言无关的标量类型"></a>与语言无关的标量类型</h3><!--rehype:wrap-class=col-span-2-->
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&#123;~, null&#125;</code></td>
+<td>空（无值）。</td>
+</tr>
+<tr>
+<td><code>[1234, 0x4D2, 02333]</code></td>
+<td>[十进制整数、十六进制整数、八进制整数]</td>
+</tr>
+<tr>
+<td><code>[1_230.15, 12.3015e+02]</code></td>
+<td>[固定浮点数，指数浮点数]</td>
+</tr>
+<tr>
+<td><code>[.inf, -.Inf, .NAN]</code></td>
+<td>[无穷大（浮点数），负数，不是数字]</td>
+</tr>
+<tr>
+<td><code>&#123;Y, true, Yes, ON&#125;</code></td>
+<td>布尔真</td>
+</tr>
+<tr>
+<td><code>&#123;n, FALSE, No, off&#125;</code></td>
+<td>布尔假</td>
+</tr>
+</tbody></table>
+<!--rehype:class=auto-wrap-->
+
+<h2 id="另见"><a href="#另见" class="headerlink" title="另见"></a>另见</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://yaml.org/refcard.html">YAML Reference Card</a> <em>(yaml.org)</em></li>
+<li><a target="_blank" rel="noopener" href="https://learnxinyminutes.com/docs/zh-cn/yaml-cn/">Learn X in Y minutes</a> <em>(learnxinyminutes.com)</em></li>
+<li><a target="_blank" rel="noopener" href="http://www.yamllint.com/">YAML lint online</a> <em>(yamllint.com)</em></li>
+<li><a href="./ini.md">INI 格式配置文件备忘清单</a> <em>(jaywcjlove.github.io)</em></li>
+<li><a href="./toml.md">TOML 格式配置文件备忘清单</a> <em>(jaywcjlove.github.io)</em></li>
+</ul>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            <a class="trm-op-top trm-anima-link" href="/blog/2025/01/08/vue%20(1)/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+                </span>
+                <h6 class="trm-op-title">Vue3 备忘录</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/01/08</li>
+                <li>10:35</li>
+                <li>前端技术</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            <a class="trm-op-top trm-anima-link" href="/blog/2025/01/08/vue2%20(1)/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+                </span>
+                <h6 class="trm-op-title">Vue2 备忘录</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/01/08</li>
+                <li>10:35</li>
+                <li>前端技术</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2024 - 2025</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX's BLOG</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="YAML 备忘清单"><a rel="nofollow" class="trm-toc-link" href="#YAML-备忘清单"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">YAML 备忘清单</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="入门"><a rel="nofollow" class="trm-toc-link" href="#入门"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">入门</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="介绍"><a rel="nofollow" class="trm-toc-link" href="#介绍"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">介绍</span></a></li><li class="trm-toc-item trm-toc-level-3" title="标量类型"><a rel="nofollow" class="trm-toc-link" href="#标量类型"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">标量类型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="变量"><a rel="nofollow" class="trm-toc-link" href="#变量"><span class="trm-toc-number">1.1.3.</span> <span class="trm-toc-text">变量</span></a></li><li class="trm-toc-item trm-toc-level-3" title="注释"><a rel="nofollow" class="trm-toc-link" href="#注释"><span class="trm-toc-number">1.1.4.</span> <span class="trm-toc-text">注释</span></a></li><li class="trm-toc-item trm-toc-level-3" title="多行字符串"><a rel="nofollow" class="trm-toc-link" href="#多行字符串"><span class="trm-toc-number">1.1.5.</span> <span class="trm-toc-text">多行字符串</span></a></li><li class="trm-toc-item trm-toc-level-3" title="继承"><a rel="nofollow" class="trm-toc-link" href="#继承"><span class="trm-toc-number">1.1.6.</span> <span class="trm-toc-text">继承</span></a></li><li class="trm-toc-item trm-toc-level-3" title="参考"><a rel="nofollow" class="trm-toc-link" href="#参考"><span class="trm-toc-number">1.1.7.</span> <span class="trm-toc-text">参考</span></a></li><li class="trm-toc-item trm-toc-level-3" title="折叠的字符串"><a rel="nofollow" class="trm-toc-link" href="#折叠的字符串"><span class="trm-toc-number">1.1.8.</span> <span class="trm-toc-text">折叠的字符串</span></a></li><li class="trm-toc-item trm-toc-level-3" title="两份文件"><a rel="nofollow" class="trm-toc-link" href="#两份文件"><span class="trm-toc-number">1.1.9.</span> <span class="trm-toc-text">两份文件</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="YAML Collections"><a rel="nofollow" class="trm-toc-link" href="#YAML-Collections"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">YAML Collections</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="序列"><a rel="nofollow" class="trm-toc-link" href="#序列"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">序列</span></a></li><li class="trm-toc-item trm-toc-level-3" title="映射"><a rel="nofollow" class="trm-toc-link" href="#映射"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">映射</span></a></li><li class="trm-toc-item trm-toc-level-3" title="映射到序列"><a rel="nofollow" class="trm-toc-link" href="#映射到序列"><span class="trm-toc-number">1.2.3.</span> <span class="trm-toc-text">映射到序列</span></a></li><li class="trm-toc-item trm-toc-level-3" title="映射序列"><a rel="nofollow" class="trm-toc-link" href="#映射序列"><span class="trm-toc-number">1.2.4.</span> <span class="trm-toc-text">映射序列</span></a></li><li class="trm-toc-item trm-toc-level-3" title="序列的序列"><a rel="nofollow" class="trm-toc-link" href="#序列的序列"><span class="trm-toc-number">1.2.5.</span> <span class="trm-toc-text">序列的序列</span></a></li><li class="trm-toc-item trm-toc-level-3" title="映射的映射"><a rel="nofollow" class="trm-toc-link" href="#映射的映射"><span class="trm-toc-number">1.2.6.</span> <span class="trm-toc-text">映射的映射</span></a></li><li class="trm-toc-item trm-toc-level-3" title="嵌套集合"><a rel="nofollow" class="trm-toc-link" href="#嵌套集合"><span class="trm-toc-number">1.2.7.</span> <span class="trm-toc-text">嵌套集合</span></a></li><li class="trm-toc-item trm-toc-level-3" title="无序集"><a rel="nofollow" class="trm-toc-link" href="#无序集"><span class="trm-toc-number">1.2.8.</span> <span class="trm-toc-text">无序集</span></a></li><li class="trm-toc-item trm-toc-level-3" title="有序映射"><a rel="nofollow" class="trm-toc-link" href="#有序映射"><span class="trm-toc-number">1.2.9.</span> <span class="trm-toc-text">有序映射</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="YAML 参考"><a rel="nofollow" class="trm-toc-link" href="#YAML-参考"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">YAML 参考</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="条款"><a rel="nofollow" class="trm-toc-link" href="#条款"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">条款</span></a></li><li class="trm-toc-item trm-toc-level-3" title="文档指标"><a rel="nofollow" class="trm-toc-link" href="#文档指标"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">文档指标</span></a></li><li class="trm-toc-item trm-toc-level-3" title="收集指标"><a rel="nofollow" class="trm-toc-link" href="#收集指标"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">收集指标</span></a></li><li class="trm-toc-item trm-toc-level-3" title="别名指标"><a rel="nofollow" class="trm-toc-link" href="#别名指标"><span class="trm-toc-number">1.3.4.</span> <span class="trm-toc-text">别名指标</span></a></li><li class="trm-toc-item trm-toc-level-3" title="特殊键"><a rel="nofollow" class="trm-toc-link" href="#特殊键"><span class="trm-toc-number">1.3.5.</span> <span class="trm-toc-text">特殊键</span></a></li><li class="trm-toc-item trm-toc-level-3" title="标量指标"><a rel="nofollow" class="trm-toc-link" href="#标量指标"><span class="trm-toc-number">1.3.6.</span> <span class="trm-toc-text">标量指标</span></a></li><li class="trm-toc-item trm-toc-level-3" title="标签属性（通常未指定）"><a rel="nofollow" class="trm-toc-link" href="#标签属性（通常未指定）"><span class="trm-toc-number">1.3.7.</span> <span class="trm-toc-text">标签属性（通常未指定）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="杂项指标"><a rel="nofollow" class="trm-toc-link" href="#杂项指标"><span class="trm-toc-number">1.3.8.</span> <span class="trm-toc-text">杂项指标</span></a></li><li class="trm-toc-item trm-toc-level-3" title="核心类型（默认自动标签）"><a rel="nofollow" class="trm-toc-link" href="#核心类型（默认自动标签）"><span class="trm-toc-number">1.3.9.</span> <span class="trm-toc-text">核心类型（默认自动标签）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="转义码"><a rel="nofollow" class="trm-toc-link" href="#转义码"><span class="trm-toc-number">1.3.10.</span> <span class="trm-toc-text">转义码</span></a></li><li class="trm-toc-item trm-toc-level-3" title="更多类型"><a rel="nofollow" class="trm-toc-link" href="#更多类型"><span class="trm-toc-number">1.3.11.</span> <span class="trm-toc-text">更多类型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="与语言无关的标量类型"><a rel="nofollow" class="trm-toc-link" href="#与语言无关的标量类型"><span class="trm-toc-number">1.3.12.</span> <span class="trm-toc-text">与语言无关的标量类型</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="另见"><a rel="nofollow" class="trm-toc-link" href="#另见"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">另见</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+        
+<script src="https://unpkg.com/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+
+        <script src="/blog/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/blog/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/blog/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

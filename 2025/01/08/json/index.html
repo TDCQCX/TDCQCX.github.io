@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="JSON 备忘清单这是理解和编写 JSON 格式配置文件的快速参考备忘单。 入门介绍JSON 是一种基于文本的轻量级开放标准，专为人类可读的数据交换而设计。  JSON 代表 JavaScript 对象表示法 JSON 易于读写。 JSON 是与语言无关的数据交换格式 JSON 文件扩展名为 .json JSON Internet 媒体类型为 application&#x2F;json  示例1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSON 备忘录">
+<meta property="og:url" content="https://tdcqcx.github.io/blog/2025/01/08/json/index.html">
+<meta property="og:site_name" content="TDCQCX&#39;s Blog">
+<meta property="og:description" content="JSON 备忘清单这是理解和编写 JSON 格式配置文件的快速参考备忘单。 入门介绍JSON 是一种基于文本的轻量级开放标准，专为人类可读的数据交换而设计。  JSON 代表 JavaScript 对象表示法 JSON 易于读写。 JSON 是与语言无关的数据交换格式 JSON 文件扩展名为 .json JSON Internet 媒体类型为 application&#x2F;json  示例1234567">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-01-08T02:35:26.000Z">
+<meta property="article:modified_time" content="2025-02-25T05:33:17.690Z">
+<meta property="article:author" content="TDCQCX">
+<meta property="article:tag" content="前端技术">
+<meta property="article:tag" content="JSON">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="JSON, 速记, 语法, 速查, 备忘录，速查表，速记手册">
+
+
+<title >JSON 备忘录</title>
+
+<!-- Favicon -->
+
+    <link href='/blog/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/blog/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/blog/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/blog/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"tdcqcx.github.io","author":"TDCQCX","root":"/blog/","typed_text":null,"theme_version":"2.2.4","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":false,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":false,"title":"default","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"04/01/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top","categorie_card":{"enable":true,"len":4,"list":["后端编程","前端技术","配置框架","其他"]}},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-02-25 13:33:17"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/blog/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/blog/atom.xml" title="TDCQCX's Blog" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/blog/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/blog/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            TDCQCX<span>’s BLOG</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/blog/" target="">
+                    首页
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/blog/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/blog/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/blog/other/" target="">
+                    其他
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            JSON 备忘录
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            JSON 备忘录
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/blog/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2025
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="https://raw.githubusercontent.com/TDCQCX/TDCQCX.github.io/main/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX&#39;s BLOG
+    </h5>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="javascript:;" title="微信" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weixin"></i>
+        </a>
+
+    
+        <a href="/blog/" title="" rel="nofollow" target="_blank">
+            <i class="iconfont "></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                China Sichuan Chengdu
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            02/25
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            13:33
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            TDCQCX
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="JSON-备忘清单"><a href="#JSON-备忘清单" class="headerlink" title="JSON 备忘清单"></a>JSON 备忘清单</h1><p>这是理解和编写 JSON 格式配置文件的快速参考备忘单。</p>
+<h2 id="入门"><a href="#入门" class="headerlink" title="入门"></a>入门</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p><a target="_blank" rel="noopener" href="https://json.org/">JSON</a> 是一种基于文本的轻量级开放标准，专为人类可读的数据交换而设计。</p>
+<ul>
+<li>JSON 代表 JavaScript 对象表示法</li>
+<li>JSON 易于读写。</li>
+<li>JSON 是与语言无关的数据交换格式</li>
+<li>JSON 文件扩展名为 <code>.json</code></li>
+<li>JSON Internet 媒体类型为 <code>application/json</code></li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Jason&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">39</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;height&quot;</span><span class="punctuation">:</span> <span class="number">1.92</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;gender&quot;</span><span class="punctuation">:</span> <span class="string">&quot;M&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;salary&quot;</span><span class="punctuation">:</span> <span class="number">70000</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;married&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;children&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Tom&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">9</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Ava&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">7</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Number</code></td>
+<td>双精度浮点</td>
+</tr>
+<tr>
+<td><code>String</code></td>
+<td>字符系列</td>
+</tr>
+<tr>
+<td><code>Boolean</code></td>
+<td>“true”或“false”</td>
+</tr>
+<tr>
+<td><code>Array</code></td>
+<td>有序的值序列</td>
+</tr>
+<tr>
+<td><code>Value</code></td>
+<td>字符串、数字、布尔值、空值等</td>
+</tr>
+<tr>
+<td><code>Object</code></td>
+<td>键&#x2F;值对的无序集合</td>
+</tr>
+<tr>
+<td><code>null</code></td>
+<td>Null 或 Empty</td>
+</tr>
+</tbody></table>
+<h3 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h3><!--rehype:wrap-style=grid-row: span 3/span 3;-->
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\&quot;</code></td>
+<td>双引号 Double quote</td>
+</tr>
+<tr>
+<td><code>\\</code></td>
+<td>反斜杠 Backslash</td>
+</tr>
+<tr>
+<td><code>\/</code></td>
+<td>正斜杠 Forward slash</td>
+</tr>
+<tr>
+<td><code>\b</code></td>
+<td>退格 Backspace</td>
+</tr>
+<tr>
+<td><code>\f</code></td>
+<td>换页 Form feed</td>
+</tr>
+<tr>
+<td><code>\n</code></td>
+<td>换行 Newline</td>
+</tr>
+<tr>
+<td><code>\r</code></td>
+<td>回车 Carriage return</td>
+</tr>
+<tr>
+<td><code>\t</code></td>
+<td>标签 Tab</td>
+</tr>
+<tr>
+<td><code>\u</code></td>
+<td>后跟四个十六进制数字</td>
+</tr>
+</tbody></table>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例"></a>示例</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;url&quot;</span><span class="punctuation">:</span> <span class="string">&quot;https://jaywcjlove.github.io&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;msg&quot;</span> <span class="punctuation">:</span> <span class="string">&quot;Hi,\n\&quot;Quick Reference\&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;intro&quot;</span><span class="punctuation">:</span> <span class="string">&quot;为开发人员分享快速参考和备忘单&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="无效字符串"><a href="#无效字符串" class="headerlink" title="无效字符串"></a>无效字符串</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;foo&quot;</span><span class="punctuation">:</span> &#x27;bar&#x27; <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>Have to be delimited by double quotes</p>
+<h3 id="数字"><a href="#数字" class="headerlink" title="数字"></a>数字</h3><!--rehype:wrap-class=row-span-2-->
+
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Integer</code></td>
+<td>数字 1-9、0 和正数或负数</td>
+</tr>
+<tr>
+<td><code>Fraction</code></td>
+<td>0.3、3.9 等分数</td>
+</tr>
+<tr>
+<td><code>Exponent</code></td>
+<td>指数，如 e、e+、e-、E、E+、E</td>
+</tr>
+</tbody></table>
+<!--rehype:className=show-header -->
+
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例"></a>示例</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;positive&quot;</span> <span class="punctuation">:</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;negative&quot;</span> <span class="punctuation">:</span> <span class="number">-1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;fraction&quot;</span> <span class="punctuation">:</span> <span class="number">10.25</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;exponent&quot;</span> <span class="punctuation">:</span> <span class="number">1.0E+2</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;zero&quot;</span> <span class="punctuation">:</span> <span class="number">0</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="无效的数字"><a href="#无效的数字" class="headerlink" title="无效的数字"></a>无效的数字</h4><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span> <span class="attr">&quot;foo&quot;</span><span class="punctuation">:</span> <span class="number">0xFF</span> <span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>在JSON中，只能使用十进制文字</p>
+<h3 id="对象-Objects"><a href="#对象-Objects" class="headerlink" title="对象 Objects"></a>对象 Objects</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;color&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Purple&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="string">&quot;210&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;composition&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;R&quot;</span><span class="punctuation">:</span> <span class="number">70</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;G&quot;</span><span class="punctuation">:</span> <span class="number">39</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;B&quot;</span><span class="punctuation">:</span> <span class="number">89</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;empty_object&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>用逗号分隔的多个键&#x2F;值对</p>
+<h3 id="数组-Arrays"><a href="#数组-Arrays" class="headerlink" title="数组 Arrays"></a>数组 Arrays</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">,</span> <span class="number">4</span><span class="punctuation">,</span> <span class="number">5</span><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>以 <code>[</code> 开始并以 <code>]</code> 结束</p>
+<h3 id="对象数组"><a href="#对象数组" class="headerlink" title="对象数组"></a>对象数组</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;children&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Jimmy Smith&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">15</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span> <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Sammy Sosa&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;age&quot;</span><span class="punctuation">:</span> <span class="number">12</span> <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数组对象"><a href="#数组对象" class="headerlink" title="数组对象"></a>数组对象</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;attributes&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;a1&quot;</span><span class="punctuation">,</span> <span class="string">&quot;a2&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;getter&quot;</span><span class="punctuation">,</span> <span class="string">&quot;setter&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;empty_array&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="二维阵列"><a href="#二维阵列" class="headerlink" title="二维阵列"></a>二维阵列</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;my_sequences&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">[</span><span class="number">1</span><span class="punctuation">,</span> <span class="number">2</span><span class="punctuation">,</span> <span class="number">3</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">[</span><span class="number">4</span><span class="punctuation">,</span> <span class="number">5</span><span class="punctuation">,</span> <span class="number">6</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">[</span><span class="number">7</span><span class="punctuation">,</span> <span class="number">8</span><span class="punctuation">,</span> <span class="number">9</span><span class="punctuation">,</span> <span class="number">0</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">[</span><span class="number">10</span><span class="punctuation">,</span> <span class="number">11</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="对象的对象"><a href="#对象的对象" class="headerlink" title="对象的对象"></a>对象的对象</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Mark McGwire&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;hr&quot;</span><span class="punctuation">:</span> <span class="number">65</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;avg&quot;</span><span class="punctuation">:</span> <span class="number">0.278</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;Sammy Sosa&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;hr&quot;</span><span class="punctuation">:</span> <span class="number">63</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;avg&quot;</span><span class="punctuation">:</span> <span class="number">0.288</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;Jack&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Franc&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;salary&quot;</span><span class="punctuation">:</span> <span class="number">25000</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;hobby&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;a&quot;</span><span class="punctuation">,</span> <span class="string">&quot;b&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;location&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;country&quot;</span><span class="punctuation">:</span> <span class="string">&quot;A&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span> <span class="string">&quot;A-A&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="JSON-5"><a href="#JSON-5" class="headerlink" title="JSON 5"></a>JSON 5</h2><h3 id="Objects"><a href="#Objects" class="headerlink" title="Objects"></a>Objects</h3><p>对象键可以是 ECMAScript 5.1 <a target="_blank" rel="noopener" href="https://www.ecma-international.org/ecma-262/5.1/#sec-7.6">IdentifierName</a></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    width<span class="punctuation">:</span> <span class="number">1920</span><span class="punctuation">,</span></span><br><span class="line">    height<span class="punctuation">:</span> <span class="number">1080</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>数组可以有一个尾随逗号</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">    <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">    &#x27;three&#x27;<span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="允许单行和多行注释"><a href="#允许单行和多行注释" class="headerlink" title="允许单行和多行注释"></a>允许单行和多行注释</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="comment">// 一行注释</span></span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Kenny&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>多行注释</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="comment">/* 这是一个</span></span><br><span class="line"><span class="comment">   多行注释 */</span></span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Kenny&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="允许附加空白字符"><a href="#允许附加空白字符" class="headerlink" title="允许附加空白字符"></a>允许附加空白字符</h3><table>
+<thead>
+<tr>
+<th align="left">代码点</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>U+0009</code></td>
+<td>水平制表符</td>
+</tr>
+<tr>
+<td align="left"><code>U+000A</code></td>
+<td>换行符</td>
+</tr>
+<tr>
+<td align="left"><code>U+000B</code></td>
+<td>垂直制表符</td>
+</tr>
+<tr>
+<td align="left"><code>U+000C</code></td>
+<td>换页符</td>
+</tr>
+<tr>
+<td align="left"><code>U+000D</code></td>
+<td>回车符</td>
+</tr>
+<tr>
+<td align="left"><code>U+0020</code></td>
+<td>空格</td>
+</tr>
+<tr>
+<td align="left"><code>U+00A0</code></td>
+<td>不间断空格</td>
+</tr>
+<tr>
+<td align="left"><code>U+2028</code></td>
+<td>行分隔符</td>
+</tr>
+<tr>
+<td align="left"><code>U+2029</code></td>
+<td>段落分隔符</td>
+</tr>
+<tr>
+<td align="left"><code>U+FEFF</code></td>
+<td>字节顺序标记</td>
+</tr>
+<tr>
+<td align="left">Unicode Zs 类别</td>
+<td>空格分隔符 Unicode 类别中的任何其他字符</td>
+</tr>
+</tbody></table>
+<!--rehype:className=left-align-->
+
+<h3 id="数字-1"><a href="#数字-1" class="headerlink" title="数字"></a>数字</h3><p>数字可能有前导或尾随小数点</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    integer<span class="punctuation">:</span> <span class="number">123</span><span class="punctuation">,</span></span><br><span class="line">    withFractionPart<span class="punctuation">:</span> <span class="number">123.456</span><span class="punctuation">,</span></span><br><span class="line">    onlyFractionPart<span class="punctuation">:</span> <span class="number">.456</span><span class="punctuation">,</span></span><br><span class="line">    withExponent<span class="punctuation">:</span> <span class="number">123e-456</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>数字可以是十六进制</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    positiveHex<span class="punctuation">:</span> <span class="number">0xdecaf</span><span class="punctuation">,</span></span><br><span class="line">    negativeHex<span class="punctuation">:</span> <span class="number">-0xC0FFEE</span><span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>数字可以是正无穷大、负无穷大和 NaN。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    positiveInfinity<span class="punctuation">:</span> Infinity<span class="punctuation">,</span></span><br><span class="line">    negativeInfinity<span class="punctuation">:</span> -Infinity<span class="punctuation">,</span></span><br><span class="line">    notANumber<span class="punctuation">:</span> NaN<span class="punctuation">,</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>数字可以以明确的加号开头</p>
+<h3 id="字符串-1"><a href="#字符串-1" class="headerlink" title="字符串"></a>字符串</h3><!--rehype:wrap-class=col-span-2-->
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;Lorem ipsum dolor sit amet, \</span></span><br><span class="line"><span class="string">consectetur adipiscing elit.&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>以下是代表相同的意思</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;\A\C\/\D\C&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>以下是代表相同的意思</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;AC/DC&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="在-JavaScript-中访问-JSON"><a href="#在-JavaScript-中访问-JSON" class="headerlink" title="在 JavaScript 中访问 JSON"></a>在 JavaScript 中访问 JSON</h2><h3 id="访问对象"><a href="#访问对象" class="headerlink" title="访问对象"></a>访问对象</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myObject = &#123;</span><br><span class="line">  <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Jason&quot;</span>,</span><br><span class="line">  <span class="string">&quot;last&quot;</span>: <span class="string">&quot;Doe&quot;</span>,</span><br><span class="line">  <span class="string">&quot;age&quot;</span>: <span class="number">39</span>,</span><br><span class="line">  <span class="string">&quot;gender&quot;</span>: <span class="string">&quot;M&quot;</span>,</span><br><span class="line">  <span class="string">&quot;salary&quot;</span>: <span class="number">70000</span>,</span><br><span class="line">  <span class="string">&quot;married&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>myObject.name</code></td>
+<td>“Jason”</td>
+</tr>
+<tr>
+<td><code>myObject[&quot;name&quot;]</code></td>
+<td>“Jason”</td>
+</tr>
+<tr>
+<td><code>myObject.age</code></td>
+<td>39</td>
+</tr>
+<tr>
+<td><code>myObject.other</code></td>
+<td>undefined</td>
+</tr>
+<tr>
+<td><code>myObject[0]</code></td>
+<td>undefined</td>
+</tr>
+</tbody></table>
+<h3 id="访问嵌套"><a href="#访问嵌套" class="headerlink" title="访问嵌套"></a>访问嵌套</h3><!--rehype:wrap-style=grid-row: span 2/span 2;-->
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myObject = &#123;</span><br><span class="line">    <span class="string">&quot;ref&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="string">&quot;last&quot;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&quot;age&quot;</span>: <span class="number">2</span>,</span><br><span class="line">        <span class="string">&quot;gender&quot;</span>: <span class="number">3</span>,</span><br><span class="line">        <span class="string">&quot;salary&quot;</span>: <span class="number">4</span>,</span><br><span class="line">        <span class="string">&quot;married&quot;</span>: <span class="number">5</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;jdoe&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;Jason&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Doe&quot;</span>,</span><br><span class="line">        <span class="number">39</span>,</span><br><span class="line">        <span class="string">&quot;M&quot;</span>,</span><br><span class="line">        <span class="number">70000</span>,</span><br><span class="line">        <span class="literal">true</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="string">&quot;jsmith&quot;</span>: [</span><br><span class="line">        <span class="string">&quot;Tom&quot;</span>,</span><br><span class="line">        <span class="string">&quot;Smith&quot;</span>,</span><br><span class="line">        <span class="number">42</span>,</span><br><span class="line">        <span class="string">&quot;F&quot;</span>,</span><br><span class="line">        <span class="number">80000</span>,</span><br><span class="line">        <span class="literal">true</span></span><br><span class="line">    ]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>myObject.ref.age</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>myObject[&quot;ref&quot;][&quot;age&quot;]</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><code>myObject.jdoe</code></td>
+<td>[“Jason”, “Doe”, 39 …]</td>
+</tr>
+<tr>
+<td><code>myObject.jsmith[3]</code></td>
+<td>“F”</td>
+</tr>
+<tr>
+<td><code>myObject[1]</code></td>
+<td>undefined</td>
+</tr>
+</tbody></table>
+<h3 id="访问对象数组"><a href="#访问对象数组" class="headerlink" title="访问对象数组"></a>访问对象数组</h3><!--rehype:wrap-style=grid-row: span 2/span 2;-->
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myArray = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Jason&quot;</span>,</span><br><span class="line">    <span class="string">&quot;last&quot;</span>: <span class="string">&quot;Doe&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>: <span class="number">39</span>,</span><br><span class="line">    <span class="string">&quot;gender&quot;</span>: <span class="string">&quot;M&quot;</span>,</span><br><span class="line">    <span class="string">&quot;salary&quot;</span>: <span class="number">70000</span>,</span><br><span class="line">    <span class="string">&quot;married&quot;</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Tom&quot;</span>,</span><br><span class="line">    <span class="string">&quot;last&quot;</span>: <span class="string">&quot;Smith&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>: <span class="number">42</span>,</span><br><span class="line">    <span class="string">&quot;gender&quot;</span>: <span class="string">&quot;F&quot;</span>,</span><br><span class="line">    <span class="string">&quot;salary&quot;</span>: <span class="number">80000</span>,</span><br><span class="line">    <span class="string">&quot;married&quot;</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;Amy&quot;</span>,</span><br><span class="line">    <span class="string">&quot;last&quot;</span>: <span class="string">&quot;Burnquist&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>: <span class="number">29</span>,</span><br><span class="line">    <span class="string">&quot;gender&quot;</span>: <span class="string">&quot;F&quot;</span>,</span><br><span class="line">    <span class="string">&quot;salary&quot;</span>: <span class="number">60000</span>,</span><br><span class="line">    <span class="string">&quot;married&quot;</span>: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<hr>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>myArray[0]</code></td>
+<td><code>&#123;</code>“name”: “Jason”, …<code>&#125;</code></td>
+</tr>
+<tr>
+<td><code>myArray[1].name</code></td>
+<td>“Tom”</td>
+</tr>
+<tr>
+<td><code>myArray[1][2]</code></td>
+<td>42</td>
+</tr>
+<tr>
+<td><code>myArray[3]</code></td>
+<td>undefined</td>
+</tr>
+<tr>
+<td><code>myArray[3].gender</code></td>
+<td>TypeError: Cannot read…</td>
+</tr>
+</tbody></table>
+<h3 id="访问阵列"><a href="#访问阵列" class="headerlink" title="访问阵列"></a>访问阵列</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myArray = [</span><br><span class="line">  <span class="string">&quot;Jason&quot;</span>,</span><br><span class="line">  <span class="string">&quot;Doe&quot;</span>,</span><br><span class="line">  <span class="number">39</span>,</span><br><span class="line">  <span class="string">&quot;M&quot;</span>,</span><br><span class="line">  <span class="number">70000</span>,</span><br><span class="line">  <span class="literal">true</span></span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+
+<hr>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>myArray[1]</code></td>
+<td>“Doe”</td>
+</tr>
+<tr>
+<td><code>myArray[5]</code></td>
+<td>true</td>
+</tr>
+<tr>
+<td><code>myArray[6]</code></td>
+<td>undefined</td>
+</tr>
+</tbody></table>
+<h2 id="另见"><a href="#另见" class="headerlink" title="另见"></a>另见</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.json.org/json-en.html">JSON</a> <em>(json.org)</em></li>
+<li><a target="_blank" rel="noopener" href="http://jsoneditoronline.org/">JSON Editor Online</a> <em>(jsoneditoronline.org)</em></li>
+<li><a target="_blank" rel="noopener" href="https://tableconvert.com/json-to-markdown">Convert JSON Array to Markdown Table, CSV and more</a> <em>(tableconvert.com)</em></li>
+</ul>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            <a class="trm-op-top trm-anima-link" href="/blog/2025/01/08/javascript/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+                </span>
+                <h6 class="trm-op-title">JavaScript 备忘录</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/01/08</li>
+                <li>10:35</li>
+                <li>后端编程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            <a class="trm-op-top trm-anima-link" href="/blog/2025/01/08/jquery/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg">
+                </span>
+                <h6 class="trm-op-title">JQuery 备忘录</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/01/08</li>
+                <li>10:35</li>
+                <li>前端技术</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2024 - 2025</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX's BLOG</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="JSON 备忘清单"><a rel="nofollow" class="trm-toc-link" href="#JSON-备忘清单"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">JSON 备忘清单</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="入门"><a rel="nofollow" class="trm-toc-link" href="#入门"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">入门</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="介绍"><a rel="nofollow" class="trm-toc-link" href="#介绍"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">介绍</span></a></li><li class="trm-toc-item trm-toc-level-3" title="示例"><a rel="nofollow" class="trm-toc-link" href="#示例"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">示例</span></a></li><li class="trm-toc-item trm-toc-level-3" title="类型"><a rel="nofollow" class="trm-toc-link" href="#类型"><span class="trm-toc-number">1.1.3.</span> <span class="trm-toc-text">类型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符串"><a rel="nofollow" class="trm-toc-link" href="#字符串"><span class="trm-toc-number">1.1.4.</span> <span class="trm-toc-text">字符串</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数字"><a rel="nofollow" class="trm-toc-link" href="#数字"><span class="trm-toc-number">1.1.5.</span> <span class="trm-toc-text">数字</span></a></li><li class="trm-toc-item trm-toc-level-3" title="对象 Objects"><a rel="nofollow" class="trm-toc-link" href="#对象-Objects"><span class="trm-toc-number">1.1.6.</span> <span class="trm-toc-text">对象 Objects</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数组 Arrays"><a rel="nofollow" class="trm-toc-link" href="#数组-Arrays"><span class="trm-toc-number">1.1.7.</span> <span class="trm-toc-text">数组 Arrays</span></a></li><li class="trm-toc-item trm-toc-level-3" title="对象数组"><a rel="nofollow" class="trm-toc-link" href="#对象数组"><span class="trm-toc-number">1.1.8.</span> <span class="trm-toc-text">对象数组</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数组对象"><a rel="nofollow" class="trm-toc-link" href="#数组对象"><span class="trm-toc-number">1.1.9.</span> <span class="trm-toc-text">数组对象</span></a></li><li class="trm-toc-item trm-toc-level-3" title="二维阵列"><a rel="nofollow" class="trm-toc-link" href="#二维阵列"><span class="trm-toc-number">1.1.10.</span> <span class="trm-toc-text">二维阵列</span></a></li><li class="trm-toc-item trm-toc-level-3" title="对象的对象"><a rel="nofollow" class="trm-toc-link" href="#对象的对象"><span class="trm-toc-number">1.1.11.</span> <span class="trm-toc-text">对象的对象</span></a></li><li class="trm-toc-item trm-toc-level-3" title="嵌套"><a rel="nofollow" class="trm-toc-link" href="#嵌套"><span class="trm-toc-number">1.1.12.</span> <span class="trm-toc-text">嵌套</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="JSON 5"><a rel="nofollow" class="trm-toc-link" href="#JSON-5"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">JSON 5</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="Objects"><a rel="nofollow" class="trm-toc-link" href="#Objects"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">Objects</span></a></li><li class="trm-toc-item trm-toc-level-3" title="允许单行和多行注释"><a rel="nofollow" class="trm-toc-link" href="#允许单行和多行注释"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">允许单行和多行注释</span></a></li><li class="trm-toc-item trm-toc-level-3" title="允许附加空白字符"><a rel="nofollow" class="trm-toc-link" href="#允许附加空白字符"><span class="trm-toc-number">1.2.3.</span> <span class="trm-toc-text">允许附加空白字符</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数字"><a rel="nofollow" class="trm-toc-link" href="#数字-1"><span class="trm-toc-number">1.2.4.</span> <span class="trm-toc-text">数字</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符串"><a rel="nofollow" class="trm-toc-link" href="#字符串-1"><span class="trm-toc-number">1.2.5.</span> <span class="trm-toc-text">字符串</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="在 JavaScript 中访问 JSON"><a rel="nofollow" class="trm-toc-link" href="#在-JavaScript-中访问-JSON"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">在 JavaScript 中访问 JSON</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="访问对象"><a rel="nofollow" class="trm-toc-link" href="#访问对象"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">访问对象</span></a></li><li class="trm-toc-item trm-toc-level-3" title="访问嵌套"><a rel="nofollow" class="trm-toc-link" href="#访问嵌套"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">访问嵌套</span></a></li><li class="trm-toc-item trm-toc-level-3" title="访问对象数组"><a rel="nofollow" class="trm-toc-link" href="#访问对象数组"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">访问对象数组</span></a></li><li class="trm-toc-item trm-toc-level-3" title="访问阵列"><a rel="nofollow" class="trm-toc-link" href="#访问阵列"><span class="trm-toc-number">1.3.4.</span> <span class="trm-toc-text">访问阵列</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="另见"><a rel="nofollow" class="trm-toc-link" href="#另见"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">另见</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+
+    
+        
+<script src="https://unpkg.com/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+
+        <script src="/blog/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/blog/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/blog/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>
