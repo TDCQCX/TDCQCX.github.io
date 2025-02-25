@@ -1,15 +1,4 @@
-name: Deploy Hexo
-on: [push]
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions: # 关键配置
-      contents: write  # 允许写入仓库
-    steps:
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认令牌
   build-deploy:
     runs-on: ubuntu-latest
     steps:
@@ -19,19 +8,20 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'  # 需与本地版本一致[2,5](@ref)
+          node-version: '18'  # 需与本地环境一致[2,5](@ref)
 
       - name: Install Hexo CLI
-        run: npm install -g hexo-cli  # 全局安装核心工具[5,7](@ref)
+        run: npm install -g hexo-cli --force  # 强制覆盖旧版本[7,9](@ref)
 
       - name: Install dependencies
-        run: npm install  # 安装 package.json 中的依赖[2,7](@ref)
+        run: |
+          npm install
+          npm install hexo-deployer-git --save  # 显式安装部署插件[7,10](@ref)
 
-      - name: Clean cache
-        run: hexo clean  # 单独执行清理[6](@ref)
-
-      - name: Generate static files
-        run: hexo generate  # 单独执行生成[6](@ref)
+      - name: Clean & Generate
+        run: |
+          hexo clean
+          hexo generate  # 生成静态文件到/public目录[6,10](@ref)
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -39,3 +29,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./public
           publish_branch: gh-pages
+      - name: Start temporary server
+        run: |
+          hexo server &
+          sleep 10  # 等待服务启动
+          curl --retry 5 --retry-delay 5 http://localhost:4000  # 验证可访问性
