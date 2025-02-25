@@ -1,18 +1,17 @@
 name: Deploy Hexo
 on: [push]
 jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions: # 关键配置
+      contents: write  # 允许写入仓库
+    steps:
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认令牌
   build-deploy:
     runs-on: ubuntu-latest
-    jobs:
-      deploy:
-        runs-on: ubuntu-latest
-        permissions: # 关键配置
-          contents: write  # 允许写入仓库
-        steps:
-          - name: Deploy
-            uses: peaceiris/actions-gh-pages@v3
-            with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}  # 使用默认令牌
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
