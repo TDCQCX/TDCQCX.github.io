@@ -39,20 +39,37 @@ top_bars:
 
 sidebar:
   social: # 社交地址
-    - name: github
+    - name: Github
       icon: fab fa-github
       url: https://github.com/TDCQCX
-    - name: weibo
+      color: "#181717"
+      title: Github
+      tooltip: Github
+      tooltip_position: right
+      tooltip_position_mobile: bottom
+      tooltip_position_pc: bottom
+    - name: 微博
       icon: fab fa-weibo
       url: https://weibo.com/u/7495045812
+      color: "#E6162D"
+      title: 微博
+      tooltip: 微博
+      tooltip_position: right
+      tooltip_position_mobile: bottom
+      tooltip_position_pc: bottom
+    - name: 微信
+      icon: fab fa-weixin
+      url: javascript:;
+      qrcode: /img/avatar.jpg # 二维码图片路径
+      color: "#1AAD19"
+      title: 微信
+
     - typed_text_prefix: I'm
       typed_text: ["Web Developer"]
   info: # 个人信息
     - key: 地址
       val: China Sichuan Chengdu
-    - key: 邮箱1
-      val: 3290264220@qq.com
-    - key: 邮箱2
+    - key: 邮箱
       val: tdcqcx@gmail.com
     - key: QQ
       val: 3290264220
@@ -231,7 +248,6 @@ wordcount:
   enable: true # enable | 开启
   count: true # count | 显示字数
   time: true # read time | 显示阅读时间
-
 # Blog search | 搜索
 search:
   enable: true
