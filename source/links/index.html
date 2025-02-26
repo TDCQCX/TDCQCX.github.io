@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩学分计算器(临时界面</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        input {
+            padding: 8px;
+            width: 120px;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>成绩学分计算器（临时界面）</h2>
+    
+    <div id="inputGroups">
+        <div class="input-group">
+            <input type="number" class="grade" placeholder="成绩" step="0.01">
+            <input type="number" class="credit" placeholder="学分" step="0.1">
+        </div>
+    </div>
+    
+    <button onclick="addInputGroup()">添加更多科目</button>
+    <button onclick="calculate()">开始计算</button>
+    
+    <div class="result">
+        <p>成绩乘以学分后总分为：<span id="totalScore">0</span></p>
+        <p>总学分为：<span id="totalCredits">0</span></p>
+        <p>最终成绩为：<span id="average">0</span></p>
+    </div>
+    
+    
+</div>
+
+<script>
+    // 添加输入组
+    function addInputGroup() {
+        const newGroup = document.createElement('div');
+        newGroup.className = 'input-group';
+        newGroup.innerHTML = `
+                <input type="number" class="grade" placeholder="成绩" step="0.01">
+                <input type="number" class="credit" placeholder="学分" step="0.1">
+            `;
+        document.getElementById('inputGroups').appendChild(newGroup);
+    }
+    
+    // 执行计算
+    function calculate() {
+        const grades = document.getElementsByClassName('grade');
+        const credits = document.getElementsByClassName('credit');
+        
+        let totalScore = 0;
+        let totalCredits = 0;
+        
+        for (let i = 0; i < grades.length; i++) {
+            const grade = parseFloat(grades[i].value) || 0;
+            const credit = parseFloat(credits[i].value) || 0;
+            
+            totalScore += grade * credit;
+            totalCredits += credit;
+        }
+        
+        const average = totalCredits > 0 ? (totalScore / totalCredits).toFixed(2) : 0;
+        
+        document.getElementById('totalScore').textContent = totalScore.toFixed(2);
+        document.getElementById('totalCredits').textContent = totalCredits.toFixed(2);
+        document.getElementById('average').textContent = average;
+    }
+</script>
+</body>
+</html>
