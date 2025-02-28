@@ -37,6 +37,33 @@
             background-color: #f0f0f0;
             border-radius: 4px;
         }
+        .home-button {
+            text-align: center;
+            display: inline-block;
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white !important; /* 强制文字颜色 */
+            text-decoration: none !important; /* 移除下划线 */
+            border-radius: 5px;
+            border: 2px solid #45a049;
+            transition: all 0.3s ease;
+            font-family: Arial, sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .home-button:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .home-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -59,9 +86,8 @@
         <p>最终成绩为：<span id="average">0</span></p>
     </div>
     
-    
+    <a href="/" class="home-button">返回主页</a>
 </div>
-
 <script>
     // 添加输入组
     function addInputGroup() {
