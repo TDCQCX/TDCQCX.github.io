@@ -7,14 +7,14 @@ theme:
 # Open Graph protocol | OG 协议
 open_graph: true # 启用
 user:
-  name: TDCQCX's BLOG
-  first_name: ’s BLOG
-  last_name: TDCQCX
+  name: TDCQCX
+  first_name: 个人博客
+  last_name: 浮生记
   email: tdcqcx@gmail.com
   domain: blog.tdcqcx.top
-  avatar: img/avatar.jpg # 网站头像
-  describe: 这是我的个人博客，分享一些学习笔记和一些有趣的东西。
-  rule_text: 暂不接受个人博客以外的友链申请，确保您的网站内容积极向上，文章至少30篇，原创70%以上，部署HTTPS。
+  avatar: img/avatar.jpg
+  description: 这是我的个人博客，记录我的生活和编程之路。
+  rule_text: 申请友链需满足：原创内容≥70%、文章≥30篇、HTTPS部署、内容合法合规
 
 top_bars:
   - title: 首页
@@ -33,9 +33,6 @@ top_bars:
   - title: 友链
     url: /links/
     noswup: true
-  - title: 其他
-    url: /other/
-    noswup: true
 
 sidebar:
   social: # 社交地址
@@ -48,6 +45,7 @@ sidebar:
       tooltip_position: right
       tooltip_position_mobile: bottom
       tooltip_position_pc: bottom
+
     - name: 微博
       icon: fab fa-weibo
       url: https://weibo.com/u/7495045812
@@ -57,13 +55,17 @@ sidebar:
       tooltip_position: right
       tooltip_position_mobile: bottom
       tooltip_position_pc: bottom
-    - name: 微信
-      icon: fab fa-weixin
-      url: javascript:;
-      qrcode: /img/avatar.jpg # 二维码图片路径
-      color: "#1AAD19"
-      title: 微信
 
+    - name: Gmail
+      icon: fas fa-envelope
+      url: mailto:tdcqcx@gmail.com
+      color: "#D44638"
+      title: Gmail
+      tooltip: Gmail
+      tooltip_position: right
+      tooltip_position_mobile: bottom
+      tooltip_position_pc: bottom
+      
     - typed_text_prefix: I'm
       typed_text: ["Web Developer"]
   info: # 个人信息
@@ -74,6 +76,7 @@ sidebar:
     - key: QQ
       val: 3290264220
 
+  
 # About page settings | 关于页
 about:
   insert: none #  插入规则  <[before,after,none]>
@@ -81,6 +84,7 @@ about:
   introduction: 大家好，我是 <strong>TDCQCX</strong>，很高兴您能在浩瀚如烟的互联网世界里发现这个博客，更感谢您能够饶有兴致地浏览这个页面。建立这个 Blog 是出于兴趣爱好，我将在此分会分享一些学习笔记，可能还会分享少许图片、视频以及其他有趣东西的链接。 # 个人简单描述
   blog: <ul class="trm-list"><li>程序：TDCQCX </li><li>主题：Hexo-theme-async </li><li>设计：async </li></ul>  # 博客信息
   privacy: 本网站不会追踪访客行为，且不要求访客提供任何敏感信息（比如真实姓名、身份证号码、手机号等），因而也不存在任何隐私泄漏问题。访客参与评论，必须遵守法律法规和基本道德规范，文明礼貌。严禁发布任何有关淫秽、反动、暴力、博彩、恐吓、低俗的内容或违法信息，在尊重言论自由的同时请保持和平与理性。请勿对他人采取不友好的评论或其它过激行为。 # 隐私权说明
+
 #横幅
 #每个页面横幅都可以自定义不同背景图、标语等，当您需要视频背景的时候，您的视频格式需要为 MP4、WebM 、Ogg 等格式。
 #
@@ -101,10 +105,12 @@ about:
 banner:
   use_cover: true
   index:
-    type: img
-    bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
-    banner_title: 花开花落花无悔，<br>缘来缘去缘如水。
-    banner_text: Welcome to here👋,This is TDCQCX's Blog.
+    type: slideshow
+    bgurl: 
+      - https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
+    animation: fade  # 切换动画效果
+    banner_title: 浮生若梦，<br>为欢几何。
+    banner_text: Welcome to here👋,This is 浮生记.
   archive: ## 归档页横幅
     banner_title: 云间连下榻，<br>天上接行杯。
     banner_text: The article archive
@@ -142,13 +148,13 @@ footer:
   live_time:
     enable: true
     prefix: footer.tips
-    start_time: 04/12/2024 17:00:00
+    start_time: 01/03/2025 17:00:00
   powered:
     enable: false
   beian:
     enable: true
     icp: 蜀ICP备87583212号
-  copyright_year: 2024
+  copyright_year: 2025
   custom_text: 你已经看到这了，很累了，休息一下吧。
 toc:
     enable: true
@@ -181,8 +187,14 @@ notice_outdate:
 
   categorie_card:
     enable: true
-    len: 4
-    list: [ "后端编程", "前端技术", "配置框架", "其他" ]
+    len: 5
+    list: [ "后端开发", "前端技术", "DevOps", "架构设计", "技术杂谈" ]
+    colors:  # 分类卡片配色
+      - "#2196F3"
+      - "#4CAF50"
+      - "#FF9800"
+      - "#9C27B0"
+      - "#E91E63"
 
 rightside:
   readmode: true
@@ -209,7 +221,7 @@ highlight:
 
   icons:
     # 主题切换图标
-    sun: far fa-sun
+    sun: fas fa-sun
     moon: far fa-moon
     # 首页视频播放
     play: fas fa-play
@@ -255,6 +267,7 @@ search:
 # Customize the template path | 自定义模块
 layout:
   path: layout # Folder path | 模板存放目录
+
   # layout
   main: _partial/main # 整体布局结构模板
   header: _partial/header # 顶部菜单栏模板
@@ -309,7 +322,8 @@ not_found:
   text: not_found.text # Tips | 提示文案
 
 links:
-  - name: TDCQCX’s Blog
-    url: blog.TDCQCX.top
+  - name: 浮生记 个人博客
+    url: https://blog.TDCQCX.top
     image: /img/avatar.jpg
     desc: 醒，亦在人间；梦，亦在人间
+  
