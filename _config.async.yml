@@ -13,20 +13,32 @@ user:
   email: tdcqcx@gmail.com
   domain: blog.tdcqcx.top
   avatar: img/avatar.jpg
-  description: 这是我的个人博客，记录我的生活和编程之路。
+  describe: 这是我的个人博客，记录我的生活和编程之路。
   rule_text: 申请友链需满足：原创内容≥70%、文章≥30篇、HTTPS部署、内容合法合规
+
+favicon:
+  logo: /img/favicon.svg # logo | 顶部 logo
+  icon16: /img/favicon.svg # icon 16*16
+  icon32: /img/favicon.svg # icon 32*32
+  apple_touch_icon: # Apple touch icon | iOS 添加到桌面时显示图标
+  webmanifest: # Webmanifest | 应用程序清单文件
+  visibilitychange: true # Enable toggle title display when leaving | 开启离开时切换标题显示
+  hidden: /failure.ico # Displays an icon when not visible | 离开窗口时显示图标
+  show_text: favicon.show_text # Displays text when the window is activated | 激活窗口时显示文字
+  hide_text: favicon.hide_text # Leave the window to display text | 离开窗口显示文字
 
 top_bars:
   - title: 首页
     url: /
+    noswup: true
+  - title: 归档
+    url: /archives/
+    noswup: true
     children:
       - title: 分类
         url: /categories/
       - title: 标签
         url: /tags/
-  - title: 归档
-    url: /archives/
-    noswup: true
   - title: 关于
     url: /about/
     noswup: true
@@ -35,6 +47,8 @@ top_bars:
     noswup: true
 
 sidebar:
+  typed_text_prefix: 你好！
+  typed_text: ["欢迎来到这！", "我是TDCQCX！", "这里有无限可能！", "好像有什么神奇的事情发生了！", "欢迎来到我的博客！"]
   social: # 社交地址
     - name: Github
       icon: fab fa-github
@@ -66,8 +80,7 @@ sidebar:
       tooltip_position_mobile: bottom
       tooltip_position_pc: bottom
       
-    - typed_text_prefix: I'm
-      typed_text: ["Web Developer"]
+    
   info: # 个人信息
     - key: 地址
       val: Chengdu China
@@ -105,22 +118,31 @@ about:
 banner:
   use_cover: true
   index:
-    type: slideshow
-    bgurl: 
-      - https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
+    type: video
+    bgurl:
+      - /img/v4.mp4
     animation: fade  # 切换动画效果
     banner_title: 浮生若梦，<br>为欢几何。
     banner_text: Welcome to here👋,This is 浮生记.
   archive: ## 归档页横幅
+    type: video
+    bgurl:
+      - /img/v1.mp4
     banner_title: 云间连下榻，<br>天上接行杯。
     banner_text: The article archive
+  comment: ## 评论页横幅
+    banner_title: 人生得意须尽欢，<br>莫使金樽空对月。
+    banner_text: Leave a message
   links: ## 友链页横幅
+    type: video
+    bgurl:
+      - /img/v3.mp4
     banner_title: 莫愁前路无知己，<br>天下谁人不识君。
     banner_text: A link to a friend's website
-  comment: ## 评论页横幅
-    banner_title: 醉后不知天在水，<br>满船清梦压星河。
-    banner_text: The magic tree hole
   about: ## 关于页横幅
+    type: video
+    bgurl:
+      - /img/v2.mp4
     banner_title: 醉后不知天在水，<br>满船清梦压星河。
     banner_text: About me
 
@@ -213,9 +235,9 @@ datetime_foramt:
     time: HH:mm
 highlight:
   theme: true
-  title: default
+  title: mac
   copy: true
-  lang: false
+  lang: true
   code_word_wrap: true
   height_limit: 200 # 超出时，显示折叠按钮
 
@@ -325,5 +347,5 @@ links:
   - name: 浮生记 个人博客
     url: https://blog.TDCQCX.top
     image: /img/avatar.jpg
-    desc: 醒，亦在人间；梦，亦在人间
-  
+    desc: 浮生若梦，为欢几何
+sw: true

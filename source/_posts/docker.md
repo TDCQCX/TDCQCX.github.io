@@ -7,10 +7,10 @@ tags:
     - Docker
     - 后端编程
 keywords: Docker, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: [https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg]
+cover: /img/96.jpg
 banner:
       type: img
-      bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
+      bgurl: /img/96.jpg
       banner_text: Docker 备忘录
       toc: true # 无需显示目录
       comments: true

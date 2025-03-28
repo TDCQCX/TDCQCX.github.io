@@ -7,11 +7,10 @@ tags:
     - CSS
     - 前端技术
 keywords: CSS, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: [https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg]
-
+cover: [/img/97.jpg]
 banner:
       type: img
-      bgurl: https://pic1.zhimg.com/v2-b3c2c6745b9421a13a3c4706b19223b3_r.jpg
+      bgurl: /img/97.jpg
       banner_text: CSS 备忘录
       toc: true # 无需显示目录
       comments: true
@@ -29,7 +28,7 @@ CSS 备忘清单
 
 CSS 功能丰富，不仅仅是布局页面
 
-#### 外部样式表 `<link>`
+#### 外部样式表 `<link></link>`
 
 ```html
 <link

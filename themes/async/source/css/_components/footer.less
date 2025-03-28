@@ -1,4 +1,13 @@
 .trm-footer-card {
+	position: relative;
+	z-index: 9999;
+
+	#live2d-widget {
+		position: fixed !important;
+		z-index: 10000 !important;
+		right: 0;
+		bottom: 0;
+	}
 	background-color: var(--theme-bg-color, #fcfcfe);
 	border-radius: var(--card-border-radius, 10px);
 	text-align: center;
