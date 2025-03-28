@@ -2540,6 +2540,8 @@ form textarea:focus,
   }
 }
 .trm-footer-card {
+  position: relative;
+  z-index: 9999;
   background-color: var(--theme-bg-color, #fcfcfe);
   border-radius: var(--card-border-radius, 10px);
   text-align: center;
@@ -2547,6 +2549,12 @@ form textarea:focus,
   padding: 20px;
   transition: all 0.4s ease-in-out, box-shadow 0.3s ease;
   box-shadow: var(--box-shadow);
+}
+.trm-footer-card #live2d-widget {
+  position: fixed !important;
+  z-index: 10000 !important;
+  right: 0;
+  bottom: 0;
 }
 .trm-footer-card:hover {
   box-shadow: var(--box-shadow-hover);
@@ -3408,6 +3416,18 @@ figure.highlight:hover .code-tools.mac-style .code-lang {
 }
 figure.highlight:hover .code-tools.mac-style .copy-button {
   display: inherit;
+}
+figure.highlight::after {
+  content: " ";
+  position: absolute;
+  border-radius: 50%;
+  background: #ff5f56;
+  width: 12px;
+  height: 12px;
+  top: 9px;
+  left: 12px;
+  -webkit-box-shadow: 20px 0 #ffbd2e, 40px 0 #27c93f;
+  box-shadow: 20px 0 #ffbd2e, 40px 0 #27c93f;
 }
 figure.highlight .code-expand-btn {
   position: absolute;
