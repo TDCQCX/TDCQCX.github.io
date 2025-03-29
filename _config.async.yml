@@ -118,9 +118,9 @@ about:
 banner:
   use_cover: true
   index:
-    type: video
+    type: img
     bgurl:
-      - /img/v4.mp4
+      - https://img.picui.cn/free/2025/03/29/67e798c2da421.jpg
     animation: fade  # 切换动画效果
     banner_title: 浮生若梦，<br>为欢几何。
     banner_text: Welcome to here👋,This is 浮生记.
