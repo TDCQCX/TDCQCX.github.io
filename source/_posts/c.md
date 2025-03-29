@@ -7,10 +7,10 @@ tags:
     - C
     - 后端编程
 keywords: C, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: /img/84.jpg
+cover: https://img.picui.cn/free/2025/03/29/67e798c32eacf.jpg
 banner:
       type: img
-      bgurl: /img/84.jpg
+      bgurl: https://img.picui.cn/free/2025/03/29/67e798c32eacf.jpg
       banner_text: C 备忘录
       toc: true 
       comments: true

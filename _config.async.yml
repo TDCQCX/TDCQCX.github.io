@@ -12,7 +12,7 @@ user:
   last_name: 浮生记
   email: tdcqcx@gmail.com
   domain: blog.tdcqcx.top
-  avatar: img/avatar.jpg
+  avatar: https://img.picui.cn/free/2025/03/29/67e79c661518c.jpg
   describe: 这是我的个人博客，记录我的生活和编程之路。
   rule_text: 申请友链需满足：原创内容≥70%、文章≥30篇、HTTPS部署、内容合法合规
 
@@ -125,24 +125,24 @@ banner:
     banner_title: 浮生若梦，<br>为欢几何。
     banner_text: Welcome to here👋,This is 浮生记.
   archive: ## 归档页横幅
-    type: video
+    type: img
     bgurl:
-      - /img/v1.mp4
+      - https://img.picui.cn/free/2025/03/29/67e798c756e0e.jpg
     banner_title: 云间连下榻，<br>天上接行杯。
     banner_text: The article archive
   comment: ## 评论页横幅
     banner_title: 人生得意须尽欢，<br>莫使金樽空对月。
     banner_text: Leave a message
   links: ## 友链页横幅
-    type: video
+    type: img
     bgurl:
-      - /img/v3.mp4
+      - https://img.picui.cn/free/2025/03/29/67e798cf1ca45.jpg
     banner_title: 莫愁前路无知己，<br>天下谁人不识君。
     banner_text: A link to a friend's website
   about: ## 关于页横幅
-    type: video
+    type: img
     bgurl:
-      - /img/v2.mp4
+      - https://img.picui.cn/free/2025/03/29/67e798cd3f15d.jpg
     banner_title: 醉后不知天在水，<br>满船清梦压星河。
     banner_text: About me
 
@@ -346,6 +346,6 @@ not_found:
 links:
   - name: 浮生记 个人博客
     url: https://blog.TDCQCX.top
-    image: /img/avatar.jpg
+    image: https://img.picui.cn/free/2025/03/29/67e79c661518c.jpg
     desc: 浮生若梦，为欢几何
 sw: true

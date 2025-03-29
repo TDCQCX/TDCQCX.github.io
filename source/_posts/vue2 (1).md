@@ -7,10 +7,10 @@ tags:
     - Vue2
     - 前端技术
 keywords: Vue2, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: /img/86.jpg
+cover: https://img.picui.cn/free/2025/03/29/67e798cf1ca45.jpg
 banner:
       type: img
-      bgurl: /img/86.jpg
+      bgurl: https://img.picui.cn/free/2025/03/29/67e798cf1ca45.jpg
       banner_text: Vue2 备忘录
       toc: true # 无需显示目录
       comments: true

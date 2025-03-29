@@ -7,10 +7,10 @@ tags:
     - CSS
     - 前端技术
 keywords: CSS, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: [/img/97.jpg]
+cover: https://img.picui.cn/free/2025/03/29/67e798c3237f6.jpg
 banner:
       type: img
-      bgurl: /img/97.jpg
+      bgurl: https://img.picui.cn/free/2025/03/29/67e798c3237f6.jpg
       banner_text: CSS 备忘录
       toc: true # 无需显示目录
       comments: true

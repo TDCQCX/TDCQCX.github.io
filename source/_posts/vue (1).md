@@ -7,10 +7,10 @@ tags:
     - Vue3
     - 前端技术
 keywords: Vue3, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: /img/87.jpg
+cover: https://img.picui.cn/free/2025/03/29/67e798ce522b4.jpg
 banner:
       type: img
-      bgurl: /img/87.jpg
+      bgurl: https://img.picui.cn/free/2025/03/29/67e798ce522b4.jpg
       banner_text: Vue3 备忘录
       toc: true # 无需显示目录
       comments: true

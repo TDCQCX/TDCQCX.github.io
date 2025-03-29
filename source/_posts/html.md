@@ -7,10 +7,10 @@ tags:
     - HTML
     - 前端技术
 keywords: HTML, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: /img/95.jpg
+cover: https://img.picui.cn/free/2025/03/29/67e798c3423cc.jpg
 banner:
       type: img
-      bgurl: /img/95.jpg
+      bgurl: https://img.picui.cn/free/2025/03/29/67e798c3423cc.jpg
       banner_text: HTML 备忘录
       toc: true # 无需显示目录
       comments: true
