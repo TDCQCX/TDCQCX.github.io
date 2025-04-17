@@ -1,6 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>如何使用hexo创建一个博客网站</title>
+    <url>/2025/04/17/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
+    <content><![CDATA[浅谈如何使用 hexo 创建一个博客网站写在前面
+最近在学习如何使用 github pages 搭建个人博客网站，在此记录一下我的学习过程。你现在所看到的网站界面都源于一个设想，我会将我学习的知识记录下来，分享给大家。
+
+平台及技术栈
+HEXO
+Markdown
+Github Pages
+域名解析
+
+搭建步骤
+注册 github 账号
+新建一个仓库，仓库名称为：username.github.io，其中 username 为你的 github 用户名。
+克隆仓库到本地
+安装 HEXO
+配置 HEXO
+生成静态页面
+部署到 github
+配置域名解析
+完成
+
+1.注册 github 账号这一点就不多说了，你可以在各大搜索引擎上找到相关教程。
+2.新建一个仓库
+仓库名称为：username.github.io，其中 username 为你的 github 用户名。这一步也很简单，你只需要在 github 上新建一个仓库，仓库名称为：username.github.io，其中 username 为你的 github 用户名。
+
+
+仓库名称必须为username.github.io，否则无法正常访问。
+
+3.克隆仓库到本地使用 git 命令克隆仓库到本地，命令如下：
+git clone URL_ADDRESSgit clone https://github.com/username/username.github.io.git
+
+其中 URL_ADDRESS 为仓库的 URL 地址，你可以在仓库的主页上找到
+4.安装 HEXO使用 npm 安装 HEXO，命令如下：
+npm install -g hexo-cli
+
+或者
+yarn global add hexo-cli
+
+5.配置 HEXO使用 HEXO 命令初始化 HEXO，命令如下：
+hexo init blog
+
+其中blog为你的博客名称，你可以根据自己的喜好来命名。现在，你已经成功地创建了一个HEXO博客。你可以在blog目录下找到一个名为_config.yml的文件，这个文件是HEXO的配置文件，你可以根据自己的喜好来修改这个文件。
+5.1 如何编写文章使用 HEXO 命令创建一篇文章，命令如下：
+hexo new &quot;文章标题&quot;
+
+其中文章标题为你要创建的文章的标题，你可以根据自己的喜好来命名。现在，你已经成功地创建了一篇文章。你可以在blog目录下找到一个名为source/_posts的目录，这个目录就是你的文章目录。你可以在source/_posts目录下找到一篇名为文章标题.md的文件，这个文件就是你的文章。你可以使用 Markdown 语法来编写你的文章。
+5.2 如何编写页面使用 HEXO 命令创建一个页面，命令如下：
+hexo new page &quot;页面标题&quot;
+
+其中页面标题为你要创建的页面的标题，你可以根据自己的喜好来命名。
+6.生成静态页面
+使用 HEXO 命令生成静态页面，命令如下：
+
+hexo generate
+
+
+或者
+
+hexo g
+
+现在，你已经成功地生成了一个静态页面。你可以在blog目录下找到一个名为public的目录，这个目录就是你的静态页面。该目录依据_config.yml文件中的deploy配置项生成。
+
+现在，你可以运行以下命令来启动服务器：
+
+hexo server
+
+如果你觉得每次都要输入hexo server命令很麻烦，你可以在_config.yml文件中添加以下配置项：
+server:  open: true
+
+这样，每次启动服务器时，都会自动打开浏览器。
+
+如果你觉得 hexo 的默认主题不好看，你可以使用其他主题。
+你可以在[HEXO 官方主题库](URL_ADDRESS 你可以在HEXO 官方主题库中找到你喜欢的主题，然后将其克隆到blog目录下的themes目录中。你可以使用以下命令来安装主题：
+
+git clone URL_ADDRESS themes/your_theme_name
+
+其中 URL_ADDRESS 为主题的 URL 地址，你可以在主题的主页上找到。然后，在_config.yml文件中添加以下配置项：
+theme: your_theme_name
+
+其中your_theme_name为你安装的主题名称。
+
+现在，你已经成功地安装了一个主题。你可以在blog目录下找到一个名为themes的目录，这个目录就是你的主题目录。你可以在themes目录下找到一个名为_config.yml的文件，
+这个文件是主题的配置文件，你可以根据自己的喜好来修改这个文件。或者根据主题的说明文档来修改。
+
+7.部署到 github使用 HEXO 命令部署到 github，命令如下：
+hexo deploy
+
+或者
+hexo d
+
+如果你的 github 账号没有配置 SSH 密钥，你需要在_config.yml文件中添加以下配置项：
+deploy:  type: git
+
+然后，在blog目录下找到一个名为.deploy_git的文件，这个文件是HEXO的部署配置文件，你可以根据自己的喜好来修改这个文件。
+
+现在，你已经成功地部署到 github。你可以在浏览器中输入你的仓库地址，访问你的博客网站。
+访问你的博客网站，链接地址如下：
+
+https://username.github.io/
+
+其中username为你的github用户名。
+
+如果你想使用自定义域名，你可以在_config.yml文件中添加以下配置项：
+
+url:    URL_ADDRESSurl: https://your_domain_name/
+
+
+其中your_domain_name为你的自定义域名。
+请确保你的自定义域名已经解析到你的github仓库地址。
+
+8.配置域名解析使用域名解析服务，将域名解析到 github 的仓库地址，命令如下：
+CNAME username.github.io
+
+其中 username 为你的 github 用户名。
+
+现在，你已经成功地配置域名解析。你可以在浏览器中输入你的自定义域名地址，访问你的博客网站。
+
+9.完成现在，你已经成功地创建了一个 HEXO 博客网站。你可以在浏览器中输入你的域名地址，访问你的博客网站。
+
+你可以在blog目录下找到一个名为source的目录，这个目录就是你的博客源文件目录。
+你可以在source目录下找到一个名为_posts的目录，这个目录就是你的博客文章目录。
+你可以在_posts目录下找到一个名为your_article.md的文件，这个文件就是你的博客文章
+
+]]></content>
+      <categories>
+        <category>技术教程</category>
+      </categories>
+      <tags>
+        <tag>HEXO</tag>
+        <tag>技术教程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>一些想说的话</title>
     <url>/2025/01/08/%E4%B8%80%E4%BA%9B%E6%83%B3%E8%AF%B4%E7%9A%84%E8%AF%9D/</url>
     <content><![CDATA[致来到博客的新朋友：你好！
@@ -1157,8 +1291,8 @@ C 教程 (jaywcjlove.github.io)
         <category>后端编程</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>后端编程</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -1830,8 +1964,8 @@ C++ Language Tutorials (cplusplus.com)
         <category>后端编程</category>
       </categories>
       <tags>
-        <tag>后端编程</tag>
         <tag>C++</tag>
+        <tag>后端编程</tag>
       </tags>
   </entry>
   <entry>
@@ -2819,6 +2953,1275 @@ CSS 专业技巧
       <tags>
         <tag>CSS</tag>
         <tag>前端技术</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML 备忘录</title>
+    <url>/2025/01/08/html/</url>
+    <content><![CDATA[HTML 备忘清单此 HTML 快速参考备忘单以可读布局列出了常见的 HTML 和 HTML5 标记。
+入门hello.html
+
+&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;    &lt;title&gt;HTML5 Boilerplate&lt;/title&gt;&lt;/head&gt;&lt;body&gt;    &lt;h1&gt;Hello world, hello 备忘清单!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+
+或者在 jsfiddle
+注释 Comment&lt;!-- 这是代码注释 --&gt;&lt;!--  或者你可以注释掉一个  大量的行。--&gt;
+
+段落 Paragraph&lt;p&gt;我来自快速参考&lt;/p&gt;&lt;p&gt;分享快速参考备忘单。&lt;/p&gt;
+
+请参阅：段落元素
+HTML 链接&lt;a href=&quot;https://github.com/jaywcjlove/reference&quot;&gt;  Github&lt;/a&gt;&lt;a href=&quot;mailto:jack@abc.com&quot;&gt;邮箱&lt;/a&gt;&lt;a href=&quot;tel:+123456789&quot;&gt;电话&lt;/a&gt;&lt;a href=&quot;sms:+123456789&amp;body=ha%20ha&quot;&gt;  短信&lt;/a&gt;
+
+
+
+
+
+:-
+:-
+
+
+
+href
+超链接指向的 URL
+
+
+rel
+链接 URL 的关系
+
+
+target
+链接目标位置：_self&#x2F;_blank&#x2F;_top&#x2F;_parent
+
+
+请参阅：&lt;a&gt; 属性
+Image 标签&lt;img loading=&quot;lazy&quot;  src=&quot;https://xxx.png&quot;  alt=&quot;在此处描述图像&quot;  width=&quot;400&quot; height=&quot;400&quot;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+src (URL&#x2F;路径)
+必填，图片位置
+
+
+
+alt
+描述图像
+
+
+
+width
+图像宽度
+
+
+
+height
+图像高度
+
+
+
+loading
+浏览器应该如何加载
+
+
+请参阅：图像嵌入元素
+文本格式标签&lt;b&gt;粗体文字&lt;/b&gt;&lt;strong&gt;这段文字很重要&lt;/strong&gt;&lt;i&gt;斜体文本&lt;/i&gt;&lt;em&gt;这段文字被强调&lt;/em&gt;&lt;u&gt;下划线文本&lt;/u&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;code&gt;源代码&lt;/code&gt;&lt;del&gt;删除的文字&lt;/del&gt;&lt;mark&gt;突出显示的文本 (HTML5)&lt;/mark&gt;&lt;ins&gt;插入的文本&lt;/ins&gt;&lt;sup&gt;使文本上标&lt;/sup&gt;&lt;sub&gt;使文本下标&lt;/sub&gt;&lt;small&gt;使文本变小&lt;/small&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;kbd&gt;Ctrl&lt;/kbd&gt;&lt;blockquote&gt;文本块引用&lt;/blockquote&gt;
+
+标题&lt;h1&gt; 这是标题 1 &lt;/h1&gt;&lt;h2&gt; 这是标题 2 &lt;/h2&gt;&lt;h3&gt; 这是标题 3 &lt;/h3&gt;&lt;h4&gt; 这是标题 4 &lt;/h4&gt;&lt;h5&gt; 这是标题 5 &lt;/h5&gt;&lt;h6&gt; 这是标题 6 &lt;/h6&gt;
+
+您的页面上应该只有一个 h1
+Section Divisions
+
+
+:-
+:-
+
+
+
+&lt;div&gt;&lt;/div&gt;
+页面内容的划分或部分
+
+
+&lt;span&gt;&lt;/span&gt;
+其他内容中的文本部分
+
+
+&lt;p&gt;&lt;/p&gt;
+文本段落
+
+
+&lt;br&gt;
+换行
+
+
+&lt;hr&gt;
+水平分割线
+
+
+这些标签用于将页面划分为多个部分
+内部框架
+
+&lt;iframe  id=&quot;inlineFrameExample&quot;  title=&quot;Inline Frame Example&quot;  width=&quot;100%&quot;  height=&quot;200&quot;  frameborder=&quot;0&quot;  src=&quot;https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&amp;layer=mapnik&quot;&gt;&lt;/iframe&gt;
+
+
+↓ 预览
+
+
+请参阅：内联框架元素
+HTML 中的 JavaScript&lt;script type=&quot;text/javascript&quot;&gt;  let text = &quot;Hello 快速参考&quot;;  alert(text);&lt;/script&gt;
+
+外部 JavaScript&lt;body&gt;  ...  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;
+
+HTML 中的 CSS&lt;style type=&quot;text/css&quot;&gt;    h1 &#123;        color: purple;    &#125;&lt;/style&gt;
+
+外部样式表&lt;head&gt;  ...  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;/&gt;&lt;/head&gt;
+
+HTML5 标签页面&lt;body&gt;  &lt;header&gt;    &lt;nav&gt;...&lt;/nav&gt;  &lt;/header&gt;  &lt;main&gt;    &lt;h1&gt;快速参考&lt;/h1&gt;  &lt;/main&gt;  &lt;footer&gt;    &lt;p&gt;©2023 快速参考&lt;/p&gt;  &lt;/footer&gt;&lt;/body&gt;
+
+标题导航&lt;header&gt;  &lt;nav&gt;    &lt;ul&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;编辑页面&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Twitter&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Facebook&lt;/a&gt;&lt;/li&gt;    &lt;/ul&gt;  &lt;/nav&gt;&lt;/header&gt;
+
+HTML5 Tags
+
+
+
+
+:-
+:-
+
+
+
+article
+独立的内容
+
+
+aside
+次要内容
+
+
+audio
+嵌入声音或音频流
+
+
+bdi
+双向隔离元件
+
+
+canvas
+通过JavaScript绘制图形
+
+
+data
+机器可读内容
+
+
+datalist
+一组预定义选项
+
+
+details
+其他信息
+
+
+dialog
+对话框或子窗口
+
+
+embed
+嵌入外部应用程序
+
+
+figcaption
+图形的标题或图例
+
+
+figure
+插图
+
+
+footer
+页脚或最不重要的
+
+
+header
+刊头或重要信息
+
+
+main
+文件的主要内容
+
+
+mark
+突出显示的文本
+
+
+meter
+已知范围内的标量值
+
+
+nav
+导航链接的一部分
+
+
+output
+计算的结果
+
+
+picture
+用于多个图像源的容器
+
+
+progress
+任务的完成进度
+
+
+rp
+提供回退括号
+
+
+rt
+定义字符的发音
+
+
+ruby
+表示ruby注释
+
+
+section
+一系列相关内容中的组
+
+
+source
+媒体元素的资源
+
+
+summary
+元素的摘要
+
+
+template
+定义HTML片段
+
+
+time
+时间或日期
+
+
+track
+媒体元素的字幕信息
+
+
+video
+嵌入视频
+
+
+wbr
+换行机会
+
+
+HTML5 Video&lt;video controls=&quot;&quot; width=&quot;100%&quot;&gt;    &lt;source src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4&quot; type=&quot;video/mp4&quot;&gt;    很抱歉，您的浏览器不支持嵌入式视频。&lt;/video&gt;
+
+
+↓ 预览
+    
+    很抱歉，您的浏览器不支持嵌入式视频。
+
+
+HTML5 Audio&lt;audio  controls  src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3&quot;&gt;    您的浏览器不支持音频元素。&lt;/audio&gt;
+
+
+↓ 预览    您的浏览器不支持音频元素。
+HTML5 Ruby&lt;ruby&gt;  汉 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;hàn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  字 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;zì&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  拼 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;pīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  音 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;yīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;
+
+
+↓ 预览
+
+
+  汉 (hàn)
+  字 (zì)
+  拼 (pīn)
+  音 (yīn)
+
+
+HTML5 kdi&lt;ul&gt; &lt;li&gt;User &lt;bdi&gt;hrefs&lt;/bdi&gt;: 60 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;jdoe&lt;/bdi&gt;: 80 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;إيان&lt;/bdi&gt;: 90 points&lt;/li&gt;&lt;/ul&gt;
+
+↓ 预览
+ User hrefs: 60 points
+ User jdoe: 80 points
+ User إيان: 90 points
+
+
+HTML5 progress&lt;progress value=&quot;50&quot; max=&quot;100&quot;&gt;&lt;/progress&gt;
+
+
+HTML5 mark&lt;p&gt;我爱&lt;mark&gt;备忘清单&lt;/mark&gt;&lt;/p&gt;
+
+我爱备忘清单
+
+HTML 表格Table 示例
+
+&lt;table&gt;  &lt;thead&gt;      &lt;tr&gt;        &lt;td&gt;name&lt;/td&gt;        &lt;td&gt;age&lt;/td&gt;      &lt;/tr&gt;  &lt;/thead&gt;  &lt;tbody&gt;      &lt;tr&gt;        &lt;td&gt;Roberta&lt;/td&gt;        &lt;td&gt;39&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;td&gt;Oliver&lt;/td&gt;        &lt;td&gt;25&lt;/td&gt;      &lt;/tr&gt;  &lt;/tbody&gt;&lt;/table&gt;
+
+HTML表格标签
+
+
+
+
+标签
+说明
+
+
+
+&lt;table&gt;
+定义表格
+
+
+&lt;th&gt;
+定义表格中的标题单元格
+
+
+&lt;tr&gt;
+定义表中的行
+
+
+&lt;td&gt;
+定义表格中的单元格
+
+
+&lt;caption&gt;
+定义表格标题
+
+
+&lt;colgroup&gt;
+定义一组列
+
+
+&lt;col&gt;
+定义表中的列
+
+
+&lt;thead&gt;
+对标题内容进行分组
+
+
+&lt;tbody&gt;
+将正文内容分组
+
+
+&lt;tfoot&gt;
+对页脚内容进行分组
+
+
+&lt;td&gt; 属性
+
+
+属性
+说明
+
+
+
+colspan
+单元格应跨越的列数
+
+
+headers
+单元格与一个或多个标题单元格相关
+
+
+rowspan
+单元格应跨越的行数
+
+
+请参阅：td#属性
+&lt;th&gt; 属性
+
+
+属性
+说明
+
+
+
+colspan
+单元格应跨越的列数
+
+
+headers
+单元格与一个或多个标题单元格相关
+
+
+rowspan
+单元格应跨越的行数
+
+
+abbr
+单元格内容的描述
+
+
+scope
+表头元素(在&lt;th&gt;中定义)关联的单元格
+
+
+请参阅：th#属性
+HTML 列表无序列表&lt;ul&gt;  &lt;li&gt;I&#x27;m an item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;&lt;/ul&gt;
+
+请参阅：无序列表元素
+有序列表&lt;ol&gt;  &lt;li&gt;I&#x27;m the first item&lt;/li&gt;  &lt;li&gt;I&#x27;m the second item&lt;/li&gt;  &lt;li&gt;I&#x27;m the third item&lt;/li&gt;&lt;/ol&gt;
+
+请参阅：有序列表元素
+定义列表&lt;dl&gt;  &lt;dt&gt;A Term&lt;/dt&gt;  &lt;dd&gt;Definition of a term&lt;/dd&gt;  &lt;dt&gt;Another Term&lt;/dt&gt;  &lt;dd&gt;Definition of another term&lt;/dd&gt;&lt;/dl&gt;
+
+请参阅：描述列表元素
+HTML 表单Form 标签
+
+&lt;form method=&quot;POST&quot; action=&quot;api/login&quot;&gt;  &lt;label for=&quot;mail&quot;&gt;邮箱: &lt;/label&gt;  &lt;input type=&quot;email&quot; id=&quot;mail&quot; name=&quot;mail&quot;&gt;  &lt;br/&gt;  &lt;label for=&quot;pw&quot;&gt;密码:&lt;/label&gt;  &lt;input type=&quot;password&quot; id=&quot;pw&quot; name=&quot;pw&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;submit&quot; value=&quot;登录&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;checkbox&quot; id=&quot;ck&quot; name=&quot;ck&quot;&gt;  &lt;label for=&quot;ck&quot;&gt;记住我&lt;/label&gt;&lt;/form&gt;
+
+↓ 预览
+  邮箱: 
+  
+  
+  密码:
+  
+  
+  
+  
+  
+  记住我
+
+
+HTML &lt;form&gt; 元素用于收集信息并将其发送到外部源。
+Form 属性
+
+
+属性
+说明
+
+
+
+name
+脚本形式的名称
+
+
+action
+表单脚本的URL
+
+
+method
+HTTP方法，POST&#x2F;GET (默认)
+
+
+enctype
+介质类型，请参见enctype
+
+
+onsubmit
+提交表单时运行
+
+
+onreset
+在窗体重置时运行
+
+
+Label 标签&lt;!-- 嵌套标签 --&gt;&lt;label&gt;Click me &lt;input type=&quot;text&quot; id=&quot;user&quot; name=&quot;name&quot;/&gt;&lt;/label&gt;
+
+
+&lt;!-- &#x27;for&#x27; 属性 --&gt;&lt;label for=&quot;user&quot;&gt;Click me&lt;/label&gt;&lt;input id=&quot;user&quot; type=&quot;text&quot; name=&quot;name&quot;/&gt;
+
+for在标签中引用输入的id属性
+Input 标签&lt;label for=&quot;Name&quot;&gt;Name:&lt;/label&gt;&lt;input type=&quot;text&quot; name=&quot;Name&quot; id=&quot;&quot;&gt;
+
+↓ 预览
+  Username:
+  
+
+
+请参阅：HTML输入标记
+Textarea 标签&lt;textarea rows=&quot;2&quot; cols=&quot;30&quot; name=&quot;address&quot; id=&quot;address&quot;&gt;&lt;/textarea&gt;
+
+
+↓ 预览
+    
+
+
+Textarea 是一个多行文本输入控件
+Radio Buttons&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;m&quot;&gt;&lt;label for=&quot;m&quot;&gt;Male&lt;/label&gt;&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;f&quot;&gt;&lt;label for=&quot;f&quot;&gt;Female&lt;/label&gt;
+
+↓ 预览
+    
+    Male
+    
+    Female
+
+
+单选按钮用于让用户只选择一个
+Checkboxes&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;soc&quot;&gt;&lt;label for=&quot;soc&quot;&gt;Soccer&lt;/label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;bas&quot;&gt;&lt;label for=&quot;bas&quot;&gt;Baseball&lt;/label&gt;
+
+↓ 预览
+    
+    Soccer
+    
+    Baseball
+
+
+复选框允许用户选择一个或多个
+Select 标签&lt;label for=&quot;city&quot;&gt;City:&lt;/label&gt;&lt;select name=&quot;city&quot; id=&quot;city&quot;&gt;  &lt;option value=&quot;1&quot;&gt;Sydney&lt;/option&gt;  &lt;option value=&quot;2&quot;&gt;Melbourne&lt;/option&gt;  &lt;option value=&quot;3&quot;&gt;Cromwell&lt;/option&gt;&lt;/select&gt;
+
+↓ 预览
+  City:
+  
+      Sydney
+      Melbourne
+      Cromwell
+  
+
+
+选择框是选项的下拉列表
+Fieldset 标签&lt;fieldset&gt;  &lt;legend&gt;Your favorite monster&lt;/legend&gt;  &lt;input type=&quot;radio&quot; id=&quot;kra&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;kraken&quot;&gt;Kraken&lt;/label&gt;&lt;br/&gt;  &lt;input type=&quot;radio&quot; id=&quot;sas&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;sas&quot;&gt;Sasquatch&lt;/label&gt;&lt;/fieldset&gt;
+
+↓ 预览
+
+  Your favorite monster
+  
+  Kraken
+  
+  Sasquatch
+
+
+
+数据列表标签（HTML5）&lt;label for=&quot;b&quot;&gt;Choose a browser: &lt;/label&gt;&lt;input list=&quot;list&quot; id=&quot;b&quot; name=&quot;browser&quot;/&gt;&lt;datalist id=&quot;list&quot;&gt;  &lt;option value=&quot;Chrome&quot;&gt;  &lt;option value=&quot;Firefox&quot;&gt;  &lt;option value=&quot;Internet Explorer&quot;&gt;  &lt;option value=&quot;Opera&quot;&gt;  &lt;option value=&quot;Safari&quot;&gt;  &lt;option value=&quot;Microsoft Edge&quot;&gt;&lt;/datalist&gt;
+
+↓ 预览
+  Choose a browser:
+  
+  
+    
+    
+    
+    
+    
+    
+  
+
+
+提交和重置按钮&lt;form action=&quot;register.php&quot; method=&quot;post&quot;&gt;  &lt;label for=&quot;foo&quot;&gt;Name:&lt;/label&gt;  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;foo&quot;&gt;  &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;  &lt;input type=&quot;reset&quot; value=&quot;重置&quot;&gt;&lt;/form&gt;
+
+↓ 预览
+  Name:
+  ]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>前端技术</tag>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript 备忘录</title>
+    <url>/2025/01/08/javascript/</url>
+    <content><![CDATA[JavaScript 备忘清单包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。
+入门介绍JavaScript 是一种轻量级的解释型编程语言。
+
+JSON 备忘清单
+JavaScript 中的正则表达式
+TypeScript 备忘清单
+
+打印调试// =&gt; Hello world!console.log(&#x27;Hello world!&#x27;);// =&gt; Hello QuickReferenceconsole.warn(&#x27;hello %s&#x27;, &#x27;QuickReference&#x27;);// 将错误消息打印到 stderrconsole.error(new Error(&#x27;Oops!&#x27;));
+
+断点调试function potentiallyBuggyCode() &#123;  debugger;  // 做可能有问题的东西来检查，逐步通过等。&#125;
+
+debugger 语句调用任何可用的调试功能。
+数字let amount = 6;let price = 4.99;let home = 1e2;let num = 1_000_000; // 位数过多可以用 _ 分割let m = 0644;   // 八进制数字 420
+
+let 关键字let count; console.log(count); // =&gt; undefinedcount = 10;console.log(count); // =&gt; 10
+
+const 关键字const numberOfColumns = 4;// TypeError: Assignment to constant...numberOfColumns = 8;
+
+变量let x = null;let name = &quot;Tammy&quot;;const found = false;// =&gt; Tammy, false, nullconsole.log(name, found, x);var a;console.log(a); // =&gt; undefined
+
+字符串let single = &#x27;Wheres my bandit hat?&#x27;;let double = &quot;Wheres my bandit hat?&quot;;// =&gt; 21console.log(single.length);
+
+算术运算符5 + 5 = 10     // 加法 Addition10 - 5 = 5     // 减法 Subtraction5 * 10 = 50    // 乘法 Multiplication10 / 5 = 2     // 除法 Division10 % 5 = 0     // 取模 Modulo
+
+注释// 此行将表示注释/* 多行配置部署前必须更改以下配置。*/
+
+赋值运算符let number = 100;// 两个语句都会加 10number = number + 10;number += 10;console.log(number); // =&gt; 120
+
+字符串插值let age = 7;// 字符串拼接&#x27;Tommy is &#x27; + age + &#x27; years old.&#x27;;// 字符串插值`Tommy is $&#123;age&#125; years old.`;
+
+字符串
+
+var abc = &quot;abcdefghijklmnopqrstuvwxyz&quot;;var esc = &#x27;I don\&#x27;t \n know&#x27;;    // \n 换行var len = abc.length;            // 字符串长度abc.indexOf(&quot;lmno&quot;);             // 查找子字符串，如果不包含则 -1abc.lastIndexOf(&quot;lmno&quot;);         // 最后一次出现abc.slice(3, 6);                 // 去掉“def”，负值从后面计算abc.replace(&quot;abc&quot;,&quot;123&quot;);        // 查找和替换，接受正则表达式abc.toUpperCase();               // 转换为大写abc.toLowerCase();               // 转换为小写abc.concat(&quot; &quot;, str2);           // abc + &quot; &quot; + str2abc.charAt(2);                   // 索引处的字符：“c”abc[2];                          // 不安全，abc[2] = &quot;C&quot; 不起作用// 索引处的字符代码：“c”-&gt; 99abc.charCodeAt(2);// 用逗号分割字符串给出一个数组abc.split(&quot;,&quot;);// 分割字符abc.split(&quot;&quot;);// 匹配开头字符串,如果忽略第二个参数，则从索引 0 开始匹配abc.startsWith(&quot;bc&quot;, 1);// 匹配结尾的字符串,如果忽略第二个参数，则默认是原字符串长度abc.endsWith(&quot;wxy&quot;, abc.length - 1);// padEnd 和 padStart 都用于填充长度，默认填充对象是空格&quot;200&quot;.padEnd(5); // &quot;200  &quot;&quot;200&quot;.padEnd(5, &quot;.&quot;); // &quot;200..&quot;// 重复字符&quot;abc&quot;.repeat(2); // &quot;abcabc&quot;// trim、trimEnd 和 trimStart 用于去除首尾空格&quot; ab c &quot;.trim(); // &quot;ab c&quot;// 数字转为十六进制 (16)、八进制 (8) 或二进制 (2)(128).toString(16);
+
+数字
+
+var pi = 3.141;pi.toFixed(0);    // 返回 3             pi.toFixed(2);    // 返回 3.14 - 使用金钱pi.toPrecision(2) // 返回 3.1pi.valueOf();     // 返回号码Number(true);     // 转换为数字// 自 1970 年以来的毫秒数Number(new Date())          // 返回第一个数字：3parseInt(&quot;3 months&quot;);       // 返回 3.5parseFloat(&quot;3.5 days&quot;);     // 最大可能的 JS 数Number.MAX_VALUE            // 最小可能的 JS 编号Number.MIN_VALUE            // -无穷Number.NEGATIVE_INFINITY    // 无穷Number.POSITIVE_INFINITY    
+
+Mathconst pi = Math.PI; // 3.141592653589793Math.round(4.4); // = 4 - 数字四舍五入Math.round(4.5); // = 5Math.pow(2,8);   // = 256 - 2 的 8 次方    Math.sqrt(49);   // = 7 - 平方根Math.abs(-3.14); // = 3.14 - 绝对，正值Math.ceil(3.14); // = 4 - 返回 &gt;= 最小整数// = 3 - 返回 &lt;= 最大整数Math.floor(3.99);       // = 0 - 正弦Math.sin(0);            // OTHERS: tan,atan,asin,acos,余弦值Math.cos(Math.PI);      // = -2 - 最低值Math.min(0, 3, -2, 2);  // = 3 - 最高值Math.max(0, 3, -2, 2);  // = 0 自然对数Math.log(1);            // = 2.7182pow(E,x) 自然对数的底数Math.exp(1);            // 0 到 1 之间的随机数Math.random();          // 随机整数，从 1Math.floor(Math.random() * 5) + 1;  
+
+全局函数
+
+// 像脚本代码一样执行字符串eval();                     // 从数字返回字符串String(23);                 // 从数字返回字符串(23).toString();            // 从字符串返回数字Number(&quot;23&quot;);               // 解码 URI。 结果：“my page.asp”decodeURI(enc);             // 编码 URI。 结果：“my%20page.asp”encodeURI(uri);             // 解码 URI 组件decodeURIComponent(enc);    // 对 URI 组件进行编码encodeURIComponent(uri);    // 是一个有限的合法数isFinite();                 // 是一个非法数字isNaN();                    // 返回字符串的浮点数parseFloat();               // 解析一个字符串并返回一个整数parseInt();                 
+
+JavaScript 条件操作符
+
+true || false;       // true10 &gt; 5 || 10 &gt; 20;   // truefalse || false;      // false10 &gt; 100 || 10 &gt; 20; // false
+
+逻辑运算符 &amp;&amp;true &amp;&amp; true;        // true1 &gt; 2 &amp;&amp; 2 &gt; 1;      // falsetrue &amp;&amp; false;       // false4 === 4 &amp;&amp; 3 &gt; 1;    // true
+
+比较运算符1 &gt; 3                 // false3 &gt; 1                 // true250 &gt;= 250            // true1 === 1               // true1 === 2               // false1 === &#x27;1&#x27;             // false
+
+逻辑运算符let lateToWork = true;let oppositeValue = !lateToWork;// =&gt; falseconsole.log(oppositeValue); 
+
+空值合并运算符 ??null ?? &#x27;I win&#x27;;         //  &#x27;I win&#x27;undefined ?? &#x27;Me too&#x27;;   //  &#x27;Me too&#x27;false ?? &#x27;I lose&#x27;        //  false0 ?? &#x27;I lose again&#x27;      //  0&#x27;&#x27; ?? &#x27;Damn it&#x27;          //  &#x27;&#x27;
+
+if Statement (if 语句)const isMailSent = true;if (isMailSent) &#123;  console.log(&#x27;Mail sent to recipient&#x27;);&#125;
+
+Ternary Operator (三元运算符)var age = 1;// =&gt; truevar status = (age &gt;= 18) ? true : false;
+
+else ifconst size = 10;if (size &gt; 20) &#123;  console.log(&#x27;Medium&#x27;);&#125; else if (size &gt; 4) &#123;  console.log(&#x27;Small&#x27;);&#125; else &#123;  console.log(&#x27;Tiny&#x27;);&#125;// Print: Small
+
+&#x3D;&#x3D; vs &#x3D;&#x3D;&#x3D;0 == false     // true0 === false    // false, 不同类型1 == &quot;1&quot;       // true,  自动类型转换1 === &quot;1&quot;      // false, 不同类型null == undefined  // truenull === undefined // false&#x27;0&#x27; == false       // true&#x27;0&#x27; === false      // false
+
+== 只检查值，=== 检查值和类型。
+switch 语句const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;: console.log(&#x27;海的味道&#x27;);    break;  case &#x27;pizza&#x27;: console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
+
+switch 多 case - 单一操作const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;:  case &#x27;pizza&#x27;:    console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
+
+JavaScript Functions 函数函数// 定义函数：function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数：sum(3, 6); // 9
+
+匿名函数// 命名函数function rocketToMars() &#123;  return &#x27;BOOM!&#x27;;&#125;// 匿名函数const rocketToMars = function() &#123;  return &#x27;BOOM!&#x27;;&#125;
+
+箭头函数 (ES6)
+
+有两个参数const sum = (param1, param2) =&gt; &#123;   return param1 + param2; &#125;; console.log(sum(2,5)); // =&gt; 7 
+
+没有参数const printHello = () =&gt; &#123;   console.log(&#x27;hello&#x27;); &#125;; printHello(); // =&gt; hello
+
+只有一个参数const checkWeight = weight =&gt; &#123;   console.log(`Weight : $&#123;weight&#125;`); &#125;; checkWeight(25); // =&gt; Weight : 25 
+
+简洁箭头函数const multiply = (a, b) =&gt; a * b; // =&gt; 60 console.log(multiply(2, 30)); 
+
+从 ES2015 开始提供箭头函数
+返回关键字// 有 returnfunction sum(num1, num2) &#123;  return num1 + num2;&#125;// 该函数不输出总和function sum(num1, num2) &#123;  num1 + num2;&#125;
+
+调用函数// 定义函数function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数sum(2, 4); // 6
+
+立即执行函数//命名函数并立即执行一次(function sum(num1, num2) &#123;  return num1 + num2;&#125;)(2,4)//6
+
+函数表达式const dog = function() &#123;  return &#x27;Woof!&#x27;;&#125;
+
+函数参数// 参数是 namefunction sayHello(name) &#123;  return `Hello, $&#123;name&#125;!`;&#125;
+
+函数声明function add(num1, num2) &#123;  return num1 + num2;&#125;
+
+JavaScript 范围范围
+
+function myFunction() &#123;  var pizzaName = &quot;Margarita&quot;;  // 这里的代码可以使用 PizzaName  &#125;// ❌ PizzaName 不能在这里使用
+
+&#123; &#125; 块内声明的变量
+&#123;  let x = 2;&#125;// ❌ x 不能在这里使用&#123;  var x = 2;&#125;// ✅ x 能在这里使用
+
+var x = 2;       // Global scopelet x = 2;       // Global scopeconst x = 2;       // Global scope
+
+ES6 引入了两个重要的新 JavaScript 关键字：let 和 const。这两个关键字在 JavaScript 中提供了块作用域。
+块作用域变量const isLoggedIn = true;if (isLoggedIn == true) &#123;  const statusMessage = &#x27;Logged in.&#x27;;&#125;// Uncaught ReferenceError...// 未捕获的引用错误...console.log(statusMessage);
+
+全局变量// 全局声明的变量const color = &#x27;blue&#x27;;function printColor() &#123;  console.log(color);&#125;printColor(); // =&gt; blue
+
+let vs varfor (let i = 0; i &lt; 3; i++) &#123;  // 这是“let”的最大范围  // i 可以访问 ✔️&#125;// i 不能访问 ❌
+
+
+for (var i = 0; i &lt; 3; i++) &#123;  // i 可以访问 ✔️&#125;// i 可以访问 ✔️
+
+var 的范围是最近的函数块，而 let 的范围是最近的封闭块。
+带闭包的循环// 打印三次，不是我们的意思。for (var i = 0; i &lt; 3; i++) &#123;  setTimeout(_ =&gt; console.log(i), 10);&#125;
+
+
+// 按预期打印 0、1 和 2。for (let j = 0; j &lt; 3; j++) &#123;   setTimeout(_ =&gt; console.log(j), 10);&#125;
+
+变量使用 let 有自己的副本，变量有使用 var 的共享副本。
+JavaScript Arrays方法
+
+
+
+
+:-
+:-
+
+
+
+Array.from()
+类似数组对象创建一个新的 #
+
+
+Array.isArray()
+值是否是一个 Array #
+
+
+Array.of()
+创建一个新数组示例 #
+
+
+.at()
+返回值索引对应的元素 #
+
+
+.concat()
+合并两个或多个数组 #
+
+
+.copyWithin()
+浅复制替换某个位置 #
+
+
+.entries()
+新的 Array Iterator 对象 #
+
+
+.every()
+是否能通过回调函数的测试 #
+
+
+.fill()
+固定值填充一个数组中 #
+
+
+.filter()
+返回过滤后的数组 #
+
+
+.find()
+第一个元素的值 #
+
+
+.findIndex()
+第一个元素的索引 #
+
+
+.findLast()
+最后一个元素的值 #
+
+
+.findLastIndex()
+最后一个元素的索引 #
+
+
+.flat()
+扁平化嵌套数组 #
+
+
+.flatMap()
+与 flat 相同 #
+
+
+.forEach()
+升序循环执行 #
+
+
+.includes()
+是否包含一个指定的值 #
+
+
+.indexOf()
+找到给定元素的第一个索引 #
+
+
+.join()
+数组链接成一个字符串 #
+
+
+.keys()
+每个索引键 #
+
+
+.lastIndexOf()
+给定元素的最后一个索引 #
+
+
+.map()
+循环返回一个新数组 #
+
+
+.pop()
+删除最后一个元素 #
+
+
+.push()
+元素添加到数组的末尾 #
+
+
+.reduce()
+循环函数传递当前和上一个值 #
+
+
+.reduceRight()
+类似 reduce 从右往左循环 #
+
+
+.reverse()
+数组元素的位置颠倒 #
+
+
+.shift()
+删除第一个元素 #
+
+
+.slice()
+提取元素 #
+
+
+.some()
+至少有一个通过测试函数 #
+
+
+.sort()
+元素进行排序 #
+
+
+.splice()
+删除或替换或添加元素 #
+
+
+.toLocaleString()
+字符串表示数组中的元素 #
+
+
+.toString()
+返回字符串 #
+
+
+.unshift()
+元素添加到数组的开头 #
+
+
+.values()
+返回新的 ArrayIterator 对象 #
+
+
+数组const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];// 不同的数据类型const data = [1, &#x27;chicken&#x27;, false];
+
+属性 .lengthconst numbers = [1, 2, 3, 4];numbers.length // 4
+
+索引// 访问数组元素const myArray = [100, 200, 300];console.log(myArray[0]); // 100console.log(myArray[1]); // 200
+
+可变图表
+
+
+
+添加
+删除
+开始
+结束
+
+
+
+push
+✅
+
+
+✅
+
+
+pop
+
+✅
+
+✅
+
+
+unshift
+✅
+
+✅
+
+
+
+shift
+
+✅
+✅
+
+
+
+
+
+方法 .push()// 添加单个元素：const cart = [&#x27;apple&#x27;, &#x27;orange&#x27;];cart.push(&#x27;pear&#x27;); // 添加多个元素：const numbers = [1, 2];numbers.push(3, 4, 5);
+
+将项目添加到末尾并返回新的数组长度。
+方法 .pop()const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];const fruit = fruits.pop(); // &#x27;banana&#x27;console.log(fruits); // [&quot;apple&quot;, &quot;dew&quot;]
+
+从末尾删除一个项目并返回已删除的项目。
+方法 .shift()const array1 = [1, 2, 3];const firstElement = array1.shift();console.log(array1); // 输出: Array [2, 3]console.log(firstElement); // 输出: 1
+
+从头删除一个项目并返回已删除的项目。
+方法 .some()const array = [1, 2, 3, 4, 5];// 检查元素是否为偶数const even = (element) =&gt; element % 2 === 0;console.log(array.some(even));// 预期输出: true
+
+方法 .concat()const numbers = [3, 2, 1]const newFirstNumber = 4    // =&gt; [ 4, 3, 2, 1 ][newFirstNumber].concat(numbers)    // =&gt; [ 3, 2, 1, 4 ]numbers.concat(newFirstNumber)
+
+如果你想避免改变你的原始数组，你可以使用 concat。
+方法 .splice()const months = [&#x27;Jan&#x27;, &#x27;March&#x27;];months.splice(1, 0, &#x27;Feb&#x27;);// 在索引 1 处插入console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;]months.splice(2, 1, &#x27;May&#x27;);// 替换索引 2 处的 1 个元素console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;May&quot;]
+
+方法 .unshift()let cats = [&#x27;Bob&#x27;];// =&gt; [&#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Willy&#x27;);// =&gt; [&#x27;Puff&#x27;, &#x27;George&#x27;, &#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Puff&#x27;, &#x27;George&#x27;);
+
+将项目添加到开头并返回新的数组长度。
+方法 .filter()const words = [&#x27;js&#x27;, &#x27;java&#x27;, &#x27;golang&#x27;];const result = words.filter(word =&gt; &#123;  return  word.length &gt; 3&#125;);console.log(result);// 预期输出: Array [&quot;java&quot;, &quot;golang&quot;]
+
+JavaScript 循环While 循环while (condition) &#123;  // 要执行的代码块&#125;let i = 0;while (i &lt; 5) &#123;          console.log(i);  i++;&#125;
+
+反向循环const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;berry&quot;];for (let i = fruits.length - 1; i &gt;= 0; i--) &#123;  console.log(`$&#123;i&#125;. $&#123;fruits[i]&#125;`);&#125;// =&gt; 2. berry// =&gt; 1. dew// =&gt; 0. apple
+
+Do…While 语句x = 0i = 0do &#123;  x = x + i;  console.log(x)  i++;&#125; while (i &lt; 5);// =&gt; 0 1 3 6 10
+
+For 循环for (let i = 0; i &lt; 4; i += 1) &#123;  console.log(i);&#125;;// =&gt; 0, 1, 2, 3
+
+遍历数组for (let i = 0; i &lt; array.length; i++)&#123;  console.log(array[i]);&#125;// =&gt; 数组中的每一项
+
+Breakfor (let i = 0; i &lt; 99; i += 1) &#123;  if (i &gt; 5) break;  console.log(i)&#125;// =&gt; 0 1 2 3 4 5
+
+Continuefor (i = 0; i &lt; 10; i++) &#123;  if (i === 3) &#123;    continue;  &#125;  text += &quot;The number is &quot; + i + &quot;&lt;br&gt;&quot;;&#125;
+
+嵌套循环for (let i = 0; i &lt; 2; i += 1) &#123;  for (let j = 0; j &lt; 3; j += 1) &#123;    console.log(`$&#123;i&#125;-$&#123;j&#125;`);  &#125;&#125;
+
+for…in 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let index in fruits) &#123;  console.log(index);&#125;// =&gt; 0// =&gt; 1// =&gt; 2
+
+label 语句
+
+var num = 0;outPoint:for(var i = 0; i &lt; 10; i++) &#123;  for(var j = 0; j &lt; 10; j++) &#123;    if(i == 5 &amp;&amp; j == 5) &#123;      continue outPoint;    &#125;    num++;  &#125;&#125;alert(num);  // 95
+
+从 alert(num) 的值可以看出，continue outPoint; 语句的作用是跳出当前循环，并跳转到 outPoint（标签）下的 for 循环继续执行。
+for…of 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let fruit of fruits) &#123;  console.log(fruit);&#125;// =&gt; apple// =&gt; orange// =&gt; banana
+
+for await…of
+
+async function* asyncGenerator() &#123;  var i = 0;  while (i &lt; 3) &#123;    yield i++;  &#125;&#125;(async function() &#123;  for await (num of asyncGenerator()) &#123;    console.log(num);  &#125;&#125;)();// 0// 1// 2
+
+可选的 for 表达式var i = 0;for (;;) &#123;  if (i &gt; 3) break;  console.log(i);  i++;&#125;
+
+JavaScript 迭代器(Iterators)
+
+分配给变量的函数let plusFive = (number) =&gt; &#123;  return number + 5;  &#125;;// f 被赋值为 plusFivelet f = plusFive;plusFive(3); // 8// 由于 f 具有函数值，因此可以调用它。f(9); // 14
+
+回调函数const isEven = (n) =&gt; &#123;  return n % 2 == 0;&#125;let printMsg = (evenFunc, num) =&gt; &#123;  const isNumEven = evenFunc(num);  console.log(`$&#123;num&#125; is an even number: $&#123;isNumEven&#125;.`)&#125;// Pass in isEven as the callback functionprintMsg(isEven, 4); // =&gt; The number 4 is an even number: True.
+
+数组方法 .reduce()const numbers = [1, 2, 3, 4];const sum = numbers.reduce((accumulator, curVal) =&gt; &#123;    return accumulator + curVal;&#125;);console.log(sum); // 10
+
+数组方法 .map()const members = [&quot;Taylor&quot;, &quot;Donald&quot;, &quot;Don&quot;, &quot;Natasha&quot;, &quot;Bobby&quot;];const announcements = members.map((member) =&gt; &#123;  return member + &quot; joined the contest.&quot;;&#125;);console.log(announcements);
+
+数组方法 .forEach()const numbers = [28, 77, 45, 99, 27];numbers.forEach(number =&gt; &#123;    console.log(number);&#125;); 
+
+数组方法 .filter()const randomNumbers = [4, 11, 42, 14, 39];const filteredArray = randomNumbers.filter(n =&gt; &#123;    return n &gt; 5;&#125;);
+
+JavaScript 对象(Objects)
+
+访问属性const apple = &#123;   color: &#x27;Green&#x27;,  price: &#123; bulk: &#x27;$3/kg&#x27;, smallQty: &#x27;$4/kg&#x27; &#125;&#125;;console.log(apple.color);      // =&gt; Greenconsole.log(apple.price.bulk); // =&gt; $3/kg
+
+命名属性// 无效键名示例const trainSchedule = &#123;  // 由于单词之间的空格而无效。  platform num: 10,   // 表达式不能是键。  40 - 10 + 2: 30,  // 除非用引号括起来，否则 + 号无效。  +compartment: &#x27;C&#x27;&#125;
+
+不存在的属性const classElection = &#123;  date: &#x27;January 12&#x27;&#125;;console.log(classElection.place); // undefined
+
+可变的
+
+const student = &#123;  name: &#x27;Sheldon&#x27;,  score: 100,  grade: &#x27;A&#x27;,&#125;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, score: 100, grade: &#x27;A&#x27; &#125;delete student.scorestudent.grade = &#x27;F&#x27;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, grade: &#x27;F&#x27; &#125;student = &#123;&#125;// TypeError: TypeError：分配给常量变量。
+
+赋值简写语法const person = &#123;  name: &#x27;Tom&#x27;,  age: &#x27;22&#x27;,&#125;;const &#123;name, age&#125; = person;console.log(name); // &#x27;Tom&#x27;console.log(age);  // &#x27;22&#x27;
+
+删除运算符const person = &#123;  firstName: &quot;Matilda&quot;,  hobby: &quot;knitting&quot;,  goal: &quot;learning JavaScript&quot;&#125;;delete person.hobby; // 或 delete person[&#x27;hobby&#x27;];console.log(person);/*&#123;  firstName: &quot;Matilda&quot;  goal: &quot;learning JavaScript&quot;&#125; */
+
+对象作为参数const origNum = 8;const origObj = &#123;color: &#x27;blue&#x27;&#125;;const changeItUp = (num, obj) =&gt; &#123;  num = 7;  obj.color = &#x27;red&#x27;;&#125;;changeItUp(origNum, origObj);// 将输出 8，因为整数是按值传递的。console.log(origNum);// 由于传递了对象，将输出“red”// 通过引用，因此是可变的。console.log(origObj.color);
+
+工厂函数
+
+// 一个接受 &#x27;name&#x27;，&#x27;age&#x27; 和 &#x27;breed&#x27; 的工厂函数，//  参数返回一个自定义的 dog 对象。const dogFactory = (name, age, breed) =&gt; &#123;  return &#123;    name: name,    age: age,    breed: breed,    bark() &#123;      console.log(&#x27;Woof!&#x27;);      &#125;  &#125;;&#125;;
+
+速记对象创建const activity = &#x27;Surfing&#x27;;const beach = &#123; activity &#125;;console.log(beach); // &#123; activity: &#x27;Surfing&#x27; &#125;
+
+this 关键字const cat = &#123;  name: &#x27;Pipey&#x27;,  age: 8,  whatName() &#123;    return this.name    &#125;&#125;;console.log(cat.whatName()); // =&gt; Pipey
+
+方法const engine = &#123;  // 方法简写，有一个参数  start(adverb) &#123;    console.log(`The engine starts up $&#123;adverb&#125;...`);  &#125;,    // 不带参数的匿名箭头函数表达式  sputter: () =&gt; &#123;    console.log(&#x27;The engine sputters...&#x27;);  &#125;,&#125;;engine.start(&#x27;noisily&#x27;);engine.sputter();
+
+Getters 和 settersconst myCat = &#123;  _name: &#x27;Dottie&#x27;,  get name() &#123;    return this._name;    &#125;,  set name(newName) &#123;    this._name = newName;    &#125;&#125;;// 引用调用 getterconsole.log(myCat.name);// 赋值调用 settermyCat.name = &#x27;Yankee&#x27;;
+
+ProxyProxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
+// 用于拦截对象的读取属性操作。const handler = &#123;    get: function(obj, prop) &#123;        return prop in obj ? obj[prop] : 37;    &#125;&#125;;const p = new Proxy(&#123;&#125;, handler);p.a = 1;p.b = undefined;console.log(p.a, p.b);      // 1, undefinedconsole.log(&#x27;c&#x27; in p, p.c); // false, 37
+
+语法const p = new Proxy(target, handler)
+
+
+target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
+handler 一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。
+
+方法
+
+
+:-
+:-
+
+
+
+Proxy.revocable()
+创建一个可撤销的Proxy对象 #
+
+
+handler 对象的方法
+
+
+:-
+:-
+
+
+
+handler.getPrototypeOf()
+Object.getPrototypeOf 方法的捕捉器 #
+
+
+handler.setPrototypeOf()
+Object.setPrototypeOf 方法的捕捉器 #
+
+
+handler.isExtensible()
+Object.isExtensible 方法的捕捉器 #
+
+
+handler.preventExtensions()
+Object.preventExtensions 方法的捕捉器 #
+
+
+handler.getOwnPropertyDescriptor()
+Object.getOwnPropertyDescriptor 方法的捕捉器 #
+
+
+handler.defineProperty()
+Object.defineProperty 方法的捕捉器 #
+
+
+handler.has()
+in 操作符的捕捉器 #
+
+
+handler.get()
+属性读取操作的捕捉器 #
+
+
+handler.set()
+属性设置操作的捕捉器 #
+
+
+handler.deleteProperty()
+delete 操作符的捕捉器 #
+
+
+handler.ownKeys()
+Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器 #
+
+
+handler.apply()
+函数调用操作的捕捉器 #
+
+
+handler.construct()
+new 操作符的捕捉器 #
+
+
+
+
+ReflectReflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。这些方法与proxy handlers (en-US)的方法相同。Reflect不是一个函数对象，因此它是不可构造的。
+// 检测一个对象是否存在特定属性const duck = &#123;  name: &#x27;Maurice&#x27;,  color: &#x27;white&#x27;,  greeting: function() &#123;    console.log(`Quaaaack! My name is $&#123;this.name&#125;`);  &#125;&#125;Reflect.has(duck, &#x27;color&#x27;);// trueReflect.has(duck, &#x27;haircut&#x27;);// false
+
+静态方法
+
+
+:-
+:-
+
+
+
+Reflect.apply(target, thisArgument, argumentsList)
+对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 Function.prototype.apply() 功能类似 #
+
+
+Reflect.construct(target, argumentsList[, newTarget])
+对构造函数进行 new 操作，相当于执行 new target(…args) #
+
+
+Reflect.defineProperty(target, propertyKey, attributes)
+和 Object.defineProperty() 类似。如果设置成功就会返回 true #
+
+
+Reflect.deleteProperty(target, propertyKey)
+作为函数的delete操作符，相当于执行 delete target[name] #
+
+
+Reflect.get(target, propertyKey[, receiver])
+获取对象身上某个属性的值，类似于 target[name] #
+
+
+Reflect.getOwnPropertyDescriptor(target, propertyKey)
+类似于 Object.getOwnPropertyDescriptor()。如果对象中存在该属性，则返回对应的属性描述符，否则返回 undefined #
+
+
+Reflect.getPrototypeOf(target)
+类似于 Object.getPrototypeOf() #
+
+
+Reflect.has(target, propertyKey)
+判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同 #
+
+
+Reflect.isExtensible(target)
+类似于 Object.isExtensible() #
+
+
+Reflect.ownKeys(target)
+返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 Object.keys(), 但不会受enumerable 影响) #
+
+
+Reflect.preventExtensions(target)
+类似于 Object.preventExtensions()。返回一个Boolean #
+
+
+Reflect.set(target, propertyKey, value[, receiver])
+将值分配给属性的函数。返回一个Boolean，如果更新成功，则返回true #
+
+
+Reflect.setPrototypeOf(target, prototype)
+设置对象原型的函数。返回一个 Boolean，如果更新成功，则返回 true #
+
+
+
+
+JavaScript this 绑定隐式绑定function foo() &#123;  console.log(this)&#125;let obj1 = &#123;  name: &quot;obj1&quot;,  foo: foo&#125;let obj2 = &#123;  name: &quot;obj2&quot;,  obj1: obj1&#125;obj2.obj1.foo() // [Object obj1]
+
+隐式丢失let a = obj2.obj1.foo()a() // Window
+
+
+指定隐式绑定：必须在调用的对象内部有一个对函数的引用（比如一个属性）
+将以上调用赋值给一个变量，结果最终会是 Window
+在 a 被调用的位置没有进行过任何显示绑定，最终全局对象 window 会调用它（Window.a）
+
+
+
+显示绑定function getName(a1, a2) &#123;  console.log(&quot;此人&quot; + this.name, &quot;岁数&quot; + (a1 + a2))&#125;let person = &#123;  name: &quot;zhangsan&quot;&#125;
+
+callcall 第一个参数接受 this 作用域，剩余参数传递给其调用的函数
+getName.call(person, 18, 12)
+
+applyapply 第一个参数与 call 相同，第二个参数是其调用函数的参数数组
+getName.apply(person, [18, 12])
+
+bindbind 函数会返回一个新函数
+getName.bind(person,18,12)()//或者可以这样getName.bind(person)(18, 12)//或者这样getName.bind(person).bind(null, 18)(12)
+
+内置函数中的 this数组中的一些方法，类似于 map、forEach 等，可以自己设置绑定 this
+const obj = &#123;  name: &quot;zhangsan&quot;&#125;const array = [1, 2, 3];array.map(function(value)&#123;  console.log(this.name)&#125;, obj)// zhangsan x3 
+
+其中一些全局对象，如 setTimeout 等，它们和未显示绑定 this 的部分数组方法一样，都会指向全局对象（Window）
+setTimeout(function()&#123;   console.log(this)&#125;, 1000) // Window
+
+JavaScript Classes静态方法&#x2F;字段
+
+class Dog &#123;  constructor(name) &#123;    this._name = name;    &#125;    introduce() &#123;     console.log(&#x27;This is &#x27; + this._name + &#x27; !&#x27;);    &#125;    // 静态方法  static bark() &#123;    console.log(&#x27;Woof!&#x27;);    &#125;  static &#123;    console.log(&#x27;类静态初始化块调用&#x27;);  &#125;&#125;const myDog = new Dog(&#x27;Buster&#x27;);myDog.introduce();// 调用静态方法Dog.bark();
+
+公有静态字段class ClassStaticField &#123;  static staticField = &#x27;static field&#x27;&#125;console.log(ClassStaticField.staticField)// 预期输出值：&quot;static field&quot;​ 
+
+Classclass Song &#123;  constructor() &#123;    this.title;    this.author;  &#125;    play() &#123;    console.log(&#x27;Song playing!&#x27;);  &#125;&#125;const mySong = new Song();mySong.play();
+
+extends// Parent classclass Media &#123;  constructor(info) &#123;    this.publishDate = info.publishDate;    this.name = info.name;  &#125;&#125;// Child classclass Song extends Media &#123;  constructor(songData) &#123;    super(songData);    this.artist = songData.artist;  &#125;&#125;const mySong = new Song(&#123;   artist: &#x27;Queen&#x27;,   name: &#x27;Bohemian Rhapsody&#x27;,   publishDate: 1975&#125;);
+
+Class Constructorclass Song &#123;  constructor(title, artist) &#123;    this.title = title;    this.artist = artist;  &#125;&#125;const mySong = new Song(&#x27;Bohemian Rhapsody&#x27;, &#x27;Queen&#x27;);console.log(mySong.title);
+
+Class Methodsclass Song &#123;  play() &#123;    console.log(&#x27;Playing!&#x27;);  &#125;    stop() &#123;    console.log(&#x27;Stopping!&#x27;);  &#125;&#125;
+
+JavaScript Modules
+
+Export &#x2F; Import// myMath.js// 默认导出 Default exportexport default function add(x,y)&#123;  return x + y&#125;// 正常导出 Normal exportexport function subtract(x,y)&#123;  return x - y&#125;// 多重导出 Multiple exportsfunction multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;export &#123;  multiply, duplicate&#125;
+
+import 加载模块// main.jsimport add, &#123; subtract, multiply, duplicate &#125; from &#x27;./myMath.js&#x27;;console.log(add(6, 2));      // 8 console.log(subtract(6, 2))  // 4console.log(multiply(6, 2)); // 12console.log(duplicate(5))    // 10// index.html&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
+
+Export Module// myMath.jsfunction add(x,y)&#123;  return x + y&#125;function subtract(x,y)&#123;  return x - y&#125;function multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;// node.js 中的多个导出module.exports = &#123;  add,  subtract,  multiply,  duplicate&#125;
+
+require 加载模块// main.jsconst myMath = require(&#x27;./myMath.js&#x27;)console.log(myMath.add(6, 2));      // 8 console.log(myMath.subtract(6, 2))  // 4console.log(myMath.multiply(6, 2)); // 12console.log(myMath.duplicate(5))    // 10
+
+JavaScript PromisesPromise
+
+创建 promises
+new Promise((resolve, reject) =&gt; &#123;  if (ok) &#123;    resolve(result)  &#125; else &#123;    reject(error)  &#125;&#125;)
+
+使用 promisespromise  .then((result) =&gt; &#123; ··· &#125;)  .catch((error) =&gt; &#123; ··· &#125;)
+
+Promise 方法Promise.all(···)Promise.race(···)Promise.reject(···)Promise.resolve(···)
+
+执行器函数const executorFn = (resolve, reject) =&gt; &#123;  resolve(&#x27;Resolved!&#x27;);&#125;;const promise = new Promise(executorFn);
+
+setTimeout()const loginAlert = () =&gt; &#123;  console.log(&#x27;Login&#x27;);&#125;;setTimeout(loginAlert, 6000);
+
+Promise 状态const promise = new Promise((resolve, reject) =&gt; &#123;  const res = true;  // 一个异步操作。  if (res) &#123;    resolve(&#x27;Resolved!&#x27;);  &#125;  else &#123;    reject(Error(&#x27;Error&#x27;));  &#125;&#125;);promise.then(  (res) =&gt; console.log(res),  (err) =&gt; console.error(err));
+
+.then() 方法const promise = new Promise((resolve, reject) =&gt; &#123;      setTimeout(() =&gt; &#123;    resolve(&#x27;Result&#x27;);  &#125;, 200);&#125;);promise.then((res) =&gt; &#123;  console.log(res);&#125;, (err) =&gt; &#123;  console.error(err);&#125;);
+
+.catch() 方法const promise = new Promise(  (resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    reject(Error(&#x27;Promise 无条件拒绝。&#x27;));  &#125;, 1000);&#125;);promise.then((res) =&gt; &#123;  console.log(value);&#125;);promise.catch((err) =&gt; &#123;  console.error(err);&#125;);
+
+Promise.all()
+
+const promise1 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(3);  &#125;, 300);&#125;);const promise2 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(2);  &#125;, 200);&#125;);Promise.all([promise1, promise2]).then((res) =&gt; &#123;  console.log(res[0]);  console.log(res[1]);&#125;);
+
+链接多个 .then()const promise = new Promise(  resolve =&gt;     setTimeout(() =&gt; resolve(&#x27;dAlan&#x27;),100));promise.then(res =&gt; &#123;  return res === &#x27;Alan&#x27;     ? Promise.resolve(&#x27;Hey Alan!&#x27;)    : Promise.reject(&#x27;Who are you?&#x27;)&#125;).then((res) =&gt; &#123;  console.log(res)&#125;, (err) =&gt; &#123;  console.error(err)&#125;);
+
+避免嵌套的 Promise 和 .then()
+
+const promise = new Promise((resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    resolve(&#x27;*&#x27;);  &#125;, 1000);&#125;);const twoStars = (star) =&gt; &#123;    return (star + star);&#125;;const oneDot = (star) =&gt; &#123;    return (star + &#x27;.&#x27;);&#125;;const print = (val) =&gt; &#123;  console.log(val);&#125;;// 将它们链接在一起promise.then(twoStars).then(oneDot).then(print);
+
+JavaScript Async-Await
+
+异步
+
+function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;// 异步函数表达式const msg = async function() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;// 异步箭头函数const msg1 = async () =&gt; &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后msg1(); // Message: Hello World! &lt;-- 2 秒后
+
+解决 Promiseslet pro1 = Promise.resolve(5);let pro2 = 44;let pro3 = new Promise(function(resolve, reject) &#123;  setTimeout(resolve, 100, &#x27;foo&#x27;);&#125;);Promise.all([pro1, pro2, pro3]).then(function(values) &#123;  console.log(values);&#125;);// expected =&gt; Array [5, 44, &quot;foo&quot;]
+
+异步等待 Promisesfunction helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
+
+错误处理// 数据不完整let json = &#x27;&#123; &quot;age&quot;: 30 &#125;&#x27;;try &#123;  let user = JSON.parse(json); // &lt;-- 没有错误  console.log( user.name );    // no name!&#125; catch (e) &#123;  console.error( &quot;Invalid JSON data!&quot; );&#125;
+
+异步等待运算符function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
+
+JavaScript 请求JSONconst jsonObj = &#123;  &quot;name&quot;: &quot;Rick&quot;,  &quot;id&quot;: &quot;11A&quot;,  &quot;level&quot;: 4  &#125;;
+
+另见：JSON 备忘单
+XMLHttpRequestconst xhr = new XMLHttpRequest();xhr.open(&#x27;GET&#x27;, &#x27;mysite.com/getjson&#x27;);
+
+XMLHttpRequest 是一个浏览器级别的 API，它使客户端能够通过 JavaScript 编写数据传输脚本，而不是 JavaScript 语言的一部分。
+GETconst req = new XMLHttpRequest();req.responseType = &#x27;json&#x27;;req.open(&#x27;GET&#x27;, &#x27;/getdata?id=65&#x27;);req.onload = () =&gt; &#123;  console.log(xhr.response);&#125;;req.send();
+
+POST
+
+const data = &#123; weight: &#x27;1.5 KG&#x27; &#125;;const xhr = new XMLHttpRequest();// 初始化一个请求。xhr.open(&#x27;POST&#x27;, &#x27;/inventory/add&#x27;);// 一个用于定义响应类型的枚举值xhr.responseType = &#x27;json&#x27;;// 发送请求以及数据。xhr.send(JSON.stringify(data));// 请求成功完成时触发。xhr.onload = () =&gt; &#123;  console.log(xhr.response);&#125;// 当 request 遭遇错误时触发。xhr.onerror = () =&gt; &#123;  console.log(xhr.response);&#125;
+
+fetch api
+
+fetch(url, &#123;    method: &#x27;POST&#x27;,    headers: &#123;      &#x27;Content-type&#x27;: &#x27;application/json&#x27;,      &#x27;apikey&#x27;: apiKey    &#125;,    body: data&#125;).then(response =&gt; &#123;  if (response.ok) &#123;    return response.json();  &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message)&#125;)
+
+JSON 格式fetch(&#x27;url-that-returns-JSON&#x27;)  .then(response =&gt; response.json())  .then(jsonResponse =&gt; &#123;    console.log(jsonResponse);  &#125;);
+
+promise url 参数获取 APIfetch(&#x27;url&#x27;)  .then(response  =&gt; &#123;    console.log(response);  &#125;, rejection =&gt; &#123;    console.error(rejection.message);  &#125;);
+
+Fetch API 函数fetch(&#x27;https://api-xxx.com/endpoint&#x27;, &#123;  method: &#x27;POST&#x27;,  body: JSON.stringify(&#123;id: &quot;200&quot;&#125;)&#125;).then(response =&gt; &#123;  if(response.ok)&#123;    return response.json();    &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message);&#125;).then(jsonResponse =&gt; &#123;  console.log(jsonResponse);&#125;)
+
+async await 语法
+
+const getSuggestions = async () =&gt; &#123;  const wordQuery = inputField.value;  const endpoint = `$&#123;url&#125;$&#123;queryParams&#125;$&#123;wordQuery&#125;`;  try&#123;    const response = await fetch(endpoint, &#123;cache: &#x27;no-cache&#x27;&#125;);    if(response.ok)&#123;      const jsonResponse = await response.json()    &#125;  &#125;  catch(error)&#123;    console.log(error)  &#125;&#125;
+]]></content>
+      <categories>
+        <category>后端编程</category>
+      </categories>
+      <tags>
+        <tag>后端编程</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
@@ -4350,1275 +5753,6 @@ Docker入门学习笔记 (github.io)
       </tags>
   </entry>
   <entry>
-    <title>HTML 备忘录</title>
-    <url>/2025/01/08/html/</url>
-    <content><![CDATA[HTML 备忘清单此 HTML 快速参考备忘单以可读布局列出了常见的 HTML 和 HTML5 标记。
-入门hello.html
-
-&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;    &lt;title&gt;HTML5 Boilerplate&lt;/title&gt;&lt;/head&gt;&lt;body&gt;    &lt;h1&gt;Hello world, hello 备忘清单!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
-
-或者在 jsfiddle
-注释 Comment&lt;!-- 这是代码注释 --&gt;&lt;!--  或者你可以注释掉一个  大量的行。--&gt;
-
-段落 Paragraph&lt;p&gt;我来自快速参考&lt;/p&gt;&lt;p&gt;分享快速参考备忘单。&lt;/p&gt;
-
-请参阅：段落元素
-HTML 链接&lt;a href=&quot;https://github.com/jaywcjlove/reference&quot;&gt;  Github&lt;/a&gt;&lt;a href=&quot;mailto:jack@abc.com&quot;&gt;邮箱&lt;/a&gt;&lt;a href=&quot;tel:+123456789&quot;&gt;电话&lt;/a&gt;&lt;a href=&quot;sms:+123456789&amp;body=ha%20ha&quot;&gt;  短信&lt;/a&gt;
-
-
-
-
-
-:-
-:-
-
-
-
-href
-超链接指向的 URL
-
-
-rel
-链接 URL 的关系
-
-
-target
-链接目标位置：_self&#x2F;_blank&#x2F;_top&#x2F;_parent
-
-
-请参阅：&lt;a&gt; 属性
-Image 标签&lt;img loading=&quot;lazy&quot;  src=&quot;https://xxx.png&quot;  alt=&quot;在此处描述图像&quot;  width=&quot;400&quot; height=&quot;400&quot;&gt;
-
-
-
-
-
-
-
-
-
-
-
-
-
-src (URL&#x2F;路径)
-必填，图片位置
-
-
-
-alt
-描述图像
-
-
-
-width
-图像宽度
-
-
-
-height
-图像高度
-
-
-
-loading
-浏览器应该如何加载
-
-
-请参阅：图像嵌入元素
-文本格式标签&lt;b&gt;粗体文字&lt;/b&gt;&lt;strong&gt;这段文字很重要&lt;/strong&gt;&lt;i&gt;斜体文本&lt;/i&gt;&lt;em&gt;这段文字被强调&lt;/em&gt;&lt;u&gt;下划线文本&lt;/u&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;code&gt;源代码&lt;/code&gt;&lt;del&gt;删除的文字&lt;/del&gt;&lt;mark&gt;突出显示的文本 (HTML5)&lt;/mark&gt;&lt;ins&gt;插入的文本&lt;/ins&gt;&lt;sup&gt;使文本上标&lt;/sup&gt;&lt;sub&gt;使文本下标&lt;/sub&gt;&lt;small&gt;使文本变小&lt;/small&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;kbd&gt;Ctrl&lt;/kbd&gt;&lt;blockquote&gt;文本块引用&lt;/blockquote&gt;
-
-标题&lt;h1&gt; 这是标题 1 &lt;/h1&gt;&lt;h2&gt; 这是标题 2 &lt;/h2&gt;&lt;h3&gt; 这是标题 3 &lt;/h3&gt;&lt;h4&gt; 这是标题 4 &lt;/h4&gt;&lt;h5&gt; 这是标题 5 &lt;/h5&gt;&lt;h6&gt; 这是标题 6 &lt;/h6&gt;
-
-您的页面上应该只有一个 h1
-Section Divisions
-
-
-:-
-:-
-
-
-
-&lt;div&gt;&lt;/div&gt;
-页面内容的划分或部分
-
-
-&lt;span&gt;&lt;/span&gt;
-其他内容中的文本部分
-
-
-&lt;p&gt;&lt;/p&gt;
-文本段落
-
-
-&lt;br&gt;
-换行
-
-
-&lt;hr&gt;
-水平分割线
-
-
-这些标签用于将页面划分为多个部分
-内部框架
-
-&lt;iframe  id=&quot;inlineFrameExample&quot;  title=&quot;Inline Frame Example&quot;  width=&quot;100%&quot;  height=&quot;200&quot;  frameborder=&quot;0&quot;  src=&quot;https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&amp;layer=mapnik&quot;&gt;&lt;/iframe&gt;
-
-
-↓ 预览
-
-
-请参阅：内联框架元素
-HTML 中的 JavaScript&lt;script type=&quot;text/javascript&quot;&gt;  let text = &quot;Hello 快速参考&quot;;  alert(text);&lt;/script&gt;
-
-外部 JavaScript&lt;body&gt;  ...  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;
-
-HTML 中的 CSS&lt;style type=&quot;text/css&quot;&gt;    h1 &#123;        color: purple;    &#125;&lt;/style&gt;
-
-外部样式表&lt;head&gt;  ...  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;/&gt;&lt;/head&gt;
-
-HTML5 标签页面&lt;body&gt;  &lt;header&gt;    &lt;nav&gt;...&lt;/nav&gt;  &lt;/header&gt;  &lt;main&gt;    &lt;h1&gt;快速参考&lt;/h1&gt;  &lt;/main&gt;  &lt;footer&gt;    &lt;p&gt;©2023 快速参考&lt;/p&gt;  &lt;/footer&gt;&lt;/body&gt;
-
-标题导航&lt;header&gt;  &lt;nav&gt;    &lt;ul&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;编辑页面&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Twitter&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Facebook&lt;/a&gt;&lt;/li&gt;    &lt;/ul&gt;  &lt;/nav&gt;&lt;/header&gt;
-
-HTML5 Tags
-
-
-
-
-:-
-:-
-
-
-
-article
-独立的内容
-
-
-aside
-次要内容
-
-
-audio
-嵌入声音或音频流
-
-
-bdi
-双向隔离元件
-
-
-canvas
-通过JavaScript绘制图形
-
-
-data
-机器可读内容
-
-
-datalist
-一组预定义选项
-
-
-details
-其他信息
-
-
-dialog
-对话框或子窗口
-
-
-embed
-嵌入外部应用程序
-
-
-figcaption
-图形的标题或图例
-
-
-figure
-插图
-
-
-footer
-页脚或最不重要的
-
-
-header
-刊头或重要信息
-
-
-main
-文件的主要内容
-
-
-mark
-突出显示的文本
-
-
-meter
-已知范围内的标量值
-
-
-nav
-导航链接的一部分
-
-
-output
-计算的结果
-
-
-picture
-用于多个图像源的容器
-
-
-progress
-任务的完成进度
-
-
-rp
-提供回退括号
-
-
-rt
-定义字符的发音
-
-
-ruby
-表示ruby注释
-
-
-section
-一系列相关内容中的组
-
-
-source
-媒体元素的资源
-
-
-summary
-元素的摘要
-
-
-template
-定义HTML片段
-
-
-time
-时间或日期
-
-
-track
-媒体元素的字幕信息
-
-
-video
-嵌入视频
-
-
-wbr
-换行机会
-
-
-HTML5 Video&lt;video controls=&quot;&quot; width=&quot;100%&quot;&gt;    &lt;source src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4&quot; type=&quot;video/mp4&quot;&gt;    很抱歉，您的浏览器不支持嵌入式视频。&lt;/video&gt;
-
-
-↓ 预览
-    
-    很抱歉，您的浏览器不支持嵌入式视频。
-
-
-HTML5 Audio&lt;audio  controls  src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3&quot;&gt;    您的浏览器不支持音频元素。&lt;/audio&gt;
-
-
-↓ 预览    您的浏览器不支持音频元素。
-HTML5 Ruby&lt;ruby&gt;  汉 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;hàn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  字 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;zì&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  拼 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;pīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  音 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;yīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;
-
-
-↓ 预览
-
-
-  汉 (hàn)
-  字 (zì)
-  拼 (pīn)
-  音 (yīn)
-
-
-HTML5 kdi&lt;ul&gt; &lt;li&gt;User &lt;bdi&gt;hrefs&lt;/bdi&gt;: 60 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;jdoe&lt;/bdi&gt;: 80 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;إيان&lt;/bdi&gt;: 90 points&lt;/li&gt;&lt;/ul&gt;
-
-↓ 预览
- User hrefs: 60 points
- User jdoe: 80 points
- User إيان: 90 points
-
-
-HTML5 progress&lt;progress value=&quot;50&quot; max=&quot;100&quot;&gt;&lt;/progress&gt;
-
-
-HTML5 mark&lt;p&gt;我爱&lt;mark&gt;备忘清单&lt;/mark&gt;&lt;/p&gt;
-
-我爱备忘清单
-
-HTML 表格Table 示例
-
-&lt;table&gt;  &lt;thead&gt;      &lt;tr&gt;        &lt;td&gt;name&lt;/td&gt;        &lt;td&gt;age&lt;/td&gt;      &lt;/tr&gt;  &lt;/thead&gt;  &lt;tbody&gt;      &lt;tr&gt;        &lt;td&gt;Roberta&lt;/td&gt;        &lt;td&gt;39&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;td&gt;Oliver&lt;/td&gt;        &lt;td&gt;25&lt;/td&gt;      &lt;/tr&gt;  &lt;/tbody&gt;&lt;/table&gt;
-
-HTML表格标签
-
-
-
-
-标签
-说明
-
-
-
-&lt;table&gt;
-定义表格
-
-
-&lt;th&gt;
-定义表格中的标题单元格
-
-
-&lt;tr&gt;
-定义表中的行
-
-
-&lt;td&gt;
-定义表格中的单元格
-
-
-&lt;caption&gt;
-定义表格标题
-
-
-&lt;colgroup&gt;
-定义一组列
-
-
-&lt;col&gt;
-定义表中的列
-
-
-&lt;thead&gt;
-对标题内容进行分组
-
-
-&lt;tbody&gt;
-将正文内容分组
-
-
-&lt;tfoot&gt;
-对页脚内容进行分组
-
-
-&lt;td&gt; 属性
-
-
-属性
-说明
-
-
-
-colspan
-单元格应跨越的列数
-
-
-headers
-单元格与一个或多个标题单元格相关
-
-
-rowspan
-单元格应跨越的行数
-
-
-请参阅：td#属性
-&lt;th&gt; 属性
-
-
-属性
-说明
-
-
-
-colspan
-单元格应跨越的列数
-
-
-headers
-单元格与一个或多个标题单元格相关
-
-
-rowspan
-单元格应跨越的行数
-
-
-abbr
-单元格内容的描述
-
-
-scope
-表头元素(在&lt;th&gt;中定义)关联的单元格
-
-
-请参阅：th#属性
-HTML 列表无序列表&lt;ul&gt;  &lt;li&gt;I&#x27;m an item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;&lt;/ul&gt;
-
-请参阅：无序列表元素
-有序列表&lt;ol&gt;  &lt;li&gt;I&#x27;m the first item&lt;/li&gt;  &lt;li&gt;I&#x27;m the second item&lt;/li&gt;  &lt;li&gt;I&#x27;m the third item&lt;/li&gt;&lt;/ol&gt;
-
-请参阅：有序列表元素
-定义列表&lt;dl&gt;  &lt;dt&gt;A Term&lt;/dt&gt;  &lt;dd&gt;Definition of a term&lt;/dd&gt;  &lt;dt&gt;Another Term&lt;/dt&gt;  &lt;dd&gt;Definition of another term&lt;/dd&gt;&lt;/dl&gt;
-
-请参阅：描述列表元素
-HTML 表单Form 标签
-
-&lt;form method=&quot;POST&quot; action=&quot;api/login&quot;&gt;  &lt;label for=&quot;mail&quot;&gt;邮箱: &lt;/label&gt;  &lt;input type=&quot;email&quot; id=&quot;mail&quot; name=&quot;mail&quot;&gt;  &lt;br/&gt;  &lt;label for=&quot;pw&quot;&gt;密码:&lt;/label&gt;  &lt;input type=&quot;password&quot; id=&quot;pw&quot; name=&quot;pw&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;submit&quot; value=&quot;登录&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;checkbox&quot; id=&quot;ck&quot; name=&quot;ck&quot;&gt;  &lt;label for=&quot;ck&quot;&gt;记住我&lt;/label&gt;&lt;/form&gt;
-
-↓ 预览
-  邮箱: 
-  
-  
-  密码:
-  
-  
-  
-  
-  
-  记住我
-
-
-HTML &lt;form&gt; 元素用于收集信息并将其发送到外部源。
-Form 属性
-
-
-属性
-说明
-
-
-
-name
-脚本形式的名称
-
-
-action
-表单脚本的URL
-
-
-method
-HTTP方法，POST&#x2F;GET (默认)
-
-
-enctype
-介质类型，请参见enctype
-
-
-onsubmit
-提交表单时运行
-
-
-onreset
-在窗体重置时运行
-
-
-Label 标签&lt;!-- 嵌套标签 --&gt;&lt;label&gt;Click me &lt;input type=&quot;text&quot; id=&quot;user&quot; name=&quot;name&quot;/&gt;&lt;/label&gt;
-
-
-&lt;!-- &#x27;for&#x27; 属性 --&gt;&lt;label for=&quot;user&quot;&gt;Click me&lt;/label&gt;&lt;input id=&quot;user&quot; type=&quot;text&quot; name=&quot;name&quot;/&gt;
-
-for在标签中引用输入的id属性
-Input 标签&lt;label for=&quot;Name&quot;&gt;Name:&lt;/label&gt;&lt;input type=&quot;text&quot; name=&quot;Name&quot; id=&quot;&quot;&gt;
-
-↓ 预览
-  Username:
-  
-
-
-请参阅：HTML输入标记
-Textarea 标签&lt;textarea rows=&quot;2&quot; cols=&quot;30&quot; name=&quot;address&quot; id=&quot;address&quot;&gt;&lt;/textarea&gt;
-
-
-↓ 预览
-    
-
-
-Textarea 是一个多行文本输入控件
-Radio Buttons&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;m&quot;&gt;&lt;label for=&quot;m&quot;&gt;Male&lt;/label&gt;&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;f&quot;&gt;&lt;label for=&quot;f&quot;&gt;Female&lt;/label&gt;
-
-↓ 预览
-    
-    Male
-    
-    Female
-
-
-单选按钮用于让用户只选择一个
-Checkboxes&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;soc&quot;&gt;&lt;label for=&quot;soc&quot;&gt;Soccer&lt;/label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;bas&quot;&gt;&lt;label for=&quot;bas&quot;&gt;Baseball&lt;/label&gt;
-
-↓ 预览
-    
-    Soccer
-    
-    Baseball
-
-
-复选框允许用户选择一个或多个
-Select 标签&lt;label for=&quot;city&quot;&gt;City:&lt;/label&gt;&lt;select name=&quot;city&quot; id=&quot;city&quot;&gt;  &lt;option value=&quot;1&quot;&gt;Sydney&lt;/option&gt;  &lt;option value=&quot;2&quot;&gt;Melbourne&lt;/option&gt;  &lt;option value=&quot;3&quot;&gt;Cromwell&lt;/option&gt;&lt;/select&gt;
-
-↓ 预览
-  City:
-  
-      Sydney
-      Melbourne
-      Cromwell
-  
-
-
-选择框是选项的下拉列表
-Fieldset 标签&lt;fieldset&gt;  &lt;legend&gt;Your favorite monster&lt;/legend&gt;  &lt;input type=&quot;radio&quot; id=&quot;kra&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;kraken&quot;&gt;Kraken&lt;/label&gt;&lt;br/&gt;  &lt;input type=&quot;radio&quot; id=&quot;sas&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;sas&quot;&gt;Sasquatch&lt;/label&gt;&lt;/fieldset&gt;
-
-↓ 预览
-
-  Your favorite monster
-  
-  Kraken
-  
-  Sasquatch
-
-
-
-数据列表标签（HTML5）&lt;label for=&quot;b&quot;&gt;Choose a browser: &lt;/label&gt;&lt;input list=&quot;list&quot; id=&quot;b&quot; name=&quot;browser&quot;/&gt;&lt;datalist id=&quot;list&quot;&gt;  &lt;option value=&quot;Chrome&quot;&gt;  &lt;option value=&quot;Firefox&quot;&gt;  &lt;option value=&quot;Internet Explorer&quot;&gt;  &lt;option value=&quot;Opera&quot;&gt;  &lt;option value=&quot;Safari&quot;&gt;  &lt;option value=&quot;Microsoft Edge&quot;&gt;&lt;/datalist&gt;
-
-↓ 预览
-  Choose a browser:
-  
-  
-    
-    
-    
-    
-    
-    
-  
-
-
-提交和重置按钮&lt;form action=&quot;register.php&quot; method=&quot;post&quot;&gt;  &lt;label for=&quot;foo&quot;&gt;Name:&lt;/label&gt;  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;foo&quot;&gt;  &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;  &lt;input type=&quot;reset&quot; value=&quot;重置&quot;&gt;&lt;/form&gt;
-
-↓ 预览
-  Name:
-  ]]></content>
-      <categories>
-        <category>前端技术</category>
-      </categories>
-      <tags>
-        <tag>前端技术</tag>
-        <tag>HTML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 备忘录</title>
-    <url>/2025/01/08/javascript/</url>
-    <content><![CDATA[JavaScript 备忘清单包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。
-入门介绍JavaScript 是一种轻量级的解释型编程语言。
-
-JSON 备忘清单
-JavaScript 中的正则表达式
-TypeScript 备忘清单
-
-打印调试// =&gt; Hello world!console.log(&#x27;Hello world!&#x27;);// =&gt; Hello QuickReferenceconsole.warn(&#x27;hello %s&#x27;, &#x27;QuickReference&#x27;);// 将错误消息打印到 stderrconsole.error(new Error(&#x27;Oops!&#x27;));
-
-断点调试function potentiallyBuggyCode() &#123;  debugger;  // 做可能有问题的东西来检查，逐步通过等。&#125;
-
-debugger 语句调用任何可用的调试功能。
-数字let amount = 6;let price = 4.99;let home = 1e2;let num = 1_000_000; // 位数过多可以用 _ 分割let m = 0644;   // 八进制数字 420
-
-let 关键字let count; console.log(count); // =&gt; undefinedcount = 10;console.log(count); // =&gt; 10
-
-const 关键字const numberOfColumns = 4;// TypeError: Assignment to constant...numberOfColumns = 8;
-
-变量let x = null;let name = &quot;Tammy&quot;;const found = false;// =&gt; Tammy, false, nullconsole.log(name, found, x);var a;console.log(a); // =&gt; undefined
-
-字符串let single = &#x27;Wheres my bandit hat?&#x27;;let double = &quot;Wheres my bandit hat?&quot;;// =&gt; 21console.log(single.length);
-
-算术运算符5 + 5 = 10     // 加法 Addition10 - 5 = 5     // 减法 Subtraction5 * 10 = 50    // 乘法 Multiplication10 / 5 = 2     // 除法 Division10 % 5 = 0     // 取模 Modulo
-
-注释// 此行将表示注释/* 多行配置部署前必须更改以下配置。*/
-
-赋值运算符let number = 100;// 两个语句都会加 10number = number + 10;number += 10;console.log(number); // =&gt; 120
-
-字符串插值let age = 7;// 字符串拼接&#x27;Tommy is &#x27; + age + &#x27; years old.&#x27;;// 字符串插值`Tommy is $&#123;age&#125; years old.`;
-
-字符串
-
-var abc = &quot;abcdefghijklmnopqrstuvwxyz&quot;;var esc = &#x27;I don\&#x27;t \n know&#x27;;    // \n 换行var len = abc.length;            // 字符串长度abc.indexOf(&quot;lmno&quot;);             // 查找子字符串，如果不包含则 -1abc.lastIndexOf(&quot;lmno&quot;);         // 最后一次出现abc.slice(3, 6);                 // 去掉“def”，负值从后面计算abc.replace(&quot;abc&quot;,&quot;123&quot;);        // 查找和替换，接受正则表达式abc.toUpperCase();               // 转换为大写abc.toLowerCase();               // 转换为小写abc.concat(&quot; &quot;, str2);           // abc + &quot; &quot; + str2abc.charAt(2);                   // 索引处的字符：“c”abc[2];                          // 不安全，abc[2] = &quot;C&quot; 不起作用// 索引处的字符代码：“c”-&gt; 99abc.charCodeAt(2);// 用逗号分割字符串给出一个数组abc.split(&quot;,&quot;);// 分割字符abc.split(&quot;&quot;);// 匹配开头字符串,如果忽略第二个参数，则从索引 0 开始匹配abc.startsWith(&quot;bc&quot;, 1);// 匹配结尾的字符串,如果忽略第二个参数，则默认是原字符串长度abc.endsWith(&quot;wxy&quot;, abc.length - 1);// padEnd 和 padStart 都用于填充长度，默认填充对象是空格&quot;200&quot;.padEnd(5); // &quot;200  &quot;&quot;200&quot;.padEnd(5, &quot;.&quot;); // &quot;200..&quot;// 重复字符&quot;abc&quot;.repeat(2); // &quot;abcabc&quot;// trim、trimEnd 和 trimStart 用于去除首尾空格&quot; ab c &quot;.trim(); // &quot;ab c&quot;// 数字转为十六进制 (16)、八进制 (8) 或二进制 (2)(128).toString(16);
-
-数字
-
-var pi = 3.141;pi.toFixed(0);    // 返回 3             pi.toFixed(2);    // 返回 3.14 - 使用金钱pi.toPrecision(2) // 返回 3.1pi.valueOf();     // 返回号码Number(true);     // 转换为数字// 自 1970 年以来的毫秒数Number(new Date())          // 返回第一个数字：3parseInt(&quot;3 months&quot;);       // 返回 3.5parseFloat(&quot;3.5 days&quot;);     // 最大可能的 JS 数Number.MAX_VALUE            // 最小可能的 JS 编号Number.MIN_VALUE            // -无穷Number.NEGATIVE_INFINITY    // 无穷Number.POSITIVE_INFINITY    
-
-Mathconst pi = Math.PI; // 3.141592653589793Math.round(4.4); // = 4 - 数字四舍五入Math.round(4.5); // = 5Math.pow(2,8);   // = 256 - 2 的 8 次方    Math.sqrt(49);   // = 7 - 平方根Math.abs(-3.14); // = 3.14 - 绝对，正值Math.ceil(3.14); // = 4 - 返回 &gt;= 最小整数// = 3 - 返回 &lt;= 最大整数Math.floor(3.99);       // = 0 - 正弦Math.sin(0);            // OTHERS: tan,atan,asin,acos,余弦值Math.cos(Math.PI);      // = -2 - 最低值Math.min(0, 3, -2, 2);  // = 3 - 最高值Math.max(0, 3, -2, 2);  // = 0 自然对数Math.log(1);            // = 2.7182pow(E,x) 自然对数的底数Math.exp(1);            // 0 到 1 之间的随机数Math.random();          // 随机整数，从 1Math.floor(Math.random() * 5) + 1;  
-
-全局函数
-
-// 像脚本代码一样执行字符串eval();                     // 从数字返回字符串String(23);                 // 从数字返回字符串(23).toString();            // 从字符串返回数字Number(&quot;23&quot;);               // 解码 URI。 结果：“my page.asp”decodeURI(enc);             // 编码 URI。 结果：“my%20page.asp”encodeURI(uri);             // 解码 URI 组件decodeURIComponent(enc);    // 对 URI 组件进行编码encodeURIComponent(uri);    // 是一个有限的合法数isFinite();                 // 是一个非法数字isNaN();                    // 返回字符串的浮点数parseFloat();               // 解析一个字符串并返回一个整数parseInt();                 
-
-JavaScript 条件操作符
-
-true || false;       // true10 &gt; 5 || 10 &gt; 20;   // truefalse || false;      // false10 &gt; 100 || 10 &gt; 20; // false
-
-逻辑运算符 &amp;&amp;true &amp;&amp; true;        // true1 &gt; 2 &amp;&amp; 2 &gt; 1;      // falsetrue &amp;&amp; false;       // false4 === 4 &amp;&amp; 3 &gt; 1;    // true
-
-比较运算符1 &gt; 3                 // false3 &gt; 1                 // true250 &gt;= 250            // true1 === 1               // true1 === 2               // false1 === &#x27;1&#x27;             // false
-
-逻辑运算符let lateToWork = true;let oppositeValue = !lateToWork;// =&gt; falseconsole.log(oppositeValue); 
-
-空值合并运算符 ??null ?? &#x27;I win&#x27;;         //  &#x27;I win&#x27;undefined ?? &#x27;Me too&#x27;;   //  &#x27;Me too&#x27;false ?? &#x27;I lose&#x27;        //  false0 ?? &#x27;I lose again&#x27;      //  0&#x27;&#x27; ?? &#x27;Damn it&#x27;          //  &#x27;&#x27;
-
-if Statement (if 语句)const isMailSent = true;if (isMailSent) &#123;  console.log(&#x27;Mail sent to recipient&#x27;);&#125;
-
-Ternary Operator (三元运算符)var age = 1;// =&gt; truevar status = (age &gt;= 18) ? true : false;
-
-else ifconst size = 10;if (size &gt; 20) &#123;  console.log(&#x27;Medium&#x27;);&#125; else if (size &gt; 4) &#123;  console.log(&#x27;Small&#x27;);&#125; else &#123;  console.log(&#x27;Tiny&#x27;);&#125;// Print: Small
-
-&#x3D;&#x3D; vs &#x3D;&#x3D;&#x3D;0 == false     // true0 === false    // false, 不同类型1 == &quot;1&quot;       // true,  自动类型转换1 === &quot;1&quot;      // false, 不同类型null == undefined  // truenull === undefined // false&#x27;0&#x27; == false       // true&#x27;0&#x27; === false      // false
-
-== 只检查值，=== 检查值和类型。
-switch 语句const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;: console.log(&#x27;海的味道&#x27;);    break;  case &#x27;pizza&#x27;: console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
-
-switch 多 case - 单一操作const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;:  case &#x27;pizza&#x27;:    console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
-
-JavaScript Functions 函数函数// 定义函数：function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数：sum(3, 6); // 9
-
-匿名函数// 命名函数function rocketToMars() &#123;  return &#x27;BOOM!&#x27;;&#125;// 匿名函数const rocketToMars = function() &#123;  return &#x27;BOOM!&#x27;;&#125;
-
-箭头函数 (ES6)
-
-有两个参数const sum = (param1, param2) =&gt; &#123;   return param1 + param2; &#125;; console.log(sum(2,5)); // =&gt; 7 
-
-没有参数const printHello = () =&gt; &#123;   console.log(&#x27;hello&#x27;); &#125;; printHello(); // =&gt; hello
-
-只有一个参数const checkWeight = weight =&gt; &#123;   console.log(`Weight : $&#123;weight&#125;`); &#125;; checkWeight(25); // =&gt; Weight : 25 
-
-简洁箭头函数const multiply = (a, b) =&gt; a * b; // =&gt; 60 console.log(multiply(2, 30)); 
-
-从 ES2015 开始提供箭头函数
-返回关键字// 有 returnfunction sum(num1, num2) &#123;  return num1 + num2;&#125;// 该函数不输出总和function sum(num1, num2) &#123;  num1 + num2;&#125;
-
-调用函数// 定义函数function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数sum(2, 4); // 6
-
-立即执行函数//命名函数并立即执行一次(function sum(num1, num2) &#123;  return num1 + num2;&#125;)(2,4)//6
-
-函数表达式const dog = function() &#123;  return &#x27;Woof!&#x27;;&#125;
-
-函数参数// 参数是 namefunction sayHello(name) &#123;  return `Hello, $&#123;name&#125;!`;&#125;
-
-函数声明function add(num1, num2) &#123;  return num1 + num2;&#125;
-
-JavaScript 范围范围
-
-function myFunction() &#123;  var pizzaName = &quot;Margarita&quot;;  // 这里的代码可以使用 PizzaName  &#125;// ❌ PizzaName 不能在这里使用
-
-&#123; &#125; 块内声明的变量
-&#123;  let x = 2;&#125;// ❌ x 不能在这里使用&#123;  var x = 2;&#125;// ✅ x 能在这里使用
-
-var x = 2;       // Global scopelet x = 2;       // Global scopeconst x = 2;       // Global scope
-
-ES6 引入了两个重要的新 JavaScript 关键字：let 和 const。这两个关键字在 JavaScript 中提供了块作用域。
-块作用域变量const isLoggedIn = true;if (isLoggedIn == true) &#123;  const statusMessage = &#x27;Logged in.&#x27;;&#125;// Uncaught ReferenceError...// 未捕获的引用错误...console.log(statusMessage);
-
-全局变量// 全局声明的变量const color = &#x27;blue&#x27;;function printColor() &#123;  console.log(color);&#125;printColor(); // =&gt; blue
-
-let vs varfor (let i = 0; i &lt; 3; i++) &#123;  // 这是“let”的最大范围  // i 可以访问 ✔️&#125;// i 不能访问 ❌
-
-
-for (var i = 0; i &lt; 3; i++) &#123;  // i 可以访问 ✔️&#125;// i 可以访问 ✔️
-
-var 的范围是最近的函数块，而 let 的范围是最近的封闭块。
-带闭包的循环// 打印三次，不是我们的意思。for (var i = 0; i &lt; 3; i++) &#123;  setTimeout(_ =&gt; console.log(i), 10);&#125;
-
-
-// 按预期打印 0、1 和 2。for (let j = 0; j &lt; 3; j++) &#123;   setTimeout(_ =&gt; console.log(j), 10);&#125;
-
-变量使用 let 有自己的副本，变量有使用 var 的共享副本。
-JavaScript Arrays方法
-
-
-
-
-:-
-:-
-
-
-
-Array.from()
-类似数组对象创建一个新的 #
-
-
-Array.isArray()
-值是否是一个 Array #
-
-
-Array.of()
-创建一个新数组示例 #
-
-
-.at()
-返回值索引对应的元素 #
-
-
-.concat()
-合并两个或多个数组 #
-
-
-.copyWithin()
-浅复制替换某个位置 #
-
-
-.entries()
-新的 Array Iterator 对象 #
-
-
-.every()
-是否能通过回调函数的测试 #
-
-
-.fill()
-固定值填充一个数组中 #
-
-
-.filter()
-返回过滤后的数组 #
-
-
-.find()
-第一个元素的值 #
-
-
-.findIndex()
-第一个元素的索引 #
-
-
-.findLast()
-最后一个元素的值 #
-
-
-.findLastIndex()
-最后一个元素的索引 #
-
-
-.flat()
-扁平化嵌套数组 #
-
-
-.flatMap()
-与 flat 相同 #
-
-
-.forEach()
-升序循环执行 #
-
-
-.includes()
-是否包含一个指定的值 #
-
-
-.indexOf()
-找到给定元素的第一个索引 #
-
-
-.join()
-数组链接成一个字符串 #
-
-
-.keys()
-每个索引键 #
-
-
-.lastIndexOf()
-给定元素的最后一个索引 #
-
-
-.map()
-循环返回一个新数组 #
-
-
-.pop()
-删除最后一个元素 #
-
-
-.push()
-元素添加到数组的末尾 #
-
-
-.reduce()
-循环函数传递当前和上一个值 #
-
-
-.reduceRight()
-类似 reduce 从右往左循环 #
-
-
-.reverse()
-数组元素的位置颠倒 #
-
-
-.shift()
-删除第一个元素 #
-
-
-.slice()
-提取元素 #
-
-
-.some()
-至少有一个通过测试函数 #
-
-
-.sort()
-元素进行排序 #
-
-
-.splice()
-删除或替换或添加元素 #
-
-
-.toLocaleString()
-字符串表示数组中的元素 #
-
-
-.toString()
-返回字符串 #
-
-
-.unshift()
-元素添加到数组的开头 #
-
-
-.values()
-返回新的 ArrayIterator 对象 #
-
-
-数组const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];// 不同的数据类型const data = [1, &#x27;chicken&#x27;, false];
-
-属性 .lengthconst numbers = [1, 2, 3, 4];numbers.length // 4
-
-索引// 访问数组元素const myArray = [100, 200, 300];console.log(myArray[0]); // 100console.log(myArray[1]); // 200
-
-可变图表
-
-
-
-添加
-删除
-开始
-结束
-
-
-
-push
-✅
-
-
-✅
-
-
-pop
-
-✅
-
-✅
-
-
-unshift
-✅
-
-✅
-
-
-
-shift
-
-✅
-✅
-
-
-
-
-
-方法 .push()// 添加单个元素：const cart = [&#x27;apple&#x27;, &#x27;orange&#x27;];cart.push(&#x27;pear&#x27;); // 添加多个元素：const numbers = [1, 2];numbers.push(3, 4, 5);
-
-将项目添加到末尾并返回新的数组长度。
-方法 .pop()const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];const fruit = fruits.pop(); // &#x27;banana&#x27;console.log(fruits); // [&quot;apple&quot;, &quot;dew&quot;]
-
-从末尾删除一个项目并返回已删除的项目。
-方法 .shift()const array1 = [1, 2, 3];const firstElement = array1.shift();console.log(array1); // 输出: Array [2, 3]console.log(firstElement); // 输出: 1
-
-从头删除一个项目并返回已删除的项目。
-方法 .some()const array = [1, 2, 3, 4, 5];// 检查元素是否为偶数const even = (element) =&gt; element % 2 === 0;console.log(array.some(even));// 预期输出: true
-
-方法 .concat()const numbers = [3, 2, 1]const newFirstNumber = 4    // =&gt; [ 4, 3, 2, 1 ][newFirstNumber].concat(numbers)    // =&gt; [ 3, 2, 1, 4 ]numbers.concat(newFirstNumber)
-
-如果你想避免改变你的原始数组，你可以使用 concat。
-方法 .splice()const months = [&#x27;Jan&#x27;, &#x27;March&#x27;];months.splice(1, 0, &#x27;Feb&#x27;);// 在索引 1 处插入console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;]months.splice(2, 1, &#x27;May&#x27;);// 替换索引 2 处的 1 个元素console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;May&quot;]
-
-方法 .unshift()let cats = [&#x27;Bob&#x27;];// =&gt; [&#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Willy&#x27;);// =&gt; [&#x27;Puff&#x27;, &#x27;George&#x27;, &#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Puff&#x27;, &#x27;George&#x27;);
-
-将项目添加到开头并返回新的数组长度。
-方法 .filter()const words = [&#x27;js&#x27;, &#x27;java&#x27;, &#x27;golang&#x27;];const result = words.filter(word =&gt; &#123;  return  word.length &gt; 3&#125;);console.log(result);// 预期输出: Array [&quot;java&quot;, &quot;golang&quot;]
-
-JavaScript 循环While 循环while (condition) &#123;  // 要执行的代码块&#125;let i = 0;while (i &lt; 5) &#123;          console.log(i);  i++;&#125;
-
-反向循环const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;berry&quot;];for (let i = fruits.length - 1; i &gt;= 0; i--) &#123;  console.log(`$&#123;i&#125;. $&#123;fruits[i]&#125;`);&#125;// =&gt; 2. berry// =&gt; 1. dew// =&gt; 0. apple
-
-Do…While 语句x = 0i = 0do &#123;  x = x + i;  console.log(x)  i++;&#125; while (i &lt; 5);// =&gt; 0 1 3 6 10
-
-For 循环for (let i = 0; i &lt; 4; i += 1) &#123;  console.log(i);&#125;;// =&gt; 0, 1, 2, 3
-
-遍历数组for (let i = 0; i &lt; array.length; i++)&#123;  console.log(array[i]);&#125;// =&gt; 数组中的每一项
-
-Breakfor (let i = 0; i &lt; 99; i += 1) &#123;  if (i &gt; 5) break;  console.log(i)&#125;// =&gt; 0 1 2 3 4 5
-
-Continuefor (i = 0; i &lt; 10; i++) &#123;  if (i === 3) &#123;    continue;  &#125;  text += &quot;The number is &quot; + i + &quot;&lt;br&gt;&quot;;&#125;
-
-嵌套循环for (let i = 0; i &lt; 2; i += 1) &#123;  for (let j = 0; j &lt; 3; j += 1) &#123;    console.log(`$&#123;i&#125;-$&#123;j&#125;`);  &#125;&#125;
-
-for…in 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let index in fruits) &#123;  console.log(index);&#125;// =&gt; 0// =&gt; 1// =&gt; 2
-
-label 语句
-
-var num = 0;outPoint:for(var i = 0; i &lt; 10; i++) &#123;  for(var j = 0; j &lt; 10; j++) &#123;    if(i == 5 &amp;&amp; j == 5) &#123;      continue outPoint;    &#125;    num++;  &#125;&#125;alert(num);  // 95
-
-从 alert(num) 的值可以看出，continue outPoint; 语句的作用是跳出当前循环，并跳转到 outPoint（标签）下的 for 循环继续执行。
-for…of 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let fruit of fruits) &#123;  console.log(fruit);&#125;// =&gt; apple// =&gt; orange// =&gt; banana
-
-for await…of
-
-async function* asyncGenerator() &#123;  var i = 0;  while (i &lt; 3) &#123;    yield i++;  &#125;&#125;(async function() &#123;  for await (num of asyncGenerator()) &#123;    console.log(num);  &#125;&#125;)();// 0// 1// 2
-
-可选的 for 表达式var i = 0;for (;;) &#123;  if (i &gt; 3) break;  console.log(i);  i++;&#125;
-
-JavaScript 迭代器(Iterators)
-
-分配给变量的函数let plusFive = (number) =&gt; &#123;  return number + 5;  &#125;;// f 被赋值为 plusFivelet f = plusFive;plusFive(3); // 8// 由于 f 具有函数值，因此可以调用它。f(9); // 14
-
-回调函数const isEven = (n) =&gt; &#123;  return n % 2 == 0;&#125;let printMsg = (evenFunc, num) =&gt; &#123;  const isNumEven = evenFunc(num);  console.log(`$&#123;num&#125; is an even number: $&#123;isNumEven&#125;.`)&#125;// Pass in isEven as the callback functionprintMsg(isEven, 4); // =&gt; The number 4 is an even number: True.
-
-数组方法 .reduce()const numbers = [1, 2, 3, 4];const sum = numbers.reduce((accumulator, curVal) =&gt; &#123;    return accumulator + curVal;&#125;);console.log(sum); // 10
-
-数组方法 .map()const members = [&quot;Taylor&quot;, &quot;Donald&quot;, &quot;Don&quot;, &quot;Natasha&quot;, &quot;Bobby&quot;];const announcements = members.map((member) =&gt; &#123;  return member + &quot; joined the contest.&quot;;&#125;);console.log(announcements);
-
-数组方法 .forEach()const numbers = [28, 77, 45, 99, 27];numbers.forEach(number =&gt; &#123;    console.log(number);&#125;); 
-
-数组方法 .filter()const randomNumbers = [4, 11, 42, 14, 39];const filteredArray = randomNumbers.filter(n =&gt; &#123;    return n &gt; 5;&#125;);
-
-JavaScript 对象(Objects)
-
-访问属性const apple = &#123;   color: &#x27;Green&#x27;,  price: &#123; bulk: &#x27;$3/kg&#x27;, smallQty: &#x27;$4/kg&#x27; &#125;&#125;;console.log(apple.color);      // =&gt; Greenconsole.log(apple.price.bulk); // =&gt; $3/kg
-
-命名属性// 无效键名示例const trainSchedule = &#123;  // 由于单词之间的空格而无效。  platform num: 10,   // 表达式不能是键。  40 - 10 + 2: 30,  // 除非用引号括起来，否则 + 号无效。  +compartment: &#x27;C&#x27;&#125;
-
-不存在的属性const classElection = &#123;  date: &#x27;January 12&#x27;&#125;;console.log(classElection.place); // undefined
-
-可变的
-
-const student = &#123;  name: &#x27;Sheldon&#x27;,  score: 100,  grade: &#x27;A&#x27;,&#125;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, score: 100, grade: &#x27;A&#x27; &#125;delete student.scorestudent.grade = &#x27;F&#x27;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, grade: &#x27;F&#x27; &#125;student = &#123;&#125;// TypeError: TypeError：分配给常量变量。
-
-赋值简写语法const person = &#123;  name: &#x27;Tom&#x27;,  age: &#x27;22&#x27;,&#125;;const &#123;name, age&#125; = person;console.log(name); // &#x27;Tom&#x27;console.log(age);  // &#x27;22&#x27;
-
-删除运算符const person = &#123;  firstName: &quot;Matilda&quot;,  hobby: &quot;knitting&quot;,  goal: &quot;learning JavaScript&quot;&#125;;delete person.hobby; // 或 delete person[&#x27;hobby&#x27;];console.log(person);/*&#123;  firstName: &quot;Matilda&quot;  goal: &quot;learning JavaScript&quot;&#125; */
-
-对象作为参数const origNum = 8;const origObj = &#123;color: &#x27;blue&#x27;&#125;;const changeItUp = (num, obj) =&gt; &#123;  num = 7;  obj.color = &#x27;red&#x27;;&#125;;changeItUp(origNum, origObj);// 将输出 8，因为整数是按值传递的。console.log(origNum);// 由于传递了对象，将输出“red”// 通过引用，因此是可变的。console.log(origObj.color);
-
-工厂函数
-
-// 一个接受 &#x27;name&#x27;，&#x27;age&#x27; 和 &#x27;breed&#x27; 的工厂函数，//  参数返回一个自定义的 dog 对象。const dogFactory = (name, age, breed) =&gt; &#123;  return &#123;    name: name,    age: age,    breed: breed,    bark() &#123;      console.log(&#x27;Woof!&#x27;);      &#125;  &#125;;&#125;;
-
-速记对象创建const activity = &#x27;Surfing&#x27;;const beach = &#123; activity &#125;;console.log(beach); // &#123; activity: &#x27;Surfing&#x27; &#125;
-
-this 关键字const cat = &#123;  name: &#x27;Pipey&#x27;,  age: 8,  whatName() &#123;    return this.name    &#125;&#125;;console.log(cat.whatName()); // =&gt; Pipey
-
-方法const engine = &#123;  // 方法简写，有一个参数  start(adverb) &#123;    console.log(`The engine starts up $&#123;adverb&#125;...`);  &#125;,    // 不带参数的匿名箭头函数表达式  sputter: () =&gt; &#123;    console.log(&#x27;The engine sputters...&#x27;);  &#125;,&#125;;engine.start(&#x27;noisily&#x27;);engine.sputter();
-
-Getters 和 settersconst myCat = &#123;  _name: &#x27;Dottie&#x27;,  get name() &#123;    return this._name;    &#125;,  set name(newName) &#123;    this._name = newName;    &#125;&#125;;// 引用调用 getterconsole.log(myCat.name);// 赋值调用 settermyCat.name = &#x27;Yankee&#x27;;
-
-ProxyProxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
-// 用于拦截对象的读取属性操作。const handler = &#123;    get: function(obj, prop) &#123;        return prop in obj ? obj[prop] : 37;    &#125;&#125;;const p = new Proxy(&#123;&#125;, handler);p.a = 1;p.b = undefined;console.log(p.a, p.b);      // 1, undefinedconsole.log(&#x27;c&#x27; in p, p.c); // false, 37
-
-语法const p = new Proxy(target, handler)
-
-
-target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
-handler 一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。
-
-方法
-
-
-:-
-:-
-
-
-
-Proxy.revocable()
-创建一个可撤销的Proxy对象 #
-
-
-handler 对象的方法
-
-
-:-
-:-
-
-
-
-handler.getPrototypeOf()
-Object.getPrototypeOf 方法的捕捉器 #
-
-
-handler.setPrototypeOf()
-Object.setPrototypeOf 方法的捕捉器 #
-
-
-handler.isExtensible()
-Object.isExtensible 方法的捕捉器 #
-
-
-handler.preventExtensions()
-Object.preventExtensions 方法的捕捉器 #
-
-
-handler.getOwnPropertyDescriptor()
-Object.getOwnPropertyDescriptor 方法的捕捉器 #
-
-
-handler.defineProperty()
-Object.defineProperty 方法的捕捉器 #
-
-
-handler.has()
-in 操作符的捕捉器 #
-
-
-handler.get()
-属性读取操作的捕捉器 #
-
-
-handler.set()
-属性设置操作的捕捉器 #
-
-
-handler.deleteProperty()
-delete 操作符的捕捉器 #
-
-
-handler.ownKeys()
-Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器 #
-
-
-handler.apply()
-函数调用操作的捕捉器 #
-
-
-handler.construct()
-new 操作符的捕捉器 #
-
-
-
-
-ReflectReflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。这些方法与proxy handlers (en-US)的方法相同。Reflect不是一个函数对象，因此它是不可构造的。
-// 检测一个对象是否存在特定属性const duck = &#123;  name: &#x27;Maurice&#x27;,  color: &#x27;white&#x27;,  greeting: function() &#123;    console.log(`Quaaaack! My name is $&#123;this.name&#125;`);  &#125;&#125;Reflect.has(duck, &#x27;color&#x27;);// trueReflect.has(duck, &#x27;haircut&#x27;);// false
-
-静态方法
-
-
-:-
-:-
-
-
-
-Reflect.apply(target, thisArgument, argumentsList)
-对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 Function.prototype.apply() 功能类似 #
-
-
-Reflect.construct(target, argumentsList[, newTarget])
-对构造函数进行 new 操作，相当于执行 new target(…args) #
-
-
-Reflect.defineProperty(target, propertyKey, attributes)
-和 Object.defineProperty() 类似。如果设置成功就会返回 true #
-
-
-Reflect.deleteProperty(target, propertyKey)
-作为函数的delete操作符，相当于执行 delete target[name] #
-
-
-Reflect.get(target, propertyKey[, receiver])
-获取对象身上某个属性的值，类似于 target[name] #
-
-
-Reflect.getOwnPropertyDescriptor(target, propertyKey)
-类似于 Object.getOwnPropertyDescriptor()。如果对象中存在该属性，则返回对应的属性描述符，否则返回 undefined #
-
-
-Reflect.getPrototypeOf(target)
-类似于 Object.getPrototypeOf() #
-
-
-Reflect.has(target, propertyKey)
-判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同 #
-
-
-Reflect.isExtensible(target)
-类似于 Object.isExtensible() #
-
-
-Reflect.ownKeys(target)
-返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 Object.keys(), 但不会受enumerable 影响) #
-
-
-Reflect.preventExtensions(target)
-类似于 Object.preventExtensions()。返回一个Boolean #
-
-
-Reflect.set(target, propertyKey, value[, receiver])
-将值分配给属性的函数。返回一个Boolean，如果更新成功，则返回true #
-
-
-Reflect.setPrototypeOf(target, prototype)
-设置对象原型的函数。返回一个 Boolean，如果更新成功，则返回 true #
-
-
-
-
-JavaScript this 绑定隐式绑定function foo() &#123;  console.log(this)&#125;let obj1 = &#123;  name: &quot;obj1&quot;,  foo: foo&#125;let obj2 = &#123;  name: &quot;obj2&quot;,  obj1: obj1&#125;obj2.obj1.foo() // [Object obj1]
-
-隐式丢失let a = obj2.obj1.foo()a() // Window
-
-
-指定隐式绑定：必须在调用的对象内部有一个对函数的引用（比如一个属性）
-将以上调用赋值给一个变量，结果最终会是 Window
-在 a 被调用的位置没有进行过任何显示绑定，最终全局对象 window 会调用它（Window.a）
-
-
-
-显示绑定function getName(a1, a2) &#123;  console.log(&quot;此人&quot; + this.name, &quot;岁数&quot; + (a1 + a2))&#125;let person = &#123;  name: &quot;zhangsan&quot;&#125;
-
-callcall 第一个参数接受 this 作用域，剩余参数传递给其调用的函数
-getName.call(person, 18, 12)
-
-applyapply 第一个参数与 call 相同，第二个参数是其调用函数的参数数组
-getName.apply(person, [18, 12])
-
-bindbind 函数会返回一个新函数
-getName.bind(person,18,12)()//或者可以这样getName.bind(person)(18, 12)//或者这样getName.bind(person).bind(null, 18)(12)
-
-内置函数中的 this数组中的一些方法，类似于 map、forEach 等，可以自己设置绑定 this
-const obj = &#123;  name: &quot;zhangsan&quot;&#125;const array = [1, 2, 3];array.map(function(value)&#123;  console.log(this.name)&#125;, obj)// zhangsan x3 
-
-其中一些全局对象，如 setTimeout 等，它们和未显示绑定 this 的部分数组方法一样，都会指向全局对象（Window）
-setTimeout(function()&#123;   console.log(this)&#125;, 1000) // Window
-
-JavaScript Classes静态方法&#x2F;字段
-
-class Dog &#123;  constructor(name) &#123;    this._name = name;    &#125;    introduce() &#123;     console.log(&#x27;This is &#x27; + this._name + &#x27; !&#x27;);    &#125;    // 静态方法  static bark() &#123;    console.log(&#x27;Woof!&#x27;);    &#125;  static &#123;    console.log(&#x27;类静态初始化块调用&#x27;);  &#125;&#125;const myDog = new Dog(&#x27;Buster&#x27;);myDog.introduce();// 调用静态方法Dog.bark();
-
-公有静态字段class ClassStaticField &#123;  static staticField = &#x27;static field&#x27;&#125;console.log(ClassStaticField.staticField)// 预期输出值：&quot;static field&quot;​ 
-
-Classclass Song &#123;  constructor() &#123;    this.title;    this.author;  &#125;    play() &#123;    console.log(&#x27;Song playing!&#x27;);  &#125;&#125;const mySong = new Song();mySong.play();
-
-extends// Parent classclass Media &#123;  constructor(info) &#123;    this.publishDate = info.publishDate;    this.name = info.name;  &#125;&#125;// Child classclass Song extends Media &#123;  constructor(songData) &#123;    super(songData);    this.artist = songData.artist;  &#125;&#125;const mySong = new Song(&#123;   artist: &#x27;Queen&#x27;,   name: &#x27;Bohemian Rhapsody&#x27;,   publishDate: 1975&#125;);
-
-Class Constructorclass Song &#123;  constructor(title, artist) &#123;    this.title = title;    this.artist = artist;  &#125;&#125;const mySong = new Song(&#x27;Bohemian Rhapsody&#x27;, &#x27;Queen&#x27;);console.log(mySong.title);
-
-Class Methodsclass Song &#123;  play() &#123;    console.log(&#x27;Playing!&#x27;);  &#125;    stop() &#123;    console.log(&#x27;Stopping!&#x27;);  &#125;&#125;
-
-JavaScript Modules
-
-Export &#x2F; Import// myMath.js// 默认导出 Default exportexport default function add(x,y)&#123;  return x + y&#125;// 正常导出 Normal exportexport function subtract(x,y)&#123;  return x - y&#125;// 多重导出 Multiple exportsfunction multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;export &#123;  multiply, duplicate&#125;
-
-import 加载模块// main.jsimport add, &#123; subtract, multiply, duplicate &#125; from &#x27;./myMath.js&#x27;;console.log(add(6, 2));      // 8 console.log(subtract(6, 2))  // 4console.log(multiply(6, 2)); // 12console.log(duplicate(5))    // 10// index.html&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
-
-Export Module// myMath.jsfunction add(x,y)&#123;  return x + y&#125;function subtract(x,y)&#123;  return x - y&#125;function multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;// node.js 中的多个导出module.exports = &#123;  add,  subtract,  multiply,  duplicate&#125;
-
-require 加载模块// main.jsconst myMath = require(&#x27;./myMath.js&#x27;)console.log(myMath.add(6, 2));      // 8 console.log(myMath.subtract(6, 2))  // 4console.log(myMath.multiply(6, 2)); // 12console.log(myMath.duplicate(5))    // 10
-
-JavaScript PromisesPromise
-
-创建 promises
-new Promise((resolve, reject) =&gt; &#123;  if (ok) &#123;    resolve(result)  &#125; else &#123;    reject(error)  &#125;&#125;)
-
-使用 promisespromise  .then((result) =&gt; &#123; ··· &#125;)  .catch((error) =&gt; &#123; ··· &#125;)
-
-Promise 方法Promise.all(···)Promise.race(···)Promise.reject(···)Promise.resolve(···)
-
-执行器函数const executorFn = (resolve, reject) =&gt; &#123;  resolve(&#x27;Resolved!&#x27;);&#125;;const promise = new Promise(executorFn);
-
-setTimeout()const loginAlert = () =&gt; &#123;  console.log(&#x27;Login&#x27;);&#125;;setTimeout(loginAlert, 6000);
-
-Promise 状态const promise = new Promise((resolve, reject) =&gt; &#123;  const res = true;  // 一个异步操作。  if (res) &#123;    resolve(&#x27;Resolved!&#x27;);  &#125;  else &#123;    reject(Error(&#x27;Error&#x27;));  &#125;&#125;);promise.then(  (res) =&gt; console.log(res),  (err) =&gt; console.error(err));
-
-.then() 方法const promise = new Promise((resolve, reject) =&gt; &#123;      setTimeout(() =&gt; &#123;    resolve(&#x27;Result&#x27;);  &#125;, 200);&#125;);promise.then((res) =&gt; &#123;  console.log(res);&#125;, (err) =&gt; &#123;  console.error(err);&#125;);
-
-.catch() 方法const promise = new Promise(  (resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    reject(Error(&#x27;Promise 无条件拒绝。&#x27;));  &#125;, 1000);&#125;);promise.then((res) =&gt; &#123;  console.log(value);&#125;);promise.catch((err) =&gt; &#123;  console.error(err);&#125;);
-
-Promise.all()
-
-const promise1 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(3);  &#125;, 300);&#125;);const promise2 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(2);  &#125;, 200);&#125;);Promise.all([promise1, promise2]).then((res) =&gt; &#123;  console.log(res[0]);  console.log(res[1]);&#125;);
-
-链接多个 .then()const promise = new Promise(  resolve =&gt;     setTimeout(() =&gt; resolve(&#x27;dAlan&#x27;),100));promise.then(res =&gt; &#123;  return res === &#x27;Alan&#x27;     ? Promise.resolve(&#x27;Hey Alan!&#x27;)    : Promise.reject(&#x27;Who are you?&#x27;)&#125;).then((res) =&gt; &#123;  console.log(res)&#125;, (err) =&gt; &#123;  console.error(err)&#125;);
-
-避免嵌套的 Promise 和 .then()
-
-const promise = new Promise((resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    resolve(&#x27;*&#x27;);  &#125;, 1000);&#125;);const twoStars = (star) =&gt; &#123;    return (star + star);&#125;;const oneDot = (star) =&gt; &#123;    return (star + &#x27;.&#x27;);&#125;;const print = (val) =&gt; &#123;  console.log(val);&#125;;// 将它们链接在一起promise.then(twoStars).then(oneDot).then(print);
-
-JavaScript Async-Await
-
-异步
-
-function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;// 异步函数表达式const msg = async function() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;// 异步箭头函数const msg1 = async () =&gt; &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后msg1(); // Message: Hello World! &lt;-- 2 秒后
-
-解决 Promiseslet pro1 = Promise.resolve(5);let pro2 = 44;let pro3 = new Promise(function(resolve, reject) &#123;  setTimeout(resolve, 100, &#x27;foo&#x27;);&#125;);Promise.all([pro1, pro2, pro3]).then(function(values) &#123;  console.log(values);&#125;);// expected =&gt; Array [5, 44, &quot;foo&quot;]
-
-异步等待 Promisesfunction helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
-
-错误处理// 数据不完整let json = &#x27;&#123; &quot;age&quot;: 30 &#125;&#x27;;try &#123;  let user = JSON.parse(json); // &lt;-- 没有错误  console.log( user.name );    // no name!&#125; catch (e) &#123;  console.error( &quot;Invalid JSON data!&quot; );&#125;
-
-异步等待运算符function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
-
-JavaScript 请求JSONconst jsonObj = &#123;  &quot;name&quot;: &quot;Rick&quot;,  &quot;id&quot;: &quot;11A&quot;,  &quot;level&quot;: 4  &#125;;
-
-另见：JSON 备忘单
-XMLHttpRequestconst xhr = new XMLHttpRequest();xhr.open(&#x27;GET&#x27;, &#x27;mysite.com/getjson&#x27;);
-
-XMLHttpRequest 是一个浏览器级别的 API，它使客户端能够通过 JavaScript 编写数据传输脚本，而不是 JavaScript 语言的一部分。
-GETconst req = new XMLHttpRequest();req.responseType = &#x27;json&#x27;;req.open(&#x27;GET&#x27;, &#x27;/getdata?id=65&#x27;);req.onload = () =&gt; &#123;  console.log(xhr.response);&#125;;req.send();
-
-POST
-
-const data = &#123; weight: &#x27;1.5 KG&#x27; &#125;;const xhr = new XMLHttpRequest();// 初始化一个请求。xhr.open(&#x27;POST&#x27;, &#x27;/inventory/add&#x27;);// 一个用于定义响应类型的枚举值xhr.responseType = &#x27;json&#x27;;// 发送请求以及数据。xhr.send(JSON.stringify(data));// 请求成功完成时触发。xhr.onload = () =&gt; &#123;  console.log(xhr.response);&#125;// 当 request 遭遇错误时触发。xhr.onerror = () =&gt; &#123;  console.log(xhr.response);&#125;
-
-fetch api
-
-fetch(url, &#123;    method: &#x27;POST&#x27;,    headers: &#123;      &#x27;Content-type&#x27;: &#x27;application/json&#x27;,      &#x27;apikey&#x27;: apiKey    &#125;,    body: data&#125;).then(response =&gt; &#123;  if (response.ok) &#123;    return response.json();  &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message)&#125;)
-
-JSON 格式fetch(&#x27;url-that-returns-JSON&#x27;)  .then(response =&gt; response.json())  .then(jsonResponse =&gt; &#123;    console.log(jsonResponse);  &#125;);
-
-promise url 参数获取 APIfetch(&#x27;url&#x27;)  .then(response  =&gt; &#123;    console.log(response);  &#125;, rejection =&gt; &#123;    console.error(rejection.message);  &#125;);
-
-Fetch API 函数fetch(&#x27;https://api-xxx.com/endpoint&#x27;, &#123;  method: &#x27;POST&#x27;,  body: JSON.stringify(&#123;id: &quot;200&quot;&#125;)&#125;).then(response =&gt; &#123;  if(response.ok)&#123;    return response.json();    &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message);&#125;).then(jsonResponse =&gt; &#123;  console.log(jsonResponse);&#125;)
-
-async await 语法
-
-const getSuggestions = async () =&gt; &#123;  const wordQuery = inputField.value;  const endpoint = `$&#123;url&#125;$&#123;queryParams&#125;$&#123;wordQuery&#125;`;  try&#123;    const response = await fetch(endpoint, &#123;cache: &#x27;no-cache&#x27;&#125;);    if(response.ok)&#123;      const jsonResponse = await response.json()    &#125;  &#125;  catch(error)&#123;    console.log(error)  &#125;&#125;
-]]></content>
-      <categories>
-        <category>后端编程</category>
-      </categories>
-      <tags>
-        <tag>后端编程</tag>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JSON 备忘录</title>
     <url>/2025/01/08/json/</url>
     <content><![CDATA[JSON 备忘清单这是理解和编写 JSON 格式配置文件的快速参考备忘单。
@@ -5983,6 +6117,399 @@ Convert JSON Array to Markdown Table, CSV and more (tableconvert.com)
       <tags>
         <tag>前端技术</tag>
         <tag>JSON</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PHP 备忘录</title>
+    <url>/2025/01/08/php/</url>
+    <content><![CDATA[PHP 备忘清单这份 PHP 备忘单为快速查找最常用代码的正确语法提供了参考
+入门hello.php&lt;?php // 以 PHP 开放标签开头echo &quot;Hello World\n&quot;;print(&quot;Hello jaywcjlove.github.io&quot;);?&gt;
+
+PHP 运行命令
+$ php hello.php
+
+变量 Variables$boolean1 = true;$boolean2 = True;$int = 12;$float = 3.1415926;unset($float);  // 删除变量$str1 = &quot;How are you?&quot;;$str2 = &#x27;Fine, thanks&#x27;;
+
+查看: Types
+字符串 Strings$url = &quot;jaywcjlove.github.io&quot;;echo &quot;I&#x27;m learning PHP at $url&quot;;// 连接字符串echo &quot;I&#x27;m learning PHP at &quot; . $url;$hello = &quot;Hello, &quot;;$hello .= &quot;World!&quot;;echo $hello;   # =&gt; Hello, World!
+
+查看: Strings
+数组 Arrays$num = [1, 3, 5, 7, 9];$num[5] = 11;unset($num[2]);    // 删除变量print_r($num);     # =&gt; 1 3 7 9 11echo count($num);  # =&gt; 5
+
+查看: Arrays
+运算符 Operators$x = 1;$y = 2;$sum = $x + $y;echo $sum;   # =&gt; 3
+
+查看: Operators
+Include
+
+vars.php&lt;?php // 以 PHP 开放标签开头。$fruit = &#x27;apple&#x27;;echo &quot;I was imported&quot;;return &#x27;Anything you like.&#x27;;?&gt;
+
+test.php&lt;?phpinclude &#x27;vars.php&#x27;;echo $fruit . &quot;\n&quot;;   # =&gt; apple/* 与 include 相同，如果不能包含则导致错误*/require &#x27;vars.php&#x27;;// 也有效include(&#x27;vars.php&#x27;);require(&#x27;vars.php&#x27;);// 通过 HTTP 包含include &#x27;http://x.com/file.php&#x27;;// 包含和返回语句$result = include &#x27;vars.php&#x27;;echo $result;  # =&gt; Anything you like.?&gt;
+
+功能 Functionsfunction add($num1, $num2 = 1) &#123;    return $num1 + $num2;&#125;echo add(10);    # =&gt; 11echo add(10, 5); # =&gt; 15
+
+查看: Functions
+注释 Comments# 这是一个单行 shell 样式的注释// 这是一行 c++ 风格的注释/* 这是一个多行注释    另一行注释 */
+
+常数 Constantsconst MY_CONST = &quot;hello&quot;;echo MY_CONST;   # =&gt; hello# =&gt; MY_CONST is: helloecho &#x27;MY_CONST is: &#x27; . MY_CONST; 
+
+类 Classesclass Student &#123;  public function __construct($name) &#123;      $this-&gt;name = $name;  &#125;&#125;$alex = new Student(&quot;Alex&quot;);
+
+查看: Classes
+PHP 类型布尔值 Boolean
+
+$boolean1 = true;$boolean2 = TRUE;$boolean3 = false;$boolean4 = FALSE;$boolean5 = (boolean) 1;   # =&gt; true$boolean6 = (boolean) 0;   # =&gt; false
+
+布尔值不区分大小写
+整数 Integer
+
+$int1 = 28;    # =&gt; 28$int2 = -32;   # =&gt; -32$int3 = 012;   # =&gt; 10 (octal)$int4 = 0x0F;  # =&gt; 15 (hex)$int5 = 0b101; # =&gt; 5  (binary)# =&gt; 2000100000 (decimal, PHP 7.4.0)$int6 = 2_000_100_000;
+
+另见: Integers
+字符串 Stringsecho &#x27;this is a simple string&#x27;;
+
+查看: Strings
+数组 Arrays$arr = array(&quot;hello&quot;, &quot;world&quot;, &quot;!&quot;);
+
+查看: Arrays
+浮点数 Float (Double)$float1 = 1.234;$float2 = 1.2e7;$float3 = 7E-10;$float4 = 1_234.567;  // as of PHP 7.4.0var_dump($float4);    // float(1234.567)$float5 = 1 + &quot;10.5&quot;;   # =&gt; 11.5$float6 = 1 + &quot;-1.3e3&quot;; # =&gt; -1299
+
+Null$a = null;$b = &#x27;Hello php!&#x27;;echo $a ?? &#x27;a is unset&#x27;; # =&gt; a is unsetecho $b ?? &#x27;b is unset&#x27;; # =&gt; Hello php$a = array();$a == null    # =&gt; true$a === null   # =&gt; falseis_null($a)   # =&gt; false
+
+可迭代对象 Iterablesfunction bar(): iterable &#123;  return [1, 2, 3];&#125;function gen(): iterable &#123;  yield 1;  yield 2;  yield 3;&#125;foreach (bar() as $value) &#123;  echo $value;   # =&gt; 123&#125; 
+
+PHP 字符串字符串 String# =&gt; &#x27;$String&#x27;$sgl_quotes = &#x27;$String&#x27;;# =&gt; &#x27;This is a $String.&#x27;$dbl_quotes = &quot;This is a $sgl_quotes.&quot;;# =&gt; a    tab character.$escaped   = &quot;a \t tab character.&quot;;# =&gt; a slash and a t: \t$unescaped = &#x27;a slash and a t: \t&#x27;;
+
+多行 Multi-line$str = &quot;foo&quot;;// 未插值的多行$nowdoc = &lt;&lt;&lt;&#x27;END&#x27;Multi line string$strEND;// 将执行字符串插值$heredoc = &lt;&lt;&lt;ENDMulti line$strEND;
+
+操作 Manipulation$s = &quot;Hello Phper&quot;;echo strlen($s);       # =&gt; 11echo substr($s, 0, 3); # =&gt; Helecho substr($s, 1);    # =&gt; ello Phperecho substr($s, -4, 3);# =&gt; hpeecho strtoupper($s);   # =&gt; HELLO PHPERecho strtolower($s);   # =&gt; hello phperecho strpos($s, &quot;l&quot;);      # =&gt; 2var_dump(strpos($s, &quot;L&quot;)); # =&gt; false
+
+另见: 字符串函数
+PHP 数组定义
+
+$a1 = [&quot;hello&quot;, &quot;world&quot;, &quot;!&quot;]$a2 = array(&quot;hello&quot;, &quot;world&quot;, &quot;!&quot;);$a3 = explode(&quot;,&quot;, &quot;apple,pear,peach&quot;);
+
+混合 int 和 string 键$array = array(    &quot;foo&quot; =&gt; &quot;bar&quot;,    &quot;bar&quot; =&gt; &quot;foo&quot;,    100   =&gt; -100,    -100  =&gt; 100,);var_dump($array);
+
+短数组语法$array = [    &quot;foo&quot; =&gt; &quot;bar&quot;,    &quot;bar&quot; =&gt; &quot;foo&quot;,];
+
+多阵列$multiArray = [     [1, 2, 3],    [4, 5, 6],    [7, 8, 9],];print_r($multiArray[0][0]) # =&gt; 1print_r($multiArray[0][1]) # =&gt; 2print_r($multiArray[0][2]) # =&gt; 3
+
+多类型
+
+$array = array(    &quot;foo&quot; =&gt; &quot;bar&quot;,    42    =&gt; 24,    &quot;multi&quot; =&gt; array(         &quot;dim&quot; =&gt; array(             &quot;a&quot; =&gt; &quot;foo&quot;         )    ));# =&gt; string(3) &quot;bar&quot;var_dump($array[&quot;foo&quot;]);# =&gt; int(24)var_dump($array[42]);    # =&gt;  string(3) &quot;foo&quot;var_dump($array[&quot;multi&quot;][&quot;dim&quot;][&quot;a&quot;]);
+
+操作$arr = array(5 =&gt; 1, 12 =&gt; 2);$arr[] = 56;      // 附加$arr[&quot;x&quot;] = 42;   // 用键添加sort($arr);       // 排序unset($arr[5]);   // 消除unset($arr);      // 移除所有
+
+查看: 数组函数
+索引迭代$array = array(&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;);$count = count($array);for ($i = 0; $i &lt; $count; $i++) &#123;    echo &quot;i:&#123;$i&#125;, v:&#123;$array[$i]&#125;\n&quot;;&#125;
+
+价值迭代$colors = array(&#x27;red&#x27;, &#x27;blue&#x27;, &#x27;green&#x27;);foreach ($colors as $color) &#123;    echo &quot;Do you like $color?\n&quot;;&#125;
+
+关键迭代$arr = [&quot;foo&quot; =&gt; &quot;bar&quot;, &quot;bar&quot; =&gt; &quot;foo&quot;];foreach ( $arr as $key =&gt; $value )&#123;    echo &quot;key: &quot; . $key . &quot;\n&quot;;    echo &quot;val: &#123;$arr[$key]&#125;\n&quot;;&#125;
+
+串联阵列$a = [1, 2];$b = [3, 4];// PHP 7.4 以后# =&gt; [1, 2, 3, 4]$result = [...$a, ...$b];
+
+Into 函数$array = [1, 2];function foo(int $a, int $b) &#123;  echo $a; # =&gt; 1    echo $b; # =&gt; 2&#125;foo(...$array);
+
+Splat运算符function foo($first, ...$other) &#123;  var_dump($first); # =&gt; a    var_dump($other); # =&gt; [&#x27;b&#x27;, &#x27;c&#x27;]&#125;foo(&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27; /*, ...*/ );// 或function foo($first, string ...$other)&#123;&#125;
+
+PHP 运算符算术
+
+
+:-
+-
+
+
+
++
+添加
+
+
+-
+减法
+
+
+*
+乘法
+
+
+/
+分配
+
+
+%
+取模
+
+
+**
+求幂
+
+
+分配
+
+
+:-
+-
+
+
+
+a += b
+如同 a = a + b
+
+
+a -= b
+如同 a = a – b
+
+
+a *= b
+如同 a = a * b
+
+
+a /= b
+如同 a = a / b
+
+
+a %= b
+如同 a = a % b
+
+
+比较
+
+
+:-
+-
+
+
+
+==
+平等的
+
+
+===
+完全相同的
+
+
+!=
+不相等
+
+
+&lt;&gt;
+不相等
+
+
+!==
+不相同
+
+
+&lt;
+少于
+
+
+&gt;
+比…更棒
+
+
+&lt;=
+小于或等于
+
+
+&gt;=
+大于或等于
+
+
+&lt;=&gt;
+小于&#x2F;等于&#x2F;大于
+
+
+逻辑的
+
+
+:-
+-
+
+
+
+and
+和
+
+
+or
+或者
+
+
+xor
+独家或
+
+
+!
+不是
+
+
+&amp;&amp;
+和
+
+
+||
+或者
+
+
+算术// 算术$sum        = 1 + 1; // 2$difference = 2 - 1; // 1$product    = 2 * 2; // 4$quotient   = 2 / 1; // 2// 速记算术$num = 0;$num += 1;       // 将 $num 增加 1echo $num++;     // 打印 1（评估后的增量）echo ++$num;     // 打印 3（评估前的增量）$num /= $float;  // 将商除并分配给 $num
+
+按位
+
+
+:-
+-
+
+
+
+&amp;
+和
+
+
+&#96;
+&#96;
+
+
+^
+异或（异或）
+
+
+~
+不是
+
+
+&lt;&lt;
+左移
+
+
+&gt;&gt;
+右移
+
+
+PHP 条件If elseif else$a = 10;$b = 20;if ($a &gt; $b) &#123;    echo &quot;a is bigger than b&quot;;&#125; elseif ($a == $b) &#123;    echo &quot;a is equal to b&quot;;&#125; else &#123;    echo &quot;a is smaller than b&quot;;&#125;
+
+Switch$x = 0;switch ($x) &#123;    case &#x27;0&#x27;:        print &quot;it&#x27;s zero&quot;;        break;     case &#x27;two&#x27;:    case &#x27;three&#x27;:        // do something        break;    default:        // do something&#125;
+
+三元运算符# =&gt; Doesprint (false ? &#x27;Not&#x27; : &#x27;Does&#x27;);$x = false;# =&gt; Doesprint($x ?: &#x27;Does&#x27;);$a = null;$b = &#x27;Does print&#x27;;# =&gt; a is unsertecho $a ?? &#x27;a is unset&#x27;;# =&gt; printecho $b ?? &#x27;b is unset&#x27;;
+
+匹配$statusCode = 500;$message = match($statusCode) &#123;  200, 300 =&gt; null,  400 =&gt; &#x27;未找到&#x27;,  500 =&gt; &#x27;服务器错误&#x27;,  default =&gt; &#x27;已知状态码&#x27;,&#125;;echo $message; # =&gt; 服务器错误
+
+查看: Match
+匹配表达式$age = 23;$result = match (true) &#123;    $age &gt;= 65 =&gt; &#x27;senior&#x27;,    $age &gt;= 25 =&gt; &#x27;adult&#x27;,    $age &gt;= 18 =&gt; &#x27;young adult&#x27;,    default =&gt; &#x27;kid&#x27;,&#125;;echo $result; # =&gt; young adult
+
+PHP 循环while 循环$i = 1;# =&gt; 12345while ($i &lt;= 5) &#123;    echo $i++;&#125;
+
+do while 循环$i = 1;# =&gt; 12345do &#123;    echo $i++;&#125; while ($i &lt;= 5);
+
+for i 循环# =&gt; 12345for ($i = 1; $i &lt;= 5; $i++) &#123;    echo $i;&#125;
+
+break 跳出循环# =&gt; 123for ($i = 1; $i &lt;= 5; $i++) &#123;    if ($i === 4) &#123;        break;    &#125;    echo $i;&#125;
+
+continue 继续# =&gt; 1235for ($i = 1; $i &lt;= 5; $i++) &#123;    if ($i === 4) &#123;        continue;    &#125;    echo $i;&#125;
+
+foreach 循环$a = [&#x27;foo&#x27; =&gt; 1, &#x27;bar&#x27; =&gt; 2];# =&gt; 12foreach ($a as $k) &#123;    echo $k;&#125;
+
+查看: Array iteration
+PHP 函数返回值function square($x)&#123;    return $x * $x;&#125;echo square(4);  # =&gt; 16
+
+返回类型// 基本返回类型声明function sum($a, $b): float &#123;/*...*/&#125;function get_item(): string &#123;/*...*/&#125;class C &#123;&#125;// 返回一个对象function getC(): C &#123; return new C; &#125;
+
+可空返回类型// 在 PHP 7.1 中可用function nullOrString(int $v) : ?string&#123;    return $v % 2 ? &quot;odd&quot; : null;&#125;echo nullOrString(3);       # =&gt; oddvar_dump(nullOrString(4));  # =&gt; NULL
+
+查看: Nullable types
+无效函数// 在 PHP 7.1 中可用function voidFunction(): void&#123;  echo &#x27;Hello&#x27;;  return;&#125;voidFunction();  # =&gt; Hello
+
+变量函数function bar($arg = &#x27;&#x27;)&#123;    echo &quot;In bar(); arg: &#x27;$arg&#x27;.\n&quot;;&#125;$func = &#x27;bar&#x27;;$func(&#x27;test&#x27;); # =&gt; In bar(); arg: test
+
+匿名函数$greet = function($name)&#123;    printf(&quot;Hello %s\r\n&quot;, $name);&#125;;$greet(&#x27;World&#x27;); # =&gt; Hello World$greet(&#x27;PHP&#x27;);   # =&gt; Hello PHP
+
+递归函数function recursion($x)&#123;    if ($x &lt; 5) &#123;        echo &quot;$x&quot;;        recursion($x + 1);    &#125;&#125;recursion(1);  # =&gt; 1234
+
+默认参数function coffee($type = &quot;cappuccino&quot;)&#123;    return &quot;Making a cup of $type.\n&quot;;&#125;# =&gt; 制作一杯卡布奇诺echo coffee();# =&gt; 制作一杯echo coffee(null);# =&gt; 制作一杯浓缩咖啡echo coffee(&quot;espresso&quot;);
+
+箭头函数$y = 1; $fn1 = fn($x) =&gt; $x + $y;// 相当于按值使用 $y：$fn2 = function ($x) use ($y) &#123;    return $x + $y;&#125;;echo $fn1(5);   # =&gt; 6echo $fn2(5);   # =&gt; 6
+
+PHP 类构造函数 Constructorclass Student &#123;    public function __construct($name) &#123;        $this-&gt;name = $name;    &#125;    public function print() &#123;        echo &quot;Name: &quot; . $this-&gt;name;    &#125;&#125;$alex = new Student(&quot;Alex&quot;);$alex-&gt;print();    # =&gt; Name: Alex
+
+继承 Inheritanceclass ExtendClass extends SimpleClass&#123;    // 重新定义父方法    function displayVar()    &#123;        echo &quot;Extending class\n&quot;;        parent::displayVar();    &#125;&#125;$extended = new ExtendClass();$extended-&gt;displayVar();
+
+类变量 Classes variables
+
+class MyClass&#123;    const MY_CONST         = &#x27;value&#x27;;    static $staticVar      = &#x27;static&#x27;;    // 可见度    public static $var1    = &#x27;pubs&#x27;;    // 仅限类    private static $var2   = &#x27;pris&#x27;;    // 类和子类    protected static $var3 = &#x27;pros&#x27;;    // 类和子类    protected $var6        = &#x27;pro&#x27;;    // 仅限类    private $var7          = &#x27;pri&#x27;;  &#125;
+
+静态访问
+echo MyClass::MY_CONST;   # =&gt; valueecho MyClass::$staticVar; # =&gt; static
+
+魔术方法class MyClass&#123;    // 对象被视为字符串    public function __toString()    &#123;        return $property;    &#125;    // 与 __construct() 相反    public function __destruct()    &#123;        print &quot;Destroying&quot;;    &#125;&#125;
+
+接口interface Foo &#123;    public function doSomething();&#125;interface Bar&#123;    public function doSomethingElse();&#125;class Cls implements Foo, Bar &#123;    public function doSomething() &#123;&#125;    public function doSomethingElse() &#123;&#125;&#125;
+
+各种各样的基本错误处理try &#123;    // 做一点事&#125; catch (Exception $e) &#123;    // 处理异常&#125; finally &#123;    echo &quot;Always print!&quot;;&#125;
+
+PHP 8.0 中的异常
+&#123;.wrap&#125;$nullableValue = null;try &#123;  $value = $nullableValue ?? throw new InvalidArgumentException();&#125; catch (InvalidArgumentException) &#123; // 变量是可选的    // 处理我的异常    echo &quot;print me!&quot;;&#125;
+
+自定义异常
+class MyException extends Exception &#123;    // 做一点事&#125;
+
+用法
+try &#123;    $condition = true;    if ($condition) &#123;        throw new MyException(&#x27;bala&#x27;);    &#125;&#125; catch (MyException $e) &#123;    // 处理我的异常&#125;
+
+Nullsafe 运算符
+
+// 从 PHP 8.0.0 开始，这一行：$result = $repo?-&gt;getUser(5)?-&gt;name;// 相当于下面的代码：if (is_null($repo)) &#123;    $result = null;&#125; else &#123;    $user = $repository-&gt;getUser(5);    if (is_null($user)) &#123;        $result = null;    &#125; else &#123;        $result = $user-&gt;name;    &#125;&#125;
+
+另见: Nullsafe 运算符
+常用表达$str = &quot;Visit jaywcjlove.github.io&quot;;echo preg_match(&quot;/qu/i&quot;, $str); # =&gt; 1
+
+查看: PHP中的正则表达式
+fopen() 模式
+
+
+:-
+-
+
+
+
+r
+读
+
+
+r+
+读写，前置
+
+
+w
+写入，截断
+
+
+w+
+读写，截断
+
+
+a
+写，追加
+
+
+a+
+读写，追加
+
+
+运行时定义的常量define(&quot;CURRENT_DATE&quot;, date(&#x27;Y-m-d&#x27;));// 一种可能的表示echo CURRENT_DATE;   # =&gt; 2021-01-05# =&gt; CURRENT_DATE is: 2021-01-05echo &#x27;CURRENT_DATE is: &#x27; . CURRENT_DATE; 
+
+另见
+PHP 官方中文文档 (php.net)
+Learn X in Y minutes (learnxinyminutes.com)
+
+]]></content>
+      <categories>
+        <category>后端编程</category>
+      </categories>
+      <tags>
+        <tag>后端编程</tag>
+        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
@@ -6523,399 +7050,6 @@ callbacks.remove() 从回调列表中删除回调或回调集合
       <tags>
         <tag>前端技术</tag>
         <tag>JQuery</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PHP 备忘录</title>
-    <url>/2025/01/08/php/</url>
-    <content><![CDATA[PHP 备忘清单这份 PHP 备忘单为快速查找最常用代码的正确语法提供了参考
-入门hello.php&lt;?php // 以 PHP 开放标签开头echo &quot;Hello World\n&quot;;print(&quot;Hello jaywcjlove.github.io&quot;);?&gt;
-
-PHP 运行命令
-$ php hello.php
-
-变量 Variables$boolean1 = true;$boolean2 = True;$int = 12;$float = 3.1415926;unset($float);  // 删除变量$str1 = &quot;How are you?&quot;;$str2 = &#x27;Fine, thanks&#x27;;
-
-查看: Types
-字符串 Strings$url = &quot;jaywcjlove.github.io&quot;;echo &quot;I&#x27;m learning PHP at $url&quot;;// 连接字符串echo &quot;I&#x27;m learning PHP at &quot; . $url;$hello = &quot;Hello, &quot;;$hello .= &quot;World!&quot;;echo $hello;   # =&gt; Hello, World!
-
-查看: Strings
-数组 Arrays$num = [1, 3, 5, 7, 9];$num[5] = 11;unset($num[2]);    // 删除变量print_r($num);     # =&gt; 1 3 7 9 11echo count($num);  # =&gt; 5
-
-查看: Arrays
-运算符 Operators$x = 1;$y = 2;$sum = $x + $y;echo $sum;   # =&gt; 3
-
-查看: Operators
-Include
-
-vars.php&lt;?php // 以 PHP 开放标签开头。$fruit = &#x27;apple&#x27;;echo &quot;I was imported&quot;;return &#x27;Anything you like.&#x27;;?&gt;
-
-test.php&lt;?phpinclude &#x27;vars.php&#x27;;echo $fruit . &quot;\n&quot;;   # =&gt; apple/* 与 include 相同，如果不能包含则导致错误*/require &#x27;vars.php&#x27;;// 也有效include(&#x27;vars.php&#x27;);require(&#x27;vars.php&#x27;);// 通过 HTTP 包含include &#x27;http://x.com/file.php&#x27;;// 包含和返回语句$result = include &#x27;vars.php&#x27;;echo $result;  # =&gt; Anything you like.?&gt;
-
-功能 Functionsfunction add($num1, $num2 = 1) &#123;    return $num1 + $num2;&#125;echo add(10);    # =&gt; 11echo add(10, 5); # =&gt; 15
-
-查看: Functions
-注释 Comments# 这是一个单行 shell 样式的注释// 这是一行 c++ 风格的注释/* 这是一个多行注释    另一行注释 */
-
-常数 Constantsconst MY_CONST = &quot;hello&quot;;echo MY_CONST;   # =&gt; hello# =&gt; MY_CONST is: helloecho &#x27;MY_CONST is: &#x27; . MY_CONST; 
-
-类 Classesclass Student &#123;  public function __construct($name) &#123;      $this-&gt;name = $name;  &#125;&#125;$alex = new Student(&quot;Alex&quot;);
-
-查看: Classes
-PHP 类型布尔值 Boolean
-
-$boolean1 = true;$boolean2 = TRUE;$boolean3 = false;$boolean4 = FALSE;$boolean5 = (boolean) 1;   # =&gt; true$boolean6 = (boolean) 0;   # =&gt; false
-
-布尔值不区分大小写
-整数 Integer
-
-$int1 = 28;    # =&gt; 28$int2 = -32;   # =&gt; -32$int3 = 012;   # =&gt; 10 (octal)$int4 = 0x0F;  # =&gt; 15 (hex)$int5 = 0b101; # =&gt; 5  (binary)# =&gt; 2000100000 (decimal, PHP 7.4.0)$int6 = 2_000_100_000;
-
-另见: Integers
-字符串 Stringsecho &#x27;this is a simple string&#x27;;
-
-查看: Strings
-数组 Arrays$arr = array(&quot;hello&quot;, &quot;world&quot;, &quot;!&quot;);
-
-查看: Arrays
-浮点数 Float (Double)$float1 = 1.234;$float2 = 1.2e7;$float3 = 7E-10;$float4 = 1_234.567;  // as of PHP 7.4.0var_dump($float4);    // float(1234.567)$float5 = 1 + &quot;10.5&quot;;   # =&gt; 11.5$float6 = 1 + &quot;-1.3e3&quot;; # =&gt; -1299
-
-Null$a = null;$b = &#x27;Hello php!&#x27;;echo $a ?? &#x27;a is unset&#x27;; # =&gt; a is unsetecho $b ?? &#x27;b is unset&#x27;; # =&gt; Hello php$a = array();$a == null    # =&gt; true$a === null   # =&gt; falseis_null($a)   # =&gt; false
-
-可迭代对象 Iterablesfunction bar(): iterable &#123;  return [1, 2, 3];&#125;function gen(): iterable &#123;  yield 1;  yield 2;  yield 3;&#125;foreach (bar() as $value) &#123;  echo $value;   # =&gt; 123&#125; 
-
-PHP 字符串字符串 String# =&gt; &#x27;$String&#x27;$sgl_quotes = &#x27;$String&#x27;;# =&gt; &#x27;This is a $String.&#x27;$dbl_quotes = &quot;This is a $sgl_quotes.&quot;;# =&gt; a    tab character.$escaped   = &quot;a \t tab character.&quot;;# =&gt; a slash and a t: \t$unescaped = &#x27;a slash and a t: \t&#x27;;
-
-多行 Multi-line$str = &quot;foo&quot;;// 未插值的多行$nowdoc = &lt;&lt;&lt;&#x27;END&#x27;Multi line string$strEND;// 将执行字符串插值$heredoc = &lt;&lt;&lt;ENDMulti line$strEND;
-
-操作 Manipulation$s = &quot;Hello Phper&quot;;echo strlen($s);       # =&gt; 11echo substr($s, 0, 3); # =&gt; Helecho substr($s, 1);    # =&gt; ello Phperecho substr($s, -4, 3);# =&gt; hpeecho strtoupper($s);   # =&gt; HELLO PHPERecho strtolower($s);   # =&gt; hello phperecho strpos($s, &quot;l&quot;);      # =&gt; 2var_dump(strpos($s, &quot;L&quot;)); # =&gt; false
-
-另见: 字符串函数
-PHP 数组定义
-
-$a1 = [&quot;hello&quot;, &quot;world&quot;, &quot;!&quot;]$a2 = array(&quot;hello&quot;, &quot;world&quot;, &quot;!&quot;);$a3 = explode(&quot;,&quot;, &quot;apple,pear,peach&quot;);
-
-混合 int 和 string 键$array = array(    &quot;foo&quot; =&gt; &quot;bar&quot;,    &quot;bar&quot; =&gt; &quot;foo&quot;,    100   =&gt; -100,    -100  =&gt; 100,);var_dump($array);
-
-短数组语法$array = [    &quot;foo&quot; =&gt; &quot;bar&quot;,    &quot;bar&quot; =&gt; &quot;foo&quot;,];
-
-多阵列$multiArray = [     [1, 2, 3],    [4, 5, 6],    [7, 8, 9],];print_r($multiArray[0][0]) # =&gt; 1print_r($multiArray[0][1]) # =&gt; 2print_r($multiArray[0][2]) # =&gt; 3
-
-多类型
-
-$array = array(    &quot;foo&quot; =&gt; &quot;bar&quot;,    42    =&gt; 24,    &quot;multi&quot; =&gt; array(         &quot;dim&quot; =&gt; array(             &quot;a&quot; =&gt; &quot;foo&quot;         )    ));# =&gt; string(3) &quot;bar&quot;var_dump($array[&quot;foo&quot;]);# =&gt; int(24)var_dump($array[42]);    # =&gt;  string(3) &quot;foo&quot;var_dump($array[&quot;multi&quot;][&quot;dim&quot;][&quot;a&quot;]);
-
-操作$arr = array(5 =&gt; 1, 12 =&gt; 2);$arr[] = 56;      // 附加$arr[&quot;x&quot;] = 42;   // 用键添加sort($arr);       // 排序unset($arr[5]);   // 消除unset($arr);      // 移除所有
-
-查看: 数组函数
-索引迭代$array = array(&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;);$count = count($array);for ($i = 0; $i &lt; $count; $i++) &#123;    echo &quot;i:&#123;$i&#125;, v:&#123;$array[$i]&#125;\n&quot;;&#125;
-
-价值迭代$colors = array(&#x27;red&#x27;, &#x27;blue&#x27;, &#x27;green&#x27;);foreach ($colors as $color) &#123;    echo &quot;Do you like $color?\n&quot;;&#125;
-
-关键迭代$arr = [&quot;foo&quot; =&gt; &quot;bar&quot;, &quot;bar&quot; =&gt; &quot;foo&quot;];foreach ( $arr as $key =&gt; $value )&#123;    echo &quot;key: &quot; . $key . &quot;\n&quot;;    echo &quot;val: &#123;$arr[$key]&#125;\n&quot;;&#125;
-
-串联阵列$a = [1, 2];$b = [3, 4];// PHP 7.4 以后# =&gt; [1, 2, 3, 4]$result = [...$a, ...$b];
-
-Into 函数$array = [1, 2];function foo(int $a, int $b) &#123;  echo $a; # =&gt; 1    echo $b; # =&gt; 2&#125;foo(...$array);
-
-Splat运算符function foo($first, ...$other) &#123;  var_dump($first); # =&gt; a    var_dump($other); # =&gt; [&#x27;b&#x27;, &#x27;c&#x27;]&#125;foo(&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27; /*, ...*/ );// 或function foo($first, string ...$other)&#123;&#125;
-
-PHP 运算符算术
-
-
-:-
--
-
-
-
-+
-添加
-
-
--
-减法
-
-
-*
-乘法
-
-
-/
-分配
-
-
-%
-取模
-
-
-**
-求幂
-
-
-分配
-
-
-:-
--
-
-
-
-a += b
-如同 a = a + b
-
-
-a -= b
-如同 a = a – b
-
-
-a *= b
-如同 a = a * b
-
-
-a /= b
-如同 a = a / b
-
-
-a %= b
-如同 a = a % b
-
-
-比较
-
-
-:-
--
-
-
-
-==
-平等的
-
-
-===
-完全相同的
-
-
-!=
-不相等
-
-
-&lt;&gt;
-不相等
-
-
-!==
-不相同
-
-
-&lt;
-少于
-
-
-&gt;
-比…更棒
-
-
-&lt;=
-小于或等于
-
-
-&gt;=
-大于或等于
-
-
-&lt;=&gt;
-小于&#x2F;等于&#x2F;大于
-
-
-逻辑的
-
-
-:-
--
-
-
-
-and
-和
-
-
-or
-或者
-
-
-xor
-独家或
-
-
-!
-不是
-
-
-&amp;&amp;
-和
-
-
-||
-或者
-
-
-算术// 算术$sum        = 1 + 1; // 2$difference = 2 - 1; // 1$product    = 2 * 2; // 4$quotient   = 2 / 1; // 2// 速记算术$num = 0;$num += 1;       // 将 $num 增加 1echo $num++;     // 打印 1（评估后的增量）echo ++$num;     // 打印 3（评估前的增量）$num /= $float;  // 将商除并分配给 $num
-
-按位
-
-
-:-
--
-
-
-
-&amp;
-和
-
-
-&#96;
-&#96;
-
-
-^
-异或（异或）
-
-
-~
-不是
-
-
-&lt;&lt;
-左移
-
-
-&gt;&gt;
-右移
-
-
-PHP 条件If elseif else$a = 10;$b = 20;if ($a &gt; $b) &#123;    echo &quot;a is bigger than b&quot;;&#125; elseif ($a == $b) &#123;    echo &quot;a is equal to b&quot;;&#125; else &#123;    echo &quot;a is smaller than b&quot;;&#125;
-
-Switch$x = 0;switch ($x) &#123;    case &#x27;0&#x27;:        print &quot;it&#x27;s zero&quot;;        break;     case &#x27;two&#x27;:    case &#x27;three&#x27;:        // do something        break;    default:        // do something&#125;
-
-三元运算符# =&gt; Doesprint (false ? &#x27;Not&#x27; : &#x27;Does&#x27;);$x = false;# =&gt; Doesprint($x ?: &#x27;Does&#x27;);$a = null;$b = &#x27;Does print&#x27;;# =&gt; a is unsertecho $a ?? &#x27;a is unset&#x27;;# =&gt; printecho $b ?? &#x27;b is unset&#x27;;
-
-匹配$statusCode = 500;$message = match($statusCode) &#123;  200, 300 =&gt; null,  400 =&gt; &#x27;未找到&#x27;,  500 =&gt; &#x27;服务器错误&#x27;,  default =&gt; &#x27;已知状态码&#x27;,&#125;;echo $message; # =&gt; 服务器错误
-
-查看: Match
-匹配表达式$age = 23;$result = match (true) &#123;    $age &gt;= 65 =&gt; &#x27;senior&#x27;,    $age &gt;= 25 =&gt; &#x27;adult&#x27;,    $age &gt;= 18 =&gt; &#x27;young adult&#x27;,    default =&gt; &#x27;kid&#x27;,&#125;;echo $result; # =&gt; young adult
-
-PHP 循环while 循环$i = 1;# =&gt; 12345while ($i &lt;= 5) &#123;    echo $i++;&#125;
-
-do while 循环$i = 1;# =&gt; 12345do &#123;    echo $i++;&#125; while ($i &lt;= 5);
-
-for i 循环# =&gt; 12345for ($i = 1; $i &lt;= 5; $i++) &#123;    echo $i;&#125;
-
-break 跳出循环# =&gt; 123for ($i = 1; $i &lt;= 5; $i++) &#123;    if ($i === 4) &#123;        break;    &#125;    echo $i;&#125;
-
-continue 继续# =&gt; 1235for ($i = 1; $i &lt;= 5; $i++) &#123;    if ($i === 4) &#123;        continue;    &#125;    echo $i;&#125;
-
-foreach 循环$a = [&#x27;foo&#x27; =&gt; 1, &#x27;bar&#x27; =&gt; 2];# =&gt; 12foreach ($a as $k) &#123;    echo $k;&#125;
-
-查看: Array iteration
-PHP 函数返回值function square($x)&#123;    return $x * $x;&#125;echo square(4);  # =&gt; 16
-
-返回类型// 基本返回类型声明function sum($a, $b): float &#123;/*...*/&#125;function get_item(): string &#123;/*...*/&#125;class C &#123;&#125;// 返回一个对象function getC(): C &#123; return new C; &#125;
-
-可空返回类型// 在 PHP 7.1 中可用function nullOrString(int $v) : ?string&#123;    return $v % 2 ? &quot;odd&quot; : null;&#125;echo nullOrString(3);       # =&gt; oddvar_dump(nullOrString(4));  # =&gt; NULL
-
-查看: Nullable types
-无效函数// 在 PHP 7.1 中可用function voidFunction(): void&#123;  echo &#x27;Hello&#x27;;  return;&#125;voidFunction();  # =&gt; Hello
-
-变量函数function bar($arg = &#x27;&#x27;)&#123;    echo &quot;In bar(); arg: &#x27;$arg&#x27;.\n&quot;;&#125;$func = &#x27;bar&#x27;;$func(&#x27;test&#x27;); # =&gt; In bar(); arg: test
-
-匿名函数$greet = function($name)&#123;    printf(&quot;Hello %s\r\n&quot;, $name);&#125;;$greet(&#x27;World&#x27;); # =&gt; Hello World$greet(&#x27;PHP&#x27;);   # =&gt; Hello PHP
-
-递归函数function recursion($x)&#123;    if ($x &lt; 5) &#123;        echo &quot;$x&quot;;        recursion($x + 1);    &#125;&#125;recursion(1);  # =&gt; 1234
-
-默认参数function coffee($type = &quot;cappuccino&quot;)&#123;    return &quot;Making a cup of $type.\n&quot;;&#125;# =&gt; 制作一杯卡布奇诺echo coffee();# =&gt; 制作一杯echo coffee(null);# =&gt; 制作一杯浓缩咖啡echo coffee(&quot;espresso&quot;);
-
-箭头函数$y = 1; $fn1 = fn($x) =&gt; $x + $y;// 相当于按值使用 $y：$fn2 = function ($x) use ($y) &#123;    return $x + $y;&#125;;echo $fn1(5);   # =&gt; 6echo $fn2(5);   # =&gt; 6
-
-PHP 类构造函数 Constructorclass Student &#123;    public function __construct($name) &#123;        $this-&gt;name = $name;    &#125;    public function print() &#123;        echo &quot;Name: &quot; . $this-&gt;name;    &#125;&#125;$alex = new Student(&quot;Alex&quot;);$alex-&gt;print();    # =&gt; Name: Alex
-
-继承 Inheritanceclass ExtendClass extends SimpleClass&#123;    // 重新定义父方法    function displayVar()    &#123;        echo &quot;Extending class\n&quot;;        parent::displayVar();    &#125;&#125;$extended = new ExtendClass();$extended-&gt;displayVar();
-
-类变量 Classes variables
-
-class MyClass&#123;    const MY_CONST         = &#x27;value&#x27;;    static $staticVar      = &#x27;static&#x27;;    // 可见度    public static $var1    = &#x27;pubs&#x27;;    // 仅限类    private static $var2   = &#x27;pris&#x27;;    // 类和子类    protected static $var3 = &#x27;pros&#x27;;    // 类和子类    protected $var6        = &#x27;pro&#x27;;    // 仅限类    private $var7          = &#x27;pri&#x27;;  &#125;
-
-静态访问
-echo MyClass::MY_CONST;   # =&gt; valueecho MyClass::$staticVar; # =&gt; static
-
-魔术方法class MyClass&#123;    // 对象被视为字符串    public function __toString()    &#123;        return $property;    &#125;    // 与 __construct() 相反    public function __destruct()    &#123;        print &quot;Destroying&quot;;    &#125;&#125;
-
-接口interface Foo &#123;    public function doSomething();&#125;interface Bar&#123;    public function doSomethingElse();&#125;class Cls implements Foo, Bar &#123;    public function doSomething() &#123;&#125;    public function doSomethingElse() &#123;&#125;&#125;
-
-各种各样的基本错误处理try &#123;    // 做一点事&#125; catch (Exception $e) &#123;    // 处理异常&#125; finally &#123;    echo &quot;Always print!&quot;;&#125;
-
-PHP 8.0 中的异常
-&#123;.wrap&#125;$nullableValue = null;try &#123;  $value = $nullableValue ?? throw new InvalidArgumentException();&#125; catch (InvalidArgumentException) &#123; // 变量是可选的    // 处理我的异常    echo &quot;print me!&quot;;&#125;
-
-自定义异常
-class MyException extends Exception &#123;    // 做一点事&#125;
-
-用法
-try &#123;    $condition = true;    if ($condition) &#123;        throw new MyException(&#x27;bala&#x27;);    &#125;&#125; catch (MyException $e) &#123;    // 处理我的异常&#125;
-
-Nullsafe 运算符
-
-// 从 PHP 8.0.0 开始，这一行：$result = $repo?-&gt;getUser(5)?-&gt;name;// 相当于下面的代码：if (is_null($repo)) &#123;    $result = null;&#125; else &#123;    $user = $repository-&gt;getUser(5);    if (is_null($user)) &#123;        $result = null;    &#125; else &#123;        $result = $user-&gt;name;    &#125;&#125;
-
-另见: Nullsafe 运算符
-常用表达$str = &quot;Visit jaywcjlove.github.io&quot;;echo preg_match(&quot;/qu/i&quot;, $str); # =&gt; 1
-
-查看: PHP中的正则表达式
-fopen() 模式
-
-
-:-
--
-
-
-
-r
-读
-
-
-r+
-读写，前置
-
-
-w
-写入，截断
-
-
-w+
-读写，截断
-
-
-a
-写，追加
-
-
-a+
-读写，追加
-
-
-运行时定义的常量define(&quot;CURRENT_DATE&quot;, date(&#x27;Y-m-d&#x27;));// 一种可能的表示echo CURRENT_DATE;   # =&gt; 2021-01-05# =&gt; CURRENT_DATE is: 2021-01-05echo &#x27;CURRENT_DATE is: &#x27; . CURRENT_DATE; 
-
-另见
-PHP 官方中文文档 (php.net)
-Learn X in Y minutes (learnxinyminutes.com)
-
-]]></content>
-      <categories>
-        <category>后端编程</category>
-      </categories>
-      <tags>
-        <tag>后端编程</tag>
-        <tag>PHP</tag>
       </tags>
   </entry>
   <entry>
