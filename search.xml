@@ -1969,6 +1969,1534 @@ C++ Language Tutorials (cplusplus.com)
       </tags>
   </entry>
   <entry>
+    <title>Docker 备忘录</title>
+    <url>/2025/01/08/docker/</url>
+    <content><![CDATA[Docker 备忘清单这是 Docker 的快速参考备忘单。 你可以在这里找到最常见的 Docker 命令。
+入门
+
+入门安装curl -sSL https://get.docker.com/ | shsudo chmod 777 /var/run/docker.sock
+
+在后台创建和运行容器
+$ docker run -d -p 80:80 docker/getting-started
+
+
+
+-d - 以分离（后台）模式运行容器
+-p 80:80 -  将端口 80 映射到容器中的端口 80，格式：宿主机端口:容器端口
+docker/getting-started - 要使用的镜像
+
+在前台创建并运行容器（之后如果要退出容器但是不关闭容器，按Ctrl+P+Q即可）
+$ docker run -it --rm -p  8001:8080 --name my-nginx nginx
+
+
+
+-it - 交互式 bash 模式
+--rm - 容器终止运行后自动删除容器文件
+-p 8001:8080 - 将 8001 端口映射到容器中的 8080 端口
+--name my-nginx - 指定名称
+nginx - 要使用的镜像
+
+一般命令
+
+
+Example
+Description
+
+
+
+docker ps
+列出正在运行的容器
+
+
+docker ps -a
+列出所有容器
+
+
+docker ps -s
+列出正在运行的容器 (带 CPU &#x2F; 内存)
+
+
+docker images
+列出所有镜像
+
+
+docker exec -it &lt;container&gt;  bash
+连接到容器
+
+
+docker logs &lt;container&gt;
+显示容器的控制台日志
+
+
+docker stop &lt;container&gt;
+停止容器
+
+
+docker restart &lt;container&gt;
+重启一个容器
+
+
+docker rm &lt;container&gt;
+移除一个容器
+
+
+docker port &lt;container&gt;
+显示容器的端口映射
+
+
+docker top &lt;container&gt;
+列出进程
+
+
+docker kill &lt;container&gt;
+杀死一个容器
+
+
+参数 &lt;container&gt; 可以是容器 id 或名称
+Docker 容器
+
+启动和停止
+
+
+Description
+Example
+
+
+
+docker start nginx-server
+开始
+
+
+docker stop nginx-server
+停止
+
+
+docker restart nginx-server
+重启
+
+
+docker pause nginx-server
+暂停
+
+
+docker unpause nginx-server
+取消暂停
+
+
+docker wait nginx-server
+阻塞容器
+
+
+docker kill nginx-server
+发送 SIGKILL
+
+
+docker attach nginx-server
+连接到现有容器
+
+
+说明
+
+
+Example
+Description
+
+
+
+docker ps
+列出正在运行的容器
+
+
+docker ps -a
+列出所有容器
+
+
+docker logs nginx-server
+容器日志
+
+
+docker inspect nginx-server
+检查容器
+
+
+docker events nginx-server
+容器事件
+
+
+docker port nginx-server
+公共端口
+
+
+docker top nginx-server
+运行进程
+
+
+docker stats nginx-server
+容器资源使用
+
+
+docker diff nginx-server
+列出对容器所做的更改
+
+
+创建容器docker create [options] IMAGE  -a, --attach               # 附加标准输出/错误  -i, --interactive          # 附加标准输入（交互式）  -t, --tty                  # 伪终端 pseudo-tty      --name NAME            # 命名你的镜像  -p, --publish 5000:5000    # 端口映射（主机:容器）      --expose 5432          # 向容器公开端口   -P, --publish-all          # 发布所有端口      --link container:alias # 链接 linking  -v, --volume `pwd`:/app    # mount（需要绝对路径）  -e, --env NAME=hello       # 环境变量 env vars
+
+实例$ docker create --name my_redis --expose 6379 redis:3.0.2
+
+操控重命名容器
+docker rename my-nginx nginx-server
+
+移除容器
+docker rm nginx-server
+
+更新容器
+docker update --cpu-shares 512 -m 300M nginx-server
+
+Docker 镜像
+
+操控
+
+
+
+
+Example
+Description
+
+
+
+docker images
+列出镜像
+
+
+docker rmi nginx
+删除镜像
+
+
+docker load &lt; ubuntu.tar.gz
+加载一个 tarred 存储库
+
+
+docker load --input ubuntu.tar
+加载一个 tarred 存储库
+
+
+docker save busybox &gt; ubuntu.tar
+将镜像保存到 tar 存档
+
+
+docker history
+显示镜像的历史
+
+
+docker commit nginx my_nginx
+将容器另存为镜像
+
+
+docker tag nginx eon01/nginx
+标记镜像
+
+
+docker push eon01/nginx
+推送镜像
+
+
+构建镜像# 注意有的最后面是英文 .$ docker build .$ docker build github.com/creack/docker-firefox$ docker build - &lt; Dockerfile$ docker build - &lt; context.tar.gz$ docker build -t eon/nginx-server .$ docker build -f myOtherDockerfile .$ docker build --build-arg https_proxy=127.0.0.1:8088 # 使用http代理构建$ curl example.com/remote/Dockerfile | docker build -f - .$ docker save -o &lt;保存路径&gt;/myimage.tar myimage:latest # 导出$ docker load -i &lt;路径&gt;/myimage.tar # 导入
+
+删除 &lt;none&gt; 镜像$ docker rmi -f $(docker images | grep &quot;none&quot; | awk &#x27;&#123;print $3&#125;&#x27;)
+
+Docker 网络
+
+创建网络docker network create -d overlay MyOverlayNetworkdocker network create -d bridge MyBridgeNetwork
+
+自定义网络子网和网关
+docker network create -d overlay \  --subnet=192.168.0.0/16 \  --subnet=192.170.0.0/16 \  --gateway=192.168.0.100 \  --gateway=192.170.0.100 \  --ip-range=192.168.1.0/24 \  --aux-address=&quot;my-router=192.168.1.5&quot; \  --aux-address=&quot;my-switch=192.168.1.6&quot; \  --aux-address=&quot;my-printer=192.170.1.5&quot; \  --aux-address=&quot;my-nas=192.170.1.6&quot; \  MyOverlayNetwork
+
+操作
+
+获取容器连接的网络
+docker inspect MyContainer | grep Network
+
+获取有关网络的信息
+docker network inspect &lt;network_name&gt;
+
+将正在运行的容器连接到网络
+docker network connect &lt;network_name&gt; &lt;container_name&gt;
+
+启动时将容器连接到网络
+docker run -it -d --network=&lt;network_name&gt; &lt;container_name&gt;
+
+断开容器与网络的连接
+docker network disconnect &lt;network_name&gt; &lt;container_name&gt;
+
+删除网络docker network rm &lt;network_name&gt;
+
+列出网络docker network ls
+
+Docker 快捷键需要特别注意的是，退出快捷键中的删除容器实例，只对于使用 docker attach 进入的容器生效，使用 docker exec 进入容器后，使用上面的快捷键后将隔离容器，且不会删除容器实例。
+退出 - 关闭容器
+
+
+Docker 快捷键
+说明
+
+
+
+ctrl c
+将关闭容器
+
+
+
+
+将关闭容器, 并删除当前的容器实例
+退出 - 保留容器
+
+
+Docker 快捷键
+说明
+
+
+
+ctrl d
+保留容器
+
+
+
+
+将保留容器，并退出到Docker主机的命令行界面
+退出 - 容器分离
+
+
+Docker 快捷键
+说明
+
+
+
+ctrl p q
+容器分离
+
+
+
+
+将容器分离，保留容器，但是不退出
+各种各样的
+
+Docker Hub$ docker search search_word  # 在 docker hub 中搜索镜像$ docker pull user/image     # 从 docker hub 下载镜像$ docker login               # 向 docker hub 进行身份验证$ docker push user/image     # 将镜像上传到 docker hub
+
+镜像仓库命令
+
+登录到镜像仓库
+$ docker login$ docker login localhost:8080
+
+从镜像仓库注销
+$ docker logout$ docker logout localhost:8080
+
+搜索镜像
+$ docker search nginx$ docker search nginx --stars=3 --no-trunc busybox
+
+拉取镜像
+$ docker pull nginx$ docker pull eon01/nginx localhost:5000/myadmin/nginx
+
+推送镜像
+$ docker push eon01/nginx$ docker push eon01/nginx localhost:5000/myadmin/nginx
+
+批量清除
+
+
+实例
+说明
+
+
+
+docker stop -f $(docker ps -a -q)
+停止所有容器
+
+
+docker rm -f $(docker ps -a -q)
+删除所有容器
+
+
+docker rmi -f $(docker images -q)
+删除所有镜像
+
+
+docker volume prune
+删除所有未使用的Docker Volume
+
+
+docker network prune
+删除所有未使用的Docker网络
+
+
+docker system prune
+清理所有空闲或与任何Docker容器无关的资源
+
+
+docker image prune
+删除悬空的Docker镜像
+
+
+docker container prune
+删除所有未使用的Docker 容器
+
+
+
+
+卷 volume$ docker volume ls    # 检查卷$ docker volume prune # 清理未使用的卷
+
+Docker Compose
+
+
+
+
+:-
+:-
+
+
+
+docker-compose up
+创建和启动容器
+
+
+docker-compose up -d
+以分离模式创建和启动容器
+
+
+docker-compose down
+停止和删除容器、网络、映像和卷
+
+
+docker-compose logs
+查看容器的输出
+
+
+docker-compose restart
+重启所有服务
+
+
+docker-compose pull
+拉取所有服务的镜像
+
+
+docker-compose build
+构建所有服务的镜像
+
+
+docker-compose config
+验证并查看 Compose 文件
+
+
+docker-compose scale &lt;service_name&gt;=&lt;replica&gt;
+为服务指定容器个数
+
+
+docker-compose top
+显示正在运行的进程
+
+
+docker-compose run -rm -p 2022:22 web bash
+启动 Web 服务并运行 bash 作为其命令，删除旧容器
+
+
+
+
+Docker Services
+
+
+:-
+:-
+
+
+
+docker service create &lt;options&gt; &lt;image&gt; &lt;command&gt;
+创建新服务
+
+
+docker service inspect --pretty &lt;service_name&gt;
+显示详细信息服务
+
+
+docker service ls
+列出服务
+
+
+docker service ps
+列出服务的任务
+
+
+docker service scale &lt;service_name&gt;=&lt;replica&gt;
+规模特殊服务
+
+
+docker service update &lt;options&gt; &lt;service_name&gt;
+更新服务选项
+
+
+
+
+Docker Stack
+
+
+
+
+:-
+:-
+
+
+
+docker stack ls
+列出此 Docker 主机上所有正在运行的应用程序
+
+
+docker stack deploy -c &lt;composefile&gt; &lt;appname&gt;
+运行指定的 Compose 文件
+
+
+docker stack services &lt;appname&gt;
+列出与应用关联的服务
+
+
+docker stack ps &lt;appname&gt;
+列出与应用关联的正在运行的容器
+
+
+docker stack rm &lt;appname&gt;
+拆掉一个应用程序
+
+
+
+
+Docker Machine
+
+
+
+
+:-
+:-
+
+
+
+docker-machine create --driver virtualbox myvm1
+创建虚拟机（Mac、Win7、Linux）
+
+
+docker-machine create -d hyperv --hyperv-virtual-switch &quot;myswitch&quot; myvm1
+Win10
+
+
+docker-machine env myvm1
+查看有关您的节点的基本信息
+
+
+docker-machine ssh myvm1 &quot;docker node ls&quot;
+列出集群中的节点
+
+
+docker-machine ssh myvm1 &quot;docker node inspect &lt;node ID&gt;&quot;
+检查节点
+
+
+docker-machine ssh myvm1 &quot;docker swarm join-token -q worker&quot;
+查看加入令牌
+
+
+docker-machine ssh myvm1
+打开与 VM 的 SSH 会话； 输入“exit”结束
+
+
+docker-machine ssh myvm2 &quot;docker swarm leave&quot;
+让工人离开群体
+
+
+docker-machine ssh myvm1 &quot;docker swarm leave -f&quot;
+让主人离开，杀群
+
+
+docker-machine start myvm1
+启动当前未运行的 VM
+
+
+docker-machine stop $(docker-machine ls -q)
+停止所有正在运行的虚拟机
+
+
+docker-machine rm $(docker-machine ls -q)
+删除所有虚拟机及其磁盘映像
+
+
+docker-machine scp docker-compose.yml myvm1:~
+将文件复制到节点的主目录
+
+
+docker-machine ssh myvm1 &quot;docker stack deploy -c &lt;file&gt; &lt;app&gt;&quot;
+部署应用
+
+
+
+
+docker 主要命令
+
+
+
+
+:-
+:-
+
+
+
+attach
+将本地标准输入、输出和错误流附加到正在运行的容器
+
+
+build
+从 Dockerfile 构建镜像
+
+
+commit
+从容器的更改创建新镜像
+
+
+cp
+在容器和本地文件系统之间复制文件&#x2F;文件夹
+
+
+create
+创建一个新容器
+
+
+diff
+检查容器文件系统上文件或目录的更改
+
+
+events
+从服务器获取实时事件
+
+
+exec
+在正在运行的容器中运行命令
+
+
+export
+将容器的文件系统导出为 tar 存档
+
+
+history
+显示镜像的历史
+
+
+images
+列出镜像
+
+
+import
+从 tarball 导入内容以创建文件系统映像
+
+
+info
+显示系统范围的信息
+
+
+inspect
+返回有关 Docker 对象的低级信息
+
+
+kill
+杀死一个或多个正在运行的容器
+
+
+load
+从 tar 存档或 STDIN 加载镜像
+
+
+login
+登录到 Docker 注册表
+
+
+logout
+从 Docker 注册表中注销
+
+
+logs
+获取容器的日志
+
+
+pause
+暂停一个或多个容器内的所有进程
+
+
+port
+列出容器的端口映射或特定映射
+
+
+ps
+列出容器
+
+
+pull
+从注册表中提取镜像或存储库
+
+
+push
+将镜像或存储库推送到注册表
+
+
+rename
+重命名容器
+
+
+restart
+重启一个或多个容器
+
+
+rm
+移除一个或多个容器
+
+
+rmi
+移除一张或多张镜像
+
+
+run
+在新容器中运行命令
+
+
+save
+将一个或多个镜像保存到 tar 存档（默认流式传输到 STDOUT）
+
+
+search
+在 Docker Hub 中搜索镜像
+
+
+start
+启动一个或多个停止的容器
+
+
+stats
+显示容器资源使用统计的实时流
+
+
+stop
+停止一个或多个正在运行的容器
+
+
+tag
+创建一个引用 SOURCE_IMAGE 的标记 TARGET_IMAGE
+
+
+top
+显示容器的运行进程
+
+
+unpause
+取消暂停一个或多个容器中的所有进程
+
+
+update
+更新一个或多个容器的配置
+
+
+version
+显示 Docker 版本信息
+
+
+wait
+阻塞直到一个或多个容器停止，然后打印它们的退出代码
+
+
+
+
+docker 管理命令
+
+
+:-
+:-
+
+
+
+docker builder
+管理构建
+
+
+docker buildx*
+Docker Buildx（Docker Inc.，v0.7.1）
+
+
+docker compose*
+Docker Compose（Docker Inc.，v2.2.3）
+
+
+docker config
+管理 Docker 配置
+
+
+docker container
+管理容器
+
+
+docker context
+管理上下文
+
+
+docker image
+管理镜像
+
+
+docker manifest
+管理 Docker 镜像清单和清单列表
+
+
+docker network
+管理网络
+
+
+docker node
+管理 Swarm 节点
+
+
+docker plugin
+管理插件
+
+
+docker scan*
+Docker 扫描（Docker Inc.，v0.16.0）
+
+
+docker secret
+管理 Docker 机密
+
+
+docker service
+管理服务
+
+
+docker stack
+管理 Docker 堆栈
+
+
+docker swarm
+管理群
+
+
+docker system
+管理 Docker
+
+
+docker trust
+管理对 Docker 映像的信任
+
+
+docker volume
+管理卷
+
+
+
+
+docker 全局参数    --config string     # 客户端配置文件的位置（默认“~/.docker”）-c, --context string    # 用于连接到守护程序的上下文的名称（                        # 覆盖 DOCKER_HOST 环境变量和使用                        # “docker context use” 设置的默认上下文）-D, --debug             # 启用调试模式-H, --host list         # 要连接的守护进程套接字-l, --log-level string  # 设置日志级别        # （默认“info”） (&quot;debug&quot;|&quot;info&quot;|&quot;warn&quot;|&quot;error&quot;|&quot;fatal&quot;)     --tls               # 使用 TLS； 由 --tlsverify 暗示    --tlscacert string  # 仅由该 CA 签署的信任证书        #（默认为“~/.docker/ca.pem”）    --tlscert string    # TLS证书文件路径        #（默认“~/.docker/cert.pem”）    --tlskey string     # TLS 密钥文件的路径        #（默认为“~/.docker/key.pem”）    --tlsverify         # 使用 TLS 并验证远程-v, --version           # 打印版本信息并退出
+
+docker images-a, --all             显示所有镜像（默认隐藏中间镜像）    --digests         显示摘要-f, --filter filter   根据提供的条件过滤输出    --format string   使用 Go 模板打印漂亮的镜像    --no-trunc        不要截断输出-q, --quiet           仅显示镜像 ID
+
+docker run&#x2F;create
+
+    --add-host list            # 添加自定义主机到 IP 映射 (host:ip)-a, --attach list              # 连接到 STDIN、STDOUT 或 STDERR    --blkio-weight uint16      # 块 IO（相对权重），介于 10 和 1000 之间，或 0 禁用（默认 0）    --blkio-weight-device list # 块 IO 权重（相对设备权重）（默认 []）    --cap-add list             # 添加 Linux 功能    --cap-drop list            # 放弃 Linux 功能    --cgroup-parent string     # 容器的可选父 cgroup    --cgroupns string          # 要使用的 Cgroup 命名空间（主机|私有）                               #  &#x27;host&#x27;:    在 Docker 主机的 cgroup 命名空间中运行容器                               #  &#x27;private&#x27;: 在自己的私有 cgroup 命名空间中运行容器                               #  &#x27;&#x27;:        使用由守护进程上的                                #        default-cgroupns-mode 选项配置的 cgroup 命名空间（默认）    --cidfile string           # 将容器 ID 写入文件    --cpu-period int           # 限制 CPU CFS（完全公平调度器）周期    --cpu-quota int            # 限制 CPU CFS（完全公平调度器）配额    --cpu-rt-period int        # 以微秒为单位限制 CPU 实时周期    --cpu-rt-runtime int       # 以微秒为单位限制 CPU 实时运行时间-c, --cpu-shares int           # CPU 份额（相对权重）    --cpus decimal             # CPU 数量    --cpuset-cpus string       # 允许执行的 CPU (0-3, 0,1)    --cpuset-mems string       # 允许执行的 MEM (0-3, 0,1)    --device list              # 将主机设备添加到容器    --device-cgroup-rule list  # 将规则添加到 cgroup 允许的设备列表    --device-read-bps list     # 限制设备的读取速率（每秒字节数）（默认 []）    --device-read-iops list    # 限制设备的读取速率（每秒 IO）（默认 []）    --device-write-bps list    # 限制设备的写入速率（每秒字节数）（默认 []）    --device-write-iops list   # 限制设备的写入速率（每秒 IO）（默认 []）    --disable-content-trust    # 跳过镜像验证（默认为 true）    --dns list                 # 设置自定义 DNS 服务器    --dns-option list          # 设置 DNS 选项    --dns-search list          # 设置自定义 DNS 搜索域    --domainname string        # 容器 NIS 域名    --entrypoint string        # 覆盖镜像的默认入口点-e, --env list                 # 设置环境变量    --env-file list            # 读入环境变量文件    --expose list              # 公开一个端口或一系列端口    --gpus gpu-request         # 要添加到容器中的 GPU 设备（“全部”以传递所有 GPU）    --group-add list           # 添加其他组以加入    --health-cmd string        # 运行以检查运行状况的命令    --health-interval duration # 运行检查之间的时间 (ms|s|m|h) (默认 0s)    --health-retries int           # 需要报告不健康的连续失败    --health-start-period duration # 开始健康重试倒计时之前容器初始化的开始时间（ms|s|m|h）（默认 0s）    --health-timeout duration      # 允许运行一项检查的最长时间 (ms|s|m|h) (默认 0s)    --help                     # 打印使用-h, --hostname string          # 容器主机名    --init                     # 在容器内运行一个 init 来转发信号并收获进程-i, --interactive              # 即使没有连接，也保持 STDIN 打开    --ip string                # IPv4 地址（例如 172.30.100.104）    --ip6 string               # IPv6 地址（例如，2001:db8::33）    --ipc string               # 要使用的 IPC 模式    --isolation string         # 容器隔离技术    --kernel-memory bytes      # 内核内存限制-l, --label list               # 在容器上设置元数据    --label-file list          # 读入以行分隔的标签文件    --link list                # 添加到另一个容器的链接    --link-local-ip list       # 容器 IPv4/IPv6 链路本地地址    --log-driver string        # 容器的日志记录驱动程序    --log-opt list             # 日志驱动程序选项    --mac-address string       # 容器 MAC 地址（例如 92:d0:c6:0a:29:33）-m, --memory bytes             # 内存限制    --memory-reservation bytes # 内存软限制    --memory-swap bytes        # 交换限制等于内存加上交换：&#x27;-1&#x27; 启用无限交换    --memory-swappiness int    # 调整容器内存交换（0 到 100）（默认 -1）    --mount mount              # 将文件系统挂载附加到容器    --name string              # 为容器分配名称    --network network          # 将容器连接到网络    --network-alias list       # 为容器添加网络范围的别名    --no-healthcheck           # 禁用任何容器指定的 HEALTHCHECK    --oom-kill-disable         # 禁用 OOM 杀手    --oom-score-adj int        # 调整主机的 OOM 首选项（-1000 到 1000）    --pid string               # 要使用的 PID 命名空间    --pids-limit int           # 调整容器 pids 限制（设置 -1 表示无限制）    --platform string          # 如果服务器支持多平台，则设置平台    --privileged               # 授予此容器扩展权限-p, --publish list             # 将容器的端口发布到主机-P, --publish-all              # 将所有暴露的端口发布到随机端口    --pull string              # 创建前拉取镜像(&quot;always&quot;|&quot;missing&quot;|&quot;never&quot;)(默认&quot;missing&quot;)    --read-only                # 将容器的根文件系统挂载为只读    --restart string           # 容器退出时应用的重启策略（默认“否”）    --rm                       # 容器退出时自动移除    --runtime string           # 用于此容器的运行时    --security-opt list        # 安全选项    --shm-size bytes           # /dev/shm 的大小    --stop-signal string       # 停止容器的信号（默认“SIGTERM”）    --stop-timeout int         # 停止容器的超时（以秒为单位）    --storage-opt list         # 容器的存储驱动程序选项    --sysctl map               # Sysctl 选项（默认 map[]）    --tmpfs list               # 挂载 tmpfs 目录-t, --tty                      # 分配一个伪 TTY    --ulimit ulimit            # ulimit 选项（默认 []）-u, --user string              # 用户名或 UID（格式：&lt;name|uid&gt;[:&lt;group|gid&gt;]）    --userns string            # 要使用的用户命名空间    --uts string               # 要使用的 UTS 命名空间-v, --volume list              # 绑定挂载卷    --volume-driver string     # 容器的可选卷驱动程序    --volumes-from list        # 从指定容器挂载卷-w, --workdir string           # 容器内的工作目录
+
+run&#x2F;create 大部分参数一致
+修改Docker镜像拉取地址您可以通过修改daemon配置文件&#x2F;etc&#x2F;docker&#x2F;daemon.json来使用加速器
+sudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;&#123;  &quot;registry-mirrors&quot;: [&quot;https://1ojaslt1.mirror.aliyuncs.com&quot;]&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker
+
+修改 Docker 数据存储路径
+
+
+停止 Docker 服务：
+  sudo systemctl stop docker
+
+将现有的 Docker 数据移动到新的目录：
+  sudo mv /var/lib/docker /new/path/docker
+
+更新 Docker 的配置文件 /etc/docker/daemon.json，添加或修改 data-root 选项：
+  &#123; &quot;data-root&quot;: &quot;/new/path/docker&quot; &#125;
+
+重新启动 Docker 服务：
+  sudo systemctl start docker
+
+
+
+⚠️注意：当你执行此操作时，旧的容器和镜像可能无法正常工作，因为它们的路径已更改。建议在部署 Docker 时执行此操作，以避免这些问题。如有必要，重新启动容器或重新创建它们，以确保它们的配置指向新的路径。
+Docker降级版本的方法yum downgrade --setopt=obsoletes=0 \    -y docker-ce-$&#123;version&#125; docker-ce-selinux-$&#123;version&#125;
+
+$&#123;version&#125; 指定要降级的版本
+Docker 常用示例
+
+Docker Web 管理工具 portainer$ docker run -d --name portainer \  -p 8000:8000 \  -p 9443:9443 \  --restart=always \  -v /var/run/docker.sock:/var/run/docker.sock \  -v $HOME/portainer:/data \    portainer/portainer-ee:latest
+
+Nginx
+
+docker run -itd -p 80:80 --restart=always --name Nginx \-v $HOME/nginx_data/html:/usr/share/nginx/html \-v $HOME/nginx_data/conf:/etc/nginx/conf.d \-v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf \nginx
+
+参数解释
+-itd: 启动容器并保持后台运行
+-p 80:80: 将主机的 80 端口映射到容器的 80 端口，用于访问 Nginx 站点页面
+--name Nginx: 给容器指定一个名称为 “Nginx”
+--restart=always: 在容器退出时，总是重新启动容器
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/nginx_data/html:/usr/share/nginx/html
+将容器中的 Nginx 站点页面路径映射到本地
+
+
+-v $HOME/nginx_data/conf:/etc/nginx/conf.d
+将容器中的 Nginx 虚拟主机配置文件路径映射到本地 (需要提前准备好文件)
+
+
+-v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf
+将容器中的 Nginx 主配置文件路径映射到本地 (需要提前准备好文件)
+
+
+
+
+Tomcatdocker run -itd -p 8080:8080 --restart=always \--name Tomcat \-v $HOME/Tomcat_data/webapps:/usr/local/tomcat/webapps/ROOT \tomcat
+
+参数解释
+-itd: 以后台运行的方式启动容器，并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
+-p 8080:8080: 将主机的端口 8080 映射到容器的 8080 端口，用于访问 Tomcat 站点页面
+--name Tomcat: 为容器指定名称为 “Tomcat”
+--restart=always: 当容器退出时，总是重新启动容器
+
+持久化解释将容器中的 /usr/local/tomcat/webapps/ROOT 路径挂载到宿主机中的 $HOME/Tomcat_data/webapps 目录下。
+Weblogic
+
+docker run -itd \-p 7001:7001 \-p 7002:7002 \-p 5556:5556 \--restart=always --name Weblogic ismaleiva90/weblogic12
+
+注意：ismaleiva90/weblogic12 是非官方或认证的 Docker 镜像！
+参数解释
+-itd: 后台运行容器，保持 STDIN 打开
+-p 7001:7001: 映射主机 7001 端口到容器 7001 端口，访问 Weblogic 控制台页面
+-p 7002:7002: 映射主机 7002 端口到容器 7002 端口，访问 Weblogic 站点页面
+-p 5556:5556: 映射主机 5556 端口到容器 5556 端口，访问 Weblogic 站点页面
+--name Weblogic: 容器名称为 “Weblogic”
+--restart=always: 容器退出时，总是重新启动容器
+
+MySQL
+
+docker run -d -it -p 3306:3306 --name MySQL --restart=always \-v $HOME/MySQL_Data/data:/var/lib/mysql \-v $HOME/MySQL_Data/conf:/etc/mysql/conf.d \--privileged=true \-e MYSQL_DATABASE=&#x27;test_db&#x27; \-e MYSQL_ROOT_PASSWORD=&#x27;abc$123&#x27; \-e MYSQL_USER=&#x27;testuser&#x27; -e MYSQL_PASSWORD=&#x27;abc$123&#x27; \mysql:8.0.31 \    --character-set-server=utf8mb4 \    --collation-server=utf8mb4_unicode_ci
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 3306:3306
+将主机的端口映射到容器的端口，这里是将主机的 3306 端口映射到容器的 3306 端口，用于访问 MySQL 数据库
+
+
+--name MySQL
+为容器指定一个名称，这里是 “MySQL”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+--privileged=true
+若不加字段–privileged&#x3D;true可能会报权限错误
+
+
+--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+这两个选项参数是改变所有表的默认编码和排序规则以使用 UTF-8 (utf8mb4)
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/MySQL_Data/data:/var/lib/mysql
+将容器中的 MySQL 数据库数据存储到本地，以确保在容器重启时数据得以保留。
+
+
+-v $HOME/MySQL_Data/conf:/etc/mysql/conf.d
+将容器中的 MySQL 自定义配置文件路径映射到本地，以方便自定义配置。请确保提前准备好文件，否则可能会启动失败。
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+MYSQL_ROOT_PASSWORD 【必填】
+必需的变量，用于指定 MySQL 的 root 超级用户帐户的密码。如果设置了 MYSQL_RANDOM_ROOT_PASSWORD=yes ，则会随机生成一个密码，并打印到 stdout。
+
+
+MYSQL_USER 【可选】
+可选变量，用于创建新用户。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_PASSWORD 变量。
+
+
+MYSQL_PASSWORD 【可选】
+可选变量，用于创建新用户并设置密码。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_USER 变量。
+
+
+MYSQL_DATABASE 【可选】
+可选变量，允许在容器启动时指定要创建的数据库的名称。如果设置了 MYSQL_USER 和 MYSQL_PASSWORD，则该用户将被授予对此数据库的超级用户访问权限。
+
+
+
+
+Oracledocker run -d -it -p 1521:1521 --name Oracle_11g --restart=always \--mount source=oracle_vol,target=/home/oracle/app/oracle/oradata \registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+
+注意：registry.cn-hangzhou.aliyuncs.com&#x2F;helowin&#x2F;oracle_11g 是非官方或认证的Docker镜像！
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 1521:1521
+将主机的端口映射到容器的端口，这里是将主机的 1521 端口映射到容器的 1521 端口，用于访问 Oracle 数据库
+
+
+--name Oracle_11g
+为容器指定一个名称，这里是 “Oracle_11g”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+--mount source=oracle_vol,target=/home/oracle/app/oracle/oradata
+将名为 “oracle_vol” 的 Docker 卷挂载到容器中的 “&#x2F;home&#x2F;oracle&#x2F;app&#x2F;oracle&#x2F;oradata” 路径。这样做的目的是将 Oracle 数据库的数据存储在持久化的卷中，以便数据在容器重启时得以保留
+
+
+
+
+PostgreSQLdocker run -d -p 5432:5432 --restart=always --name PostgreSQL \-e POSTGRES_USER=&#x27;postgres&#x27; \-e POSTGRES_PASSWORD=&#x27;abc$123&#x27; \-e POSTGRES_DB=&#x27;test&#x27; \-e PGDATA=/var/lib/postgresql/data/pgdata \-v $HOME/Postgres_Data:/var/lib/postgresql/data \-d postgres
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 5432:5432
+将主机的端口映射到容器的端口，这里是将主机的 5432 端口映射到容器的 5432 端口，用于访问 Postgre 数据库
+
+
+--name PostgreSQL
+为容器指定一个名称，这里是 “PostgreSQL”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/Postgres_Data:/var/lib/postgresql/data
+将到容器中的 “&#x2F;var&#x2F;lib&#x2F;postgresql&#x2F;data” 路径映射挂载到 宿主机中的 ”$HOME&#x2F;Postgres_Data“目录下,这样做的目的是将 Postgre 数据库的数据存储在本地中，以便数据在容器重启时得以保留
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+POSTGRES_PASSWORD 【必填】
+PostgreSQL 映像所需的环境变量。设置 PostgreSQL 超级用户的密码。不能为空或未定义。
+
+
+POSTGRES_USER 【可选】
+可选环境变量，用于创建用户及其密码。创建具有超级用户权限的指定用户和同名的数据库。默认用户是 “postgres”。
+
+
+POSTGRES_DB 【可选】
+可选环境变量，用于定义首次启动映像时创建的默认数据库的名称。默认值是 POSTGRES_USER 的值，如果未设置，则默认为 “postgres”。
+
+
+PGDATA 【可选】
+默认为 /var/lib/postgresql/data。如果使用的数据卷是文件系统挂载点或无法被用户 chowned 的远程文件夹，则需要设置此环境变量以包含数据。
+
+
+
+
+达梦docker run -d -p 5236:5236 --restart=always --name DaMengDB \--privileged=true \-e PAGE_SIZE=16 \-e LD_LIBRARY_PATH=/opt/dmdbms/bin \-e EXTENT_SIZE=32 \-e BLANK_PAD_MODE=1 \-e LOG_SIZE=1024 \-e UNICODE_FLAG=1 \-e LENGTH_IN_CHAR=1 \-e INSTANCE_NAME=dm8_test \-v $HOME/DaMeng_Data:/opt/dmdbms/data \if010/dameng
+
+注意：if010&#x2F;dameng 是从官网下载上传至 Docker Hub 的镜像！
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 5236:5236
+将主机的端口映射到容器的端口，这里是将主机的 5236 端口映射到容器的 5236 端口，用于访问达梦数据库
+
+
+--name DaMengDB
+为容器指定一个名称，这里是 “DaMengDB”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/DaMeng_Data:/opt/dmdbms/data
+将容器中的达梦数据库数据存储路径 “&#x2F;opt&#x2F;dmdbms&#x2F;data” 映射到本地主机的 “$HOME&#x2F;DaMeng_Data” 目录，以确保在容器重启时数据得以保留
+
+
+
+
+人大金仓docker run -idt -p 54321:54321 --restart=always \--name Kingbase --privileged=true \-e DB_MODE=oracle \-e NEED_START=yes \-e DB_USER=kingbase \-e DB_PASSWORD=abc123 \-e ENABLE_CI=yes \-v $HOME/Kingbase_Data:/home/kingbase/userdata \if010/kingbase:v009r001c001b0025 /usr/sbin/init
+
+注意：if010/kingbase:v009r001c001b0025 是从官网下载上传至 Docker Hub 的镜像，官网提供了两个下载版本，一个是 v008r006c008b0014，另一个是 v009r001c001b0025，可以拉取对应的 tag 镜像进行测试使用！
+参数解释
+
+
+–
+–
+
+
+
+-itd
+以后台方式启动容器，保持 STDIN 打开
+
+
+-p 54321:54321
+将主机的 54321 端口映射到容器的 54321 端口，访问数据库
+
+
+--name Kingbase
+给容器指定名称为 “Kingbase”
+
+
+--restart=always
+容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/Kingbase_Data:/home/kingbase/userdata
+将容器中的人大金仓数据库数据存储路径 “&#x2F;home&#x2F;kingbase&#x2F;userdata” 映射到本地主机的 “$HOME&#x2F;Kingbase_Data” 目录，以确保在容器重启时数据得以保留
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+DB_USER 【可选】
+设置用户及其密码，默认为 “system”
+
+
+DB_PASSWORD 【可选】
+设置用户密码，默认为 “123456”
+
+
+DB_MODE 【可选】
+设置数据库模式，支持的模式有 oracle、pg、mysql
+
+
+NEED_START 【可选】
+设置进入容器后是否启动数据库，默认为 “yes”
+
+
+ENABLE_CI 【可选】
+设置是否需要配置大小写敏感，默认为 “yes”
+
+
+
+
+Redisdocker run -d -p 6379:6379 --restart=always --name Redis \-v $HOME/Redis_Data/conf:/usr/local/etc/redis \-v $HOME/Redis_Data/data:/data \redis redis-server /usr/local/etc/redis/redis.conf
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 6379:6379
+将主机的端口映射到容器的端口，这里是将主机的 6379 端口映射到容器的 6379 端口，用于访问 Redis 数据库
+
+
+--name Redis
+为容器指定一个名称，这里是 “Redis”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/Redis_Data/conf:/usr/local/etc/redis
+(需提前准备好文件，否则可能会启动失败) 将到容器中的 “&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;conf”目录下,这样子做的目的是可以自定义Redis的配置文件
+
+
+-v $HOME/Redis_Data/data:/data
+将到容器中的 “&#x2F;data” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;data”目录下,这样做的目的是将 Redis 数据库的数据存储在本地中，以便数据在容器重启时得以保留
+
+
+
+
+关于启动命令
+
+
+–
+–
+
+
+
+redis-server /usr/local/etc/redis/redis.conf
+容器内部执行该命令是为了按照我们自定义的配置文件启动，这个不是必须的！！！
+
+
+
+
+Memcachedocker run -d -p 11211:11211 --name Memcached \    --restart=always memcached memcached -m 64
+
+参数解释
+-d: 以后台方式启动容器。
+-it: 分配一个伪终端（pseudo-TTY）并保持 STDIN 打开。
+-p 11211:11211: 将主机的 11211 端口映射到容器的 11211 端口，用于访问 Memcached 消息队列的 web 管理界面。
+--name Memcached: 容器的名称为 “Memcached”。
+--restart=always: 容器退出时，总是重新启动容器。
+
+命令执行解释
+memcached -m 64 这会将 Memcached 服务器设置为使用 64 MB 进行存储
+
+MongoDB
+
+docker run -d -p 27017:27017 --restart=always --name MongoDB \-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \-e MONGO_INITDB_ROOT_PASSWORD=abc123 \-v $HOME/MongoDB_Data/data:/data/db \-v $HOME/MongoDB_Data/conf:/etc/mongo \mongo --config /etc/mongo/mongod.conf --wiredTigerCacheSizeGB 1.5
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 27017:27017
+将主机的端口映射到容器的端口，这里是将主机的 27017 端口映射到容器的 27017 端口，用于访问 MongoDB 数据库
+
+
+--name MongoDB
+为容器指定一个名称，这里是 “MongoDB”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+--config /etc/mongo/mongod.conf
+指定配置文件路径 (这个不是必须的，设置此选项之前需准备好mongod.conf文件映射到Docker内部)
+
+
+--wiredTigerCacheSizeGB 1.5
+设置WiredTiger缓存大小限制为1.5G
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/MongoDB_Data/conf:/etc/mongo
+将到容器中的 “&#x2F;etc&#x2F;mongo” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;conf”目录下,这样子做的目的是可以自定义MongoDB的配置文件 (需提前准备好文件，否则可能会启动失败)
+
+
+-v $HOME/Redis_Data/data:/data
+将到容器中的 “&#x2F;data&#x2F;db” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;data”目录下,这样做的目的是将 MongoDB 数据库的数据存储在本地中，以便数据在容器重启时得以保留
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+MONGO_INITDB_ROOT_USERNAME 【可选】
+该变量是创建管理员用户，该用户是在 admin 身份验证数据库中创建的，并被赋予角色 root，这是一个”超级用户”角色。
+
+
+MONGO_INITDB_ROOT_PASSWORD 【可选】
+该变量是为创建管理员用户设置密码，需配合 MONGO_INITDB_ROOT_USERNAME 变量参数使用
+
+
+
+
+RabbitMQdocker run -itd -p 15672:15672 --name RabbitMQ \--hostname rmq-test \-e RABBITMQ_DEFAULT_VHOST=rmq-test \-e RABBITMQ_DEFAULT_USER=admin \-e RABBITMQ_DEFAULT_PASS=abc123 \rabbitmq:3-management 
+
+参数解释
+
+
+–
+–
+
+
+
+-itd
+表示以后台运行的方式启动容器,并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
+
+
+-p 15672:15672
+将主机的端口映射到容器的端口，这里是将主机的 15672 端口映射到容器的 15672 端口，用于访问 RabbitMQ 控制台页面，内部除了该端口外，还开了4369&#x2F;tcp、5671-5672&#x2F;tcp、15671&#x2F;tcp、15691-15692&#x2F;tcp、25672&#x2F;tcp
+
+
+--name RabbitMQ
+为容器指定一个名称，这里是 “RabbitMQ”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+--hostname
+设置容器主机名称
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+RABBITMQ_DEFAULT_VHOST 【可选】
+该变量是可选的，是设置 RabbitMQ 的主机名称
+
+
+RABBITMQ_DEFAULT_USER 【可选】
+该变量是可选的，是设置 RabbitMQ 的账户
+
+
+RABBITMQ_DEFAULT_PASS 【可选】
+该变量是可选的，是设置 RabbitMQ 的密码
+
+
+
+
+远程协助工具 Guacd
+
+docker run -d -p 4822:4822 --privileged=true \    --restart=always --name Guacd \    -e LANG=zh_CN.UTF-8 \    -v /docker_data/Guacd/rdp-rec:/rdp-rec \    -v /docker_data/Guacd/rdp-file:/rdp-file \    guacamole/guacd
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 4822:4822
+将主机的端口映射到容器的端口，这里是将主机的 4822 端口映射到容器的 4822 端口，用于访问 Guacd远程的API接口
+
+
+--name Guacd
+为容器指定一个名称，这里是 “Guacd”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+--privileged=true
+若不加字段–privileged&#x3D;true可能会报权限错误
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v /docker_data/Guacd/rdp-rec:/rdp-rec
+代码内固定配置，guacd服务rdp录屏文件存放路径
+
+
+-v /docker_data/Guacd/rdp-file:/rdp-file
+代码内固定配置，guacd服务rdp远程磁盘文件存放路
+
+
+
+
+环境变量解释
+LANG 设置字符编码格式
+
+在线代码编辑器 Code Server$ mkdir -p ~/.config$ docker run -it --name code-server  \  -p 127.0.0.1:8080:8080 \  -v &quot;$HOME/.config/code-server:/home/coder/.config&quot; \  -v &quot;$PWD:/home/coder/project&quot; \  -u &quot;$(id -u):$(id -g)&quot; \  -e &quot;DOCKER_USER=$USER&quot; \    codercom/code-server:latest
+
+媒体管理工具 Dim$ docker run --name my-dim \   -p 8000:8000/tcp \   -v $HOME/.config/dim:/opt/dim/config \   -v $HOME/dim/media:/media:ro \   -d ghcr.io/dusk-labs/dim:dev
+
+Github
+Gitlab$ docker run -d --name gitlab \  --hostname gitlab.example.com \  --publish 8443:443 --publish 8081:80 -p 2222:22 \  --restart always \  --volume $HOME/gitlab/config:/etc/gitlab \  --volume $HOME/gitlab/logs:/var/log/gitlab \  --volume $HOME/gitlab/data:/var/opt/gitlab \  -v /etc/localtime:/etc/localtime \  --shm-size 256m \    gitlab/gitlab-ce:latest
+
+另见
+Dockerfile 备忘清单 (github.io)
+Docker 官方入门教程 (docker.com)
+Docker入门学习笔记 (github.io)
+快速安装Docker及配置及Docker配置、Docker常用命令
+
+]]></content>
+      <categories>
+        <category>后端编程</category>
+      </categories>
+      <tags>
+        <tag>后端编程</tag>
+        <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CSS 备忘录</title>
     <url>/2025/01/08/css/</url>
     <content><![CDATA[CSS 备忘清单这是一份关于 CSS 优点的快速参考备忘单，列出了选择器语法、属性、单位和其他有用的信息
@@ -4225,1534 +5753,6 @@ const getSuggestions = async () =&gt; &#123;  const wordQuery = inputField.value
       </tags>
   </entry>
   <entry>
-    <title>Docker 备忘录</title>
-    <url>/2025/01/08/docker/</url>
-    <content><![CDATA[Docker 备忘清单这是 Docker 的快速参考备忘单。 你可以在这里找到最常见的 Docker 命令。
-入门
-
-入门安装curl -sSL https://get.docker.com/ | shsudo chmod 777 /var/run/docker.sock
-
-在后台创建和运行容器
-$ docker run -d -p 80:80 docker/getting-started
-
-
-
--d - 以分离（后台）模式运行容器
--p 80:80 -  将端口 80 映射到容器中的端口 80，格式：宿主机端口:容器端口
-docker/getting-started - 要使用的镜像
-
-在前台创建并运行容器（之后如果要退出容器但是不关闭容器，按Ctrl+P+Q即可）
-$ docker run -it --rm -p  8001:8080 --name my-nginx nginx
-
-
-
--it - 交互式 bash 模式
---rm - 容器终止运行后自动删除容器文件
--p 8001:8080 - 将 8001 端口映射到容器中的 8080 端口
---name my-nginx - 指定名称
-nginx - 要使用的镜像
-
-一般命令
-
-
-Example
-Description
-
-
-
-docker ps
-列出正在运行的容器
-
-
-docker ps -a
-列出所有容器
-
-
-docker ps -s
-列出正在运行的容器 (带 CPU &#x2F; 内存)
-
-
-docker images
-列出所有镜像
-
-
-docker exec -it &lt;container&gt;  bash
-连接到容器
-
-
-docker logs &lt;container&gt;
-显示容器的控制台日志
-
-
-docker stop &lt;container&gt;
-停止容器
-
-
-docker restart &lt;container&gt;
-重启一个容器
-
-
-docker rm &lt;container&gt;
-移除一个容器
-
-
-docker port &lt;container&gt;
-显示容器的端口映射
-
-
-docker top &lt;container&gt;
-列出进程
-
-
-docker kill &lt;container&gt;
-杀死一个容器
-
-
-参数 &lt;container&gt; 可以是容器 id 或名称
-Docker 容器
-
-启动和停止
-
-
-Description
-Example
-
-
-
-docker start nginx-server
-开始
-
-
-docker stop nginx-server
-停止
-
-
-docker restart nginx-server
-重启
-
-
-docker pause nginx-server
-暂停
-
-
-docker unpause nginx-server
-取消暂停
-
-
-docker wait nginx-server
-阻塞容器
-
-
-docker kill nginx-server
-发送 SIGKILL
-
-
-docker attach nginx-server
-连接到现有容器
-
-
-说明
-
-
-Example
-Description
-
-
-
-docker ps
-列出正在运行的容器
-
-
-docker ps -a
-列出所有容器
-
-
-docker logs nginx-server
-容器日志
-
-
-docker inspect nginx-server
-检查容器
-
-
-docker events nginx-server
-容器事件
-
-
-docker port nginx-server
-公共端口
-
-
-docker top nginx-server
-运行进程
-
-
-docker stats nginx-server
-容器资源使用
-
-
-docker diff nginx-server
-列出对容器所做的更改
-
-
-创建容器docker create [options] IMAGE  -a, --attach               # 附加标准输出/错误  -i, --interactive          # 附加标准输入（交互式）  -t, --tty                  # 伪终端 pseudo-tty      --name NAME            # 命名你的镜像  -p, --publish 5000:5000    # 端口映射（主机:容器）      --expose 5432          # 向容器公开端口   -P, --publish-all          # 发布所有端口      --link container:alias # 链接 linking  -v, --volume `pwd`:/app    # mount（需要绝对路径）  -e, --env NAME=hello       # 环境变量 env vars
-
-实例$ docker create --name my_redis --expose 6379 redis:3.0.2
-
-操控重命名容器
-docker rename my-nginx nginx-server
-
-移除容器
-docker rm nginx-server
-
-更新容器
-docker update --cpu-shares 512 -m 300M nginx-server
-
-Docker 镜像
-
-操控
-
-
-
-
-Example
-Description
-
-
-
-docker images
-列出镜像
-
-
-docker rmi nginx
-删除镜像
-
-
-docker load &lt; ubuntu.tar.gz
-加载一个 tarred 存储库
-
-
-docker load --input ubuntu.tar
-加载一个 tarred 存储库
-
-
-docker save busybox &gt; ubuntu.tar
-将镜像保存到 tar 存档
-
-
-docker history
-显示镜像的历史
-
-
-docker commit nginx my_nginx
-将容器另存为镜像
-
-
-docker tag nginx eon01/nginx
-标记镜像
-
-
-docker push eon01/nginx
-推送镜像
-
-
-构建镜像# 注意有的最后面是英文 .$ docker build .$ docker build github.com/creack/docker-firefox$ docker build - &lt; Dockerfile$ docker build - &lt; context.tar.gz$ docker build -t eon/nginx-server .$ docker build -f myOtherDockerfile .$ docker build --build-arg https_proxy=127.0.0.1:8088 # 使用http代理构建$ curl example.com/remote/Dockerfile | docker build -f - .$ docker save -o &lt;保存路径&gt;/myimage.tar myimage:latest # 导出$ docker load -i &lt;路径&gt;/myimage.tar # 导入
-
-删除 &lt;none&gt; 镜像$ docker rmi -f $(docker images | grep &quot;none&quot; | awk &#x27;&#123;print $3&#125;&#x27;)
-
-Docker 网络
-
-创建网络docker network create -d overlay MyOverlayNetworkdocker network create -d bridge MyBridgeNetwork
-
-自定义网络子网和网关
-docker network create -d overlay \  --subnet=192.168.0.0/16 \  --subnet=192.170.0.0/16 \  --gateway=192.168.0.100 \  --gateway=192.170.0.100 \  --ip-range=192.168.1.0/24 \  --aux-address=&quot;my-router=192.168.1.5&quot; \  --aux-address=&quot;my-switch=192.168.1.6&quot; \  --aux-address=&quot;my-printer=192.170.1.5&quot; \  --aux-address=&quot;my-nas=192.170.1.6&quot; \  MyOverlayNetwork
-
-操作
-
-获取容器连接的网络
-docker inspect MyContainer | grep Network
-
-获取有关网络的信息
-docker network inspect &lt;network_name&gt;
-
-将正在运行的容器连接到网络
-docker network connect &lt;network_name&gt; &lt;container_name&gt;
-
-启动时将容器连接到网络
-docker run -it -d --network=&lt;network_name&gt; &lt;container_name&gt;
-
-断开容器与网络的连接
-docker network disconnect &lt;network_name&gt; &lt;container_name&gt;
-
-删除网络docker network rm &lt;network_name&gt;
-
-列出网络docker network ls
-
-Docker 快捷键需要特别注意的是，退出快捷键中的删除容器实例，只对于使用 docker attach 进入的容器生效，使用 docker exec 进入容器后，使用上面的快捷键后将隔离容器，且不会删除容器实例。
-退出 - 关闭容器
-
-
-Docker 快捷键
-说明
-
-
-
-ctrl c
-将关闭容器
-
-
-
-
-将关闭容器, 并删除当前的容器实例
-退出 - 保留容器
-
-
-Docker 快捷键
-说明
-
-
-
-ctrl d
-保留容器
-
-
-
-
-将保留容器，并退出到Docker主机的命令行界面
-退出 - 容器分离
-
-
-Docker 快捷键
-说明
-
-
-
-ctrl p q
-容器分离
-
-
-
-
-将容器分离，保留容器，但是不退出
-各种各样的
-
-Docker Hub$ docker search search_word  # 在 docker hub 中搜索镜像$ docker pull user/image     # 从 docker hub 下载镜像$ docker login               # 向 docker hub 进行身份验证$ docker push user/image     # 将镜像上传到 docker hub
-
-镜像仓库命令
-
-登录到镜像仓库
-$ docker login$ docker login localhost:8080
-
-从镜像仓库注销
-$ docker logout$ docker logout localhost:8080
-
-搜索镜像
-$ docker search nginx$ docker search nginx --stars=3 --no-trunc busybox
-
-拉取镜像
-$ docker pull nginx$ docker pull eon01/nginx localhost:5000/myadmin/nginx
-
-推送镜像
-$ docker push eon01/nginx$ docker push eon01/nginx localhost:5000/myadmin/nginx
-
-批量清除
-
-
-实例
-说明
-
-
-
-docker stop -f $(docker ps -a -q)
-停止所有容器
-
-
-docker rm -f $(docker ps -a -q)
-删除所有容器
-
-
-docker rmi -f $(docker images -q)
-删除所有镜像
-
-
-docker volume prune
-删除所有未使用的Docker Volume
-
-
-docker network prune
-删除所有未使用的Docker网络
-
-
-docker system prune
-清理所有空闲或与任何Docker容器无关的资源
-
-
-docker image prune
-删除悬空的Docker镜像
-
-
-docker container prune
-删除所有未使用的Docker 容器
-
-
-
-
-卷 volume$ docker volume ls    # 检查卷$ docker volume prune # 清理未使用的卷
-
-Docker Compose
-
-
-
-
-:-
-:-
-
-
-
-docker-compose up
-创建和启动容器
-
-
-docker-compose up -d
-以分离模式创建和启动容器
-
-
-docker-compose down
-停止和删除容器、网络、映像和卷
-
-
-docker-compose logs
-查看容器的输出
-
-
-docker-compose restart
-重启所有服务
-
-
-docker-compose pull
-拉取所有服务的镜像
-
-
-docker-compose build
-构建所有服务的镜像
-
-
-docker-compose config
-验证并查看 Compose 文件
-
-
-docker-compose scale &lt;service_name&gt;=&lt;replica&gt;
-为服务指定容器个数
-
-
-docker-compose top
-显示正在运行的进程
-
-
-docker-compose run -rm -p 2022:22 web bash
-启动 Web 服务并运行 bash 作为其命令，删除旧容器
-
-
-
-
-Docker Services
-
-
-:-
-:-
-
-
-
-docker service create &lt;options&gt; &lt;image&gt; &lt;command&gt;
-创建新服务
-
-
-docker service inspect --pretty &lt;service_name&gt;
-显示详细信息服务
-
-
-docker service ls
-列出服务
-
-
-docker service ps
-列出服务的任务
-
-
-docker service scale &lt;service_name&gt;=&lt;replica&gt;
-规模特殊服务
-
-
-docker service update &lt;options&gt; &lt;service_name&gt;
-更新服务选项
-
-
-
-
-Docker Stack
-
-
-
-
-:-
-:-
-
-
-
-docker stack ls
-列出此 Docker 主机上所有正在运行的应用程序
-
-
-docker stack deploy -c &lt;composefile&gt; &lt;appname&gt;
-运行指定的 Compose 文件
-
-
-docker stack services &lt;appname&gt;
-列出与应用关联的服务
-
-
-docker stack ps &lt;appname&gt;
-列出与应用关联的正在运行的容器
-
-
-docker stack rm &lt;appname&gt;
-拆掉一个应用程序
-
-
-
-
-Docker Machine
-
-
-
-
-:-
-:-
-
-
-
-docker-machine create --driver virtualbox myvm1
-创建虚拟机（Mac、Win7、Linux）
-
-
-docker-machine create -d hyperv --hyperv-virtual-switch &quot;myswitch&quot; myvm1
-Win10
-
-
-docker-machine env myvm1
-查看有关您的节点的基本信息
-
-
-docker-machine ssh myvm1 &quot;docker node ls&quot;
-列出集群中的节点
-
-
-docker-machine ssh myvm1 &quot;docker node inspect &lt;node ID&gt;&quot;
-检查节点
-
-
-docker-machine ssh myvm1 &quot;docker swarm join-token -q worker&quot;
-查看加入令牌
-
-
-docker-machine ssh myvm1
-打开与 VM 的 SSH 会话； 输入“exit”结束
-
-
-docker-machine ssh myvm2 &quot;docker swarm leave&quot;
-让工人离开群体
-
-
-docker-machine ssh myvm1 &quot;docker swarm leave -f&quot;
-让主人离开，杀群
-
-
-docker-machine start myvm1
-启动当前未运行的 VM
-
-
-docker-machine stop $(docker-machine ls -q)
-停止所有正在运行的虚拟机
-
-
-docker-machine rm $(docker-machine ls -q)
-删除所有虚拟机及其磁盘映像
-
-
-docker-machine scp docker-compose.yml myvm1:~
-将文件复制到节点的主目录
-
-
-docker-machine ssh myvm1 &quot;docker stack deploy -c &lt;file&gt; &lt;app&gt;&quot;
-部署应用
-
-
-
-
-docker 主要命令
-
-
-
-
-:-
-:-
-
-
-
-attach
-将本地标准输入、输出和错误流附加到正在运行的容器
-
-
-build
-从 Dockerfile 构建镜像
-
-
-commit
-从容器的更改创建新镜像
-
-
-cp
-在容器和本地文件系统之间复制文件&#x2F;文件夹
-
-
-create
-创建一个新容器
-
-
-diff
-检查容器文件系统上文件或目录的更改
-
-
-events
-从服务器获取实时事件
-
-
-exec
-在正在运行的容器中运行命令
-
-
-export
-将容器的文件系统导出为 tar 存档
-
-
-history
-显示镜像的历史
-
-
-images
-列出镜像
-
-
-import
-从 tarball 导入内容以创建文件系统映像
-
-
-info
-显示系统范围的信息
-
-
-inspect
-返回有关 Docker 对象的低级信息
-
-
-kill
-杀死一个或多个正在运行的容器
-
-
-load
-从 tar 存档或 STDIN 加载镜像
-
-
-login
-登录到 Docker 注册表
-
-
-logout
-从 Docker 注册表中注销
-
-
-logs
-获取容器的日志
-
-
-pause
-暂停一个或多个容器内的所有进程
-
-
-port
-列出容器的端口映射或特定映射
-
-
-ps
-列出容器
-
-
-pull
-从注册表中提取镜像或存储库
-
-
-push
-将镜像或存储库推送到注册表
-
-
-rename
-重命名容器
-
-
-restart
-重启一个或多个容器
-
-
-rm
-移除一个或多个容器
-
-
-rmi
-移除一张或多张镜像
-
-
-run
-在新容器中运行命令
-
-
-save
-将一个或多个镜像保存到 tar 存档（默认流式传输到 STDOUT）
-
-
-search
-在 Docker Hub 中搜索镜像
-
-
-start
-启动一个或多个停止的容器
-
-
-stats
-显示容器资源使用统计的实时流
-
-
-stop
-停止一个或多个正在运行的容器
-
-
-tag
-创建一个引用 SOURCE_IMAGE 的标记 TARGET_IMAGE
-
-
-top
-显示容器的运行进程
-
-
-unpause
-取消暂停一个或多个容器中的所有进程
-
-
-update
-更新一个或多个容器的配置
-
-
-version
-显示 Docker 版本信息
-
-
-wait
-阻塞直到一个或多个容器停止，然后打印它们的退出代码
-
-
-
-
-docker 管理命令
-
-
-:-
-:-
-
-
-
-docker builder
-管理构建
-
-
-docker buildx*
-Docker Buildx（Docker Inc.，v0.7.1）
-
-
-docker compose*
-Docker Compose（Docker Inc.，v2.2.3）
-
-
-docker config
-管理 Docker 配置
-
-
-docker container
-管理容器
-
-
-docker context
-管理上下文
-
-
-docker image
-管理镜像
-
-
-docker manifest
-管理 Docker 镜像清单和清单列表
-
-
-docker network
-管理网络
-
-
-docker node
-管理 Swarm 节点
-
-
-docker plugin
-管理插件
-
-
-docker scan*
-Docker 扫描（Docker Inc.，v0.16.0）
-
-
-docker secret
-管理 Docker 机密
-
-
-docker service
-管理服务
-
-
-docker stack
-管理 Docker 堆栈
-
-
-docker swarm
-管理群
-
-
-docker system
-管理 Docker
-
-
-docker trust
-管理对 Docker 映像的信任
-
-
-docker volume
-管理卷
-
-
-
-
-docker 全局参数    --config string     # 客户端配置文件的位置（默认“~/.docker”）-c, --context string    # 用于连接到守护程序的上下文的名称（                        # 覆盖 DOCKER_HOST 环境变量和使用                        # “docker context use” 设置的默认上下文）-D, --debug             # 启用调试模式-H, --host list         # 要连接的守护进程套接字-l, --log-level string  # 设置日志级别        # （默认“info”） (&quot;debug&quot;|&quot;info&quot;|&quot;warn&quot;|&quot;error&quot;|&quot;fatal&quot;)     --tls               # 使用 TLS； 由 --tlsverify 暗示    --tlscacert string  # 仅由该 CA 签署的信任证书        #（默认为“~/.docker/ca.pem”）    --tlscert string    # TLS证书文件路径        #（默认“~/.docker/cert.pem”）    --tlskey string     # TLS 密钥文件的路径        #（默认为“~/.docker/key.pem”）    --tlsverify         # 使用 TLS 并验证远程-v, --version           # 打印版本信息并退出
-
-docker images-a, --all             显示所有镜像（默认隐藏中间镜像）    --digests         显示摘要-f, --filter filter   根据提供的条件过滤输出    --format string   使用 Go 模板打印漂亮的镜像    --no-trunc        不要截断输出-q, --quiet           仅显示镜像 ID
-
-docker run&#x2F;create
-
-    --add-host list            # 添加自定义主机到 IP 映射 (host:ip)-a, --attach list              # 连接到 STDIN、STDOUT 或 STDERR    --blkio-weight uint16      # 块 IO（相对权重），介于 10 和 1000 之间，或 0 禁用（默认 0）    --blkio-weight-device list # 块 IO 权重（相对设备权重）（默认 []）    --cap-add list             # 添加 Linux 功能    --cap-drop list            # 放弃 Linux 功能    --cgroup-parent string     # 容器的可选父 cgroup    --cgroupns string          # 要使用的 Cgroup 命名空间（主机|私有）                               #  &#x27;host&#x27;:    在 Docker 主机的 cgroup 命名空间中运行容器                               #  &#x27;private&#x27;: 在自己的私有 cgroup 命名空间中运行容器                               #  &#x27;&#x27;:        使用由守护进程上的                                #        default-cgroupns-mode 选项配置的 cgroup 命名空间（默认）    --cidfile string           # 将容器 ID 写入文件    --cpu-period int           # 限制 CPU CFS（完全公平调度器）周期    --cpu-quota int            # 限制 CPU CFS（完全公平调度器）配额    --cpu-rt-period int        # 以微秒为单位限制 CPU 实时周期    --cpu-rt-runtime int       # 以微秒为单位限制 CPU 实时运行时间-c, --cpu-shares int           # CPU 份额（相对权重）    --cpus decimal             # CPU 数量    --cpuset-cpus string       # 允许执行的 CPU (0-3, 0,1)    --cpuset-mems string       # 允许执行的 MEM (0-3, 0,1)    --device list              # 将主机设备添加到容器    --device-cgroup-rule list  # 将规则添加到 cgroup 允许的设备列表    --device-read-bps list     # 限制设备的读取速率（每秒字节数）（默认 []）    --device-read-iops list    # 限制设备的读取速率（每秒 IO）（默认 []）    --device-write-bps list    # 限制设备的写入速率（每秒字节数）（默认 []）    --device-write-iops list   # 限制设备的写入速率（每秒 IO）（默认 []）    --disable-content-trust    # 跳过镜像验证（默认为 true）    --dns list                 # 设置自定义 DNS 服务器    --dns-option list          # 设置 DNS 选项    --dns-search list          # 设置自定义 DNS 搜索域    --domainname string        # 容器 NIS 域名    --entrypoint string        # 覆盖镜像的默认入口点-e, --env list                 # 设置环境变量    --env-file list            # 读入环境变量文件    --expose list              # 公开一个端口或一系列端口    --gpus gpu-request         # 要添加到容器中的 GPU 设备（“全部”以传递所有 GPU）    --group-add list           # 添加其他组以加入    --health-cmd string        # 运行以检查运行状况的命令    --health-interval duration # 运行检查之间的时间 (ms|s|m|h) (默认 0s)    --health-retries int           # 需要报告不健康的连续失败    --health-start-period duration # 开始健康重试倒计时之前容器初始化的开始时间（ms|s|m|h）（默认 0s）    --health-timeout duration      # 允许运行一项检查的最长时间 (ms|s|m|h) (默认 0s)    --help                     # 打印使用-h, --hostname string          # 容器主机名    --init                     # 在容器内运行一个 init 来转发信号并收获进程-i, --interactive              # 即使没有连接，也保持 STDIN 打开    --ip string                # IPv4 地址（例如 172.30.100.104）    --ip6 string               # IPv6 地址（例如，2001:db8::33）    --ipc string               # 要使用的 IPC 模式    --isolation string         # 容器隔离技术    --kernel-memory bytes      # 内核内存限制-l, --label list               # 在容器上设置元数据    --label-file list          # 读入以行分隔的标签文件    --link list                # 添加到另一个容器的链接    --link-local-ip list       # 容器 IPv4/IPv6 链路本地地址    --log-driver string        # 容器的日志记录驱动程序    --log-opt list             # 日志驱动程序选项    --mac-address string       # 容器 MAC 地址（例如 92:d0:c6:0a:29:33）-m, --memory bytes             # 内存限制    --memory-reservation bytes # 内存软限制    --memory-swap bytes        # 交换限制等于内存加上交换：&#x27;-1&#x27; 启用无限交换    --memory-swappiness int    # 调整容器内存交换（0 到 100）（默认 -1）    --mount mount              # 将文件系统挂载附加到容器    --name string              # 为容器分配名称    --network network          # 将容器连接到网络    --network-alias list       # 为容器添加网络范围的别名    --no-healthcheck           # 禁用任何容器指定的 HEALTHCHECK    --oom-kill-disable         # 禁用 OOM 杀手    --oom-score-adj int        # 调整主机的 OOM 首选项（-1000 到 1000）    --pid string               # 要使用的 PID 命名空间    --pids-limit int           # 调整容器 pids 限制（设置 -1 表示无限制）    --platform string          # 如果服务器支持多平台，则设置平台    --privileged               # 授予此容器扩展权限-p, --publish list             # 将容器的端口发布到主机-P, --publish-all              # 将所有暴露的端口发布到随机端口    --pull string              # 创建前拉取镜像(&quot;always&quot;|&quot;missing&quot;|&quot;never&quot;)(默认&quot;missing&quot;)    --read-only                # 将容器的根文件系统挂载为只读    --restart string           # 容器退出时应用的重启策略（默认“否”）    --rm                       # 容器退出时自动移除    --runtime string           # 用于此容器的运行时    --security-opt list        # 安全选项    --shm-size bytes           # /dev/shm 的大小    --stop-signal string       # 停止容器的信号（默认“SIGTERM”）    --stop-timeout int         # 停止容器的超时（以秒为单位）    --storage-opt list         # 容器的存储驱动程序选项    --sysctl map               # Sysctl 选项（默认 map[]）    --tmpfs list               # 挂载 tmpfs 目录-t, --tty                      # 分配一个伪 TTY    --ulimit ulimit            # ulimit 选项（默认 []）-u, --user string              # 用户名或 UID（格式：&lt;name|uid&gt;[:&lt;group|gid&gt;]）    --userns string            # 要使用的用户命名空间    --uts string               # 要使用的 UTS 命名空间-v, --volume list              # 绑定挂载卷    --volume-driver string     # 容器的可选卷驱动程序    --volumes-from list        # 从指定容器挂载卷-w, --workdir string           # 容器内的工作目录
-
-run&#x2F;create 大部分参数一致
-修改Docker镜像拉取地址您可以通过修改daemon配置文件&#x2F;etc&#x2F;docker&#x2F;daemon.json来使用加速器
-sudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;&#123;  &quot;registry-mirrors&quot;: [&quot;https://1ojaslt1.mirror.aliyuncs.com&quot;]&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker
-
-修改 Docker 数据存储路径
-
-
-停止 Docker 服务：
-  sudo systemctl stop docker
-
-将现有的 Docker 数据移动到新的目录：
-  sudo mv /var/lib/docker /new/path/docker
-
-更新 Docker 的配置文件 /etc/docker/daemon.json，添加或修改 data-root 选项：
-  &#123; &quot;data-root&quot;: &quot;/new/path/docker&quot; &#125;
-
-重新启动 Docker 服务：
-  sudo systemctl start docker
-
-
-
-⚠️注意：当你执行此操作时，旧的容器和镜像可能无法正常工作，因为它们的路径已更改。建议在部署 Docker 时执行此操作，以避免这些问题。如有必要，重新启动容器或重新创建它们，以确保它们的配置指向新的路径。
-Docker降级版本的方法yum downgrade --setopt=obsoletes=0 \    -y docker-ce-$&#123;version&#125; docker-ce-selinux-$&#123;version&#125;
-
-$&#123;version&#125; 指定要降级的版本
-Docker 常用示例
-
-Docker Web 管理工具 portainer$ docker run -d --name portainer \  -p 8000:8000 \  -p 9443:9443 \  --restart=always \  -v /var/run/docker.sock:/var/run/docker.sock \  -v $HOME/portainer:/data \    portainer/portainer-ee:latest
-
-Nginx
-
-docker run -itd -p 80:80 --restart=always --name Nginx \-v $HOME/nginx_data/html:/usr/share/nginx/html \-v $HOME/nginx_data/conf:/etc/nginx/conf.d \-v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf \nginx
-
-参数解释
--itd: 启动容器并保持后台运行
--p 80:80: 将主机的 80 端口映射到容器的 80 端口，用于访问 Nginx 站点页面
---name Nginx: 给容器指定一个名称为 “Nginx”
---restart=always: 在容器退出时，总是重新启动容器
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/nginx_data/html:/usr/share/nginx/html
-将容器中的 Nginx 站点页面路径映射到本地
-
-
--v $HOME/nginx_data/conf:/etc/nginx/conf.d
-将容器中的 Nginx 虚拟主机配置文件路径映射到本地 (需要提前准备好文件)
-
-
--v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf
-将容器中的 Nginx 主配置文件路径映射到本地 (需要提前准备好文件)
-
-
-
-
-Tomcatdocker run -itd -p 8080:8080 --restart=always \--name Tomcat \-v $HOME/Tomcat_data/webapps:/usr/local/tomcat/webapps/ROOT \tomcat
-
-参数解释
--itd: 以后台运行的方式启动容器，并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
--p 8080:8080: 将主机的端口 8080 映射到容器的 8080 端口，用于访问 Tomcat 站点页面
---name Tomcat: 为容器指定名称为 “Tomcat”
---restart=always: 当容器退出时，总是重新启动容器
-
-持久化解释将容器中的 /usr/local/tomcat/webapps/ROOT 路径挂载到宿主机中的 $HOME/Tomcat_data/webapps 目录下。
-Weblogic
-
-docker run -itd \-p 7001:7001 \-p 7002:7002 \-p 5556:5556 \--restart=always --name Weblogic ismaleiva90/weblogic12
-
-注意：ismaleiva90/weblogic12 是非官方或认证的 Docker 镜像！
-参数解释
--itd: 后台运行容器，保持 STDIN 打开
--p 7001:7001: 映射主机 7001 端口到容器 7001 端口，访问 Weblogic 控制台页面
--p 7002:7002: 映射主机 7002 端口到容器 7002 端口，访问 Weblogic 站点页面
--p 5556:5556: 映射主机 5556 端口到容器 5556 端口，访问 Weblogic 站点页面
---name Weblogic: 容器名称为 “Weblogic”
---restart=always: 容器退出时，总是重新启动容器
-
-MySQL
-
-docker run -d -it -p 3306:3306 --name MySQL --restart=always \-v $HOME/MySQL_Data/data:/var/lib/mysql \-v $HOME/MySQL_Data/conf:/etc/mysql/conf.d \--privileged=true \-e MYSQL_DATABASE=&#x27;test_db&#x27; \-e MYSQL_ROOT_PASSWORD=&#x27;abc$123&#x27; \-e MYSQL_USER=&#x27;testuser&#x27; -e MYSQL_PASSWORD=&#x27;abc$123&#x27; \mysql:8.0.31 \    --character-set-server=utf8mb4 \    --collation-server=utf8mb4_unicode_ci
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 3306:3306
-将主机的端口映射到容器的端口，这里是将主机的 3306 端口映射到容器的 3306 端口，用于访问 MySQL 数据库
-
-
---name MySQL
-为容器指定一个名称，这里是 “MySQL”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
---privileged=true
-若不加字段–privileged&#x3D;true可能会报权限错误
-
-
---character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-这两个选项参数是改变所有表的默认编码和排序规则以使用 UTF-8 (utf8mb4)
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/MySQL_Data/data:/var/lib/mysql
-将容器中的 MySQL 数据库数据存储到本地，以确保在容器重启时数据得以保留。
-
-
--v $HOME/MySQL_Data/conf:/etc/mysql/conf.d
-将容器中的 MySQL 自定义配置文件路径映射到本地，以方便自定义配置。请确保提前准备好文件，否则可能会启动失败。
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-MYSQL_ROOT_PASSWORD 【必填】
-必需的变量，用于指定 MySQL 的 root 超级用户帐户的密码。如果设置了 MYSQL_RANDOM_ROOT_PASSWORD=yes ，则会随机生成一个密码，并打印到 stdout。
-
-
-MYSQL_USER 【可选】
-可选变量，用于创建新用户。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_PASSWORD 变量。
-
-
-MYSQL_PASSWORD 【可选】
-可选变量，用于创建新用户并设置密码。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_USER 变量。
-
-
-MYSQL_DATABASE 【可选】
-可选变量，允许在容器启动时指定要创建的数据库的名称。如果设置了 MYSQL_USER 和 MYSQL_PASSWORD，则该用户将被授予对此数据库的超级用户访问权限。
-
-
-
-
-Oracledocker run -d -it -p 1521:1521 --name Oracle_11g --restart=always \--mount source=oracle_vol,target=/home/oracle/app/oracle/oradata \registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
-
-注意：registry.cn-hangzhou.aliyuncs.com&#x2F;helowin&#x2F;oracle_11g 是非官方或认证的Docker镜像！
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 1521:1521
-将主机的端口映射到容器的端口，这里是将主机的 1521 端口映射到容器的 1521 端口，用于访问 Oracle 数据库
-
-
---name Oracle_11g
-为容器指定一个名称，这里是 “Oracle_11g”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
---mount source=oracle_vol,target=/home/oracle/app/oracle/oradata
-将名为 “oracle_vol” 的 Docker 卷挂载到容器中的 “&#x2F;home&#x2F;oracle&#x2F;app&#x2F;oracle&#x2F;oradata” 路径。这样做的目的是将 Oracle 数据库的数据存储在持久化的卷中，以便数据在容器重启时得以保留
-
-
-
-
-PostgreSQLdocker run -d -p 5432:5432 --restart=always --name PostgreSQL \-e POSTGRES_USER=&#x27;postgres&#x27; \-e POSTGRES_PASSWORD=&#x27;abc$123&#x27; \-e POSTGRES_DB=&#x27;test&#x27; \-e PGDATA=/var/lib/postgresql/data/pgdata \-v $HOME/Postgres_Data:/var/lib/postgresql/data \-d postgres
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 5432:5432
-将主机的端口映射到容器的端口，这里是将主机的 5432 端口映射到容器的 5432 端口，用于访问 Postgre 数据库
-
-
---name PostgreSQL
-为容器指定一个名称，这里是 “PostgreSQL”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/Postgres_Data:/var/lib/postgresql/data
-将到容器中的 “&#x2F;var&#x2F;lib&#x2F;postgresql&#x2F;data” 路径映射挂载到 宿主机中的 ”$HOME&#x2F;Postgres_Data“目录下,这样做的目的是将 Postgre 数据库的数据存储在本地中，以便数据在容器重启时得以保留
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-POSTGRES_PASSWORD 【必填】
-PostgreSQL 映像所需的环境变量。设置 PostgreSQL 超级用户的密码。不能为空或未定义。
-
-
-POSTGRES_USER 【可选】
-可选环境变量，用于创建用户及其密码。创建具有超级用户权限的指定用户和同名的数据库。默认用户是 “postgres”。
-
-
-POSTGRES_DB 【可选】
-可选环境变量，用于定义首次启动映像时创建的默认数据库的名称。默认值是 POSTGRES_USER 的值，如果未设置，则默认为 “postgres”。
-
-
-PGDATA 【可选】
-默认为 /var/lib/postgresql/data。如果使用的数据卷是文件系统挂载点或无法被用户 chowned 的远程文件夹，则需要设置此环境变量以包含数据。
-
-
-
-
-达梦docker run -d -p 5236:5236 --restart=always --name DaMengDB \--privileged=true \-e PAGE_SIZE=16 \-e LD_LIBRARY_PATH=/opt/dmdbms/bin \-e EXTENT_SIZE=32 \-e BLANK_PAD_MODE=1 \-e LOG_SIZE=1024 \-e UNICODE_FLAG=1 \-e LENGTH_IN_CHAR=1 \-e INSTANCE_NAME=dm8_test \-v $HOME/DaMeng_Data:/opt/dmdbms/data \if010/dameng
-
-注意：if010&#x2F;dameng 是从官网下载上传至 Docker Hub 的镜像！
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 5236:5236
-将主机的端口映射到容器的端口，这里是将主机的 5236 端口映射到容器的 5236 端口，用于访问达梦数据库
-
-
---name DaMengDB
-为容器指定一个名称，这里是 “DaMengDB”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/DaMeng_Data:/opt/dmdbms/data
-将容器中的达梦数据库数据存储路径 “&#x2F;opt&#x2F;dmdbms&#x2F;data” 映射到本地主机的 “$HOME&#x2F;DaMeng_Data” 目录，以确保在容器重启时数据得以保留
-
-
-
-
-人大金仓docker run -idt -p 54321:54321 --restart=always \--name Kingbase --privileged=true \-e DB_MODE=oracle \-e NEED_START=yes \-e DB_USER=kingbase \-e DB_PASSWORD=abc123 \-e ENABLE_CI=yes \-v $HOME/Kingbase_Data:/home/kingbase/userdata \if010/kingbase:v009r001c001b0025 /usr/sbin/init
-
-注意：if010/kingbase:v009r001c001b0025 是从官网下载上传至 Docker Hub 的镜像，官网提供了两个下载版本，一个是 v008r006c008b0014，另一个是 v009r001c001b0025，可以拉取对应的 tag 镜像进行测试使用！
-参数解释
-
-
-–
-–
-
-
-
--itd
-以后台方式启动容器，保持 STDIN 打开
-
-
--p 54321:54321
-将主机的 54321 端口映射到容器的 54321 端口，访问数据库
-
-
---name Kingbase
-给容器指定名称为 “Kingbase”
-
-
---restart=always
-容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/Kingbase_Data:/home/kingbase/userdata
-将容器中的人大金仓数据库数据存储路径 “&#x2F;home&#x2F;kingbase&#x2F;userdata” 映射到本地主机的 “$HOME&#x2F;Kingbase_Data” 目录，以确保在容器重启时数据得以保留
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-DB_USER 【可选】
-设置用户及其密码，默认为 “system”
-
-
-DB_PASSWORD 【可选】
-设置用户密码，默认为 “123456”
-
-
-DB_MODE 【可选】
-设置数据库模式，支持的模式有 oracle、pg、mysql
-
-
-NEED_START 【可选】
-设置进入容器后是否启动数据库，默认为 “yes”
-
-
-ENABLE_CI 【可选】
-设置是否需要配置大小写敏感，默认为 “yes”
-
-
-
-
-Redisdocker run -d -p 6379:6379 --restart=always --name Redis \-v $HOME/Redis_Data/conf:/usr/local/etc/redis \-v $HOME/Redis_Data/data:/data \redis redis-server /usr/local/etc/redis/redis.conf
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 6379:6379
-将主机的端口映射到容器的端口，这里是将主机的 6379 端口映射到容器的 6379 端口，用于访问 Redis 数据库
-
-
---name Redis
-为容器指定一个名称，这里是 “Redis”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/Redis_Data/conf:/usr/local/etc/redis
-(需提前准备好文件，否则可能会启动失败) 将到容器中的 “&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;conf”目录下,这样子做的目的是可以自定义Redis的配置文件
-
-
--v $HOME/Redis_Data/data:/data
-将到容器中的 “&#x2F;data” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;data”目录下,这样做的目的是将 Redis 数据库的数据存储在本地中，以便数据在容器重启时得以保留
-
-
-
-
-关于启动命令
-
-
-–
-–
-
-
-
-redis-server /usr/local/etc/redis/redis.conf
-容器内部执行该命令是为了按照我们自定义的配置文件启动，这个不是必须的！！！
-
-
-
-
-Memcachedocker run -d -p 11211:11211 --name Memcached \    --restart=always memcached memcached -m 64
-
-参数解释
--d: 以后台方式启动容器。
--it: 分配一个伪终端（pseudo-TTY）并保持 STDIN 打开。
--p 11211:11211: 将主机的 11211 端口映射到容器的 11211 端口，用于访问 Memcached 消息队列的 web 管理界面。
---name Memcached: 容器的名称为 “Memcached”。
---restart=always: 容器退出时，总是重新启动容器。
-
-命令执行解释
-memcached -m 64 这会将 Memcached 服务器设置为使用 64 MB 进行存储
-
-MongoDB
-
-docker run -d -p 27017:27017 --restart=always --name MongoDB \-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \-e MONGO_INITDB_ROOT_PASSWORD=abc123 \-v $HOME/MongoDB_Data/data:/data/db \-v $HOME/MongoDB_Data/conf:/etc/mongo \mongo --config /etc/mongo/mongod.conf --wiredTigerCacheSizeGB 1.5
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 27017:27017
-将主机的端口映射到容器的端口，这里是将主机的 27017 端口映射到容器的 27017 端口，用于访问 MongoDB 数据库
-
-
---name MongoDB
-为容器指定一个名称，这里是 “MongoDB”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
---config /etc/mongo/mongod.conf
-指定配置文件路径 (这个不是必须的，设置此选项之前需准备好mongod.conf文件映射到Docker内部)
-
-
---wiredTigerCacheSizeGB 1.5
-设置WiredTiger缓存大小限制为1.5G
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/MongoDB_Data/conf:/etc/mongo
-将到容器中的 “&#x2F;etc&#x2F;mongo” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;conf”目录下,这样子做的目的是可以自定义MongoDB的配置文件 (需提前准备好文件，否则可能会启动失败)
-
-
--v $HOME/Redis_Data/data:/data
-将到容器中的 “&#x2F;data&#x2F;db” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;data”目录下,这样做的目的是将 MongoDB 数据库的数据存储在本地中，以便数据在容器重启时得以保留
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-MONGO_INITDB_ROOT_USERNAME 【可选】
-该变量是创建管理员用户，该用户是在 admin 身份验证数据库中创建的，并被赋予角色 root，这是一个”超级用户”角色。
-
-
-MONGO_INITDB_ROOT_PASSWORD 【可选】
-该变量是为创建管理员用户设置密码，需配合 MONGO_INITDB_ROOT_USERNAME 变量参数使用
-
-
-
-
-RabbitMQdocker run -itd -p 15672:15672 --name RabbitMQ \--hostname rmq-test \-e RABBITMQ_DEFAULT_VHOST=rmq-test \-e RABBITMQ_DEFAULT_USER=admin \-e RABBITMQ_DEFAULT_PASS=abc123 \rabbitmq:3-management 
-
-参数解释
-
-
-–
-–
-
-
-
--itd
-表示以后台运行的方式启动容器,并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
-
-
--p 15672:15672
-将主机的端口映射到容器的端口，这里是将主机的 15672 端口映射到容器的 15672 端口，用于访问 RabbitMQ 控制台页面，内部除了该端口外，还开了4369&#x2F;tcp、5671-5672&#x2F;tcp、15671&#x2F;tcp、15691-15692&#x2F;tcp、25672&#x2F;tcp
-
-
---name RabbitMQ
-为容器指定一个名称，这里是 “RabbitMQ”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
---hostname
-设置容器主机名称
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-RABBITMQ_DEFAULT_VHOST 【可选】
-该变量是可选的，是设置 RabbitMQ 的主机名称
-
-
-RABBITMQ_DEFAULT_USER 【可选】
-该变量是可选的，是设置 RabbitMQ 的账户
-
-
-RABBITMQ_DEFAULT_PASS 【可选】
-该变量是可选的，是设置 RabbitMQ 的密码
-
-
-
-
-远程协助工具 Guacd
-
-docker run -d -p 4822:4822 --privileged=true \    --restart=always --name Guacd \    -e LANG=zh_CN.UTF-8 \    -v /docker_data/Guacd/rdp-rec:/rdp-rec \    -v /docker_data/Guacd/rdp-file:/rdp-file \    guacamole/guacd
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 4822:4822
-将主机的端口映射到容器的端口，这里是将主机的 4822 端口映射到容器的 4822 端口，用于访问 Guacd远程的API接口
-
-
---name Guacd
-为容器指定一个名称，这里是 “Guacd”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
---privileged=true
-若不加字段–privileged&#x3D;true可能会报权限错误
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v /docker_data/Guacd/rdp-rec:/rdp-rec
-代码内固定配置，guacd服务rdp录屏文件存放路径
-
-
--v /docker_data/Guacd/rdp-file:/rdp-file
-代码内固定配置，guacd服务rdp远程磁盘文件存放路
-
-
-
-
-环境变量解释
-LANG 设置字符编码格式
-
-在线代码编辑器 Code Server$ mkdir -p ~/.config$ docker run -it --name code-server  \  -p 127.0.0.1:8080:8080 \  -v &quot;$HOME/.config/code-server:/home/coder/.config&quot; \  -v &quot;$PWD:/home/coder/project&quot; \  -u &quot;$(id -u):$(id -g)&quot; \  -e &quot;DOCKER_USER=$USER&quot; \    codercom/code-server:latest
-
-媒体管理工具 Dim$ docker run --name my-dim \   -p 8000:8000/tcp \   -v $HOME/.config/dim:/opt/dim/config \   -v $HOME/dim/media:/media:ro \   -d ghcr.io/dusk-labs/dim:dev
-
-Github
-Gitlab$ docker run -d --name gitlab \  --hostname gitlab.example.com \  --publish 8443:443 --publish 8081:80 -p 2222:22 \  --restart always \  --volume $HOME/gitlab/config:/etc/gitlab \  --volume $HOME/gitlab/logs:/var/log/gitlab \  --volume $HOME/gitlab/data:/var/opt/gitlab \  -v /etc/localtime:/etc/localtime \  --shm-size 256m \    gitlab/gitlab-ce:latest
-
-另见
-Dockerfile 备忘清单 (github.io)
-Docker 官方入门教程 (docker.com)
-Docker入门学习笔记 (github.io)
-快速安装Docker及配置及Docker配置、Docker常用命令
-
-]]></content>
-      <categories>
-        <category>后端编程</category>
-      </categories>
-      <tags>
-        <tag>后端编程</tag>
-        <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JSON 备忘录</title>
     <url>/2025/01/08/json/</url>
     <content><![CDATA[JSON 备忘清单这是理解和编写 JSON 格式配置文件的快速参考备忘单。
@@ -7053,26 +7053,123 @@ callbacks.remove() 从回调列表中删除回调或回调集合
       </tags>
   </entry>
   <entry>
-    <title>Pyhton备忘录</title>
-    <url>/2025/01/08/pyhton%E5%A4%87%E5%BF%98%E5%BD%95/</url>
-    <content><![CDATA[Python 3 备忘清单Python 备忘单是 Python 3 编程语言的单页参考表
-入门介绍
-Python 官方网站  (python.org)
-Python 文档  (docs.python.org)
-Y 分钟学会 Python (learnxinyminutes.com)
-Python 中的正则表达式 (jaywcjlove.github.io)
+    <title>Yaml 备忘录</title>
+    <url>/2025/01/08/yaml/</url>
+    <content><![CDATA[YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。
+入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写
 
-控制台打印&gt;&gt;&gt; print(&quot;Hello, World!&quot;)Hello, World!
-
-著名的“Hello World”程序在 Python 中的实现
-变量age = 18       # 年龄是 int 类型name = &quot;John&quot;  # 名字现在是 str 类型print(name)
+YAML 不允许使用制表符
+元素部分之间必须有空间
+YAML 区分大小写
+以 .yaml 或 .yml 扩展名结束您的 YAML 文件
+YAML 是 JSON 的超集
+Ansible playbook 是 YAML 文件
 
 
-Python 不能在没有赋值的情况下声明变量
-变量可以存放不同类型的值
 
-内置数据类型
-序列指一批有序的元素，集合指一批无序且不重复的元素
+标量类型
+
+n1: 1            # 整数n2: 1.234        # 浮点s1: &#x27;abc&#x27;        # 字符串s2: &quot;abc&quot;        # 字符串s3: abc          # 字符串b: false         # 布尔类型d: 2015-04-05    # 日期类型
+
+↓ 等效的 JSON&#123;  &quot;n1&quot;: 1,  &quot;n2&quot;: 1.234,  &quot;s1&quot;: &quot;abc&quot;,  &quot;s2&quot;: &quot;abc&quot;,  &quot;s3&quot;: &quot;abc&quot;,  &quot;b&quot;: false,  &quot;d&quot;: &quot;2015-04-05&quot;&#125;
+
+使用空格缩进。 元素部分之间必须有空间。
+变量some_thing: &amp;VAR_NAME foobarother_thing: *VAR_NAME
+
+↓ 等效的 JSON&#123;  &quot;some_thing&quot;: &quot;foobar&quot;,  &quot;other_thing&quot;: &quot;foobar&quot;&#125;
+
+注释# A single line comment example# block level comment example# comment line 1# comment line 2# comment line 3
+
+多行字符串description: |  hello  world
+
+↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello\nworld\n&quot;&#125;
+
+继承
+
+parent: &amp;defaults  a: 2  b: 3child:  &lt;&lt;: *defaults  b: 4
+
+↓ 等效的 JSON&#123;  &quot;parent&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 3  &#125;,  &quot;child&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 4  &#125;&#125;
+
+参考
+
+values: &amp;ref  - Will be  - reused below  other_values:  i_am_ref: *ref
+
+↓ 等效的 JSON&#123;  &quot;values&quot;: [    &quot;Will be&quot;,    &quot;reused below&quot;  ],  &quot;other_values&quot;: &#123;    &quot;i_am_ref&quot;: [      &quot;Will be&quot;,      &quot;reused below&quot;    ]  &#125;&#125;
+
+折叠的字符串description: &gt;  hello  world
+
+↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello world\n&quot;&#125;
+
+两份文件---document: this is doc 1---document: this is doc 2
+
+YAML使用---将指令与文档内容分开。
+YAML Collections序列- Mark McGwire- Sammy Sosa- Ken Griffey
+
+↓ 等效的 JSON[  &quot;Mark McGwire&quot;,  &quot;Sammy Sosa&quot;,  &quot;Ken Griffey&quot;]
+
+映射hr:  65       # Home runsavg: 0.278    # Batting averagerbi: 147      # Runs Batted In
+
+↓ 等效的 JSON&#123;  &quot;hr&quot;: 65,  &quot;avg&quot;: 0.278,  &quot;rbi&quot;: 147&#125;
+
+映射到序列attributes:  - a1  - a2methods: [getter, setter]
+
+↓ 等效的 JSON&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;]&#125;
+
+映射序列children:  - name: Jimmy Smith    age: 15  - name: Jimmy Smith    age: 15  -    name: Sammy Sosa    age: 12
+
+↓ 等效的 JSON&#123;  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12&#125;  ]&#125;
+
+序列的序列my_sequences:  - [1, 2, 3]  - [4, 5, 6]  -      - 7    - 8    - 9    - 0 
+
+↓ 等效的 JSON&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0]  ]&#125;
+
+映射的映射Mark McGwire: &#123;hr: 65, avg: 0.278&#125;Sammy Sosa: &#123;    hr: 63,    avg: 0.288  &#125;
+
+↓ 等效的 JSON&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
+
+嵌套集合Jack:  id: 1  name: Franc  salary: 25000  hobby:    - a    - b  location: &#123;country: &quot;A&quot;, city: &quot;A-A&quot;&#125;
+
+↓ 等效的 JSON&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
+
+无序集set1: !!set  ? one  ? twoset2: !!set &#123;&#x27;one&#x27;, &quot;two&quot;&#125;
+
+↓ 等效的 JSON&#123;  &quot;set1&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;,  &quot;set2&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;&#125;
+
+集合表示为一个映射，其中每个键都与一个空值相关联
+有序映射ordered: !!omap- Mark McGwire: 65- Sammy Sosa: 63- Ken Griffy: 58
+
+↓ 等效的 JSON&#123;  &quot;ordered&quot;: [     &#123;&quot;Mark McGwire&quot;: 65&#125;,     &#123;&quot;Sammy Sosa&quot;: 63&#125;,     &#123;&quot;Ken Griffy&quot;: 58&#125;  ]&#125;
+
+YAML 参考条款
+序列又名数组或列表
+标量又名字符串或数字
+映射又名哈希或字典
+
+
+
+基于 YAML.org refcard。
+文档指标
+
+
+:-
+:-
+
+
+
+%
+指令指标
+
+
+---
+文档标题
+
+
+...
+文档终结者
+
+
+收集指标
+
 
 
 
@@ -7081,1037 +7178,275 @@ Python 不能在没有赋值的情况下声明变量
 
 
 
-str
-文本／字符串（Text）
+?
+关键指标
 
 
-int, float, complex
-数值（Numeric）
+:
+价值指标
 
 
-dict
-映射／键值对（Mapping）
+-
+嵌套系列条目指示器
 
 
-list, tuple, range
-序列（Sequence）
+,
+单独的内联分支条目
 
 
-set, frozenset
-集合（Set）
+[]
+环绕串联系列分支
 
 
-bool
-布尔值／逻辑值（Boolean）
+&#123;&#125;
+环绕在线键控分支
 
 
-bytes, bytearray,  memoryview
-二进制数据（Binary）
+别名指标
 
 
-查看: 数据类型
-字符串切片&gt;&gt;&gt; msg = &quot;Hello, World!&quot;&gt;&gt;&gt; print(msg[2:5])llo
+:-
+:-
 
-查看: 字符串
-列表mylist = []mylist.append(1)mylist.append(2)for item in mylist:    print(item) # 打印输出 1,2
 
-查看: 列表
-判断num = 200if num &gt; 0:    print(&quot;num is greater than 0&quot;)else:    print(&quot;num is not greater than 0&quot;)
 
-查看: 判断
-循环for item in range(6):    if item == 3: break    print(item)else:    print(&quot;Finally finished!&quot;)
+&amp;
+锚属性
 
-查看: 循环
-函数&gt;&gt;&gt; def my_function():...     print(&quot;来自函数的你好&quot;)...&gt;&gt;&gt; my_function()来自函数的你好
 
-查看: 函数
-文件处理
+*
+别名指示符
 
-with open(&quot;myfile.txt&quot;, &quot;r&quot;, encoding=&#x27;utf8&#x27;) as file:    for line in file:        print(line)
 
-查看: 文件处理
-算术result = 10 + 30 # =&gt; 40result = 40 - 10 # =&gt; 30result = 50 * 5  # =&gt; 250result = 16 / 4  # =&gt; 4.0 (Float Division)result = 16 // 4 # =&gt; 4 (Integer Division)result = 25 % 2  # =&gt; 1result = 5 ** 3  # =&gt; 125
+特殊键
 
-/ 表示 x 和 y 的商，// 表示 x 和 y 的底商，另见 StackOverflow
-加等于counter = 0counter += 10           # =&gt; 10counter = 0counter = counter + 10  # =&gt; 10message = &quot;Part 1.&quot;# =&gt; Part 1.Part 2.message += &quot;Part 2.&quot;   
 
-f-字符串 (Python 3.6+)&gt;&gt;&gt; website = &#x27;Quick Reference&#x27;&gt;&gt;&gt; f&quot;Hello, &#123;website&#125;&quot;&quot;Hello, Quick Reference&quot;&gt;&gt;&gt; num = 10&gt;&gt;&gt; f&#x27;&#123;num&#125; + 10 = &#123;num + 10&#125;&#x27;&#x27;10 + 10 = 20&#x27;
+:-
+:-
 
-查看: f-字符串
-Python 数据类型字符串hello = &quot;Hello World&quot;hello = &#x27;Hello World&#x27;multi_string = &quot;&quot;&quot;Multiline StringsLorem ipsum dolor sit amet,consectetur adipiscing elit &quot;&quot;&quot;
 
-查看: 字符串
-数值x = 1    # 整数y = 2.8  # 浮点小数z = 1j   # 复数&gt;&gt;&gt; print(type(x))&lt;class &#x27;int&#x27;&gt;
 
-只要内存足够，可以容纳无限大(小)的数值
-布尔值my_bool = True my_bool = Falsebool(0)     # =&gt; Falsebool(1)     # =&gt; True
+=
+默认“值”映射键
 
-bool 是 int 的子类
-列表list1 = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]list2 = [True, False, False]list3 = [1, 5, 7, 9, 3]list4 = list((1, 5, 7, 9, 3))
 
-查看: 列表
-元组my_tuple = (1, 2, 3)my_tuple = tuple((1, 2, 3))
+&lt;&lt;
+合并来自另一个映射的键
 
-类似列表，但自身不可变
-集合set1 = &#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;&#125;   set2 = set((&quot;a&quot;, &quot;b&quot;, &quot;c&quot;))
 
-类似列表，但里面的元素是无序而不重复的
-字典&gt;&gt;&gt; empty_dict = &#123;&#125;&gt;&gt;&gt; a = &#123;&quot;one&quot;: 1, &quot;two&quot;: 2, &quot;three&quot;: 3&#125;&gt;&gt;&gt; a[&quot;one&quot;]1&gt;&gt;&gt; a.keys()dict_keys([&#x27;one&#x27;, &#x27;two&#x27;, &#x27;three&#x27;])&gt;&gt;&gt; a.values()dict_values([1, 2, 3])&gt;&gt;&gt; a.update(&#123;&quot;four&quot;: 4&#125;)&gt;&gt;&gt; a.keys()dict_keys([&#x27;one&#x27;, &#x27;two&#x27;, &#x27;three&#x27;, &#x27;four&#x27;])&gt;&gt;&gt; a[&#x27;four&#x27;]4
+标量指标
 
-键-值对，一种像 JSON 那样对象
-类型转换转换为整数x = int(1)       # 得到 1y = int(2.8)     # 得到 2z = int(&quot;3&quot;)     # 得到 3
 
-转换为浮点数x = float(1)     # 得到 1.0y = float(2.8)   # 得到 2.8z = float(&quot;3&quot;)   # 得到 3.0w = float(&quot;4.2&quot;) # 得到 4.2
+:-
+:-
 
-转换为字符串x = str(&quot;s1&quot;)    # 得到 &quot;s1&quot;y = str(2)       # 得到 &quot;2&quot;z = str(3.0)     # 得到 &quot;3.0&quot;
 
-Python 字符串下标访问&gt;&gt;&gt; hello = &quot;Hello, World&quot;&gt;&gt;&gt; print(hello[1])  # 获取第二个字符e&gt;&gt;&gt; print(hello[-1])  # 获取倒数第一个字符d&gt;&gt;&gt; print(type(hello[-1]))  # 得到的还是字符串&lt;class &#x27;str&#x27;&gt;
 
-循环&gt;&gt;&gt; for char in &quot;foo&quot;:...     print(char)foo
+&#39;&#39;
+环绕内联未转义标量
 
-对字符串 for-in 可以得到每个字符（类型还是字符串）
-切割字符串
 
- ┌───┬───┬───┬───┬───┬───┬───┐ | m | y | b | a | c | o | n | └───┴───┴───┴───┴───┴───┴───┘ 0   1   2   3   4   5   6   7-7  -6  -5  -4  -3  -2  -1
+&quot;
+环绕内嵌转义标量
 
 
-&gt;&gt;&gt; s = &#x27;mybacon&#x27;&gt;&gt;&gt; s[2:5]&#x27;bac&#x27;&gt;&gt;&gt; s[0:2]&#x27;my&#x27;
+&#96;
+&#96;
 
 
-&gt;&gt;&gt; s = &#x27;mybacon&#x27;&gt;&gt;&gt; s[:2]&#x27;my&#x27;&gt;&gt;&gt; s[2:]&#x27;bacon&#x27;&gt;&gt;&gt; s[:2] + s[2:]&#x27;mybacon&#x27;&gt;&gt;&gt; s[:]&#x27;mybacon&#x27;
+&gt;
+折叠标量指示器
 
 
-&gt;&gt;&gt; s = &#x27;mybacon&#x27;&gt;&gt;&gt; s[-5:-1]&#x27;baco&#x27;&gt;&gt;&gt; s[2:6]&#x27;baco&#x27;
+-
+剥离 chomp 修饰符（|- 或 &gt;-）
 
-步长&gt;&gt;&gt; s = &#x27;12345&#x27; * 5&gt;&gt;&gt; s&#x27;1234512345123451234512345&#x27;&gt;&gt;&gt; s[::5]&#x27;11111&#x27;&gt;&gt;&gt; s[4::5]&#x27;55555&#x27;&gt;&gt;&gt; s[::-5]&#x27;55555&#x27;&gt;&gt;&gt; s[::-1]&#x27;5432154321543215432154321&#x27;
 
-获取长度&gt;&gt;&gt; hello = &quot;Hello, World!&quot;&gt;&gt;&gt; print(len(hello))13
++
+保留 chomp 修饰符（|+ 或 &gt;+）
 
-len() 函数返回字符串的长度
-重复多次&gt;&gt;&gt; s = &#x27;===+&#x27;&gt;&gt;&gt; n = 8&gt;&gt;&gt; s * n&#x27;===+===+===+===+===+===+===+===+&#x27;
 
-存在性判断&gt;&gt;&gt; s = &#x27;spam&#x27;&gt;&gt;&gt; s in &#x27;I saw spamalot!&#x27;True&gt;&gt;&gt; s not in &#x27;I saw The Holy Grail!&#x27;True
+1-9
+显式缩进修饰符（|1 或 &gt;2）。  修饰符可以组合（|2-, &gt;+1）
 
-判断 “spam” 这个字符串是否在其它字符串里
-字符串拼接&gt;&gt;&gt; s = &#x27;spam&#x27;&gt;&gt;&gt; t = &#x27;egg&#x27;&gt;&gt;&gt; s + t  # 可以使用加号进行拼接&#x27;spamegg&#x27;&gt;&gt;&gt; &#x27;spam&#x27; &#x27;egg&#x27;  # 两个字符串之间可以省略加号&#x27;spamegg&#x27;
 
-格式化
+标签属性（通常未指定）
 
-name = &quot;John&quot;print(&quot;Hello, %s!&quot; % name)
 
 
-name = &quot;John&quot;age = 23print(&quot;%s is %d years old.&quot; % (name, age))
 
-format() 方法txt1 = &quot;My name is &#123;fname&#125;, I&#x27;m &#123;age&#125;&quot;.format(fname=&quot;John&quot;, age=36)txt2 = &quot;My name is &#123;0&#125;, I&#x27;m &#123;1&#125;&quot;.format(&quot;John&quot;, 36)txt3 = &quot;My name is &#123;&#125;, I&#x27;m &#123;&#125;&quot;.format(&quot;John&quot;, 36)
+:-
+:-
 
-转义符号
 
 
+none
+未指定的标签（由应用程序自动解析）
 
 
-转义符号
-对应的操作
+!
+非特定标签（默认情况下，!!map&#x2F;!!seq&#x2F;!!str）
 
 
+!foo
+主要（按照惯例，表示本地 !foo 标记）
 
-\\
-输出反斜杠
 
+!!foo
+次要的（按照惯例，表示 tag:yaml.org,2002:foo）
 
-\&#39;
-输出单引号
 
+!h!foo
+需要 %TAG !h! &lt;prefix&gt;（然后表示 &lt;prefix&gt;foo）
 
-\&quot;
-输出双引号
 
+!&lt;foo&gt;
+逐字标记（始终表示“foo”）
 
-\n
-换行
 
 
-\t
-水平制表符
 
+杂项指标
 
-\r
-光标回到首位
 
 
-\b
-退格
 
 
-控制台输入&gt;&gt;&gt; name = input(&quot;Enter your name: &quot;)Enter your name: Tom&gt;&gt;&gt; name&#x27;Tom&#x27;
 
-从控制台获取输入数据
-头尾判断
 
-&gt;&gt;&gt; # 是否以 H 开头&gt;&gt;&gt; &quot;Hello, world!&quot;.startswith(&quot;H&quot;)True&gt;&gt;&gt; # 是否以 h 开头&gt;&gt;&gt; &quot;Hello, world!&quot;.startswith(&quot;h&quot;)False&gt;&gt;&gt; # 是否以 ! 结尾&gt;&gt;&gt; &quot;Hello, world!&quot;.endswith(&quot;!&quot;)True
+#
+一次性评论指示器
 
-插入分隔符拼接&gt;&gt;&gt; &quot;、&quot;.join([&quot;John&quot;, &quot;Peter&quot;, &quot;Vicky&quot;])&#x27;John、Peter、Vicky&#x27;
 
-Python f-字符串 (Python 3.6+)f-字符串 用法
+`@
+两者都保留供将来使用
 
-&gt;&gt;&gt; website = &#x27;Reference&#x27;&gt;&gt;&gt; f&quot;Hello, &#123;website&#125;&quot;&quot;Hello, Reference&quot;&gt;&gt;&gt; num = 10&gt;&gt;&gt; f&#x27;&#123;num&#125; + 10 = &#123;num + 10&#125;&#x27;&#x27;10 + 10 = 20&#x27;&gt;&gt;&gt; f&quot;&quot;&quot;He said &#123;&quot;I&#x27;m John&quot;&#125;&quot;&quot;&quot;&quot;He said I&#x27;m John&quot;&gt;&gt;&gt; f&#x27;5 &#123;&quot;&#123;stars&#125;&quot;&#125;&#x27;&#x27;5 &#123;stars&#125;&#x27;&gt;&gt;&gt; f&#x27;&#123;&#123;5&#125;&#125; &#123;&quot;stars&quot;&#125;&#x27;&#x27;&#123;5&#125; stars&#x27;&gt;&gt;&gt; name = &#x27;Eric&#x27;&gt;&gt;&gt; age = 27&gt;&gt;&gt; f&quot;&quot;&quot;Hello!...     I&#x27;m &#123;name&#125;....     I&#x27;m &#123;age&#125;.&quot;&quot;&quot;&quot;Hello!\n    I&#x27;m Eric.\n    I&#x27;m 27.&quot;
 
-它从 Python 3.6 开始可用，另见: 格式字符串字面值
-填充对齐&gt;&gt;&gt; f&#x27;&#123;&quot;text&quot;:10&#125;&#x27;   # 使用空格填充到指定长度&#x27;text      &#x27;&gt;&gt;&gt; f&#x27;&#123;&quot;test&quot;:*&gt;10&#125;&#x27; # 向左填充&#x27;******test&#x27;&gt;&gt;&gt; f&#x27;&#123;&quot;test&quot;:*&lt;10&#125;&#x27; # 向右填充&#x27;test******&#x27;&gt;&gt;&gt; f&#x27;&#123;&quot;test&quot;:*^10&#125;&#x27; # 居中填充&#x27;***test***&#x27;&gt;&gt;&gt; f&#x27;&#123;12345:0&gt;10&#125;&#x27;  # 使用数字填充&#x27;0000012345&#x27;
+核心类型（默认自动标签）
 
-按类型输出
 
-&gt;&gt;&gt; f&#x27;&#123;10:b&#125;&#x27;     # 输出二进制数值&#x27;1010&#x27;&gt;&gt;&gt; f&#x27;&#123;10:o&#125;&#x27;     # 输出八进制数值&#x27;12&#x27;&gt;&gt;&gt; f&#x27;&#123;200:x&#125;&#x27;    # 输出十六进制数值&#x27;c8&#x27;&gt;&gt;&gt; f&#x27;&#123;200:X&#125;&#x27;&#x27;C8&#x27;&gt;&gt;&gt; f&#x27;&#123;345600000000:e&#125;&#x27; # 科学计数法&#x27;3.456000e+11&#x27;&gt;&gt;&gt; f&#x27;&#123;65:c&#125;&#x27;       # 将整数转化为一个字符后输出&#x27;A&#x27;&gt;&gt;&gt; f&#x27;&#123;10:#b&#125;&#x27;      # [类型] 带符号（基础）&#x27;0b1010&#x27;&gt;&gt;&gt; f&#x27;&#123;10:#o&#125;&#x27;&#x27;0o12&#x27;&gt;&gt;&gt; f&#x27;&#123;10:#x&#125;&#x27;&#x27;0xa&#x27;
 
-显示正负号&gt;&gt;&gt; f&#x27;&#123;12345:+&#125;&#x27;      # 显示正数的正号&#x27;+12345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:+&#125;&#x27;     # 显示负数的负号&#x27;-12345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:+10&#125;&#x27;   # 显示负号，并使用空格填充，直到长度为 10&#x27;    -12345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:+010&#125;&#x27;  # 显示负号，并使用0填充，直到长度为 10&#x27;-000012345&#x27;
 
-其它&gt;&gt;&gt; f&#x27;&#123;-12345:0=10&#125;&#x27;  # 负数&#x27;-000012345&#x27;&gt;&gt;&gt; f&#x27;&#123;12345:010&#125;&#x27;    # [0] 快捷方式（不对齐）&#x27;0000012345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:010&#125;&#x27;&#x27;-000012345&#x27;&gt;&gt;&gt; import math       # [.precision]&gt;&gt;&gt; math.pi3.141592653589793&gt;&gt;&gt; f&#x27;&#123;math.pi:.2f&#125;&#x27;&#x27;3.14&#x27;&gt;&gt;&gt; f&#x27;&#123;1000000:,.2f&#125;&#x27; # [分组选项]&#x27;1,000,000.00&#x27;&gt;&gt;&gt; f&#x27;&#123;1000000:_.2f&#125;&#x27;&#x27;1_000_000.00&#x27;&gt;&gt;&gt; f&#x27;&#123;0.25:0%&#125;&#x27;      # 百分比&#x27;25.000000%&#x27;&gt;&gt;&gt; f&#x27;&#123;0.25:.0%&#125;&#x27;&#x27;25%&#x27;
 
-Python 列表定义&gt;&gt;&gt; li1 = []&gt;&gt;&gt; li1[]&gt;&gt;&gt; li2 = [4, 5, 6]&gt;&gt;&gt; li2[4, 5, 6]&gt;&gt;&gt; li3 = list((1, 2, 3))&gt;&gt;&gt; li3[1, 2, 3]&gt;&gt;&gt; li4 = list(range(1, 11))&gt;&gt;&gt; li4[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-生成
 
-&gt;&gt;&gt; list(filter(lambda x : x % 2 == 1, range(1, 20)))[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]&gt;&gt;&gt; [x ** 2 for x in range (1, 11) if  x % 2 == 1][1, 9, 25, 49, 81]&gt;&gt;&gt; [x for x in [3, 4, 5, 6, 7] if x &gt; 5][6, 7]&gt;&gt;&gt; list(filter(lambda x: x &gt; 5, [3, 4, 5, 6, 7]))[6, 7]
 
-添加元素&gt;&gt;&gt; li = []&gt;&gt;&gt; li.append(1)&gt;&gt;&gt; li[1]&gt;&gt;&gt; li.append(2)&gt;&gt;&gt; li[1, 2]&gt;&gt;&gt; li.append(4)&gt;&gt;&gt; li[1, 2, 4]&gt;&gt;&gt; li.append(3)&gt;&gt;&gt; li[1, 2, 4, 3]
 
-切片
+!!map
+&#123;Hash table, dictionary, mapping&#125;
 
-列表切片的语法：
-a_list[start:end]a_list[start:end:step]
 
-切片&gt;&gt;&gt; a = [&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[2:5][&#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;]&gt;&gt;&gt; a[-5:-2][&#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]&gt;&gt;&gt; a[1:4][&#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]
+!!seq
+&#123;List, array, tuple, vector, sequence&#125;
 
-省略索引&gt;&gt;&gt; a[:4][&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]&gt;&gt;&gt; a[0:4][&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]&gt;&gt;&gt; a[2:][&#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[2:len(a)][&#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[:][&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]
 
-间隔索引[&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[0:6:2][&#x27;spam&#x27;, &#x27;bacon&#x27;, &#x27;ham&#x27;]&gt;&gt;&gt; a[1:6:2][&#x27;egg&#x27;, &#x27;tomato&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[6:0:-2][&#x27;lobster&#x27;, &#x27;tomato&#x27;, &#x27;egg&#x27;]&gt;&gt;&gt; a[&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[::-1][&#x27;lobster&#x27;, &#x27;ham&#x27;, &#x27;tomato&#x27;, &#x27;bacon&#x27;, &#x27;egg&#x27;, &#x27;spam&#x27;]
+!!str
+Unicode 字符串
 
-删除&gt;&gt;&gt; li = [&#x27;bread&#x27;, &#x27;butter&#x27;, &#x27;milk&#x27;]&gt;&gt;&gt; li.pop()&#x27;milk&#x27;&gt;&gt;&gt; li[&#x27;bread&#x27;, &#x27;butter&#x27;]&gt;&gt;&gt; del li[0]&gt;&gt;&gt; li[&#x27;butter&#x27;]&gt;&gt;&gt; li.remove(&#x27;butter&#x27;)&gt;&gt;&gt; li[]
 
-列表边界&gt;&gt;&gt; li = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]&gt;&gt;&gt; li[0]&#x27;a&#x27;&gt;&gt;&gt; li[-1]&#x27;d&#x27;&gt;&gt;&gt; li[4]Traceback (most recent call last):  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;IndexError: list index out of range
+转义码
 
-连接
+Numeric
+\x12 (8-bit)
+\u1234 (16-bit)
+\U00102030 (32-bit)
 
-&gt;&gt;&gt; odd = [1, 3, 5]&gt;&gt;&gt; odd.extend([9, 11, 13])&gt;&gt;&gt; odd[1, 3, 5, 9, 11, 13]&gt;&gt;&gt; odd = [1, 3, 5]&gt;&gt;&gt; odd + [9, 11, 13][1, 3, 5, 9, 11, 13]
 
-排序和反转
 
-&gt;&gt;&gt; li = [3, 1, 3, 2, 5]&gt;&gt;&gt; li.sort()&gt;&gt;&gt; li[1, 2, 3, 3, 5]&gt;&gt;&gt; li.reverse()&gt;&gt;&gt; li[5, 3, 3, 2, 1]
+Protective
+\\ (\)
+\&quot; (“)
+\ ( )
+\&lt;TAB&gt; (TAB)
 
-计数&gt;&gt;&gt; li = [3, 1, 3, 2, 5]&gt;&gt;&gt; li.count(3)2
 
-重复&gt;&gt;&gt; li = [&quot;re&quot;] * 3&gt;&gt;&gt; li[&#x27;re&#x27;, &#x27;re&#x27;, &#x27;re&#x27;]
 
-搜索&gt;&gt;&gt; nums = [40, 36, 89, 2, 36, 100, 7, -20.5, -999]&gt;&gt;&gt; nums.index(2)3&gt;&gt;&gt; nums.index(100, 3, 7)  # 搜索3-7之间的元素5&gt;&gt;&gt; nums.index(7, 4) # 搜索4之后的元素6
+C
+\0 (NUL)
+\a (BEL)
+\b (BS)
+\f (FF)
+\n (LF)
+\r (CR)
+\t (TAB)
+\v (VTAB)
 
-当寻找一个不存在的值时，抛出ValueError。
-Python 判断if-elsenumber = int(input(&#x27;输入一个整数：&#x27;))if number &lt; 0:    print(&quot;您输入了一个负数。&quot;)else:    print(&quot;您输入了一个非负整数。&quot;)
 
-if-elif-elsenumber = int(input(&#x27;输入一个整数：&#x27;))if number &lt; 0:    print(&quot;您输入了一个负数。&quot;)elif number == 0:    print(&quot;您输入了一个 0 。&quot;)else:    print(&quot;您输入了一个正数。&quot;)
 
-三目运算scope = int(input(&#x27;输入百分制成绩：&#x27;))line = 60tip = &quot;及格&quot; if scope &gt;= line else &quot;不及格&quot;# 相当于 scope &gt;= line ? &quot;及格&quot; : &quot;不及格&quot;print(tip)
+额外的
+\e (ESC)
+\_ (NBSP)
+\N (NEL)
+\L (LS)
+\P (PS)
 
-注意条件是放在中间的
-Python 循环一般形式primes = [2, 3, 5, 7]for prime in primes:    print(prime)
 
-带索引animals = [&quot;dog&quot;, &quot;cat&quot;, &quot;mouse&quot;]for i, value in enumerate(animals):    print(i, value)
+更多类型
 
-while 循环x = 0while x &lt; 4:    print(x)    x += 1  # Shorthand for x = x + 1
 
-跳出循环x = 0for index in range(10):    x = index * 10    if index == 5:        break    print(x)
 
-跳过一轮循环for index in range(3, 8):     x = index * 10    if index == 5:        continue    print(x)
 
-范围循环for i in range(4):    print(i) # Prints: 0 1 2 3for i in range(4, 8):    print(i) # Prints: 4 5 6 7for i in range(4, 10, 2):    print(i) # Prints: 4 6 8
 
-使用 zip()name = [&#x27;Pete&#x27;, &#x27;John&#x27;, &#x27;Elizabeth&#x27;]age = [6, 23, 44]for n, a in zip(name, age):    print(&#x27;%s is %d years old&#x27; %(n, a))
 
-列表生成式
 
-result = [x**2 for x in range(10) if x % 2 == 0] print(result)# [0, 4, 16, 36, 64]
+!!set
+&#123;cherries, plums, apples&#125;
 
-Python 函数基础def hello_world():      print(&#x27;Hello, World!&#x27;)
 
-返回&#123;3&#125;def add(x, y):    print(&quot;x is %s, y is %s&quot; %(x, y))    return x + yadd(5, 6)    # =&gt; 11
+!!omap
+[one: 1, two: 2]
 
-位置参数def varargs(*args):    return argsvarargs(1, 2, 3)  # =&gt; (1, 2, 3)
 
-args 的类型是 tuple
-关键字参数def keyword_args(**kwargs):    return kwargs# =&gt; &#123;&quot;big&quot;: &quot;foot&quot;, &quot;loch&quot;: &quot;ness&quot;&#125;keyword_args(big=&quot;foot&quot;, loch=&quot;ness&quot;)
+与语言无关的标量类型
 
-kwargs 的类型是 dict
-返回多个def swap(x, y):    return y, xx = 1y = 2x, y = swap(x, y)  # =&gt; x = 2, y = 1
 
-默认值def add(x, y=10):    return x + yadd(5)      # =&gt; 15add(5, 20)  # =&gt; 25
 
-匿名函数# =&gt; True(lambda x: x &gt; 2)(3)# =&gt; 5(lambda x, y: x ** 2 + y ** 2)(2, 1)
 
-Python 解包
-解包是将一个序列内的多个元素依次重新分配到有限个容器的过程，这只发生在 变量赋值、参数传递 和 生成式生成 过程中。
-_ 这个变量是命令行交互中最后一次计算得到的值，在程序设计中一般用来存放解包时不再需要的值。但它的含义会因赋值而改变，比如标准库 gettext 中常用作动态获取翻译文本。
 
-等量解包ip, port = &quot;127.0.0.1&quot;, 80print(ip)  # -&gt; &quot;127.0.0.1&quot;print(port)  # -&gt; 80# 与以下代码等价ip, port = (&quot;127.0.0.1&quot;, 80)# 与以下代码效果相同ip, port = [&quot;127.0.0.1&quot;, 80]
 
-适量解包ip, _, port = &quot;127.0.0.1:80&quot;.rpartition(&quot;:&quot;)print(ip)  # -&gt; &quot;127.0.0.1&quot;print(port)  # -&gt; &quot;80&quot;# _ 这个变量此刻的值是 &quot;:&quot; ，但一般不再使用。
 
-_ 也是一个单一变量，不允许解包多个元素，因此变量与值必须一一对应。
-过量解包major, minor, *parts = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(major)  # -&gt; &quot;3&quot;print(minor)  # -&gt; &quot;10&quot;print(parts)  # -&gt; [&quot;2&quot;, &quot;beta&quot;]# 可将 parts 改为 _ 来表示不再需要后面的元素
 
-这里的 * 就是收集序列在解包过程中多出来的元素，只能有一个，与向函数传递位置参数时的 * 别无二致。
-解包取左边major, minor, *_ = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(major)  # -&gt; &quot;3&quot;print(minor)  # -&gt; &quot;10&quot;
 
-解包取两边major, *_, level = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(major)  # -&gt; &quot;3&quot;print(level)  # -&gt; &quot;beta&quot;
+&#123;~, null&#125;
+空（无值）。
 
-解包取右边*_, micro, level = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(micro)  # -&gt; &quot;2&quot;print(level)  # -&gt; &quot;beta&quot;
 
-解包集合a, b, *_ = &#123;3, 2, 1&#125;print(a)  # -&gt; 1print(b)  # -&gt; 2print(_)  # -&gt; [3]
+[1234, 0x4D2, 02333]
+[十进制整数、十六进制整数、八进制整数]
 
-集合中的元素是无序的，因此解包结果不能轻易确定。
-解包迭代器a, b, *_ = range(3)print(a)  # -&gt; 0print(b)  # -&gt; 1print(_)  # -&gt; [2]
 
-支持迭代器协议的对象也可被解包。
-解包字典a, b, *_ = dict(a=1, b=2, c=3)print(a)  # -&gt; &quot;a&quot;print(_)  # -&gt; [&quot;c&quot;]a, b, *_ = dict(a=1, b=2, c=3).values()print(a)  # -&gt; 1print(_)  # -&gt; [3]
+[1_230.15, 12.3015e+02]
+[固定浮点数，指数浮点数]
 
-生成式中的解包chars = (*&quot;abc&quot;, *&quot;def&quot;, &quot;g&quot;, &quot;h&quot;)# -&gt; (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;, &quot;g&quot;, &quot;h&quot;)digits = [*range(10), *&quot;abcdef&quot;]# -&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,#     &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]part = &#123;&quot;小明&quot;: 18, &quot;小亮&quot;: 22&#125;summary = &#123;&quot;小花&quot;: 16, **part&#125;print(summary)# -&gt; &#123;&quot;小花&quot;: 16, &quot;小明&quot;: 18, &quot;小亮&quot;: 22&#125;
 
+[.inf, -.Inf, .NAN]
+[无穷大（浮点数），负数，不是数字]
 
-仅在列表／元组生成式中可以使用多个 *
-仅在字典生成式中可以使用多个 **
 
-迭代中解包students = [    (&quot;小明&quot;, 18),    (&quot;小亮&quot;, 22),]for k, v in students:    print(k)  # -&gt; &quot;小明&quot;、&quot;小亮&quot;    print(v)  # -&gt; 18、22students = [    (0, (&quot;小明&quot;, 18)),    (1, (&quot;小亮&quot;, 22)),]for i, (k, v) in students:    print(i)  # -&gt; 0、1    print(k)  # -&gt; &quot;小明&quot;、&quot;小亮&quot;    print(v)  # -&gt; 18、22
+&#123;Y, true, Yes, ON&#125;
+布尔真
 
-函数中的解包def version(major, minor, *parts):    print(major)  # -&gt; &quot;3&quot;    print(minor)  # -&gt; &quot;10&quot;    print(parts)  # -&gt; (&quot;2&quot;, &quot;beta&quot;, &quot;0&quot;)version(&quot;3&quot;, &quot;10&quot;, &quot;2&quot;, &quot;beta&quot;, &quot;0&quot;)# 过程类似于major, minor, *parts = (&quot;3&quot;, &quot;10&quot;, &quot;2&quot;, &quot;beta&quot;, &quot;0&quot;)def version():    parts = &quot;3.10.2.beta.0&quot;.split(&quot;.&quot;)    return *parts, &quot;x64&quot;print(version())# -&gt; (&quot;3&quot;, &quot;10&quot;, &quot;2&quot;, &quot;beta&quot;, &quot;0&quot;, &quot;x64&quot;)
 
-Python 模块导入模块import mathprint(math.sqrt(16))  # =&gt; 4.0
+&#123;n, FALSE, No, off&#125;
+布尔假
 
-从一个模块导入from math import ceil, floorprint(ceil(3.7))   # =&gt; 4.0print(floor(3.7))  # =&gt; 3.0
 
-导入一个模块的全部from math import *
 
-给模块起别名import math as m# =&gt; Truemath.sqrt(16) == m.sqrt(16)
-
-浏览模块的函数和属性import mathdir(math)
-
-Python 文件处理读取文件逐行with open(&quot;myfile.txt&quot;) as file:    for line in file:        print(line)
-
-带行号file = open(&#x27;myfile.txt&#x27;, &#x27;r&#x27;)for i, line in enumerate(file, start=1):    print(&quot;Number %s: %s&quot; % (i, line))
-
-字符串写入一个字符串contents = &#123;&quot;aa&quot;: 12, &quot;bb&quot;: 21&#125;with open(&quot;myfile1.txt&quot;, &quot;w+&quot;) as file:    file.write(str(contents))
-
-读取一个字符串with open(&#x27;myfile1.txt&#x27;, &quot;r+&quot;) as file:    contents = file.read()print(contents)
-
-对象写一个对象contents = &#123;&quot;aa&quot;: 12, &quot;bb&quot;: 21&#125;with open(&quot;myfile2.txt&quot;, &quot;w+&quot;) as file:    file.write(json.dumps(contents))
-
-读取对象with open(&#x27;myfile2.txt&#x27;, &quot;r+&quot;) as file:    contents = json.load(file)print(contents)
-
-删除文件import osos.remove(&quot;myfile.txt&quot;)
-
-检查和删除import osif os.path.exists(&quot;myfile.txt&quot;):    os.remove(&quot;myfile.txt&quot;)else:    print(&quot;The file does not exist&quot;)
-
-删除文件夹import osos.rmdir(&quot;myfolder&quot;)
-
-Python 类和继承定义class MyNewClass:    pass# 类的实例化my = MyNewClass()
-
-构造函数class Animal:    def __init__(self, voice):        self.voice = voice cat = Animal(&#x27;Meow&#x27;)print(cat.voice)    # =&gt; Meow dog = Animal(&#x27;Woof&#x27;) print(dog.voice)    # =&gt; Woof
-
-方法class Dog:    # 类的方法    def bark(self):        print(&quot;Ham-Ham&quot;) charlie = Dog()charlie.bark()   # =&gt; &quot;Ham-Ham&quot;
-
-类变量
-
-class MyClass:    class_variable = &quot;A class variable!&quot;# =&gt; 一个类变量！print(MyClass.class_variable)x = MyClass() # =&gt; 一个类变量！print(x.class_variable)
-
-super() 函数
-
-class ParentClass:    def print_test(self):        print(&quot;Parent Method&quot;) class ChildClass(ParentClass):    def print_test(self):        print(&quot;Child Method&quot;)        # 调用父级的 print_test()        super().print_test() 
-
-
-&gt;&gt;&gt; child_instance = ChildClass()&gt;&gt;&gt; child_instance.print_test()Child MethodParent Method
-
-repr() 方法class Employee:    def __init__(self, name):        self.name = name     def __repr__(self):        return self.name john = Employee(&#x27;John&#x27;)print(john)  # =&gt; John
-
-用户定义的异常class CustomError(Exception):    pass
-
-多态性class ParentClass:    def print_self(self):        print(&#x27;A&#x27;) class ChildClass(ParentClass):    def print_self(self):        print(&#x27;B&#x27;) obj_A = ParentClass()obj_B = ChildClass() obj_A.print_self() # =&gt; Aobj_B.print_self() # =&gt; B
-
-重写class ParentClass:    def print_self(self):        print(&quot;Parent&quot;) class ChildClass(ParentClass):    def print_self(self):        print(&quot;Child&quot;) child_instance = ChildClass()child_instance.print_self() # =&gt; Child
-
-继承class Animal:     def __init__(self, name, legs):        self.name = name        self.legs = legs        class Dog(Animal):    def sound(self):        print(&quot;Woof!&quot;) Yoki = Dog(&quot;Yoki&quot;, 4)print(Yoki.name) # =&gt; YOKIprint(Yoki.legs) # =&gt; 4Yoki.sound()     # =&gt; Woof!
-
-Python 数据模型更多请移步 https://docs.python.org/zh-cn/3/reference/datamodel.html
-自定义类创建参见 自定义类创建 。
-from typing import Anyclass Object:    def __new__(cls, *args, **kwargs) -&gt; &quot;self&quot;:        # new 和 init 声明的参数必须一致        # 或者用 *args 和 **kwargs 进行兼容        return object.__new__(cls)    def __init__(self, *args, **kwargs):        # 初始化方法没有返回值，也不能返回值。        pass    def __call__(self, *args, **kwargs) -&gt; Any:        pass# 依次调用了 new 和 init，所以如果# 手动调用 new，那么别忘了调用 initobj = Object()# 触发 __call__ 方法，要给什么参数取决于声明obj()
-
-上下文管理器
-参见 上下文管理器 。
-from typing import Anyclass Object:    def __enter__(self) -&gt; Optional[Any]:        # with 语句会将返回值绑定到 as 子句中的变量，如果有的话。        return    def __exit__(self, exc_type, exc_value, traceback):        # 若 with 内没有发生异常，则三个参数都是 None 。        # 不应该重新引发传入的异常，这是调用者的责任。        passwith Object() as alias:    # 进入 with 之前调用 obj.__enter__() 并得到 alias（如果有返回的话）    pass# 离开 with 后调用 obj.__exit__() ，不管是正常结束还是因异常抛出而离开。# 当需要获取 Object 的对象时可以这样写obj = Object()with obj as alias:    pass
-
-特殊方法
-下表使用 -&gt; * 代表返回值类型是任意的，或者需要视情况而定，实际上并不存在这种写法。诸如 -&gt; str 仅表示绝大多数情况下应当返回 str 类型，或者推荐返回 str 类型。没有 -&gt; 的方法一般没有返回值。参见 https://docs.python.org/zh-cn/3/reference/datamodel.html
-
-
-
-语句
-特殊方法
-备注
-
-
-
-
-repr(obj)
-__repr__(self) -&gt; str
-详见 repr() 。
-
-
-
-str(obj)
-__str__(self) -&gt; str
-详见 str 类型 。
-
-
-
-bytes(obj)
-__bytes__(self) -&gt; bytes
-详见 bytes() 。
-
-
-
-format(obj, spec)
-__format__(self, spec) -&gt; str
-详见 format()、格式化字符串字面值、格式规格迷你语言 。
-
-
-
-hash(obj)
-__hash__(self) -&gt; int
-详见 hash() 。
-
-
-
-bool(obj)
-__bool__(self) -&gt; bool
-未定义时调用 obj.__len__() != 0 ，若 __len__() 也未定义，则所有对象都被视为 True 。另见 bool() 。
-
-
-
-dir(obj)
-__dir__(self) -&gt; list
-返回值必须是一个序列，dir() 会把返回的序列转换为列表并对其排序。
-
-
-
-Object[key]
-__class_getitem__(cls, key) -&gt; *
-不建议用于除了 模拟泛型类型 以外的用途，避免 IDE 误判。
-
-
-
-
-自定义实例及子类检查，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#customizing-instance-and-subclass-checks
-
-
-
-
-语句
-特殊方法
-备注
-
-
-
-
-isinstance(instance, class)
-class.__instancecheck__(self, instance) -&gt; bool
-如果 instance 应被视为 class 的一个（直接或间接）实例则返回真值。
-
-
-
-issubclass(subclass, class)
-class.__subclasscheck__(self, subclass) -&gt; bool
-如果 subclass 应被视为 class 的一个（直接或间接）子类则返回真值。
-
-
-
-
-“富比较”方法，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#object.__lt__
-
-
-
-
-语句
-特殊方法
-备注
-
-
-
-
-obj &lt; other
-__lt__(self, other) -&gt; bool
-
-
-
-
-obj &lt;= other
-__le__(self, other) -&gt; bool
-
-
-
-
-obj == other
-__eq__(self, other) -&gt; bool
-默认返回 obj is other ，如果结果为 False ，则会返回 NotImplemented 。
-
-
-
-obj != other
-__ne__(self, other) -&gt; bool
-默认返回 not obj.__eq__(other) 。
-
-
-
-obj &gt; other
-__gt__(self, other) -&gt; bool
-
-
-
-
-obj &gt;= other
-__ge__(self, other) -&gt; bool
-
-
-
-
-
-自定义属性访问，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#customizing-attribute-access
-
-
-
-
-语句
-特殊方法
-备注
-
-
-
-
-obj.name
-__getattr__(self, name) -&gt; *
-优先调用。当抛出 AttributeError 时转向调用 __getattribute__() 。
-
-
-
-obj.name
-__getattribute__(self, name) -&gt; *
-参见 自定义属性访问 避免无限递归。
-
-
-
-obj.name = value
-__setattr__(self, name, value)
-
-
-
-
-del obj.name
-__delattr__(self, name)
-仅在 del obj.name 对于该对象有意义时才应该被实现。
-
-
-
-
-模拟容器类型，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#emulating-container-types
-
-
-
-
-语句
-特殊方法
-备注
-
-
-
-
-len(obj)
-__len__(self) -&gt; int
-
-
-
-
-op.length_hint(obj)
-__length_hint__(self) -&gt; int
-在使用标准库 operator 的 length_hint() 时会被调用（Python 3.4+）。
-
-
-
-obj[key]
-__getitem__(self, key) -&gt; *
-需要抛出 IndexError 以便正确地结束 for 循环。
-
-
-
-obj[key]
-__missing__(self, key) -&gt; *
-仅在 dict 的子类找不到键时被调用（不能重写 __getitem__ 方法）。
-
-
-
-obj[key] = value
-__setitem__(self, key, value)
-a[1:2] = b 实际上是 a[slice(1, 2, None)] = b ，其它情形及在其余方法中同理。详见 slice() 。
-
-
-
-del obj[key]
-__delitem__(self, key)
-
-
-
-
-调用途径有很多
-__iter__(self) -&gt; Iterator
-在需要创建一个 迭代器 时被调用，例如使用 iter() 、 for 循环 。最好返回一个新对象，因为迭代器在语义上是一次性的。若返回 self ，则必须实现 __next__() 方法。
-
-
-
-reversed(obj)
-__reversed__(self) -&gt; *
-详见 reversed() 。
-
-
-
-item in obj
-__contains__(self, item) -&gt; bool
-对于未定义该方法的对象在 in 和 not in 时，参考 成员检测运算 。
-
-
-
-
-模拟数字类型，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#emulating-numeric-types
-
-
-
-
-语句
-特殊方法
-备注
-
-
-
-
-+obj
-__neg__(self) -&gt; *
-
-
-
-
--obj
-__pos__(self) -&gt; *
-
-
-
-
-~obj
-__invert__(self) -&gt; *
-
-
-
-
-abs(obj)
-__abs__(self) -&gt; *
-
-
-
-
-int(obj)
-__int__(self) -&gt; *
-
-
-
-
-float(obj)
-__float__(self) -&gt; *
-
-
-
-
-complex(obj)
-__complex__(self) -&gt; *
-
-
-
-
-round(obj)
-__round__(self) -&gt; int
-详见 round() 。
-
-
-
-round(obj)
-__round__(self, ndigits) -&gt; *
-详见 round() 。
-
-
-
-math.ceil(obj)
-__ceil__(self) -&gt; int
-详见标准库 math 的 ceil() 。
-
-
-
-math.floor(obj)
-__floor__(self) -&gt; int
-详见标准库 math 的 floor() 。
-
-
-
-math.trunc(obj)
-__trunc__(self) -&gt; int
-详见标准库 math 的 trunc() 。
-
-
-
-
-__index__(self) -&gt; int
-需要无损地将数值转换为整数的时候会被调用。详见 这里 。
-
-
-
-obj + other
-__add__(self, other) -&gt; *
-
-
-
-
-obj - other
-__sub__(self, other) -&gt; *
-
-
-
-
-obj * other
-__mul__(self, other) -&gt; *
-
-
-
-
-obj @ other
-__matmul__(self, other) -&gt; *
-为第三方库而生的矩阵乘法运算符，这里提了一嘴。（Python 3.5+）
-
-
-
-obj / other
-__truediv__(self, other) -&gt; *
-
-
-
-
-obj // other
-__floordiv__(self, other) -&gt; *
-
-
-
-
-obj % other
-__mod__(self, other) -&gt; *
-
-
-
-
-divmod(obj, other)
-__divmod__(self, other) -&gt; tuple
-divmod(a, b) 返回一个元组 (a // b, a % b) ，详见 divmod() 。
-
-
-
-obj ** exp
-__pow__(self, exp) -&gt; *
-
-
-
-
-pow(obj, exp, mod)
-__pow__(self, exp, mod) -&gt; *
-pow(base, exp, mod) 比 pow(base, exp) % mod 更高效。
-
-
-
-obj &lt;&lt; other
-__lshift__(self, other) -&gt; *
-
-
-
-
-obj &gt;&gt; other
-__rshift__(self, other) -&gt; *
-
-
-
-
-obj &amp; other
-__and__(self, other) -&gt; *
-
-
-
-
-obj ^ other
-__xor__(self, other) -&gt; *
-
-
-
-
-obj | other
-__or__(self, other) -&gt; *
-
-
-
-
-other + obj
-__radd__(self, obj) -&gt; *
-仅当 obj 未定义 __add__() 或其返回 NotImplemented ，且与 other 互相都没有继承关系时，调用 other 的 __radd__() 。详见 这里 。
-
-
-
-other - obj
-__rsub__(self, obj) -&gt; *
-以下，如此类推。
-
-
-
-other * obj
-__rmul__(self, obj) -&gt; *
-
-
-
-
-other @ obj
-__rmatmul__(self, obj) -&gt; *
-
-
-
-
-other / obj
-__rtruediv__(self, obj) -&gt; *
-
-
-
-
-other // obj
-__rfloordiv__(self, obj) -&gt; *
-
-
-
-
-other % obj
-__rmod__(self, obj) -&gt; *
-
-
-
-
-divmod(other, obj)
-__rdivmod__(self, obj) -&gt; tuple
-
-
-
-
-other ** obj
-__rpow__(self, obj) -&gt; *
-
-
-
-
-
-__rpow__(self, obj, mod) -&gt; *
-pow(obj, other, mod) 不会尝试调用 other.__rpow__(obj, mod) ，因为强制转换规则会太过复杂。
-
-
-
-other &lt;&lt; obj
-__rlshift__(self, obj) -&gt; *
-
-
-
-
-other &gt;&gt; obj
-__rrshift__(self, obj) -&gt; *
-
-
-
-
-other &amp; obj
-__rand__(self, obj) -&gt; *
-
-
-
-
-other ^ obj
-__rxor__(self, obj) -&gt; *
-
-
-
-
-other | obj
-__ror__(self, obj) -&gt; *
-
-
-
-
-obj += other
-__iadd__(self, other) -&gt; *
-若方法已定义，则 a += b 等价于 a.__iadd(b) ；若未定义，则回退到 a + b 选择 x.__add__(y) 和 y.__radd__(x) 。
-
-
-
-obj -= other
-__isub__(self, other) -&gt; *
-以下，如此类推。
-
-
-
-obj *= other
-__imul__(self, other) -&gt; *
-
-
-
-
-obj @= other
-__imatmul__(self, other) -&gt; *
-
-
-
-
-obj /= other
-__itruediv__(self, other) -&gt; *
-
-
-
-
-obj //= other
-__ifloordiv__(self, other) -&gt; *
-
-
-
-
-obj %= other
-__imod__(self, other) -&gt; *
-
-
-
-
-obj **= exp
-__ipow__(self, other) -&gt; *
-
-
-
-
-obj &lt;&lt;= other
-__ilshift__(self, other) -&gt; *
-
-
-
-
-obj &gt;&gt;= other
-__irshift__(self, other) -&gt; *
-
-
-
-
-obj &amp;= other
-__iand__(self, other) -&gt; *
-
-
-
-
-obj ^= other
-__ixor__(self, other) -&gt; *
-
-
-
-
-obj |= other
-__ior__(self, other) -&gt; *
-
-
-
-
-Python 类型标注 (Python 3.5+)变量string: str = &quot;ha&quot;times: int = 3print(string * times)  # =&gt; hahaha
-
-变量result: str = 1 + 2print(result)  # =&gt; 3
-
-错误的类型标注不会影响正常运行，也不会报错
-参数def say(name: str, start: str = &quot;Hi&quot;):    return start + &quot;, &quot; + nameprint(say(&quot;Python&quot;))  # =&gt; Hi, Python
-
-位置参数def calc_summary(*args: int):    return sum(args)print(calc_summary(3, 1, 4))  # =&gt; 8
-
-表示 args 的所有元素都是 int 类型的。
-返回值def say_hello(name) -&gt; str:    return &quot;Hello, &quot; + namevar = &quot;Python&quot;print(say_hello(var))  # =&gt; Hello, Python
-
-多种可能的返回值from typing import Uniondef resp200(meaningful) -&gt; Union[int, str]:    return &quot;OK&quot; if meaningful else 200
-
-表示返回值可能是 int，也可能是 str 。
-关键字参数def calc_summary(**kwargs: int):    return sum(kwargs.values())print(calc_summary(a=1, b=2))  # =&gt; 3
-
-表示 kwargs 的所有值都是 int 类型的。
-多个返回值def resp200() -&gt; (int, str):    return 200, &quot;OK&quot;
-
-多种可能的返回值 (3.10+)def resp200(meaningful) -&gt; int | str:    return &quot;OK&quot; if meaningful else 200
-
-自 Python 3.10 起可用。
-属性class Employee:    name: str    age: int    def __init__(self, name, age):        self.name = name        self.age = age        self.graduated: bool = False
-
-标注自己class Employee:    name: str    age: int    def set_name(self, name) -&gt; &quot;Employee&quot;:        self.name = name        return self
-
-这里表示 set_name() 返回了一个 Employee 对象。
-标注自己 (3.11+)from typing import Selfclass Employee:    name: str    age: int    def set_name(self: Self, name) -&gt; Self:        self.name = name        return self
-
-标注一个值为类型的参数
-from typing import TypeVar, TypeT = TypeVar(&quot;T&quot;)# &quot;mapper&quot; 的值是一个像 int、str、MyClass 这样的类型# &quot;default&quot; 是一个 T 类型的值，比如 314、&quot;string&quot;、MyClass()# 函数的返回值也是一个 T 类型的值def converter(raw, mapper: Type[T], default: T) -&gt; T:    try:        return mapper(raw)    except:        return defaultraw: str = input(&quot;请输入一个整数：&quot;)result: int = converter(raw, mapper=int, default=0)
-
-标注一个值为函数的参数
-
-from typing import TypeVar, Callable, AnyT = TypeVar(&quot;T&quot;)def converter(raw, mapper: Callable[[Any], T], default: T) -&gt; T:    try:        return mapper(raw)    except:        return default# Callable[[Any], T] 表示值是一个像这样声明的函数:# def anynomous(arg: Any) -&gt; T:#     passdef is_success(value) -&gt; bool:    return value in (0, &quot;OK&quot;, True, &quot;success&quot;)resp = dict(code=0, message=&quot;OK&quot;, data=[])successed: bool = converter(resp.message, mapper=is_success, default=False)
-
-各种各样的注释# 这是单行注释
-
-
-&quot;&quot;&quot; 可以写多行字符串    使用三个&quot;，并且经常使用    作为文档。&quot;&quot;&quot;
-
-
-&#x27;&#x27;&#x27; 可以写多行字符串    使用三个&#x27;，并且经常使用    作为文档。&#x27;&#x27;&#x27;
-
-生成器def double_numbers(iterable):    for i in iterable:        yield i + i
-
-生成器可帮助您编写惰性代码
-要列出的生成器values = (-x for x in [1,2,3,4,5])gen_to_list = list(values)# =&gt; [-1, -2, -3, -4, -5]print(gen_to_list)
-
-处理异常
-
-try:    # 使用“raise”来引发错误    raise IndexError(&quot;这是一个索引错误&quot;)except IndexError as e:    pass                 # pass只是一个空操作。 通常你会在这里做恢复。except (TypeError, NameError):    pass                 # 如果需要，可以一起处理多个异常。else:                    # try/except 块的可选子句。 必须遵循除块之外的所有内容    print(&quot;All good!&quot;)   # 仅当 try 中的代码未引发异常时运行finally:                 # 在所有情况下执行    print(&quot;我们可以在这里清理资源&quot;)
-
-pyenv &amp; pipenv
-
-pvenv 用于管理python版本，pipenv 用于管理项目包版本
-pyenv# 安装 pyenvcurl https://pyenv.run | bash
-
-更多安装方式
-# 安装 python 版本pyenv install 3.10.12# 设置 python 版本pyenv global 3.10.12 # 全局设置pyenv shell  3.10.12 # 针对当前 shell sessionpyenv local  3.10.12 # 针对当前目录 
-
-pipenv# 安装 pipenvpip install pipenv --user  # pipbrew install pipenv        # homebrew# 更新 pipenvpip install --user --upgrade pipenv # pipbrew upgrade pipenv                 # homebrew
-
-# 将 pipenv 命令加入到系统环境变量 $PATH 中 (Unix and MacOS)dir=$(python -c &#x27;import site; print(site.USER_BASE + &quot;/bin&quot;)&#x27;) # 打印 python site-packages bin 路径echo &#x27;export PATH=&quot;&#x27;$dir&#x27;:$PATH&quot;&#x27; &gt;&gt; ~/.zshrc # 将 dir 路径加入到 PATH 中source ~/.zshrc# 安装 packagepipenv install &lt;package name&gt; # 不指定版本pipenv install &lt;package name&gt;==&lt;version&gt;    # 精确指定版本pipenv install &lt;package name&gt;~=&lt;version&gt;    # 指定版本范围，例如 1.1则表示安装1.x的最新版本，1.0.1则表示安装1.0.x的最新版本pipenv install &quot;&lt;package name&gt;=&lt;version&gt;&quot;   # 大于等于指定版本pipenv install &quot;&lt;package name&gt;=&lt;version&gt;&quot;   # 小于等于指定版本
-
-# 指定 python 版本pipenv --python 3.10.12# 激活当前目录虚拟环境pipenv shell
 
 另见
-Python 官方网站  (python.org)
-Python 文档  (docs.python.org)
-Y 分钟学会 Python (learnxinyminutes.com)
-Python 中的正则表达式 (jaywcjlove.github.io)
+YAML Reference Card (yaml.org)
+Learn X in Y minutes (learnxinyminutes.com)
+YAML lint online (yamllint.com)
+INI 格式配置文件备忘清单 (jaywcjlove.github.io)
+TOML 格式配置文件备忘清单 (jaywcjlove.github.io)
 
 ]]></content>
       <categories>
-        <category>后端编程</category>
+        <category>配置框架</category>
       </categories>
       <tags>
-        <tag>后端编程</tag>
-        <tag>Python</tag>
+        <tag>Yaml</tag>
+        <tag>配置框架</tag>
       </tags>
   </entry>
   <entry>
@@ -9364,123 +8699,26 @@ Vue Router 4.x 官方文档
       </tags>
   </entry>
   <entry>
-    <title>Yaml 备忘录</title>
-    <url>/2025/01/08/yaml/</url>
-    <content><![CDATA[YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。
-入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写
+    <title>Pyhton备忘录</title>
+    <url>/2025/01/08/pyhton%E5%A4%87%E5%BF%98%E5%BD%95/</url>
+    <content><![CDATA[Python 3 备忘清单Python 备忘单是 Python 3 编程语言的单页参考表
+入门介绍
+Python 官方网站  (python.org)
+Python 文档  (docs.python.org)
+Y 分钟学会 Python (learnxinyminutes.com)
+Python 中的正则表达式 (jaywcjlove.github.io)
 
-YAML 不允许使用制表符
-元素部分之间必须有空间
-YAML 区分大小写
-以 .yaml 或 .yml 扩展名结束您的 YAML 文件
-YAML 是 JSON 的超集
-Ansible playbook 是 YAML 文件
+控制台打印&gt;&gt;&gt; print(&quot;Hello, World!&quot;)Hello, World!
 
-
-
-标量类型
-
-n1: 1            # 整数n2: 1.234        # 浮点s1: &#x27;abc&#x27;        # 字符串s2: &quot;abc&quot;        # 字符串s3: abc          # 字符串b: false         # 布尔类型d: 2015-04-05    # 日期类型
-
-↓ 等效的 JSON&#123;  &quot;n1&quot;: 1,  &quot;n2&quot;: 1.234,  &quot;s1&quot;: &quot;abc&quot;,  &quot;s2&quot;: &quot;abc&quot;,  &quot;s3&quot;: &quot;abc&quot;,  &quot;b&quot;: false,  &quot;d&quot;: &quot;2015-04-05&quot;&#125;
-
-使用空格缩进。 元素部分之间必须有空间。
-变量some_thing: &amp;VAR_NAME foobarother_thing: *VAR_NAME
-
-↓ 等效的 JSON&#123;  &quot;some_thing&quot;: &quot;foobar&quot;,  &quot;other_thing&quot;: &quot;foobar&quot;&#125;
-
-注释# A single line comment example# block level comment example# comment line 1# comment line 2# comment line 3
-
-多行字符串description: |  hello  world
-
-↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello\nworld\n&quot;&#125;
-
-继承
-
-parent: &amp;defaults  a: 2  b: 3child:  &lt;&lt;: *defaults  b: 4
-
-↓ 等效的 JSON&#123;  &quot;parent&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 3  &#125;,  &quot;child&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 4  &#125;&#125;
-
-参考
-
-values: &amp;ref  - Will be  - reused below  other_values:  i_am_ref: *ref
-
-↓ 等效的 JSON&#123;  &quot;values&quot;: [    &quot;Will be&quot;,    &quot;reused below&quot;  ],  &quot;other_values&quot;: &#123;    &quot;i_am_ref&quot;: [      &quot;Will be&quot;,      &quot;reused below&quot;    ]  &#125;&#125;
-
-折叠的字符串description: &gt;  hello  world
-
-↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello world\n&quot;&#125;
-
-两份文件---document: this is doc 1---document: this is doc 2
-
-YAML使用---将指令与文档内容分开。
-YAML Collections序列- Mark McGwire- Sammy Sosa- Ken Griffey
-
-↓ 等效的 JSON[  &quot;Mark McGwire&quot;,  &quot;Sammy Sosa&quot;,  &quot;Ken Griffey&quot;]
-
-映射hr:  65       # Home runsavg: 0.278    # Batting averagerbi: 147      # Runs Batted In
-
-↓ 等效的 JSON&#123;  &quot;hr&quot;: 65,  &quot;avg&quot;: 0.278,  &quot;rbi&quot;: 147&#125;
-
-映射到序列attributes:  - a1  - a2methods: [getter, setter]
-
-↓ 等效的 JSON&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;]&#125;
-
-映射序列children:  - name: Jimmy Smith    age: 15  - name: Jimmy Smith    age: 15  -    name: Sammy Sosa    age: 12
-
-↓ 等效的 JSON&#123;  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12&#125;  ]&#125;
-
-序列的序列my_sequences:  - [1, 2, 3]  - [4, 5, 6]  -      - 7    - 8    - 9    - 0 
-
-↓ 等效的 JSON&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0]  ]&#125;
-
-映射的映射Mark McGwire: &#123;hr: 65, avg: 0.278&#125;Sammy Sosa: &#123;    hr: 63,    avg: 0.288  &#125;
-
-↓ 等效的 JSON&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
-
-嵌套集合Jack:  id: 1  name: Franc  salary: 25000  hobby:    - a    - b  location: &#123;country: &quot;A&quot;, city: &quot;A-A&quot;&#125;
-
-↓ 等效的 JSON&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
-
-无序集set1: !!set  ? one  ? twoset2: !!set &#123;&#x27;one&#x27;, &quot;two&quot;&#125;
-
-↓ 等效的 JSON&#123;  &quot;set1&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;,  &quot;set2&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;&#125;
-
-集合表示为一个映射，其中每个键都与一个空值相关联
-有序映射ordered: !!omap- Mark McGwire: 65- Sammy Sosa: 63- Ken Griffy: 58
-
-↓ 等效的 JSON&#123;  &quot;ordered&quot;: [     &#123;&quot;Mark McGwire&quot;: 65&#125;,     &#123;&quot;Sammy Sosa&quot;: 63&#125;,     &#123;&quot;Ken Griffy&quot;: 58&#125;  ]&#125;
-
-YAML 参考条款
-序列又名数组或列表
-标量又名字符串或数字
-映射又名哈希或字典
+著名的“Hello World”程序在 Python 中的实现
+变量age = 18       # 年龄是 int 类型name = &quot;John&quot;  # 名字现在是 str 类型print(name)
 
 
+Python 不能在没有赋值的情况下声明变量
+变量可以存放不同类型的值
 
-基于 YAML.org refcard。
-文档指标
-
-
-:-
-:-
-
-
-
-%
-指令指标
-
-
----
-文档标题
-
-
-...
-文档终结者
-
-
-收集指标
-
+内置数据类型
+序列指一批有序的元素，集合指一批无序且不重复的元素
 
 
 
@@ -9489,275 +8727,1037 @@ YAML 参考条款
 
 
 
-?
-关键指标
+str
+文本／字符串（Text）
 
 
-:
-价值指标
+int, float, complex
+数值（Numeric）
 
 
--
-嵌套系列条目指示器
+dict
+映射／键值对（Mapping）
 
 
-,
-单独的内联分支条目
+list, tuple, range
+序列（Sequence）
 
 
-[]
-环绕串联系列分支
+set, frozenset
+集合（Set）
 
 
-&#123;&#125;
-环绕在线键控分支
+bool
+布尔值／逻辑值（Boolean）
 
 
-别名指标
+bytes, bytearray,  memoryview
+二进制数据（Binary）
 
 
-:-
-:-
+查看: 数据类型
+字符串切片&gt;&gt;&gt; msg = &quot;Hello, World!&quot;&gt;&gt;&gt; print(msg[2:5])llo
 
+查看: 字符串
+列表mylist = []mylist.append(1)mylist.append(2)for item in mylist:    print(item) # 打印输出 1,2
 
+查看: 列表
+判断num = 200if num &gt; 0:    print(&quot;num is greater than 0&quot;)else:    print(&quot;num is not greater than 0&quot;)
 
-&amp;
-锚属性
+查看: 判断
+循环for item in range(6):    if item == 3: break    print(item)else:    print(&quot;Finally finished!&quot;)
 
+查看: 循环
+函数&gt;&gt;&gt; def my_function():...     print(&quot;来自函数的你好&quot;)...&gt;&gt;&gt; my_function()来自函数的你好
 
-*
-别名指示符
+查看: 函数
+文件处理
 
+with open(&quot;myfile.txt&quot;, &quot;r&quot;, encoding=&#x27;utf8&#x27;) as file:    for line in file:        print(line)
 
-特殊键
+查看: 文件处理
+算术result = 10 + 30 # =&gt; 40result = 40 - 10 # =&gt; 30result = 50 * 5  # =&gt; 250result = 16 / 4  # =&gt; 4.0 (Float Division)result = 16 // 4 # =&gt; 4 (Integer Division)result = 25 % 2  # =&gt; 1result = 5 ** 3  # =&gt; 125
 
+/ 表示 x 和 y 的商，// 表示 x 和 y 的底商，另见 StackOverflow
+加等于counter = 0counter += 10           # =&gt; 10counter = 0counter = counter + 10  # =&gt; 10message = &quot;Part 1.&quot;# =&gt; Part 1.Part 2.message += &quot;Part 2.&quot;   
 
-:-
-:-
+f-字符串 (Python 3.6+)&gt;&gt;&gt; website = &#x27;Quick Reference&#x27;&gt;&gt;&gt; f&quot;Hello, &#123;website&#125;&quot;&quot;Hello, Quick Reference&quot;&gt;&gt;&gt; num = 10&gt;&gt;&gt; f&#x27;&#123;num&#125; + 10 = &#123;num + 10&#125;&#x27;&#x27;10 + 10 = 20&#x27;
 
+查看: f-字符串
+Python 数据类型字符串hello = &quot;Hello World&quot;hello = &#x27;Hello World&#x27;multi_string = &quot;&quot;&quot;Multiline StringsLorem ipsum dolor sit amet,consectetur adipiscing elit &quot;&quot;&quot;
 
+查看: 字符串
+数值x = 1    # 整数y = 2.8  # 浮点小数z = 1j   # 复数&gt;&gt;&gt; print(type(x))&lt;class &#x27;int&#x27;&gt;
 
-=
-默认“值”映射键
+只要内存足够，可以容纳无限大(小)的数值
+布尔值my_bool = True my_bool = Falsebool(0)     # =&gt; Falsebool(1)     # =&gt; True
 
+bool 是 int 的子类
+列表list1 = [&quot;apple&quot;, &quot;banana&quot;, &quot;cherry&quot;]list2 = [True, False, False]list3 = [1, 5, 7, 9, 3]list4 = list((1, 5, 7, 9, 3))
 
-&lt;&lt;
-合并来自另一个映射的键
+查看: 列表
+元组my_tuple = (1, 2, 3)my_tuple = tuple((1, 2, 3))
 
+类似列表，但自身不可变
+集合set1 = &#123;&quot;a&quot;, &quot;b&quot;, &quot;c&quot;&#125;   set2 = set((&quot;a&quot;, &quot;b&quot;, &quot;c&quot;))
 
-标量指标
+类似列表，但里面的元素是无序而不重复的
+字典&gt;&gt;&gt; empty_dict = &#123;&#125;&gt;&gt;&gt; a = &#123;&quot;one&quot;: 1, &quot;two&quot;: 2, &quot;three&quot;: 3&#125;&gt;&gt;&gt; a[&quot;one&quot;]1&gt;&gt;&gt; a.keys()dict_keys([&#x27;one&#x27;, &#x27;two&#x27;, &#x27;three&#x27;])&gt;&gt;&gt; a.values()dict_values([1, 2, 3])&gt;&gt;&gt; a.update(&#123;&quot;four&quot;: 4&#125;)&gt;&gt;&gt; a.keys()dict_keys([&#x27;one&#x27;, &#x27;two&#x27;, &#x27;three&#x27;, &#x27;four&#x27;])&gt;&gt;&gt; a[&#x27;four&#x27;]4
 
+键-值对，一种像 JSON 那样对象
+类型转换转换为整数x = int(1)       # 得到 1y = int(2.8)     # 得到 2z = int(&quot;3&quot;)     # 得到 3
 
-:-
-:-
+转换为浮点数x = float(1)     # 得到 1.0y = float(2.8)   # 得到 2.8z = float(&quot;3&quot;)   # 得到 3.0w = float(&quot;4.2&quot;) # 得到 4.2
 
+转换为字符串x = str(&quot;s1&quot;)    # 得到 &quot;s1&quot;y = str(2)       # 得到 &quot;2&quot;z = str(3.0)     # 得到 &quot;3.0&quot;
 
+Python 字符串下标访问&gt;&gt;&gt; hello = &quot;Hello, World&quot;&gt;&gt;&gt; print(hello[1])  # 获取第二个字符e&gt;&gt;&gt; print(hello[-1])  # 获取倒数第一个字符d&gt;&gt;&gt; print(type(hello[-1]))  # 得到的还是字符串&lt;class &#x27;str&#x27;&gt;
 
-&#39;&#39;
-环绕内联未转义标量
+循环&gt;&gt;&gt; for char in &quot;foo&quot;:...     print(char)foo
 
+对字符串 for-in 可以得到每个字符（类型还是字符串）
+切割字符串
 
-&quot;
-环绕内嵌转义标量
+ ┌───┬───┬───┬───┬───┬───┬───┐ | m | y | b | a | c | o | n | └───┴───┴───┴───┴───┴───┴───┘ 0   1   2   3   4   5   6   7-7  -6  -5  -4  -3  -2  -1
 
 
-&#96;
-&#96;
+&gt;&gt;&gt; s = &#x27;mybacon&#x27;&gt;&gt;&gt; s[2:5]&#x27;bac&#x27;&gt;&gt;&gt; s[0:2]&#x27;my&#x27;
 
 
-&gt;
-折叠标量指示器
+&gt;&gt;&gt; s = &#x27;mybacon&#x27;&gt;&gt;&gt; s[:2]&#x27;my&#x27;&gt;&gt;&gt; s[2:]&#x27;bacon&#x27;&gt;&gt;&gt; s[:2] + s[2:]&#x27;mybacon&#x27;&gt;&gt;&gt; s[:]&#x27;mybacon&#x27;
 
 
--
-剥离 chomp 修饰符（|- 或 &gt;-）
+&gt;&gt;&gt; s = &#x27;mybacon&#x27;&gt;&gt;&gt; s[-5:-1]&#x27;baco&#x27;&gt;&gt;&gt; s[2:6]&#x27;baco&#x27;
 
+步长&gt;&gt;&gt; s = &#x27;12345&#x27; * 5&gt;&gt;&gt; s&#x27;1234512345123451234512345&#x27;&gt;&gt;&gt; s[::5]&#x27;11111&#x27;&gt;&gt;&gt; s[4::5]&#x27;55555&#x27;&gt;&gt;&gt; s[::-5]&#x27;55555&#x27;&gt;&gt;&gt; s[::-1]&#x27;5432154321543215432154321&#x27;
 
-+
-保留 chomp 修饰符（|+ 或 &gt;+）
+获取长度&gt;&gt;&gt; hello = &quot;Hello, World!&quot;&gt;&gt;&gt; print(len(hello))13
 
+len() 函数返回字符串的长度
+重复多次&gt;&gt;&gt; s = &#x27;===+&#x27;&gt;&gt;&gt; n = 8&gt;&gt;&gt; s * n&#x27;===+===+===+===+===+===+===+===+&#x27;
 
-1-9
-显式缩进修饰符（|1 或 &gt;2）。  修饰符可以组合（|2-, &gt;+1）
+存在性判断&gt;&gt;&gt; s = &#x27;spam&#x27;&gt;&gt;&gt; s in &#x27;I saw spamalot!&#x27;True&gt;&gt;&gt; s not in &#x27;I saw The Holy Grail!&#x27;True
 
+判断 “spam” 这个字符串是否在其它字符串里
+字符串拼接&gt;&gt;&gt; s = &#x27;spam&#x27;&gt;&gt;&gt; t = &#x27;egg&#x27;&gt;&gt;&gt; s + t  # 可以使用加号进行拼接&#x27;spamegg&#x27;&gt;&gt;&gt; &#x27;spam&#x27; &#x27;egg&#x27;  # 两个字符串之间可以省略加号&#x27;spamegg&#x27;
 
-标签属性（通常未指定）
+格式化
 
+name = &quot;John&quot;print(&quot;Hello, %s!&quot; % name)
 
 
+name = &quot;John&quot;age = 23print(&quot;%s is %d years old.&quot; % (name, age))
 
-:-
-:-
+format() 方法txt1 = &quot;My name is &#123;fname&#125;, I&#x27;m &#123;age&#125;&quot;.format(fname=&quot;John&quot;, age=36)txt2 = &quot;My name is &#123;0&#125;, I&#x27;m &#123;1&#125;&quot;.format(&quot;John&quot;, 36)txt3 = &quot;My name is &#123;&#125;, I&#x27;m &#123;&#125;&quot;.format(&quot;John&quot;, 36)
 
+转义符号
 
 
-none
-未指定的标签（由应用程序自动解析）
 
 
-!
-非特定标签（默认情况下，!!map&#x2F;!!seq&#x2F;!!str）
+转义符号
+对应的操作
 
 
-!foo
-主要（按照惯例，表示本地 !foo 标记）
 
+\\
+输出反斜杠
 
-!!foo
-次要的（按照惯例，表示 tag:yaml.org,2002:foo）
 
+\&#39;
+输出单引号
 
-!h!foo
-需要 %TAG !h! &lt;prefix&gt;（然后表示 &lt;prefix&gt;foo）
 
+\&quot;
+输出双引号
 
-!&lt;foo&gt;
-逐字标记（始终表示“foo”）
 
+\n
+换行
 
 
+\t
+水平制表符
 
-杂项指标
 
+\r
+光标回到首位
 
 
+\b
+退格
 
 
+控制台输入&gt;&gt;&gt; name = input(&quot;Enter your name: &quot;)Enter your name: Tom&gt;&gt;&gt; name&#x27;Tom&#x27;
 
+从控制台获取输入数据
+头尾判断
 
-#
-一次性评论指示器
+&gt;&gt;&gt; # 是否以 H 开头&gt;&gt;&gt; &quot;Hello, world!&quot;.startswith(&quot;H&quot;)True&gt;&gt;&gt; # 是否以 h 开头&gt;&gt;&gt; &quot;Hello, world!&quot;.startswith(&quot;h&quot;)False&gt;&gt;&gt; # 是否以 ! 结尾&gt;&gt;&gt; &quot;Hello, world!&quot;.endswith(&quot;!&quot;)True
 
+插入分隔符拼接&gt;&gt;&gt; &quot;、&quot;.join([&quot;John&quot;, &quot;Peter&quot;, &quot;Vicky&quot;])&#x27;John、Peter、Vicky&#x27;
 
-`@
-两者都保留供将来使用
+Python f-字符串 (Python 3.6+)f-字符串 用法
 
+&gt;&gt;&gt; website = &#x27;Reference&#x27;&gt;&gt;&gt; f&quot;Hello, &#123;website&#125;&quot;&quot;Hello, Reference&quot;&gt;&gt;&gt; num = 10&gt;&gt;&gt; f&#x27;&#123;num&#125; + 10 = &#123;num + 10&#125;&#x27;&#x27;10 + 10 = 20&#x27;&gt;&gt;&gt; f&quot;&quot;&quot;He said &#123;&quot;I&#x27;m John&quot;&#125;&quot;&quot;&quot;&quot;He said I&#x27;m John&quot;&gt;&gt;&gt; f&#x27;5 &#123;&quot;&#123;stars&#125;&quot;&#125;&#x27;&#x27;5 &#123;stars&#125;&#x27;&gt;&gt;&gt; f&#x27;&#123;&#123;5&#125;&#125; &#123;&quot;stars&quot;&#125;&#x27;&#x27;&#123;5&#125; stars&#x27;&gt;&gt;&gt; name = &#x27;Eric&#x27;&gt;&gt;&gt; age = 27&gt;&gt;&gt; f&quot;&quot;&quot;Hello!...     I&#x27;m &#123;name&#125;....     I&#x27;m &#123;age&#125;.&quot;&quot;&quot;&quot;Hello!\n    I&#x27;m Eric.\n    I&#x27;m 27.&quot;
 
-核心类型（默认自动标签）
+它从 Python 3.6 开始可用，另见: 格式字符串字面值
+填充对齐&gt;&gt;&gt; f&#x27;&#123;&quot;text&quot;:10&#125;&#x27;   # 使用空格填充到指定长度&#x27;text      &#x27;&gt;&gt;&gt; f&#x27;&#123;&quot;test&quot;:*&gt;10&#125;&#x27; # 向左填充&#x27;******test&#x27;&gt;&gt;&gt; f&#x27;&#123;&quot;test&quot;:*&lt;10&#125;&#x27; # 向右填充&#x27;test******&#x27;&gt;&gt;&gt; f&#x27;&#123;&quot;test&quot;:*^10&#125;&#x27; # 居中填充&#x27;***test***&#x27;&gt;&gt;&gt; f&#x27;&#123;12345:0&gt;10&#125;&#x27;  # 使用数字填充&#x27;0000012345&#x27;
 
+按类型输出
 
+&gt;&gt;&gt; f&#x27;&#123;10:b&#125;&#x27;     # 输出二进制数值&#x27;1010&#x27;&gt;&gt;&gt; f&#x27;&#123;10:o&#125;&#x27;     # 输出八进制数值&#x27;12&#x27;&gt;&gt;&gt; f&#x27;&#123;200:x&#125;&#x27;    # 输出十六进制数值&#x27;c8&#x27;&gt;&gt;&gt; f&#x27;&#123;200:X&#125;&#x27;&#x27;C8&#x27;&gt;&gt;&gt; f&#x27;&#123;345600000000:e&#125;&#x27; # 科学计数法&#x27;3.456000e+11&#x27;&gt;&gt;&gt; f&#x27;&#123;65:c&#125;&#x27;       # 将整数转化为一个字符后输出&#x27;A&#x27;&gt;&gt;&gt; f&#x27;&#123;10:#b&#125;&#x27;      # [类型] 带符号（基础）&#x27;0b1010&#x27;&gt;&gt;&gt; f&#x27;&#123;10:#o&#125;&#x27;&#x27;0o12&#x27;&gt;&gt;&gt; f&#x27;&#123;10:#x&#125;&#x27;&#x27;0xa&#x27;
 
+显示正负号&gt;&gt;&gt; f&#x27;&#123;12345:+&#125;&#x27;      # 显示正数的正号&#x27;+12345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:+&#125;&#x27;     # 显示负数的负号&#x27;-12345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:+10&#125;&#x27;   # 显示负号，并使用空格填充，直到长度为 10&#x27;    -12345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:+010&#125;&#x27;  # 显示负号，并使用0填充，直到长度为 10&#x27;-000012345&#x27;
 
+其它&gt;&gt;&gt; f&#x27;&#123;-12345:0=10&#125;&#x27;  # 负数&#x27;-000012345&#x27;&gt;&gt;&gt; f&#x27;&#123;12345:010&#125;&#x27;    # [0] 快捷方式（不对齐）&#x27;0000012345&#x27;&gt;&gt;&gt; f&#x27;&#123;-12345:010&#125;&#x27;&#x27;-000012345&#x27;&gt;&gt;&gt; import math       # [.precision]&gt;&gt;&gt; math.pi3.141592653589793&gt;&gt;&gt; f&#x27;&#123;math.pi:.2f&#125;&#x27;&#x27;3.14&#x27;&gt;&gt;&gt; f&#x27;&#123;1000000:,.2f&#125;&#x27; # [分组选项]&#x27;1,000,000.00&#x27;&gt;&gt;&gt; f&#x27;&#123;1000000:_.2f&#125;&#x27;&#x27;1_000_000.00&#x27;&gt;&gt;&gt; f&#x27;&#123;0.25:0%&#125;&#x27;      # 百分比&#x27;25.000000%&#x27;&gt;&gt;&gt; f&#x27;&#123;0.25:.0%&#125;&#x27;&#x27;25%&#x27;
 
+Python 列表定义&gt;&gt;&gt; li1 = []&gt;&gt;&gt; li1[]&gt;&gt;&gt; li2 = [4, 5, 6]&gt;&gt;&gt; li2[4, 5, 6]&gt;&gt;&gt; li3 = list((1, 2, 3))&gt;&gt;&gt; li3[1, 2, 3]&gt;&gt;&gt; li4 = list(range(1, 11))&gt;&gt;&gt; li4[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
+生成
 
+&gt;&gt;&gt; list(filter(lambda x : x % 2 == 1, range(1, 20)))[1, 3, 5, 7, 9, 11, 13, 15, 17, 19]&gt;&gt;&gt; [x ** 2 for x in range (1, 11) if  x % 2 == 1][1, 9, 25, 49, 81]&gt;&gt;&gt; [x for x in [3, 4, 5, 6, 7] if x &gt; 5][6, 7]&gt;&gt;&gt; list(filter(lambda x: x &gt; 5, [3, 4, 5, 6, 7]))[6, 7]
 
+添加元素&gt;&gt;&gt; li = []&gt;&gt;&gt; li.append(1)&gt;&gt;&gt; li[1]&gt;&gt;&gt; li.append(2)&gt;&gt;&gt; li[1, 2]&gt;&gt;&gt; li.append(4)&gt;&gt;&gt; li[1, 2, 4]&gt;&gt;&gt; li.append(3)&gt;&gt;&gt; li[1, 2, 4, 3]
 
-!!map
-&#123;Hash table, dictionary, mapping&#125;
+切片
 
+列表切片的语法：
+a_list[start:end]a_list[start:end:step]
 
-!!seq
-&#123;List, array, tuple, vector, sequence&#125;
+切片&gt;&gt;&gt; a = [&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[2:5][&#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;]&gt;&gt;&gt; a[-5:-2][&#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]&gt;&gt;&gt; a[1:4][&#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]
 
+省略索引&gt;&gt;&gt; a[:4][&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]&gt;&gt;&gt; a[0:4][&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;]&gt;&gt;&gt; a[2:][&#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[2:len(a)][&#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[:][&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]
 
-!!str
-Unicode 字符串
+间隔索引[&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[0:6:2][&#x27;spam&#x27;, &#x27;bacon&#x27;, &#x27;ham&#x27;]&gt;&gt;&gt; a[1:6:2][&#x27;egg&#x27;, &#x27;tomato&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[6:0:-2][&#x27;lobster&#x27;, &#x27;tomato&#x27;, &#x27;egg&#x27;]&gt;&gt;&gt; a[&#x27;spam&#x27;, &#x27;egg&#x27;, &#x27;bacon&#x27;, &#x27;tomato&#x27;, &#x27;ham&#x27;, &#x27;lobster&#x27;]&gt;&gt;&gt; a[::-1][&#x27;lobster&#x27;, &#x27;ham&#x27;, &#x27;tomato&#x27;, &#x27;bacon&#x27;, &#x27;egg&#x27;, &#x27;spam&#x27;]
 
+删除&gt;&gt;&gt; li = [&#x27;bread&#x27;, &#x27;butter&#x27;, &#x27;milk&#x27;]&gt;&gt;&gt; li.pop()&#x27;milk&#x27;&gt;&gt;&gt; li[&#x27;bread&#x27;, &#x27;butter&#x27;]&gt;&gt;&gt; del li[0]&gt;&gt;&gt; li[&#x27;butter&#x27;]&gt;&gt;&gt; li.remove(&#x27;butter&#x27;)&gt;&gt;&gt; li[]
 
-转义码
+列表边界&gt;&gt;&gt; li = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;, &#x27;d&#x27;]&gt;&gt;&gt; li[0]&#x27;a&#x27;&gt;&gt;&gt; li[-1]&#x27;d&#x27;&gt;&gt;&gt; li[4]Traceback (most recent call last):  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;IndexError: list index out of range
 
-Numeric
-\x12 (8-bit)
-\u1234 (16-bit)
-\U00102030 (32-bit)
+连接
 
+&gt;&gt;&gt; odd = [1, 3, 5]&gt;&gt;&gt; odd.extend([9, 11, 13])&gt;&gt;&gt; odd[1, 3, 5, 9, 11, 13]&gt;&gt;&gt; odd = [1, 3, 5]&gt;&gt;&gt; odd + [9, 11, 13][1, 3, 5, 9, 11, 13]
 
+排序和反转
 
-Protective
-\\ (\)
-\&quot; (“)
-\ ( )
-\&lt;TAB&gt; (TAB)
+&gt;&gt;&gt; li = [3, 1, 3, 2, 5]&gt;&gt;&gt; li.sort()&gt;&gt;&gt; li[1, 2, 3, 3, 5]&gt;&gt;&gt; li.reverse()&gt;&gt;&gt; li[5, 3, 3, 2, 1]
 
+计数&gt;&gt;&gt; li = [3, 1, 3, 2, 5]&gt;&gt;&gt; li.count(3)2
 
+重复&gt;&gt;&gt; li = [&quot;re&quot;] * 3&gt;&gt;&gt; li[&#x27;re&#x27;, &#x27;re&#x27;, &#x27;re&#x27;]
 
-C
-\0 (NUL)
-\a (BEL)
-\b (BS)
-\f (FF)
-\n (LF)
-\r (CR)
-\t (TAB)
-\v (VTAB)
+搜索&gt;&gt;&gt; nums = [40, 36, 89, 2, 36, 100, 7, -20.5, -999]&gt;&gt;&gt; nums.index(2)3&gt;&gt;&gt; nums.index(100, 3, 7)  # 搜索3-7之间的元素5&gt;&gt;&gt; nums.index(7, 4) # 搜索4之后的元素6
 
+当寻找一个不存在的值时，抛出ValueError。
+Python 判断if-elsenumber = int(input(&#x27;输入一个整数：&#x27;))if number &lt; 0:    print(&quot;您输入了一个负数。&quot;)else:    print(&quot;您输入了一个非负整数。&quot;)
 
+if-elif-elsenumber = int(input(&#x27;输入一个整数：&#x27;))if number &lt; 0:    print(&quot;您输入了一个负数。&quot;)elif number == 0:    print(&quot;您输入了一个 0 。&quot;)else:    print(&quot;您输入了一个正数。&quot;)
 
-额外的
-\e (ESC)
-\_ (NBSP)
-\N (NEL)
-\L (LS)
-\P (PS)
+三目运算scope = int(input(&#x27;输入百分制成绩：&#x27;))line = 60tip = &quot;及格&quot; if scope &gt;= line else &quot;不及格&quot;# 相当于 scope &gt;= line ? &quot;及格&quot; : &quot;不及格&quot;print(tip)
 
+注意条件是放在中间的
+Python 循环一般形式primes = [2, 3, 5, 7]for prime in primes:    print(prime)
 
-更多类型
+带索引animals = [&quot;dog&quot;, &quot;cat&quot;, &quot;mouse&quot;]for i, value in enumerate(animals):    print(i, value)
 
+while 循环x = 0while x &lt; 4:    print(x)    x += 1  # Shorthand for x = x + 1
 
+跳出循环x = 0for index in range(10):    x = index * 10    if index == 5:        break    print(x)
 
+跳过一轮循环for index in range(3, 8):     x = index * 10    if index == 5:        continue    print(x)
 
+范围循环for i in range(4):    print(i) # Prints: 0 1 2 3for i in range(4, 8):    print(i) # Prints: 4 5 6 7for i in range(4, 10, 2):    print(i) # Prints: 4 6 8
 
+使用 zip()name = [&#x27;Pete&#x27;, &#x27;John&#x27;, &#x27;Elizabeth&#x27;]age = [6, 23, 44]for n, a in zip(name, age):    print(&#x27;%s is %d years old&#x27; %(n, a))
 
+列表生成式
 
-!!set
-&#123;cherries, plums, apples&#125;
+result = [x**2 for x in range(10) if x % 2 == 0] print(result)# [0, 4, 16, 36, 64]
 
+Python 函数基础def hello_world():      print(&#x27;Hello, World!&#x27;)
 
-!!omap
-[one: 1, two: 2]
+返回&#123;3&#125;def add(x, y):    print(&quot;x is %s, y is %s&quot; %(x, y))    return x + yadd(5, 6)    # =&gt; 11
 
+位置参数def varargs(*args):    return argsvarargs(1, 2, 3)  # =&gt; (1, 2, 3)
 
-与语言无关的标量类型
+args 的类型是 tuple
+关键字参数def keyword_args(**kwargs):    return kwargs# =&gt; &#123;&quot;big&quot;: &quot;foot&quot;, &quot;loch&quot;: &quot;ness&quot;&#125;keyword_args(big=&quot;foot&quot;, loch=&quot;ness&quot;)
 
+kwargs 的类型是 dict
+返回多个def swap(x, y):    return y, xx = 1y = 2x, y = swap(x, y)  # =&gt; x = 2, y = 1
 
+默认值def add(x, y=10):    return x + yadd(5)      # =&gt; 15add(5, 20)  # =&gt; 25
 
+匿名函数# =&gt; True(lambda x: x &gt; 2)(3)# =&gt; 5(lambda x, y: x ** 2 + y ** 2)(2, 1)
 
+Python 解包
+解包是将一个序列内的多个元素依次重新分配到有限个容器的过程，这只发生在 变量赋值、参数传递 和 生成式生成 过程中。
+_ 这个变量是命令行交互中最后一次计算得到的值，在程序设计中一般用来存放解包时不再需要的值。但它的含义会因赋值而改变，比如标准库 gettext 中常用作动态获取翻译文本。
 
+等量解包ip, port = &quot;127.0.0.1&quot;, 80print(ip)  # -&gt; &quot;127.0.0.1&quot;print(port)  # -&gt; 80# 与以下代码等价ip, port = (&quot;127.0.0.1&quot;, 80)# 与以下代码效果相同ip, port = [&quot;127.0.0.1&quot;, 80]
 
+适量解包ip, _, port = &quot;127.0.0.1:80&quot;.rpartition(&quot;:&quot;)print(ip)  # -&gt; &quot;127.0.0.1&quot;print(port)  # -&gt; &quot;80&quot;# _ 这个变量此刻的值是 &quot;:&quot; ，但一般不再使用。
 
+_ 也是一个单一变量，不允许解包多个元素，因此变量与值必须一一对应。
+过量解包major, minor, *parts = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(major)  # -&gt; &quot;3&quot;print(minor)  # -&gt; &quot;10&quot;print(parts)  # -&gt; [&quot;2&quot;, &quot;beta&quot;]# 可将 parts 改为 _ 来表示不再需要后面的元素
 
+这里的 * 就是收集序列在解包过程中多出来的元素，只能有一个，与向函数传递位置参数时的 * 别无二致。
+解包取左边major, minor, *_ = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(major)  # -&gt; &quot;3&quot;print(minor)  # -&gt; &quot;10&quot;
 
-&#123;~, null&#125;
-空（无值）。
+解包取两边major, *_, level = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(major)  # -&gt; &quot;3&quot;print(level)  # -&gt; &quot;beta&quot;
 
+解包取右边*_, micro, level = &quot;3.10.2.beta&quot;.split(&quot;.&quot;)print(micro)  # -&gt; &quot;2&quot;print(level)  # -&gt; &quot;beta&quot;
 
-[1234, 0x4D2, 02333]
-[十进制整数、十六进制整数、八进制整数]
+解包集合a, b, *_ = &#123;3, 2, 1&#125;print(a)  # -&gt; 1print(b)  # -&gt; 2print(_)  # -&gt; [3]
 
+集合中的元素是无序的，因此解包结果不能轻易确定。
+解包迭代器a, b, *_ = range(3)print(a)  # -&gt; 0print(b)  # -&gt; 1print(_)  # -&gt; [2]
 
-[1_230.15, 12.3015e+02]
-[固定浮点数，指数浮点数]
+支持迭代器协议的对象也可被解包。
+解包字典a, b, *_ = dict(a=1, b=2, c=3)print(a)  # -&gt; &quot;a&quot;print(_)  # -&gt; [&quot;c&quot;]a, b, *_ = dict(a=1, b=2, c=3).values()print(a)  # -&gt; 1print(_)  # -&gt; [3]
 
+生成式中的解包chars = (*&quot;abc&quot;, *&quot;def&quot;, &quot;g&quot;, &quot;h&quot;)# -&gt; (&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;, &quot;g&quot;, &quot;h&quot;)digits = [*range(10), *&quot;abcdef&quot;]# -&gt; [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,#     &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]part = &#123;&quot;小明&quot;: 18, &quot;小亮&quot;: 22&#125;summary = &#123;&quot;小花&quot;: 16, **part&#125;print(summary)# -&gt; &#123;&quot;小花&quot;: 16, &quot;小明&quot;: 18, &quot;小亮&quot;: 22&#125;
 
-[.inf, -.Inf, .NAN]
-[无穷大（浮点数），负数，不是数字]
 
+仅在列表／元组生成式中可以使用多个 *
+仅在字典生成式中可以使用多个 **
 
-&#123;Y, true, Yes, ON&#125;
-布尔真
+迭代中解包students = [    (&quot;小明&quot;, 18),    (&quot;小亮&quot;, 22),]for k, v in students:    print(k)  # -&gt; &quot;小明&quot;、&quot;小亮&quot;    print(v)  # -&gt; 18、22students = [    (0, (&quot;小明&quot;, 18)),    (1, (&quot;小亮&quot;, 22)),]for i, (k, v) in students:    print(i)  # -&gt; 0、1    print(k)  # -&gt; &quot;小明&quot;、&quot;小亮&quot;    print(v)  # -&gt; 18、22
 
+函数中的解包def version(major, minor, *parts):    print(major)  # -&gt; &quot;3&quot;    print(minor)  # -&gt; &quot;10&quot;    print(parts)  # -&gt; (&quot;2&quot;, &quot;beta&quot;, &quot;0&quot;)version(&quot;3&quot;, &quot;10&quot;, &quot;2&quot;, &quot;beta&quot;, &quot;0&quot;)# 过程类似于major, minor, *parts = (&quot;3&quot;, &quot;10&quot;, &quot;2&quot;, &quot;beta&quot;, &quot;0&quot;)def version():    parts = &quot;3.10.2.beta.0&quot;.split(&quot;.&quot;)    return *parts, &quot;x64&quot;print(version())# -&gt; (&quot;3&quot;, &quot;10&quot;, &quot;2&quot;, &quot;beta&quot;, &quot;0&quot;, &quot;x64&quot;)
 
-&#123;n, FALSE, No, off&#125;
-布尔假
+Python 模块导入模块import mathprint(math.sqrt(16))  # =&gt; 4.0
 
+从一个模块导入from math import ceil, floorprint(ceil(3.7))   # =&gt; 4.0print(floor(3.7))  # =&gt; 3.0
 
+导入一个模块的全部from math import *
 
+给模块起别名import math as m# =&gt; Truemath.sqrt(16) == m.sqrt(16)
+
+浏览模块的函数和属性import mathdir(math)
+
+Python 文件处理读取文件逐行with open(&quot;myfile.txt&quot;) as file:    for line in file:        print(line)
+
+带行号file = open(&#x27;myfile.txt&#x27;, &#x27;r&#x27;)for i, line in enumerate(file, start=1):    print(&quot;Number %s: %s&quot; % (i, line))
+
+字符串写入一个字符串contents = &#123;&quot;aa&quot;: 12, &quot;bb&quot;: 21&#125;with open(&quot;myfile1.txt&quot;, &quot;w+&quot;) as file:    file.write(str(contents))
+
+读取一个字符串with open(&#x27;myfile1.txt&#x27;, &quot;r+&quot;) as file:    contents = file.read()print(contents)
+
+对象写一个对象contents = &#123;&quot;aa&quot;: 12, &quot;bb&quot;: 21&#125;with open(&quot;myfile2.txt&quot;, &quot;w+&quot;) as file:    file.write(json.dumps(contents))
+
+读取对象with open(&#x27;myfile2.txt&#x27;, &quot;r+&quot;) as file:    contents = json.load(file)print(contents)
+
+删除文件import osos.remove(&quot;myfile.txt&quot;)
+
+检查和删除import osif os.path.exists(&quot;myfile.txt&quot;):    os.remove(&quot;myfile.txt&quot;)else:    print(&quot;The file does not exist&quot;)
+
+删除文件夹import osos.rmdir(&quot;myfolder&quot;)
+
+Python 类和继承定义class MyNewClass:    pass# 类的实例化my = MyNewClass()
+
+构造函数class Animal:    def __init__(self, voice):        self.voice = voice cat = Animal(&#x27;Meow&#x27;)print(cat.voice)    # =&gt; Meow dog = Animal(&#x27;Woof&#x27;) print(dog.voice)    # =&gt; Woof
+
+方法class Dog:    # 类的方法    def bark(self):        print(&quot;Ham-Ham&quot;) charlie = Dog()charlie.bark()   # =&gt; &quot;Ham-Ham&quot;
+
+类变量
+
+class MyClass:    class_variable = &quot;A class variable!&quot;# =&gt; 一个类变量！print(MyClass.class_variable)x = MyClass() # =&gt; 一个类变量！print(x.class_variable)
+
+super() 函数
+
+class ParentClass:    def print_test(self):        print(&quot;Parent Method&quot;) class ChildClass(ParentClass):    def print_test(self):        print(&quot;Child Method&quot;)        # 调用父级的 print_test()        super().print_test() 
+
+
+&gt;&gt;&gt; child_instance = ChildClass()&gt;&gt;&gt; child_instance.print_test()Child MethodParent Method
+
+repr() 方法class Employee:    def __init__(self, name):        self.name = name     def __repr__(self):        return self.name john = Employee(&#x27;John&#x27;)print(john)  # =&gt; John
+
+用户定义的异常class CustomError(Exception):    pass
+
+多态性class ParentClass:    def print_self(self):        print(&#x27;A&#x27;) class ChildClass(ParentClass):    def print_self(self):        print(&#x27;B&#x27;) obj_A = ParentClass()obj_B = ChildClass() obj_A.print_self() # =&gt; Aobj_B.print_self() # =&gt; B
+
+重写class ParentClass:    def print_self(self):        print(&quot;Parent&quot;) class ChildClass(ParentClass):    def print_self(self):        print(&quot;Child&quot;) child_instance = ChildClass()child_instance.print_self() # =&gt; Child
+
+继承class Animal:     def __init__(self, name, legs):        self.name = name        self.legs = legs        class Dog(Animal):    def sound(self):        print(&quot;Woof!&quot;) Yoki = Dog(&quot;Yoki&quot;, 4)print(Yoki.name) # =&gt; YOKIprint(Yoki.legs) # =&gt; 4Yoki.sound()     # =&gt; Woof!
+
+Python 数据模型更多请移步 https://docs.python.org/zh-cn/3/reference/datamodel.html
+自定义类创建参见 自定义类创建 。
+from typing import Anyclass Object:    def __new__(cls, *args, **kwargs) -&gt; &quot;self&quot;:        # new 和 init 声明的参数必须一致        # 或者用 *args 和 **kwargs 进行兼容        return object.__new__(cls)    def __init__(self, *args, **kwargs):        # 初始化方法没有返回值，也不能返回值。        pass    def __call__(self, *args, **kwargs) -&gt; Any:        pass# 依次调用了 new 和 init，所以如果# 手动调用 new，那么别忘了调用 initobj = Object()# 触发 __call__ 方法，要给什么参数取决于声明obj()
+
+上下文管理器
+参见 上下文管理器 。
+from typing import Anyclass Object:    def __enter__(self) -&gt; Optional[Any]:        # with 语句会将返回值绑定到 as 子句中的变量，如果有的话。        return    def __exit__(self, exc_type, exc_value, traceback):        # 若 with 内没有发生异常，则三个参数都是 None 。        # 不应该重新引发传入的异常，这是调用者的责任。        passwith Object() as alias:    # 进入 with 之前调用 obj.__enter__() 并得到 alias（如果有返回的话）    pass# 离开 with 后调用 obj.__exit__() ，不管是正常结束还是因异常抛出而离开。# 当需要获取 Object 的对象时可以这样写obj = Object()with obj as alias:    pass
+
+特殊方法
+下表使用 -&gt; * 代表返回值类型是任意的，或者需要视情况而定，实际上并不存在这种写法。诸如 -&gt; str 仅表示绝大多数情况下应当返回 str 类型，或者推荐返回 str 类型。没有 -&gt; 的方法一般没有返回值。参见 https://docs.python.org/zh-cn/3/reference/datamodel.html
+
+
+
+语句
+特殊方法
+备注
+
+
+
+
+repr(obj)
+__repr__(self) -&gt; str
+详见 repr() 。
+
+
+
+str(obj)
+__str__(self) -&gt; str
+详见 str 类型 。
+
+
+
+bytes(obj)
+__bytes__(self) -&gt; bytes
+详见 bytes() 。
+
+
+
+format(obj, spec)
+__format__(self, spec) -&gt; str
+详见 format()、格式化字符串字面值、格式规格迷你语言 。
+
+
+
+hash(obj)
+__hash__(self) -&gt; int
+详见 hash() 。
+
+
+
+bool(obj)
+__bool__(self) -&gt; bool
+未定义时调用 obj.__len__() != 0 ，若 __len__() 也未定义，则所有对象都被视为 True 。另见 bool() 。
+
+
+
+dir(obj)
+__dir__(self) -&gt; list
+返回值必须是一个序列，dir() 会把返回的序列转换为列表并对其排序。
+
+
+
+Object[key]
+__class_getitem__(cls, key) -&gt; *
+不建议用于除了 模拟泛型类型 以外的用途，避免 IDE 误判。
+
+
+
+
+自定义实例及子类检查，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#customizing-instance-and-subclass-checks
+
+
+
+
+语句
+特殊方法
+备注
+
+
+
+
+isinstance(instance, class)
+class.__instancecheck__(self, instance) -&gt; bool
+如果 instance 应被视为 class 的一个（直接或间接）实例则返回真值。
+
+
+
+issubclass(subclass, class)
+class.__subclasscheck__(self, subclass) -&gt; bool
+如果 subclass 应被视为 class 的一个（直接或间接）子类则返回真值。
+
+
+
+
+“富比较”方法，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#object.__lt__
+
+
+
+
+语句
+特殊方法
+备注
+
+
+
+
+obj &lt; other
+__lt__(self, other) -&gt; bool
+
+
+
+
+obj &lt;= other
+__le__(self, other) -&gt; bool
+
+
+
+
+obj == other
+__eq__(self, other) -&gt; bool
+默认返回 obj is other ，如果结果为 False ，则会返回 NotImplemented 。
+
+
+
+obj != other
+__ne__(self, other) -&gt; bool
+默认返回 not obj.__eq__(other) 。
+
+
+
+obj &gt; other
+__gt__(self, other) -&gt; bool
+
+
+
+
+obj &gt;= other
+__ge__(self, other) -&gt; bool
+
+
+
+
+
+自定义属性访问，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#customizing-attribute-access
+
+
+
+
+语句
+特殊方法
+备注
+
+
+
+
+obj.name
+__getattr__(self, name) -&gt; *
+优先调用。当抛出 AttributeError 时转向调用 __getattribute__() 。
+
+
+
+obj.name
+__getattribute__(self, name) -&gt; *
+参见 自定义属性访问 避免无限递归。
+
+
+
+obj.name = value
+__setattr__(self, name, value)
+
+
+
+
+del obj.name
+__delattr__(self, name)
+仅在 del obj.name 对于该对象有意义时才应该被实现。
+
+
+
+
+模拟容器类型，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#emulating-container-types
+
+
+
+
+语句
+特殊方法
+备注
+
+
+
+
+len(obj)
+__len__(self) -&gt; int
+
+
+
+
+op.length_hint(obj)
+__length_hint__(self) -&gt; int
+在使用标准库 operator 的 length_hint() 时会被调用（Python 3.4+）。
+
+
+
+obj[key]
+__getitem__(self, key) -&gt; *
+需要抛出 IndexError 以便正确地结束 for 循环。
+
+
+
+obj[key]
+__missing__(self, key) -&gt; *
+仅在 dict 的子类找不到键时被调用（不能重写 __getitem__ 方法）。
+
+
+
+obj[key] = value
+__setitem__(self, key, value)
+a[1:2] = b 实际上是 a[slice(1, 2, None)] = b ，其它情形及在其余方法中同理。详见 slice() 。
+
+
+
+del obj[key]
+__delitem__(self, key)
+
+
+
+
+调用途径有很多
+__iter__(self) -&gt; Iterator
+在需要创建一个 迭代器 时被调用，例如使用 iter() 、 for 循环 。最好返回一个新对象，因为迭代器在语义上是一次性的。若返回 self ，则必须实现 __next__() 方法。
+
+
+
+reversed(obj)
+__reversed__(self) -&gt; *
+详见 reversed() 。
+
+
+
+item in obj
+__contains__(self, item) -&gt; bool
+对于未定义该方法的对象在 in 和 not in 时，参考 成员检测运算 。
+
+
+
+
+模拟数字类型，参见 https://docs.python.org/zh-cn/3/reference/datamodel.html#emulating-numeric-types
+
+
+
+
+语句
+特殊方法
+备注
+
+
+
+
++obj
+__neg__(self) -&gt; *
+
+
+
+
+-obj
+__pos__(self) -&gt; *
+
+
+
+
+~obj
+__invert__(self) -&gt; *
+
+
+
+
+abs(obj)
+__abs__(self) -&gt; *
+
+
+
+
+int(obj)
+__int__(self) -&gt; *
+
+
+
+
+float(obj)
+__float__(self) -&gt; *
+
+
+
+
+complex(obj)
+__complex__(self) -&gt; *
+
+
+
+
+round(obj)
+__round__(self) -&gt; int
+详见 round() 。
+
+
+
+round(obj)
+__round__(self, ndigits) -&gt; *
+详见 round() 。
+
+
+
+math.ceil(obj)
+__ceil__(self) -&gt; int
+详见标准库 math 的 ceil() 。
+
+
+
+math.floor(obj)
+__floor__(self) -&gt; int
+详见标准库 math 的 floor() 。
+
+
+
+math.trunc(obj)
+__trunc__(self) -&gt; int
+详见标准库 math 的 trunc() 。
+
+
+
+
+__index__(self) -&gt; int
+需要无损地将数值转换为整数的时候会被调用。详见 这里 。
+
+
+
+obj + other
+__add__(self, other) -&gt; *
+
+
+
+
+obj - other
+__sub__(self, other) -&gt; *
+
+
+
+
+obj * other
+__mul__(self, other) -&gt; *
+
+
+
+
+obj @ other
+__matmul__(self, other) -&gt; *
+为第三方库而生的矩阵乘法运算符，这里提了一嘴。（Python 3.5+）
+
+
+
+obj / other
+__truediv__(self, other) -&gt; *
+
+
+
+
+obj // other
+__floordiv__(self, other) -&gt; *
+
+
+
+
+obj % other
+__mod__(self, other) -&gt; *
+
+
+
+
+divmod(obj, other)
+__divmod__(self, other) -&gt; tuple
+divmod(a, b) 返回一个元组 (a // b, a % b) ，详见 divmod() 。
+
+
+
+obj ** exp
+__pow__(self, exp) -&gt; *
+
+
+
+
+pow(obj, exp, mod)
+__pow__(self, exp, mod) -&gt; *
+pow(base, exp, mod) 比 pow(base, exp) % mod 更高效。
+
+
+
+obj &lt;&lt; other
+__lshift__(self, other) -&gt; *
+
+
+
+
+obj &gt;&gt; other
+__rshift__(self, other) -&gt; *
+
+
+
+
+obj &amp; other
+__and__(self, other) -&gt; *
+
+
+
+
+obj ^ other
+__xor__(self, other) -&gt; *
+
+
+
+
+obj | other
+__or__(self, other) -&gt; *
+
+
+
+
+other + obj
+__radd__(self, obj) -&gt; *
+仅当 obj 未定义 __add__() 或其返回 NotImplemented ，且与 other 互相都没有继承关系时，调用 other 的 __radd__() 。详见 这里 。
+
+
+
+other - obj
+__rsub__(self, obj) -&gt; *
+以下，如此类推。
+
+
+
+other * obj
+__rmul__(self, obj) -&gt; *
+
+
+
+
+other @ obj
+__rmatmul__(self, obj) -&gt; *
+
+
+
+
+other / obj
+__rtruediv__(self, obj) -&gt; *
+
+
+
+
+other // obj
+__rfloordiv__(self, obj) -&gt; *
+
+
+
+
+other % obj
+__rmod__(self, obj) -&gt; *
+
+
+
+
+divmod(other, obj)
+__rdivmod__(self, obj) -&gt; tuple
+
+
+
+
+other ** obj
+__rpow__(self, obj) -&gt; *
+
+
+
+
+
+__rpow__(self, obj, mod) -&gt; *
+pow(obj, other, mod) 不会尝试调用 other.__rpow__(obj, mod) ，因为强制转换规则会太过复杂。
+
+
+
+other &lt;&lt; obj
+__rlshift__(self, obj) -&gt; *
+
+
+
+
+other &gt;&gt; obj
+__rrshift__(self, obj) -&gt; *
+
+
+
+
+other &amp; obj
+__rand__(self, obj) -&gt; *
+
+
+
+
+other ^ obj
+__rxor__(self, obj) -&gt; *
+
+
+
+
+other | obj
+__ror__(self, obj) -&gt; *
+
+
+
+
+obj += other
+__iadd__(self, other) -&gt; *
+若方法已定义，则 a += b 等价于 a.__iadd(b) ；若未定义，则回退到 a + b 选择 x.__add__(y) 和 y.__radd__(x) 。
+
+
+
+obj -= other
+__isub__(self, other) -&gt; *
+以下，如此类推。
+
+
+
+obj *= other
+__imul__(self, other) -&gt; *
+
+
+
+
+obj @= other
+__imatmul__(self, other) -&gt; *
+
+
+
+
+obj /= other
+__itruediv__(self, other) -&gt; *
+
+
+
+
+obj //= other
+__ifloordiv__(self, other) -&gt; *
+
+
+
+
+obj %= other
+__imod__(self, other) -&gt; *
+
+
+
+
+obj **= exp
+__ipow__(self, other) -&gt; *
+
+
+
+
+obj &lt;&lt;= other
+__ilshift__(self, other) -&gt; *
+
+
+
+
+obj &gt;&gt;= other
+__irshift__(self, other) -&gt; *
+
+
+
+
+obj &amp;= other
+__iand__(self, other) -&gt; *
+
+
+
+
+obj ^= other
+__ixor__(self, other) -&gt; *
+
+
+
+
+obj |= other
+__ior__(self, other) -&gt; *
+
+
+
+
+Python 类型标注 (Python 3.5+)变量string: str = &quot;ha&quot;times: int = 3print(string * times)  # =&gt; hahaha
+
+变量result: str = 1 + 2print(result)  # =&gt; 3
+
+错误的类型标注不会影响正常运行，也不会报错
+参数def say(name: str, start: str = &quot;Hi&quot;):    return start + &quot;, &quot; + nameprint(say(&quot;Python&quot;))  # =&gt; Hi, Python
+
+位置参数def calc_summary(*args: int):    return sum(args)print(calc_summary(3, 1, 4))  # =&gt; 8
+
+表示 args 的所有元素都是 int 类型的。
+返回值def say_hello(name) -&gt; str:    return &quot;Hello, &quot; + namevar = &quot;Python&quot;print(say_hello(var))  # =&gt; Hello, Python
+
+多种可能的返回值from typing import Uniondef resp200(meaningful) -&gt; Union[int, str]:    return &quot;OK&quot; if meaningful else 200
+
+表示返回值可能是 int，也可能是 str 。
+关键字参数def calc_summary(**kwargs: int):    return sum(kwargs.values())print(calc_summary(a=1, b=2))  # =&gt; 3
+
+表示 kwargs 的所有值都是 int 类型的。
+多个返回值def resp200() -&gt; (int, str):    return 200, &quot;OK&quot;
+
+多种可能的返回值 (3.10+)def resp200(meaningful) -&gt; int | str:    return &quot;OK&quot; if meaningful else 200
+
+自 Python 3.10 起可用。
+属性class Employee:    name: str    age: int    def __init__(self, name, age):        self.name = name        self.age = age        self.graduated: bool = False
+
+标注自己class Employee:    name: str    age: int    def set_name(self, name) -&gt; &quot;Employee&quot;:        self.name = name        return self
+
+这里表示 set_name() 返回了一个 Employee 对象。
+标注自己 (3.11+)from typing import Selfclass Employee:    name: str    age: int    def set_name(self: Self, name) -&gt; Self:        self.name = name        return self
+
+标注一个值为类型的参数
+from typing import TypeVar, TypeT = TypeVar(&quot;T&quot;)# &quot;mapper&quot; 的值是一个像 int、str、MyClass 这样的类型# &quot;default&quot; 是一个 T 类型的值，比如 314、&quot;string&quot;、MyClass()# 函数的返回值也是一个 T 类型的值def converter(raw, mapper: Type[T], default: T) -&gt; T:    try:        return mapper(raw)    except:        return defaultraw: str = input(&quot;请输入一个整数：&quot;)result: int = converter(raw, mapper=int, default=0)
+
+标注一个值为函数的参数
+
+from typing import TypeVar, Callable, AnyT = TypeVar(&quot;T&quot;)def converter(raw, mapper: Callable[[Any], T], default: T) -&gt; T:    try:        return mapper(raw)    except:        return default# Callable[[Any], T] 表示值是一个像这样声明的函数:# def anynomous(arg: Any) -&gt; T:#     passdef is_success(value) -&gt; bool:    return value in (0, &quot;OK&quot;, True, &quot;success&quot;)resp = dict(code=0, message=&quot;OK&quot;, data=[])successed: bool = converter(resp.message, mapper=is_success, default=False)
+
+各种各样的注释# 这是单行注释
+
+
+&quot;&quot;&quot; 可以写多行字符串    使用三个&quot;，并且经常使用    作为文档。&quot;&quot;&quot;
+
+
+&#x27;&#x27;&#x27; 可以写多行字符串    使用三个&#x27;，并且经常使用    作为文档。&#x27;&#x27;&#x27;
+
+生成器def double_numbers(iterable):    for i in iterable:        yield i + i
+
+生成器可帮助您编写惰性代码
+要列出的生成器values = (-x for x in [1,2,3,4,5])gen_to_list = list(values)# =&gt; [-1, -2, -3, -4, -5]print(gen_to_list)
+
+处理异常
+
+try:    # 使用“raise”来引发错误    raise IndexError(&quot;这是一个索引错误&quot;)except IndexError as e:    pass                 # pass只是一个空操作。 通常你会在这里做恢复。except (TypeError, NameError):    pass                 # 如果需要，可以一起处理多个异常。else:                    # try/except 块的可选子句。 必须遵循除块之外的所有内容    print(&quot;All good!&quot;)   # 仅当 try 中的代码未引发异常时运行finally:                 # 在所有情况下执行    print(&quot;我们可以在这里清理资源&quot;)
+
+pyenv &amp; pipenv
+
+pvenv 用于管理python版本，pipenv 用于管理项目包版本
+pyenv# 安装 pyenvcurl https://pyenv.run | bash
+
+更多安装方式
+# 安装 python 版本pyenv install 3.10.12# 设置 python 版本pyenv global 3.10.12 # 全局设置pyenv shell  3.10.12 # 针对当前 shell sessionpyenv local  3.10.12 # 针对当前目录 
+
+pipenv# 安装 pipenvpip install pipenv --user  # pipbrew install pipenv        # homebrew# 更新 pipenvpip install --user --upgrade pipenv # pipbrew upgrade pipenv                 # homebrew
+
+# 将 pipenv 命令加入到系统环境变量 $PATH 中 (Unix and MacOS)dir=$(python -c &#x27;import site; print(site.USER_BASE + &quot;/bin&quot;)&#x27;) # 打印 python site-packages bin 路径echo &#x27;export PATH=&quot;&#x27;$dir&#x27;:$PATH&quot;&#x27; &gt;&gt; ~/.zshrc # 将 dir 路径加入到 PATH 中source ~/.zshrc# 安装 packagepipenv install &lt;package name&gt; # 不指定版本pipenv install &lt;package name&gt;==&lt;version&gt;    # 精确指定版本pipenv install &lt;package name&gt;~=&lt;version&gt;    # 指定版本范围，例如 1.1则表示安装1.x的最新版本，1.0.1则表示安装1.0.x的最新版本pipenv install &quot;&lt;package name&gt;=&lt;version&gt;&quot;   # 大于等于指定版本pipenv install &quot;&lt;package name&gt;=&lt;version&gt;&quot;   # 小于等于指定版本
+
+# 指定 python 版本pipenv --python 3.10.12# 激活当前目录虚拟环境pipenv shell
 
 另见
-YAML Reference Card (yaml.org)
-Learn X in Y minutes (learnxinyminutes.com)
-YAML lint online (yamllint.com)
-INI 格式配置文件备忘清单 (jaywcjlove.github.io)
-TOML 格式配置文件备忘清单 (jaywcjlove.github.io)
+Python 官方网站  (python.org)
+Python 文档  (docs.python.org)
+Y 分钟学会 Python (learnxinyminutes.com)
+Python 中的正则表达式 (jaywcjlove.github.io)
 
 ]]></content>
       <categories>
-        <category>配置框架</category>
+        <category>后端编程</category>
       </categories>
       <tags>
-        <tag>Yaml</tag>
-        <tag>配置框架</tag>
+        <tag>后端编程</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
