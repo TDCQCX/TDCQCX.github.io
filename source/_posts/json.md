@@ -7,10 +7,10 @@ tags:
     - JSON
     - 前端技术
 keywords: JSON, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: https://img.picui.cn/free/2025/03/29/67e798c948399.jpg
+cover: https://img.picui.cn/free/2024/07/10/668e66bb057fa.jpg
 banner:
       type: img
-      bgurl: https://img.picui.cn/free/2025/03/29/67e798c948399.jpg
+      bgurl: https://img.picui.cn/free/2024/07/10/668e66bb057fa.jpg
       banner_text: JSON 备忘录
       toc: true # 无需显示目录
       comments: true

@@ -124,3 +124,4 @@ deploy:
     icon: icon.png
     autodiscovery: true
     template:
+domain: https://blog.TDCQCX.top

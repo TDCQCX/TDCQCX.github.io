@@ -7,10 +7,10 @@ tags:
     - Python
     - 后端编程
 keywords: Python, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: https://img.picui.cn/free/2025/03/29/67e798cd7f521.jpg
+cover: https://img.picui.cn/free/2025/05/06/681959f7f2d6e.jpg
 banner:
       type: img
-      bgurl: https://img.picui.cn/free/2025/03/29/67e798cd7f521.jpg
+      bgurl: https://img.picui.cn/free/2025/05/06/681959f7f2d6e.jpg
       banner_text: Python 备忘录
       toc: true # 无需显示目录
       comments: true
