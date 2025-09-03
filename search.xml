@@ -1,6 +1,134 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Godot开发与学习-基础学习笔记</title>
+    <url>/2025/05/30/Godot%E5%BC%80%E5%8F%91%E4%B8%8E%E5%AD%A6%E4%B9%A0-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[Godot开发与学习Godot开发思想
+节点的特征与优势
+
+
+节点使Godot内最常用最基本的开发组件
+大部分节点都具有非常具体的功能，它们往往直接涉及人类的视听感官，如显示图片、播放音乐、显示模型、模拟物理体等
+节点之间可以用上下级的方式组合，一个节点可以有多个子节点
+节点的开发思想与人类相接近
+
+
+场景树与服务器控制节点运行（节点实在场景树与服务器的控制下运行的）
+
+
+场景树是游戏的主循环对象，只有在“树”下的节点才可以正常行使节点的主要功能。（节点初始化时并不在“树”下）
+“服务器”指的是Godot内置的各类Server，节点的主要功能都要使用Server实现，节点本身不具备实际功能。二者通过场景树进行协调沟通
+“服务器”的编码比较接近底层，保障了游戏运行的效率。节点的设计思路比较接近人类，加速了游戏开发者开发游戏的效率。场景树起到了协调二者的作用
+
+
+节点的组织方式————场景
+
+
+场景是若干节点的集合
+场景文件时记录若干节点集合的文件
+游戏实际运行时不存在“场景”，场景是节点在文件系统中储存和加载的单位
+游戏从主场景开始运行
+
+
+Godot软件的界面介绍————围绕节点
+
+
+1 场景栏：显示场景内节点，可以在这里增删一个场景内的节点（还可以在这里为节点附加脚本）
+2 文件系统：显示场景文件与游戏素材文件
+3 视图区；预览场景内的可视节点（编写代码与查看素材库）
+4 检查器：查看节点的属性（显示节点的信号连接，节点组情况与游戏素材文件属性）
+
+GD Script语言————Godot的原生脚本语言
+GD Script入门介绍
+
+
+GD Script是Godot的原生脚本语言，是最适合Godot开发的脚本语言
+在入门阶段，我们只需要知道GD Script可以为节点拓展功能即可
+
+
+GD Script与节点的关系
+
+
+节点对电脑而言具有非常具体的功能，可以令游戏程序执行显示图片、播放音频、模拟物理体等功能，但也仅限于此
+游戏出来上述的具体功能外，往往还需要具有一套内在的逻辑。就像我们现实中下的象棋，棋子本身只是普通的木头和石头，只是能让我们看得见“象棋”，而要让这些木头和石头能勾起人的兴趣，我们还要制定一套象棋的规则，规定这些棋子在何种情况下如何行走
+GDS负责实现内在逻辑，同时控制节点展示具体的功能。比如一个角色被一个怪物攻击掉血死亡的功能，出来要在GDS中进行角色生命值的削减和角色存活的判断，还要在判断角色死亡后控制节点播放死亡动画和音效
+
+GD Script语言入门————变量
+变量的概念与简单操作
+
+
+变量是可以代表数据的一种抽象概念，可以通过对变量名的操作来对变量代表的数据进行操作
+在GDS中，你可以创建自定义的变量，也可以使用系统内置的变量
+变量可以进行计算与转换
+即使是同一脚本文件，绑定不同的对象从而产生了同名的变量，这两个变量以及变量代表的数据也分别属于不同的对象，互相独立，因此使用变量前必须指明变量所属的对象
+
+
+四种基本数据类型
+
+
+布尔类型（bool）：true和false
+整数类型（int）：-1，0，1，2，3，4，5，6，7，8，9
+浮点数类型（float）：-1.0，0.0，1.0，2.0，3.0，4.0，5.0，6.0，7.0，8.0，9.0
+字符串类型（String）：”Hello World”，”123”，”true”，”false”，”1.0”，”2.0”，”3.0”，”4.0”，”5.0”，”6.0”，”7.0”，”8.0”，”9.0”
+
+
+由四种基本变了组成的其他值类型变量
+
+
+值变量：执行 变量A &#x3D; 变量B 时，变量A的值会被变量B的值所替换，对于A的修改不会影响B的值
+引用变量：执行 变量A &#x3D; 变量B 时，变量A的值会被变量B的值所替换，对于A的修改会影响B的值
+大部分变量都是值变量
+二维向量变量：由两个浮点数组成的向量，用Vector2表示，如Vector2(1.0, 2.0)
+
+
+变量的作用
+
+
+变量除定义的过程外，必须在函数内进行数值的修改，内置代码中的许多变量在修改后，会直接对一下内容产生实质性的影响。而自定义的变量则不会。因此，可以用自定义的变量来定义逻辑上的影响数据，而后通过判断逻辑上的数据情况来调整内置代码中的变量，对一下的画面、音效等产生实际的影响
+
+GD Script语言入门————函数
+函数的概念
+
+
+函数也叫方法或模块，是一套操作的集合。函数也包括自定义函数与内置函数
+大部分内置函数可以对游戏内容产生实质性的影响或在代码中起到传递数据的作用，少部分函数比较特殊
+一个函数除名称外，还包括了【输入信息、处理流程、处理结果】等关键信息。在程序中，一切数据的处理都是通过函数来实现的
+函数调用一般必须指明调用对象
+
+
+内置函数的调用
+
+
+虚函数是指没有实际处理流程的函数，这部分函数的内容可以由开发者自行编写。而内置虚函数则是指开发者规定了特定名称却没有实际处理流程的函数，节点内的虚函数会在特定的条件下自动被触发
+条件1：当节点本身或其周围节点状态发送改变时。【节点创建、节点入“树”、节点出“树”、节点死亡前、节点的子节点全部加入场景树】
+条件2：当场景树的状态发送改变时，且节点自身处于“树”中。【画面刷新、物理引擎刷新、硬件设备输入】
+条件3：当节点的属性发生改变时。【节点属性改变、节点的子节点改变】
+条件4：当节点的信号连接发生改变时。【节点的信号连接改变】
+条件5：当节点的子节点发生改变时。【节点的子节点改变】
+常用虚函数：
+_ready()：节点创建后自动调用
+_process(delta)：节点处于“树”中时自动调用
+_physics_process(delta)：物理引擎刷新时自动调用
+
+
+
+
+函数中的变量
+
+
+函数中也可以定义变量，各个函数都拥有一个独立的作用域，在一个函数内部定义的变量无法再另一个函数中直接访问变量名   
+子啊函数运行结束后变量和变量所代表的数据会自动销毁。某些情况下，变量所代表的数据不会自动销毁，但变量一定会自动销毁
+
+]]></content>
+      <categories>
+        <category>游戏开发</category>
+      </categories>
+      <tags>
+        <tag>Godot</tag>
+        <tag>游戏开发</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何使用hexo创建一个博客网站</title>
     <url>/2025/04/17/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</url>
     <content><![CDATA[浅谈如何使用 hexo 创建一个博客网站写在前面
@@ -1291,8 +1419,8 @@ C 教程 (jaywcjlove.github.io)
         <category>后端编程</category>
       </categories>
       <tags>
-        <tag>C</tag>
         <tag>后端编程</tag>
+        <tag>C</tag>
       </tags>
   </entry>
   <entry>
@@ -1964,8 +2092,8 @@ C++ Language Tutorials (cplusplus.com)
         <category>后端编程</category>
       </categories>
       <tags>
-        <tag>后端编程</tag>
         <tag>C++</tag>
+        <tag>后端编程</tag>
       </tags>
   </entry>
   <entry>
@@ -2956,1007 +3084,743 @@ CSS 专业技巧
       </tags>
   </entry>
   <entry>
-    <title>HTML 备忘录</title>
-    <url>/2025/01/08/html/</url>
-    <content><![CDATA[HTML 备忘清单此 HTML 快速参考备忘单以可读布局列出了常见的 HTML 和 HTML5 标记。
-入门hello.html
+    <title>Docker 备忘录</title>
+    <url>/2025/01/08/docker/</url>
+    <content><![CDATA[Docker 备忘清单这是 Docker 的快速参考备忘单。 你可以在这里找到最常见的 Docker 命令。
+入门
 
-&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;    &lt;title&gt;HTML5 Boilerplate&lt;/title&gt;&lt;/head&gt;&lt;body&gt;    &lt;h1&gt;Hello world, hello 备忘清单!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+入门安装curl -sSL https://get.docker.com/ | shsudo chmod 777 /var/run/docker.sock
 
-或者在 jsfiddle
-注释 Comment&lt;!-- 这是代码注释 --&gt;&lt;!--  或者你可以注释掉一个  大量的行。--&gt;
+在后台创建和运行容器
+$ docker run -d -p 80:80 docker/getting-started
 
-段落 Paragraph&lt;p&gt;我来自快速参考&lt;/p&gt;&lt;p&gt;分享快速参考备忘单。&lt;/p&gt;
 
-请参阅：段落元素
-HTML 链接&lt;a href=&quot;https://github.com/jaywcjlove/reference&quot;&gt;  Github&lt;/a&gt;&lt;a href=&quot;mailto:jack@abc.com&quot;&gt;邮箱&lt;/a&gt;&lt;a href=&quot;tel:+123456789&quot;&gt;电话&lt;/a&gt;&lt;a href=&quot;sms:+123456789&amp;body=ha%20ha&quot;&gt;  短信&lt;/a&gt;
 
+-d - 以分离（后台）模式运行容器
+-p 80:80 -  将端口 80 映射到容器中的端口 80，格式：宿主机端口:容器端口
+docker/getting-started - 要使用的镜像
 
+在前台创建并运行容器（之后如果要退出容器但是不关闭容器，按Ctrl+P+Q即可）
+$ docker run -it --rm -p  8001:8080 --name my-nginx nginx
 
 
 
-:-
-:-
+-it - 交互式 bash 模式
+--rm - 容器终止运行后自动删除容器文件
+-p 8001:8080 - 将 8001 端口映射到容器中的 8080 端口
+--name my-nginx - 指定名称
+nginx - 要使用的镜像
 
+一般命令
 
 
-href
-超链接指向的 URL
+Example
+Description
 
 
-rel
-链接 URL 的关系
 
+docker ps
+列出正在运行的容器
 
-target
-链接目标位置：_self&#x2F;_blank&#x2F;_top&#x2F;_parent
 
+docker ps -a
+列出所有容器
 
-请参阅：&lt;a&gt; 属性
-Image 标签&lt;img loading=&quot;lazy&quot;  src=&quot;https://xxx.png&quot;  alt=&quot;在此处描述图像&quot;  width=&quot;400&quot; height=&quot;400&quot;&gt;
 
+docker ps -s
+列出正在运行的容器 (带 CPU &#x2F; 内存)
 
 
+docker images
+列出所有镜像
 
 
+docker exec -it &lt;container&gt;  bash
+连接到容器
 
 
+docker logs &lt;container&gt;
+显示容器的控制台日志
 
 
+docker stop &lt;container&gt;
+停止容器
 
 
+docker restart &lt;container&gt;
+重启一个容器
 
 
-src (URL&#x2F;路径)
-必填，图片位置
+docker rm &lt;container&gt;
+移除一个容器
 
 
+docker port &lt;container&gt;
+显示容器的端口映射
 
-alt
-描述图像
 
+docker top &lt;container&gt;
+列出进程
 
 
-width
-图像宽度
+docker kill &lt;container&gt;
+杀死一个容器
 
 
+参数 &lt;container&gt; 可以是容器 id 或名称
+Docker 容器
 
-height
-图像高度
+启动和停止
 
 
+Description
+Example
 
-loading
-浏览器应该如何加载
 
 
-请参阅：图像嵌入元素
-文本格式标签&lt;b&gt;粗体文字&lt;/b&gt;&lt;strong&gt;这段文字很重要&lt;/strong&gt;&lt;i&gt;斜体文本&lt;/i&gt;&lt;em&gt;这段文字被强调&lt;/em&gt;&lt;u&gt;下划线文本&lt;/u&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;code&gt;源代码&lt;/code&gt;&lt;del&gt;删除的文字&lt;/del&gt;&lt;mark&gt;突出显示的文本 (HTML5)&lt;/mark&gt;&lt;ins&gt;插入的文本&lt;/ins&gt;&lt;sup&gt;使文本上标&lt;/sup&gt;&lt;sub&gt;使文本下标&lt;/sub&gt;&lt;small&gt;使文本变小&lt;/small&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;kbd&gt;Ctrl&lt;/kbd&gt;&lt;blockquote&gt;文本块引用&lt;/blockquote&gt;
-
-标题&lt;h1&gt; 这是标题 1 &lt;/h1&gt;&lt;h2&gt; 这是标题 2 &lt;/h2&gt;&lt;h3&gt; 这是标题 3 &lt;/h3&gt;&lt;h4&gt; 这是标题 4 &lt;/h4&gt;&lt;h5&gt; 这是标题 5 &lt;/h5&gt;&lt;h6&gt; 这是标题 6 &lt;/h6&gt;
-
-您的页面上应该只有一个 h1
-Section Divisions
-
-
-:-
-:-
-
-
-
-&lt;div&gt;&lt;/div&gt;
-页面内容的划分或部分
-
-
-&lt;span&gt;&lt;/span&gt;
-其他内容中的文本部分
-
-
-&lt;p&gt;&lt;/p&gt;
-文本段落
-
-
-&lt;br&gt;
-换行
-
-
-&lt;hr&gt;
-水平分割线
-
-
-这些标签用于将页面划分为多个部分
-内部框架
-
-&lt;iframe  id=&quot;inlineFrameExample&quot;  title=&quot;Inline Frame Example&quot;  width=&quot;100%&quot;  height=&quot;200&quot;  frameborder=&quot;0&quot;  src=&quot;https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&amp;layer=mapnik&quot;&gt;&lt;/iframe&gt;
-
-
-↓ 预览
-
-
-请参阅：内联框架元素
-HTML 中的 JavaScript&lt;script type=&quot;text/javascript&quot;&gt;  let text = &quot;Hello 快速参考&quot;;  alert(text);&lt;/script&gt;
-
-外部 JavaScript&lt;body&gt;  ...  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;
-
-HTML 中的 CSS&lt;style type=&quot;text/css&quot;&gt;    h1 &#123;        color: purple;    &#125;&lt;/style&gt;
-
-外部样式表&lt;head&gt;  ...  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;/&gt;&lt;/head&gt;
-
-HTML5 标签页面&lt;body&gt;  &lt;header&gt;    &lt;nav&gt;...&lt;/nav&gt;  &lt;/header&gt;  &lt;main&gt;    &lt;h1&gt;快速参考&lt;/h1&gt;  &lt;/main&gt;  &lt;footer&gt;    &lt;p&gt;©2023 快速参考&lt;/p&gt;  &lt;/footer&gt;&lt;/body&gt;
-
-标题导航&lt;header&gt;  &lt;nav&gt;    &lt;ul&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;编辑页面&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Twitter&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Facebook&lt;/a&gt;&lt;/li&gt;    &lt;/ul&gt;  &lt;/nav&gt;&lt;/header&gt;
-
-HTML5 Tags
-
-
-
-
-:-
-:-
-
-
-
-article
-独立的内容
-
-
-aside
-次要内容
-
-
-audio
-嵌入声音或音频流
-
-
-bdi
-双向隔离元件
-
-
-canvas
-通过JavaScript绘制图形
-
-
-data
-机器可读内容
-
-
-datalist
-一组预定义选项
-
-
-details
-其他信息
-
-
-dialog
-对话框或子窗口
-
-
-embed
-嵌入外部应用程序
-
-
-figcaption
-图形的标题或图例
-
-
-figure
-插图
-
-
-footer
-页脚或最不重要的
-
-
-header
-刊头或重要信息
-
-
-main
-文件的主要内容
-
-
-mark
-突出显示的文本
-
-
-meter
-已知范围内的标量值
-
-
-nav
-导航链接的一部分
-
-
-output
-计算的结果
-
-
-picture
-用于多个图像源的容器
-
-
-progress
-任务的完成进度
-
-
-rp
-提供回退括号
-
-
-rt
-定义字符的发音
-
-
-ruby
-表示ruby注释
-
-
-section
-一系列相关内容中的组
-
-
-source
-媒体元素的资源
-
-
-summary
-元素的摘要
-
-
-template
-定义HTML片段
-
-
-time
-时间或日期
-
-
-track
-媒体元素的字幕信息
-
-
-video
-嵌入视频
-
-
-wbr
-换行机会
-
-
-HTML5 Video&lt;video controls=&quot;&quot; width=&quot;100%&quot;&gt;    &lt;source src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4&quot; type=&quot;video/mp4&quot;&gt;    很抱歉，您的浏览器不支持嵌入式视频。&lt;/video&gt;
-
-
-↓ 预览
-    
-    很抱歉，您的浏览器不支持嵌入式视频。
-
-
-HTML5 Audio&lt;audio  controls  src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3&quot;&gt;    您的浏览器不支持音频元素。&lt;/audio&gt;
-
-
-↓ 预览    您的浏览器不支持音频元素。
-HTML5 Ruby&lt;ruby&gt;  汉 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;hàn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  字 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;zì&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  拼 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;pīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  音 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;yīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;
-
-
-↓ 预览
-
-
-  汉 (hàn)
-  字 (zì)
-  拼 (pīn)
-  音 (yīn)
-
-
-HTML5 kdi&lt;ul&gt; &lt;li&gt;User &lt;bdi&gt;hrefs&lt;/bdi&gt;: 60 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;jdoe&lt;/bdi&gt;: 80 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;إيان&lt;/bdi&gt;: 90 points&lt;/li&gt;&lt;/ul&gt;
-
-↓ 预览
- User hrefs: 60 points
- User jdoe: 80 points
- User إيان: 90 points
-
-
-HTML5 progress&lt;progress value=&quot;50&quot; max=&quot;100&quot;&gt;&lt;/progress&gt;
-
-
-HTML5 mark&lt;p&gt;我爱&lt;mark&gt;备忘清单&lt;/mark&gt;&lt;/p&gt;
-
-我爱备忘清单
-
-HTML 表格Table 示例
-
-&lt;table&gt;  &lt;thead&gt;      &lt;tr&gt;        &lt;td&gt;name&lt;/td&gt;        &lt;td&gt;age&lt;/td&gt;      &lt;/tr&gt;  &lt;/thead&gt;  &lt;tbody&gt;      &lt;tr&gt;        &lt;td&gt;Roberta&lt;/td&gt;        &lt;td&gt;39&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;td&gt;Oliver&lt;/td&gt;        &lt;td&gt;25&lt;/td&gt;      &lt;/tr&gt;  &lt;/tbody&gt;&lt;/table&gt;
-
-HTML表格标签
-
-
-
-
-标签
-说明
-
-
-
-&lt;table&gt;
-定义表格
-
-
-&lt;th&gt;
-定义表格中的标题单元格
-
-
-&lt;tr&gt;
-定义表中的行
-
-
-&lt;td&gt;
-定义表格中的单元格
-
-
-&lt;caption&gt;
-定义表格标题
-
-
-&lt;colgroup&gt;
-定义一组列
-
-
-&lt;col&gt;
-定义表中的列
-
-
-&lt;thead&gt;
-对标题内容进行分组
-
-
-&lt;tbody&gt;
-将正文内容分组
-
-
-&lt;tfoot&gt;
-对页脚内容进行分组
-
-
-&lt;td&gt; 属性
-
-
-属性
-说明
-
-
-
-colspan
-单元格应跨越的列数
-
-
-headers
-单元格与一个或多个标题单元格相关
-
-
-rowspan
-单元格应跨越的行数
-
-
-请参阅：td#属性
-&lt;th&gt; 属性
-
-
-属性
-说明
-
-
-
-colspan
-单元格应跨越的列数
-
-
-headers
-单元格与一个或多个标题单元格相关
-
-
-rowspan
-单元格应跨越的行数
-
-
-abbr
-单元格内容的描述
-
-
-scope
-表头元素(在&lt;th&gt;中定义)关联的单元格
-
-
-请参阅：th#属性
-HTML 列表无序列表&lt;ul&gt;  &lt;li&gt;I&#x27;m an item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;&lt;/ul&gt;
-
-请参阅：无序列表元素
-有序列表&lt;ol&gt;  &lt;li&gt;I&#x27;m the first item&lt;/li&gt;  &lt;li&gt;I&#x27;m the second item&lt;/li&gt;  &lt;li&gt;I&#x27;m the third item&lt;/li&gt;&lt;/ol&gt;
-
-请参阅：有序列表元素
-定义列表&lt;dl&gt;  &lt;dt&gt;A Term&lt;/dt&gt;  &lt;dd&gt;Definition of a term&lt;/dd&gt;  &lt;dt&gt;Another Term&lt;/dt&gt;  &lt;dd&gt;Definition of another term&lt;/dd&gt;&lt;/dl&gt;
-
-请参阅：描述列表元素
-HTML 表单Form 标签
-
-&lt;form method=&quot;POST&quot; action=&quot;api/login&quot;&gt;  &lt;label for=&quot;mail&quot;&gt;邮箱: &lt;/label&gt;  &lt;input type=&quot;email&quot; id=&quot;mail&quot; name=&quot;mail&quot;&gt;  &lt;br/&gt;  &lt;label for=&quot;pw&quot;&gt;密码:&lt;/label&gt;  &lt;input type=&quot;password&quot; id=&quot;pw&quot; name=&quot;pw&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;submit&quot; value=&quot;登录&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;checkbox&quot; id=&quot;ck&quot; name=&quot;ck&quot;&gt;  &lt;label for=&quot;ck&quot;&gt;记住我&lt;/label&gt;&lt;/form&gt;
-
-↓ 预览
-  邮箱: 
-  
-  
-  密码:
-  
-  
-  
-  
-  
-  记住我
-
-
-HTML &lt;form&gt; 元素用于收集信息并将其发送到外部源。
-Form 属性
-
-
-属性
-说明
-
-
-
-name
-脚本形式的名称
-
-
-action
-表单脚本的URL
-
-
-method
-HTTP方法，POST&#x2F;GET (默认)
-
-
-enctype
-介质类型，请参见enctype
-
-
-onsubmit
-提交表单时运行
-
-
-onreset
-在窗体重置时运行
-
-
-Label 标签&lt;!-- 嵌套标签 --&gt;&lt;label&gt;Click me &lt;input type=&quot;text&quot; id=&quot;user&quot; name=&quot;name&quot;/&gt;&lt;/label&gt;
-
-
-&lt;!-- &#x27;for&#x27; 属性 --&gt;&lt;label for=&quot;user&quot;&gt;Click me&lt;/label&gt;&lt;input id=&quot;user&quot; type=&quot;text&quot; name=&quot;name&quot;/&gt;
-
-for在标签中引用输入的id属性
-Input 标签&lt;label for=&quot;Name&quot;&gt;Name:&lt;/label&gt;&lt;input type=&quot;text&quot; name=&quot;Name&quot; id=&quot;&quot;&gt;
-
-↓ 预览
-  Username:
-  
-
-
-请参阅：HTML输入标记
-Textarea 标签&lt;textarea rows=&quot;2&quot; cols=&quot;30&quot; name=&quot;address&quot; id=&quot;address&quot;&gt;&lt;/textarea&gt;
-
-
-↓ 预览
-    
-
-
-Textarea 是一个多行文本输入控件
-Radio Buttons&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;m&quot;&gt;&lt;label for=&quot;m&quot;&gt;Male&lt;/label&gt;&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;f&quot;&gt;&lt;label for=&quot;f&quot;&gt;Female&lt;/label&gt;
-
-↓ 预览
-    
-    Male
-    
-    Female
-
-
-单选按钮用于让用户只选择一个
-Checkboxes&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;soc&quot;&gt;&lt;label for=&quot;soc&quot;&gt;Soccer&lt;/label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;bas&quot;&gt;&lt;label for=&quot;bas&quot;&gt;Baseball&lt;/label&gt;
-
-↓ 预览
-    
-    Soccer
-    
-    Baseball
-
-
-复选框允许用户选择一个或多个
-Select 标签&lt;label for=&quot;city&quot;&gt;City:&lt;/label&gt;&lt;select name=&quot;city&quot; id=&quot;city&quot;&gt;  &lt;option value=&quot;1&quot;&gt;Sydney&lt;/option&gt;  &lt;option value=&quot;2&quot;&gt;Melbourne&lt;/option&gt;  &lt;option value=&quot;3&quot;&gt;Cromwell&lt;/option&gt;&lt;/select&gt;
-
-↓ 预览
-  City:
-  
-      Sydney
-      Melbourne
-      Cromwell
-  
-
-
-选择框是选项的下拉列表
-Fieldset 标签&lt;fieldset&gt;  &lt;legend&gt;Your favorite monster&lt;/legend&gt;  &lt;input type=&quot;radio&quot; id=&quot;kra&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;kraken&quot;&gt;Kraken&lt;/label&gt;&lt;br/&gt;  &lt;input type=&quot;radio&quot; id=&quot;sas&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;sas&quot;&gt;Sasquatch&lt;/label&gt;&lt;/fieldset&gt;
-
-↓ 预览
-
-  Your favorite monster
-  
-  Kraken
-  
-  Sasquatch
-
-
-
-数据列表标签（HTML5）&lt;label for=&quot;b&quot;&gt;Choose a browser: &lt;/label&gt;&lt;input list=&quot;list&quot; id=&quot;b&quot; name=&quot;browser&quot;/&gt;&lt;datalist id=&quot;list&quot;&gt;  &lt;option value=&quot;Chrome&quot;&gt;  &lt;option value=&quot;Firefox&quot;&gt;  &lt;option value=&quot;Internet Explorer&quot;&gt;  &lt;option value=&quot;Opera&quot;&gt;  &lt;option value=&quot;Safari&quot;&gt;  &lt;option value=&quot;Microsoft Edge&quot;&gt;&lt;/datalist&gt;
-
-↓ 预览
-  Choose a browser:
-  
-  
-    
-    
-    
-    
-    
-    
-  
-
-
-提交和重置按钮&lt;form action=&quot;register.php&quot; method=&quot;post&quot;&gt;  &lt;label for=&quot;foo&quot;&gt;Name:&lt;/label&gt;  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;foo&quot;&gt;  &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;  &lt;input type=&quot;reset&quot; value=&quot;重置&quot;&gt;&lt;/form&gt;
-
-↓ 预览
-  Name:
-  ]]></content>
-      <categories>
-        <category>前端技术</category>
-      </categories>
-      <tags>
-        <tag>前端技术</tag>
-        <tag>HTML</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 备忘录</title>
-    <url>/2025/01/08/javascript/</url>
-    <content><![CDATA[JavaScript 备忘清单包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。
-入门介绍JavaScript 是一种轻量级的解释型编程语言。
-
-JSON 备忘清单
-JavaScript 中的正则表达式
-TypeScript 备忘清单
-
-打印调试// =&gt; Hello world!console.log(&#x27;Hello world!&#x27;);// =&gt; Hello QuickReferenceconsole.warn(&#x27;hello %s&#x27;, &#x27;QuickReference&#x27;);// 将错误消息打印到 stderrconsole.error(new Error(&#x27;Oops!&#x27;));
-
-断点调试function potentiallyBuggyCode() &#123;  debugger;  // 做可能有问题的东西来检查，逐步通过等。&#125;
-
-debugger 语句调用任何可用的调试功能。
-数字let amount = 6;let price = 4.99;let home = 1e2;let num = 1_000_000; // 位数过多可以用 _ 分割let m = 0644;   // 八进制数字 420
-
-let 关键字let count; console.log(count); // =&gt; undefinedcount = 10;console.log(count); // =&gt; 10
-
-const 关键字const numberOfColumns = 4;// TypeError: Assignment to constant...numberOfColumns = 8;
-
-变量let x = null;let name = &quot;Tammy&quot;;const found = false;// =&gt; Tammy, false, nullconsole.log(name, found, x);var a;console.log(a); // =&gt; undefined
-
-字符串let single = &#x27;Wheres my bandit hat?&#x27;;let double = &quot;Wheres my bandit hat?&quot;;// =&gt; 21console.log(single.length);
-
-算术运算符5 + 5 = 10     // 加法 Addition10 - 5 = 5     // 减法 Subtraction5 * 10 = 50    // 乘法 Multiplication10 / 5 = 2     // 除法 Division10 % 5 = 0     // 取模 Modulo
-
-注释// 此行将表示注释/* 多行配置部署前必须更改以下配置。*/
-
-赋值运算符let number = 100;// 两个语句都会加 10number = number + 10;number += 10;console.log(number); // =&gt; 120
-
-字符串插值let age = 7;// 字符串拼接&#x27;Tommy is &#x27; + age + &#x27; years old.&#x27;;// 字符串插值`Tommy is $&#123;age&#125; years old.`;
-
-字符串
-
-var abc = &quot;abcdefghijklmnopqrstuvwxyz&quot;;var esc = &#x27;I don\&#x27;t \n know&#x27;;    // \n 换行var len = abc.length;            // 字符串长度abc.indexOf(&quot;lmno&quot;);             // 查找子字符串，如果不包含则 -1abc.lastIndexOf(&quot;lmno&quot;);         // 最后一次出现abc.slice(3, 6);                 // 去掉“def”，负值从后面计算abc.replace(&quot;abc&quot;,&quot;123&quot;);        // 查找和替换，接受正则表达式abc.toUpperCase();               // 转换为大写abc.toLowerCase();               // 转换为小写abc.concat(&quot; &quot;, str2);           // abc + &quot; &quot; + str2abc.charAt(2);                   // 索引处的字符：“c”abc[2];                          // 不安全，abc[2] = &quot;C&quot; 不起作用// 索引处的字符代码：“c”-&gt; 99abc.charCodeAt(2);// 用逗号分割字符串给出一个数组abc.split(&quot;,&quot;);// 分割字符abc.split(&quot;&quot;);// 匹配开头字符串,如果忽略第二个参数，则从索引 0 开始匹配abc.startsWith(&quot;bc&quot;, 1);// 匹配结尾的字符串,如果忽略第二个参数，则默认是原字符串长度abc.endsWith(&quot;wxy&quot;, abc.length - 1);// padEnd 和 padStart 都用于填充长度，默认填充对象是空格&quot;200&quot;.padEnd(5); // &quot;200  &quot;&quot;200&quot;.padEnd(5, &quot;.&quot;); // &quot;200..&quot;// 重复字符&quot;abc&quot;.repeat(2); // &quot;abcabc&quot;// trim、trimEnd 和 trimStart 用于去除首尾空格&quot; ab c &quot;.trim(); // &quot;ab c&quot;// 数字转为十六进制 (16)、八进制 (8) 或二进制 (2)(128).toString(16);
-
-数字
-
-var pi = 3.141;pi.toFixed(0);    // 返回 3             pi.toFixed(2);    // 返回 3.14 - 使用金钱pi.toPrecision(2) // 返回 3.1pi.valueOf();     // 返回号码Number(true);     // 转换为数字// 自 1970 年以来的毫秒数Number(new Date())          // 返回第一个数字：3parseInt(&quot;3 months&quot;);       // 返回 3.5parseFloat(&quot;3.5 days&quot;);     // 最大可能的 JS 数Number.MAX_VALUE            // 最小可能的 JS 编号Number.MIN_VALUE            // -无穷Number.NEGATIVE_INFINITY    // 无穷Number.POSITIVE_INFINITY    
-
-Mathconst pi = Math.PI; // 3.141592653589793Math.round(4.4); // = 4 - 数字四舍五入Math.round(4.5); // = 5Math.pow(2,8);   // = 256 - 2 的 8 次方    Math.sqrt(49);   // = 7 - 平方根Math.abs(-3.14); // = 3.14 - 绝对，正值Math.ceil(3.14); // = 4 - 返回 &gt;= 最小整数// = 3 - 返回 &lt;= 最大整数Math.floor(3.99);       // = 0 - 正弦Math.sin(0);            // OTHERS: tan,atan,asin,acos,余弦值Math.cos(Math.PI);      // = -2 - 最低值Math.min(0, 3, -2, 2);  // = 3 - 最高值Math.max(0, 3, -2, 2);  // = 0 自然对数Math.log(1);            // = 2.7182pow(E,x) 自然对数的底数Math.exp(1);            // 0 到 1 之间的随机数Math.random();          // 随机整数，从 1Math.floor(Math.random() * 5) + 1;  
-
-全局函数
-
-// 像脚本代码一样执行字符串eval();                     // 从数字返回字符串String(23);                 // 从数字返回字符串(23).toString();            // 从字符串返回数字Number(&quot;23&quot;);               // 解码 URI。 结果：“my page.asp”decodeURI(enc);             // 编码 URI。 结果：“my%20page.asp”encodeURI(uri);             // 解码 URI 组件decodeURIComponent(enc);    // 对 URI 组件进行编码encodeURIComponent(uri);    // 是一个有限的合法数isFinite();                 // 是一个非法数字isNaN();                    // 返回字符串的浮点数parseFloat();               // 解析一个字符串并返回一个整数parseInt();                 
-
-JavaScript 条件操作符
-
-true || false;       // true10 &gt; 5 || 10 &gt; 20;   // truefalse || false;      // false10 &gt; 100 || 10 &gt; 20; // false
-
-逻辑运算符 &amp;&amp;true &amp;&amp; true;        // true1 &gt; 2 &amp;&amp; 2 &gt; 1;      // falsetrue &amp;&amp; false;       // false4 === 4 &amp;&amp; 3 &gt; 1;    // true
-
-比较运算符1 &gt; 3                 // false3 &gt; 1                 // true250 &gt;= 250            // true1 === 1               // true1 === 2               // false1 === &#x27;1&#x27;             // false
-
-逻辑运算符let lateToWork = true;let oppositeValue = !lateToWork;// =&gt; falseconsole.log(oppositeValue); 
-
-空值合并运算符 ??null ?? &#x27;I win&#x27;;         //  &#x27;I win&#x27;undefined ?? &#x27;Me too&#x27;;   //  &#x27;Me too&#x27;false ?? &#x27;I lose&#x27;        //  false0 ?? &#x27;I lose again&#x27;      //  0&#x27;&#x27; ?? &#x27;Damn it&#x27;          //  &#x27;&#x27;
-
-if Statement (if 语句)const isMailSent = true;if (isMailSent) &#123;  console.log(&#x27;Mail sent to recipient&#x27;);&#125;
-
-Ternary Operator (三元运算符)var age = 1;// =&gt; truevar status = (age &gt;= 18) ? true : false;
-
-else ifconst size = 10;if (size &gt; 20) &#123;  console.log(&#x27;Medium&#x27;);&#125; else if (size &gt; 4) &#123;  console.log(&#x27;Small&#x27;);&#125; else &#123;  console.log(&#x27;Tiny&#x27;);&#125;// Print: Small
-
-&#x3D;&#x3D; vs &#x3D;&#x3D;&#x3D;0 == false     // true0 === false    // false, 不同类型1 == &quot;1&quot;       // true,  自动类型转换1 === &quot;1&quot;      // false, 不同类型null == undefined  // truenull === undefined // false&#x27;0&#x27; == false       // true&#x27;0&#x27; === false      // false
-
-== 只检查值，=== 检查值和类型。
-switch 语句const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;: console.log(&#x27;海的味道&#x27;);    break;  case &#x27;pizza&#x27;: console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
-
-switch 多 case - 单一操作const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;:  case &#x27;pizza&#x27;:    console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
-
-JavaScript Functions 函数函数// 定义函数：function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数：sum(3, 6); // 9
-
-匿名函数// 命名函数function rocketToMars() &#123;  return &#x27;BOOM!&#x27;;&#125;// 匿名函数const rocketToMars = function() &#123;  return &#x27;BOOM!&#x27;;&#125;
-
-箭头函数 (ES6)
-
-有两个参数const sum = (param1, param2) =&gt; &#123;   return param1 + param2; &#125;; console.log(sum(2,5)); // =&gt; 7 
-
-没有参数const printHello = () =&gt; &#123;   console.log(&#x27;hello&#x27;); &#125;; printHello(); // =&gt; hello
-
-只有一个参数const checkWeight = weight =&gt; &#123;   console.log(`Weight : $&#123;weight&#125;`); &#125;; checkWeight(25); // =&gt; Weight : 25 
-
-简洁箭头函数const multiply = (a, b) =&gt; a * b; // =&gt; 60 console.log(multiply(2, 30)); 
-
-从 ES2015 开始提供箭头函数
-返回关键字// 有 returnfunction sum(num1, num2) &#123;  return num1 + num2;&#125;// 该函数不输出总和function sum(num1, num2) &#123;  num1 + num2;&#125;
-
-调用函数// 定义函数function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数sum(2, 4); // 6
-
-立即执行函数//命名函数并立即执行一次(function sum(num1, num2) &#123;  return num1 + num2;&#125;)(2,4)//6
-
-函数表达式const dog = function() &#123;  return &#x27;Woof!&#x27;;&#125;
-
-函数参数// 参数是 namefunction sayHello(name) &#123;  return `Hello, $&#123;name&#125;!`;&#125;
-
-函数声明function add(num1, num2) &#123;  return num1 + num2;&#125;
-
-JavaScript 范围范围
-
-function myFunction() &#123;  var pizzaName = &quot;Margarita&quot;;  // 这里的代码可以使用 PizzaName  &#125;// ❌ PizzaName 不能在这里使用
-
-&#123; &#125; 块内声明的变量
-&#123;  let x = 2;&#125;// ❌ x 不能在这里使用&#123;  var x = 2;&#125;// ✅ x 能在这里使用
-
-var x = 2;       // Global scopelet x = 2;       // Global scopeconst x = 2;       // Global scope
-
-ES6 引入了两个重要的新 JavaScript 关键字：let 和 const。这两个关键字在 JavaScript 中提供了块作用域。
-块作用域变量const isLoggedIn = true;if (isLoggedIn == true) &#123;  const statusMessage = &#x27;Logged in.&#x27;;&#125;// Uncaught ReferenceError...// 未捕获的引用错误...console.log(statusMessage);
-
-全局变量// 全局声明的变量const color = &#x27;blue&#x27;;function printColor() &#123;  console.log(color);&#125;printColor(); // =&gt; blue
-
-let vs varfor (let i = 0; i &lt; 3; i++) &#123;  // 这是“let”的最大范围  // i 可以访问 ✔️&#125;// i 不能访问 ❌
-
-
-for (var i = 0; i &lt; 3; i++) &#123;  // i 可以访问 ✔️&#125;// i 可以访问 ✔️
-
-var 的范围是最近的函数块，而 let 的范围是最近的封闭块。
-带闭包的循环// 打印三次，不是我们的意思。for (var i = 0; i &lt; 3; i++) &#123;  setTimeout(_ =&gt; console.log(i), 10);&#125;
-
-
-// 按预期打印 0、1 和 2。for (let j = 0; j &lt; 3; j++) &#123;   setTimeout(_ =&gt; console.log(j), 10);&#125;
-
-变量使用 let 有自己的副本，变量有使用 var 的共享副本。
-JavaScript Arrays方法
-
-
-
-
-:-
-:-
-
-
-
-Array.from()
-类似数组对象创建一个新的 #
-
-
-Array.isArray()
-值是否是一个 Array #
-
-
-Array.of()
-创建一个新数组示例 #
-
-
-.at()
-返回值索引对应的元素 #
-
-
-.concat()
-合并两个或多个数组 #
-
-
-.copyWithin()
-浅复制替换某个位置 #
-
-
-.entries()
-新的 Array Iterator 对象 #
-
-
-.every()
-是否能通过回调函数的测试 #
-
-
-.fill()
-固定值填充一个数组中 #
-
-
-.filter()
-返回过滤后的数组 #
-
-
-.find()
-第一个元素的值 #
-
-
-.findIndex()
-第一个元素的索引 #
-
-
-.findLast()
-最后一个元素的值 #
-
-
-.findLastIndex()
-最后一个元素的索引 #
-
-
-.flat()
-扁平化嵌套数组 #
-
-
-.flatMap()
-与 flat 相同 #
-
-
-.forEach()
-升序循环执行 #
-
-
-.includes()
-是否包含一个指定的值 #
-
-
-.indexOf()
-找到给定元素的第一个索引 #
-
-
-.join()
-数组链接成一个字符串 #
-
-
-.keys()
-每个索引键 #
-
-
-.lastIndexOf()
-给定元素的最后一个索引 #
-
-
-.map()
-循环返回一个新数组 #
-
-
-.pop()
-删除最后一个元素 #
-
-
-.push()
-元素添加到数组的末尾 #
-
-
-.reduce()
-循环函数传递当前和上一个值 #
-
-
-.reduceRight()
-类似 reduce 从右往左循环 #
-
-
-.reverse()
-数组元素的位置颠倒 #
-
-
-.shift()
-删除第一个元素 #
-
-
-.slice()
-提取元素 #
-
-
-.some()
-至少有一个通过测试函数 #
-
-
-.sort()
-元素进行排序 #
-
-
-.splice()
-删除或替换或添加元素 #
-
-
-.toLocaleString()
-字符串表示数组中的元素 #
-
-
-.toString()
-返回字符串 #
-
-
-.unshift()
-元素添加到数组的开头 #
-
-
-.values()
-返回新的 ArrayIterator 对象 #
-
-
-数组const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];// 不同的数据类型const data = [1, &#x27;chicken&#x27;, false];
-
-属性 .lengthconst numbers = [1, 2, 3, 4];numbers.length // 4
-
-索引// 访问数组元素const myArray = [100, 200, 300];console.log(myArray[0]); // 100console.log(myArray[1]); // 200
-
-可变图表
-
-
-
-添加
-删除
+docker start nginx-server
 开始
-结束
 
+
+docker stop nginx-server
+停止
+
+
+docker restart nginx-server
+重启
+
+
+docker pause nginx-server
+暂停
+
+
+docker unpause nginx-server
+取消暂停
+
+
+docker wait nginx-server
+阻塞容器
+
+
+docker kill nginx-server
+发送 SIGKILL
+
+
+docker attach nginx-server
+连接到现有容器
+
+
+说明
+
+
+Example
+Description
+
+
+
+docker ps
+列出正在运行的容器
+
+
+docker ps -a
+列出所有容器
+
+
+docker logs nginx-server
+容器日志
+
+
+docker inspect nginx-server
+检查容器
+
+
+docker events nginx-server
+容器事件
+
+
+docker port nginx-server
+公共端口
+
+
+docker top nginx-server
+运行进程
+
+
+docker stats nginx-server
+容器资源使用
+
+
+docker diff nginx-server
+列出对容器所做的更改
+
+
+创建容器docker create [options] IMAGE  -a, --attach               # 附加标准输出/错误  -i, --interactive          # 附加标准输入（交互式）  -t, --tty                  # 伪终端 pseudo-tty      --name NAME            # 命名你的镜像  -p, --publish 5000:5000    # 端口映射（主机:容器）      --expose 5432          # 向容器公开端口   -P, --publish-all          # 发布所有端口      --link container:alias # 链接 linking  -v, --volume `pwd`:/app    # mount（需要绝对路径）  -e, --env NAME=hello       # 环境变量 env vars
+
+实例$ docker create --name my_redis --expose 6379 redis:3.0.2
+
+操控重命名容器
+docker rename my-nginx nginx-server
+
+移除容器
+docker rm nginx-server
+
+更新容器
+docker update --cpu-shares 512 -m 300M nginx-server
+
+Docker 镜像
+
+操控
+
+
+
+
+Example
+Description
+
+
+
+docker images
+列出镜像
+
+
+docker rmi nginx
+删除镜像
+
+
+docker load &lt; ubuntu.tar.gz
+加载一个 tarred 存储库
+
+
+docker load --input ubuntu.tar
+加载一个 tarred 存储库
+
+
+docker save busybox &gt; ubuntu.tar
+将镜像保存到 tar 存档
+
+
+docker history
+显示镜像的历史
+
+
+docker commit nginx my_nginx
+将容器另存为镜像
+
+
+docker tag nginx eon01/nginx
+标记镜像
+
+
+docker push eon01/nginx
+推送镜像
+
+
+构建镜像# 注意有的最后面是英文 .$ docker build .$ docker build github.com/creack/docker-firefox$ docker build - &lt; Dockerfile$ docker build - &lt; context.tar.gz$ docker build -t eon/nginx-server .$ docker build -f myOtherDockerfile .$ docker build --build-arg https_proxy=127.0.0.1:8088 # 使用http代理构建$ curl example.com/remote/Dockerfile | docker build -f - .$ docker save -o &lt;保存路径&gt;/myimage.tar myimage:latest # 导出$ docker load -i &lt;路径&gt;/myimage.tar # 导入
+
+删除 &lt;none&gt; 镜像$ docker rmi -f $(docker images | grep &quot;none&quot; | awk &#x27;&#123;print $3&#125;&#x27;)
+
+Docker 网络
+
+创建网络docker network create -d overlay MyOverlayNetworkdocker network create -d bridge MyBridgeNetwork
+
+自定义网络子网和网关
+docker network create -d overlay \  --subnet=192.168.0.0/16 \  --subnet=192.170.0.0/16 \  --gateway=192.168.0.100 \  --gateway=192.170.0.100 \  --ip-range=192.168.1.0/24 \  --aux-address=&quot;my-router=192.168.1.5&quot; \  --aux-address=&quot;my-switch=192.168.1.6&quot; \  --aux-address=&quot;my-printer=192.170.1.5&quot; \  --aux-address=&quot;my-nas=192.170.1.6&quot; \  MyOverlayNetwork
+
+操作
+
+获取容器连接的网络
+docker inspect MyContainer | grep Network
+
+获取有关网络的信息
+docker network inspect &lt;network_name&gt;
+
+将正在运行的容器连接到网络
+docker network connect &lt;network_name&gt; &lt;container_name&gt;
+
+启动时将容器连接到网络
+docker run -it -d --network=&lt;network_name&gt; &lt;container_name&gt;
+
+断开容器与网络的连接
+docker network disconnect &lt;network_name&gt; &lt;container_name&gt;
+
+删除网络docker network rm &lt;network_name&gt;
+
+列出网络docker network ls
+
+Docker 快捷键需要特别注意的是，退出快捷键中的删除容器实例，只对于使用 docker attach 进入的容器生效，使用 docker exec 进入容器后，使用上面的快捷键后将隔离容器，且不会删除容器实例。
+退出 - 关闭容器
+
+
+Docker 快捷键
+说明
+
+
+
+ctrl c
+将关闭容器
+
+
+
+
+将关闭容器, 并删除当前的容器实例
+退出 - 保留容器
+
+
+Docker 快捷键
+说明
+
+
+
+ctrl d
+保留容器
+
+
+
+
+将保留容器，并退出到Docker主机的命令行界面
+退出 - 容器分离
+
+
+Docker 快捷键
+说明
+
+
+
+ctrl p q
+容器分离
+
+
+
+
+将容器分离，保留容器，但是不退出
+各种各样的
+
+Docker Hub$ docker search search_word  # 在 docker hub 中搜索镜像$ docker pull user/image     # 从 docker hub 下载镜像$ docker login               # 向 docker hub 进行身份验证$ docker push user/image     # 将镜像上传到 docker hub
+
+镜像仓库命令
+
+登录到镜像仓库
+$ docker login$ docker login localhost:8080
+
+从镜像仓库注销
+$ docker logout$ docker logout localhost:8080
+
+搜索镜像
+$ docker search nginx$ docker search nginx --stars=3 --no-trunc busybox
+
+拉取镜像
+$ docker pull nginx$ docker pull eon01/nginx localhost:5000/myadmin/nginx
+
+推送镜像
+$ docker push eon01/nginx$ docker push eon01/nginx localhost:5000/myadmin/nginx
+
+批量清除
+
+
+实例
+说明
+
+
+
+docker stop -f $(docker ps -a -q)
+停止所有容器
+
+
+docker rm -f $(docker ps -a -q)
+删除所有容器
+
+
+docker rmi -f $(docker images -q)
+删除所有镜像
+
+
+docker volume prune
+删除所有未使用的Docker Volume
+
+
+docker network prune
+删除所有未使用的Docker网络
+
+
+docker system prune
+清理所有空闲或与任何Docker容器无关的资源
+
+
+docker image prune
+删除悬空的Docker镜像
+
+
+docker container prune
+删除所有未使用的Docker 容器
+
+
+
+
+卷 volume$ docker volume ls    # 检查卷$ docker volume prune # 清理未使用的卷
+
+Docker Compose
+
+
+
+
+:-
+:-
+
+
+
+docker-compose up
+创建和启动容器
+
+
+docker-compose up -d
+以分离模式创建和启动容器
+
+
+docker-compose down
+停止和删除容器、网络、映像和卷
+
+
+docker-compose logs
+查看容器的输出
+
+
+docker-compose restart
+重启所有服务
+
+
+docker-compose pull
+拉取所有服务的镜像
+
+
+docker-compose build
+构建所有服务的镜像
+
+
+docker-compose config
+验证并查看 Compose 文件
+
+
+docker-compose scale &lt;service_name&gt;=&lt;replica&gt;
+为服务指定容器个数
+
+
+docker-compose top
+显示正在运行的进程
+
+
+docker-compose run -rm -p 2022:22 web bash
+启动 Web 服务并运行 bash 作为其命令，删除旧容器
+
+
+
+
+Docker Services
+
+
+:-
+:-
+
+
+
+docker service create &lt;options&gt; &lt;image&gt; &lt;command&gt;
+创建新服务
+
+
+docker service inspect --pretty &lt;service_name&gt;
+显示详细信息服务
+
+
+docker service ls
+列出服务
+
+
+docker service ps
+列出服务的任务
+
+
+docker service scale &lt;service_name&gt;=&lt;replica&gt;
+规模特殊服务
+
+
+docker service update &lt;options&gt; &lt;service_name&gt;
+更新服务选项
+
+
+
+
+Docker Stack
+
+
+
+
+:-
+:-
+
+
+
+docker stack ls
+列出此 Docker 主机上所有正在运行的应用程序
+
+
+docker stack deploy -c &lt;composefile&gt; &lt;appname&gt;
+运行指定的 Compose 文件
+
+
+docker stack services &lt;appname&gt;
+列出与应用关联的服务
+
+
+docker stack ps &lt;appname&gt;
+列出与应用关联的正在运行的容器
+
+
+docker stack rm &lt;appname&gt;
+拆掉一个应用程序
+
+
+
+
+Docker Machine
+
+
+
+
+:-
+:-
+
+
+
+docker-machine create --driver virtualbox myvm1
+创建虚拟机（Mac、Win7、Linux）
+
+
+docker-machine create -d hyperv --hyperv-virtual-switch &quot;myswitch&quot; myvm1
+Win10
+
+
+docker-machine env myvm1
+查看有关您的节点的基本信息
+
+
+docker-machine ssh myvm1 &quot;docker node ls&quot;
+列出集群中的节点
+
+
+docker-machine ssh myvm1 &quot;docker node inspect &lt;node ID&gt;&quot;
+检查节点
+
+
+docker-machine ssh myvm1 &quot;docker swarm join-token -q worker&quot;
+查看加入令牌
+
+
+docker-machine ssh myvm1
+打开与 VM 的 SSH 会话； 输入“exit”结束
+
+
+docker-machine ssh myvm2 &quot;docker swarm leave&quot;
+让工人离开群体
+
+
+docker-machine ssh myvm1 &quot;docker swarm leave -f&quot;
+让主人离开，杀群
+
+
+docker-machine start myvm1
+启动当前未运行的 VM
+
+
+docker-machine stop $(docker-machine ls -q)
+停止所有正在运行的虚拟机
+
+
+docker-machine rm $(docker-machine ls -q)
+删除所有虚拟机及其磁盘映像
+
+
+docker-machine scp docker-compose.yml myvm1:~
+将文件复制到节点的主目录
+
+
+docker-machine ssh myvm1 &quot;docker stack deploy -c &lt;file&gt; &lt;app&gt;&quot;
+部署应用
+
+
+
+
+docker 主要命令
+
+
+
+
+:-
+:-
+
+
+
+attach
+将本地标准输入、输出和错误流附加到正在运行的容器
+
+
+build
+从 Dockerfile 构建镜像
+
+
+commit
+从容器的更改创建新镜像
+
+
+cp
+在容器和本地文件系统之间复制文件&#x2F;文件夹
+
+
+create
+创建一个新容器
+
+
+diff
+检查容器文件系统上文件或目录的更改
+
+
+events
+从服务器获取实时事件
+
+
+exec
+在正在运行的容器中运行命令
+
+
+export
+将容器的文件系统导出为 tar 存档
+
+
+history
+显示镜像的历史
+
+
+images
+列出镜像
+
+
+import
+从 tarball 导入内容以创建文件系统映像
+
+
+info
+显示系统范围的信息
+
+
+inspect
+返回有关 Docker 对象的低级信息
+
+
+kill
+杀死一个或多个正在运行的容器
+
+
+load
+从 tar 存档或 STDIN 加载镜像
+
+
+login
+登录到 Docker 注册表
+
+
+logout
+从 Docker 注册表中注销
+
+
+logs
+获取容器的日志
+
+
+pause
+暂停一个或多个容器内的所有进程
+
+
+port
+列出容器的端口映射或特定映射
+
+
+ps
+列出容器
+
+
+pull
+从注册表中提取镜像或存储库
 
 
 push
-✅
+将镜像或存储库推送到注册表
 
 
-✅
+rename
+重命名容器
 
 
-pop
+restart
+重启一个或多个容器
 
-✅
 
-✅
+rm
+移除一个或多个容器
 
 
-unshift
-✅
+rmi
+移除一张或多张镜像
 
-✅
 
+run
+在新容器中运行命令
 
 
-shift
+save
+将一个或多个镜像保存到 tar 存档（默认流式传输到 STDOUT）
 
-✅
-✅
 
+search
+在 Docker Hub 中搜索镜像
 
 
+start
+启动一个或多个停止的容器
 
 
-方法 .push()// 添加单个元素：const cart = [&#x27;apple&#x27;, &#x27;orange&#x27;];cart.push(&#x27;pear&#x27;); // 添加多个元素：const numbers = [1, 2];numbers.push(3, 4, 5);
+stats
+显示容器资源使用统计的实时流
 
-将项目添加到末尾并返回新的数组长度。
-方法 .pop()const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];const fruit = fruits.pop(); // &#x27;banana&#x27;console.log(fruits); // [&quot;apple&quot;, &quot;dew&quot;]
 
-从末尾删除一个项目并返回已删除的项目。
-方法 .shift()const array1 = [1, 2, 3];const firstElement = array1.shift();console.log(array1); // 输出: Array [2, 3]console.log(firstElement); // 输出: 1
+stop
+停止一个或多个正在运行的容器
 
-从头删除一个项目并返回已删除的项目。
-方法 .some()const array = [1, 2, 3, 4, 5];// 检查元素是否为偶数const even = (element) =&gt; element % 2 === 0;console.log(array.some(even));// 预期输出: true
 
-方法 .concat()const numbers = [3, 2, 1]const newFirstNumber = 4    // =&gt; [ 4, 3, 2, 1 ][newFirstNumber].concat(numbers)    // =&gt; [ 3, 2, 1, 4 ]numbers.concat(newFirstNumber)
+tag
+创建一个引用 SOURCE_IMAGE 的标记 TARGET_IMAGE
 
-如果你想避免改变你的原始数组，你可以使用 concat。
-方法 .splice()const months = [&#x27;Jan&#x27;, &#x27;March&#x27;];months.splice(1, 0, &#x27;Feb&#x27;);// 在索引 1 处插入console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;]months.splice(2, 1, &#x27;May&#x27;);// 替换索引 2 处的 1 个元素console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;May&quot;]
 
-方法 .unshift()let cats = [&#x27;Bob&#x27;];// =&gt; [&#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Willy&#x27;);// =&gt; [&#x27;Puff&#x27;, &#x27;George&#x27;, &#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Puff&#x27;, &#x27;George&#x27;);
+top
+显示容器的运行进程
 
-将项目添加到开头并返回新的数组长度。
-方法 .filter()const words = [&#x27;js&#x27;, &#x27;java&#x27;, &#x27;golang&#x27;];const result = words.filter(word =&gt; &#123;  return  word.length &gt; 3&#125;);console.log(result);// 预期输出: Array [&quot;java&quot;, &quot;golang&quot;]
 
-JavaScript 循环While 循环while (condition) &#123;  // 要执行的代码块&#125;let i = 0;while (i &lt; 5) &#123;          console.log(i);  i++;&#125;
+unpause
+取消暂停一个或多个容器中的所有进程
 
-反向循环const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;berry&quot;];for (let i = fruits.length - 1; i &gt;= 0; i--) &#123;  console.log(`$&#123;i&#125;. $&#123;fruits[i]&#125;`);&#125;// =&gt; 2. berry// =&gt; 1. dew// =&gt; 0. apple
 
-Do…While 语句x = 0i = 0do &#123;  x = x + i;  console.log(x)  i++;&#125; while (i &lt; 5);// =&gt; 0 1 3 6 10
+update
+更新一个或多个容器的配置
 
-For 循环for (let i = 0; i &lt; 4; i += 1) &#123;  console.log(i);&#125;;// =&gt; 0, 1, 2, 3
 
-遍历数组for (let i = 0; i &lt; array.length; i++)&#123;  console.log(array[i]);&#125;// =&gt; 数组中的每一项
+version
+显示 Docker 版本信息
 
-Breakfor (let i = 0; i &lt; 99; i += 1) &#123;  if (i &gt; 5) break;  console.log(i)&#125;// =&gt; 0 1 2 3 4 5
 
-Continuefor (i = 0; i &lt; 10; i++) &#123;  if (i === 3) &#123;    continue;  &#125;  text += &quot;The number is &quot; + i + &quot;&lt;br&gt;&quot;;&#125;
+wait
+阻塞直到一个或多个容器停止，然后打印它们的退出代码
 
-嵌套循环for (let i = 0; i &lt; 2; i += 1) &#123;  for (let j = 0; j &lt; 3; j += 1) &#123;    console.log(`$&#123;i&#125;-$&#123;j&#125;`);  &#125;&#125;
 
-for…in 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let index in fruits) &#123;  console.log(index);&#125;// =&gt; 0// =&gt; 1// =&gt; 2
 
-label 语句
 
-var num = 0;outPoint:for(var i = 0; i &lt; 10; i++) &#123;  for(var j = 0; j &lt; 10; j++) &#123;    if(i == 5 &amp;&amp; j == 5) &#123;      continue outPoint;    &#125;    num++;  &#125;&#125;alert(num);  // 95
-
-从 alert(num) 的值可以看出，continue outPoint; 语句的作用是跳出当前循环，并跳转到 outPoint（标签）下的 for 循环继续执行。
-for…of 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let fruit of fruits) &#123;  console.log(fruit);&#125;// =&gt; apple// =&gt; orange// =&gt; banana
-
-for await…of
-
-async function* asyncGenerator() &#123;  var i = 0;  while (i &lt; 3) &#123;    yield i++;  &#125;&#125;(async function() &#123;  for await (num of asyncGenerator()) &#123;    console.log(num);  &#125;&#125;)();// 0// 1// 2
-
-可选的 for 表达式var i = 0;for (;;) &#123;  if (i &gt; 3) break;  console.log(i);  i++;&#125;
-
-JavaScript 迭代器(Iterators)
-
-分配给变量的函数let plusFive = (number) =&gt; &#123;  return number + 5;  &#125;;// f 被赋值为 plusFivelet f = plusFive;plusFive(3); // 8// 由于 f 具有函数值，因此可以调用它。f(9); // 14
-
-回调函数const isEven = (n) =&gt; &#123;  return n % 2 == 0;&#125;let printMsg = (evenFunc, num) =&gt; &#123;  const isNumEven = evenFunc(num);  console.log(`$&#123;num&#125; is an even number: $&#123;isNumEven&#125;.`)&#125;// Pass in isEven as the callback functionprintMsg(isEven, 4); // =&gt; The number 4 is an even number: True.
-
-数组方法 .reduce()const numbers = [1, 2, 3, 4];const sum = numbers.reduce((accumulator, curVal) =&gt; &#123;    return accumulator + curVal;&#125;);console.log(sum); // 10
-
-数组方法 .map()const members = [&quot;Taylor&quot;, &quot;Donald&quot;, &quot;Don&quot;, &quot;Natasha&quot;, &quot;Bobby&quot;];const announcements = members.map((member) =&gt; &#123;  return member + &quot; joined the contest.&quot;;&#125;);console.log(announcements);
-
-数组方法 .forEach()const numbers = [28, 77, 45, 99, 27];numbers.forEach(number =&gt; &#123;    console.log(number);&#125;); 
-
-数组方法 .filter()const randomNumbers = [4, 11, 42, 14, 39];const filteredArray = randomNumbers.filter(n =&gt; &#123;    return n &gt; 5;&#125;);
-
-JavaScript 对象(Objects)
-
-访问属性const apple = &#123;   color: &#x27;Green&#x27;,  price: &#123; bulk: &#x27;$3/kg&#x27;, smallQty: &#x27;$4/kg&#x27; &#125;&#125;;console.log(apple.color);      // =&gt; Greenconsole.log(apple.price.bulk); // =&gt; $3/kg
-
-命名属性// 无效键名示例const trainSchedule = &#123;  // 由于单词之间的空格而无效。  platform num: 10,   // 表达式不能是键。  40 - 10 + 2: 30,  // 除非用引号括起来，否则 + 号无效。  +compartment: &#x27;C&#x27;&#125;
-
-不存在的属性const classElection = &#123;  date: &#x27;January 12&#x27;&#125;;console.log(classElection.place); // undefined
-
-可变的
-
-const student = &#123;  name: &#x27;Sheldon&#x27;,  score: 100,  grade: &#x27;A&#x27;,&#125;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, score: 100, grade: &#x27;A&#x27; &#125;delete student.scorestudent.grade = &#x27;F&#x27;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, grade: &#x27;F&#x27; &#125;student = &#123;&#125;// TypeError: TypeError：分配给常量变量。
-
-赋值简写语法const person = &#123;  name: &#x27;Tom&#x27;,  age: &#x27;22&#x27;,&#125;;const &#123;name, age&#125; = person;console.log(name); // &#x27;Tom&#x27;console.log(age);  // &#x27;22&#x27;
-
-删除运算符const person = &#123;  firstName: &quot;Matilda&quot;,  hobby: &quot;knitting&quot;,  goal: &quot;learning JavaScript&quot;&#125;;delete person.hobby; // 或 delete person[&#x27;hobby&#x27;];console.log(person);/*&#123;  firstName: &quot;Matilda&quot;  goal: &quot;learning JavaScript&quot;&#125; */
-
-对象作为参数const origNum = 8;const origObj = &#123;color: &#x27;blue&#x27;&#125;;const changeItUp = (num, obj) =&gt; &#123;  num = 7;  obj.color = &#x27;red&#x27;;&#125;;changeItUp(origNum, origObj);// 将输出 8，因为整数是按值传递的。console.log(origNum);// 由于传递了对象，将输出“red”// 通过引用，因此是可变的。console.log(origObj.color);
-
-工厂函数
-
-// 一个接受 &#x27;name&#x27;，&#x27;age&#x27; 和 &#x27;breed&#x27; 的工厂函数，//  参数返回一个自定义的 dog 对象。const dogFactory = (name, age, breed) =&gt; &#123;  return &#123;    name: name,    age: age,    breed: breed,    bark() &#123;      console.log(&#x27;Woof!&#x27;);      &#125;  &#125;;&#125;;
-
-速记对象创建const activity = &#x27;Surfing&#x27;;const beach = &#123; activity &#125;;console.log(beach); // &#123; activity: &#x27;Surfing&#x27; &#125;
-
-this 关键字const cat = &#123;  name: &#x27;Pipey&#x27;,  age: 8,  whatName() &#123;    return this.name    &#125;&#125;;console.log(cat.whatName()); // =&gt; Pipey
-
-方法const engine = &#123;  // 方法简写，有一个参数  start(adverb) &#123;    console.log(`The engine starts up $&#123;adverb&#125;...`);  &#125;,    // 不带参数的匿名箭头函数表达式  sputter: () =&gt; &#123;    console.log(&#x27;The engine sputters...&#x27;);  &#125;,&#125;;engine.start(&#x27;noisily&#x27;);engine.sputter();
-
-Getters 和 settersconst myCat = &#123;  _name: &#x27;Dottie&#x27;,  get name() &#123;    return this._name;    &#125;,  set name(newName) &#123;    this._name = newName;    &#125;&#125;;// 引用调用 getterconsole.log(myCat.name);// 赋值调用 settermyCat.name = &#x27;Yankee&#x27;;
-
-ProxyProxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
-// 用于拦截对象的读取属性操作。const handler = &#123;    get: function(obj, prop) &#123;        return prop in obj ? obj[prop] : 37;    &#125;&#125;;const p = new Proxy(&#123;&#125;, handler);p.a = 1;p.b = undefined;console.log(p.a, p.b);      // 1, undefinedconsole.log(&#x27;c&#x27; in p, p.c); // false, 37
-
-语法const p = new Proxy(target, handler)
-
-
-target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
-handler 一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。
-
-方法
+docker 管理命令
 
 
 :-
@@ -3964,804 +3828,787 @@ handler 一个通常以函数作为属性的对象，各属性中的函数分别
 
 
 
-Proxy.revocable()
-创建一个可撤销的Proxy对象 #
+docker builder
+管理构建
 
 
-handler 对象的方法
+docker buildx*
+Docker Buildx（Docker Inc.，v0.7.1）
 
 
-:-
-:-
+docker compose*
+Docker Compose（Docker Inc.，v2.2.3）
 
 
+docker config
+管理 Docker 配置
 
-handler.getPrototypeOf()
-Object.getPrototypeOf 方法的捕捉器 #
 
+docker container
+管理容器
 
-handler.setPrototypeOf()
-Object.setPrototypeOf 方法的捕捉器 #
 
+docker context
+管理上下文
 
-handler.isExtensible()
-Object.isExtensible 方法的捕捉器 #
 
+docker image
+管理镜像
 
-handler.preventExtensions()
-Object.preventExtensions 方法的捕捉器 #
 
+docker manifest
+管理 Docker 镜像清单和清单列表
 
-handler.getOwnPropertyDescriptor()
-Object.getOwnPropertyDescriptor 方法的捕捉器 #
 
+docker network
+管理网络
 
-handler.defineProperty()
-Object.defineProperty 方法的捕捉器 #
 
+docker node
+管理 Swarm 节点
 
-handler.has()
-in 操作符的捕捉器 #
 
+docker plugin
+管理插件
 
-handler.get()
-属性读取操作的捕捉器 #
 
+docker scan*
+Docker 扫描（Docker Inc.，v0.16.0）
 
-handler.set()
-属性设置操作的捕捉器 #
 
+docker secret
+管理 Docker 机密
 
-handler.deleteProperty()
-delete 操作符的捕捉器 #
 
+docker service
+管理服务
 
-handler.ownKeys()
-Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器 #
 
+docker stack
+管理 Docker 堆栈
 
-handler.apply()
-函数调用操作的捕捉器 #
 
+docker swarm
+管理群
 
-handler.construct()
-new 操作符的捕捉器 #
 
+docker system
+管理 Docker
 
 
+docker trust
+管理对 Docker 映像的信任
 
-ReflectReflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。这些方法与proxy handlers (en-US)的方法相同。Reflect不是一个函数对象，因此它是不可构造的。
-// 检测一个对象是否存在特定属性const duck = &#123;  name: &#x27;Maurice&#x27;,  color: &#x27;white&#x27;,  greeting: function() &#123;    console.log(`Quaaaack! My name is $&#123;this.name&#125;`);  &#125;&#125;Reflect.has(duck, &#x27;color&#x27;);// trueReflect.has(duck, &#x27;haircut&#x27;);// false
 
-静态方法
+docker volume
+管理卷
 
 
-:-
-:-
 
 
+docker 全局参数    --config string     # 客户端配置文件的位置（默认“~/.docker”）-c, --context string    # 用于连接到守护程序的上下文的名称（                        # 覆盖 DOCKER_HOST 环境变量和使用                        # “docker context use” 设置的默认上下文）-D, --debug             # 启用调试模式-H, --host list         # 要连接的守护进程套接字-l, --log-level string  # 设置日志级别        # （默认“info”） (&quot;debug&quot;|&quot;info&quot;|&quot;warn&quot;|&quot;error&quot;|&quot;fatal&quot;)     --tls               # 使用 TLS； 由 --tlsverify 暗示    --tlscacert string  # 仅由该 CA 签署的信任证书        #（默认为“~/.docker/ca.pem”）    --tlscert string    # TLS证书文件路径        #（默认“~/.docker/cert.pem”）    --tlskey string     # TLS 密钥文件的路径        #（默认为“~/.docker/key.pem”）    --tlsverify         # 使用 TLS 并验证远程-v, --version           # 打印版本信息并退出
 
-Reflect.apply(target, thisArgument, argumentsList)
-对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 Function.prototype.apply() 功能类似 #
+docker images-a, --all             显示所有镜像（默认隐藏中间镜像）    --digests         显示摘要-f, --filter filter   根据提供的条件过滤输出    --format string   使用 Go 模板打印漂亮的镜像    --no-trunc        不要截断输出-q, --quiet           仅显示镜像 ID
 
+docker run&#x2F;create
 
-Reflect.construct(target, argumentsList[, newTarget])
-对构造函数进行 new 操作，相当于执行 new target(…args) #
+    --add-host list            # 添加自定义主机到 IP 映射 (host:ip)-a, --attach list              # 连接到 STDIN、STDOUT 或 STDERR    --blkio-weight uint16      # 块 IO（相对权重），介于 10 和 1000 之间，或 0 禁用（默认 0）    --blkio-weight-device list # 块 IO 权重（相对设备权重）（默认 []）    --cap-add list             # 添加 Linux 功能    --cap-drop list            # 放弃 Linux 功能    --cgroup-parent string     # 容器的可选父 cgroup    --cgroupns string          # 要使用的 Cgroup 命名空间（主机|私有）                               #  &#x27;host&#x27;:    在 Docker 主机的 cgroup 命名空间中运行容器                               #  &#x27;private&#x27;: 在自己的私有 cgroup 命名空间中运行容器                               #  &#x27;&#x27;:        使用由守护进程上的                                #        default-cgroupns-mode 选项配置的 cgroup 命名空间（默认）    --cidfile string           # 将容器 ID 写入文件    --cpu-period int           # 限制 CPU CFS（完全公平调度器）周期    --cpu-quota int            # 限制 CPU CFS（完全公平调度器）配额    --cpu-rt-period int        # 以微秒为单位限制 CPU 实时周期    --cpu-rt-runtime int       # 以微秒为单位限制 CPU 实时运行时间-c, --cpu-shares int           # CPU 份额（相对权重）    --cpus decimal             # CPU 数量    --cpuset-cpus string       # 允许执行的 CPU (0-3, 0,1)    --cpuset-mems string       # 允许执行的 MEM (0-3, 0,1)    --device list              # 将主机设备添加到容器    --device-cgroup-rule list  # 将规则添加到 cgroup 允许的设备列表    --device-read-bps list     # 限制设备的读取速率（每秒字节数）（默认 []）    --device-read-iops list    # 限制设备的读取速率（每秒 IO）（默认 []）    --device-write-bps list    # 限制设备的写入速率（每秒字节数）（默认 []）    --device-write-iops list   # 限制设备的写入速率（每秒 IO）（默认 []）    --disable-content-trust    # 跳过镜像验证（默认为 true）    --dns list                 # 设置自定义 DNS 服务器    --dns-option list          # 设置 DNS 选项    --dns-search list          # 设置自定义 DNS 搜索域    --domainname string        # 容器 NIS 域名    --entrypoint string        # 覆盖镜像的默认入口点-e, --env list                 # 设置环境变量    --env-file list            # 读入环境变量文件    --expose list              # 公开一个端口或一系列端口    --gpus gpu-request         # 要添加到容器中的 GPU 设备（“全部”以传递所有 GPU）    --group-add list           # 添加其他组以加入    --health-cmd string        # 运行以检查运行状况的命令    --health-interval duration # 运行检查之间的时间 (ms|s|m|h) (默认 0s)    --health-retries int           # 需要报告不健康的连续失败    --health-start-period duration # 开始健康重试倒计时之前容器初始化的开始时间（ms|s|m|h）（默认 0s）    --health-timeout duration      # 允许运行一项检查的最长时间 (ms|s|m|h) (默认 0s)    --help                     # 打印使用-h, --hostname string          # 容器主机名    --init                     # 在容器内运行一个 init 来转发信号并收获进程-i, --interactive              # 即使没有连接，也保持 STDIN 打开    --ip string                # IPv4 地址（例如 172.30.100.104）    --ip6 string               # IPv6 地址（例如，2001:db8::33）    --ipc string               # 要使用的 IPC 模式    --isolation string         # 容器隔离技术    --kernel-memory bytes      # 内核内存限制-l, --label list               # 在容器上设置元数据    --label-file list          # 读入以行分隔的标签文件    --link list                # 添加到另一个容器的链接    --link-local-ip list       # 容器 IPv4/IPv6 链路本地地址    --log-driver string        # 容器的日志记录驱动程序    --log-opt list             # 日志驱动程序选项    --mac-address string       # 容器 MAC 地址（例如 92:d0:c6:0a:29:33）-m, --memory bytes             # 内存限制    --memory-reservation bytes # 内存软限制    --memory-swap bytes        # 交换限制等于内存加上交换：&#x27;-1&#x27; 启用无限交换    --memory-swappiness int    # 调整容器内存交换（0 到 100）（默认 -1）    --mount mount              # 将文件系统挂载附加到容器    --name string              # 为容器分配名称    --network network          # 将容器连接到网络    --network-alias list       # 为容器添加网络范围的别名    --no-healthcheck           # 禁用任何容器指定的 HEALTHCHECK    --oom-kill-disable         # 禁用 OOM 杀手    --oom-score-adj int        # 调整主机的 OOM 首选项（-1000 到 1000）    --pid string               # 要使用的 PID 命名空间    --pids-limit int           # 调整容器 pids 限制（设置 -1 表示无限制）    --platform string          # 如果服务器支持多平台，则设置平台    --privileged               # 授予此容器扩展权限-p, --publish list             # 将容器的端口发布到主机-P, --publish-all              # 将所有暴露的端口发布到随机端口    --pull string              # 创建前拉取镜像(&quot;always&quot;|&quot;missing&quot;|&quot;never&quot;)(默认&quot;missing&quot;)    --read-only                # 将容器的根文件系统挂载为只读    --restart string           # 容器退出时应用的重启策略（默认“否”）    --rm                       # 容器退出时自动移除    --runtime string           # 用于此容器的运行时    --security-opt list        # 安全选项    --shm-size bytes           # /dev/shm 的大小    --stop-signal string       # 停止容器的信号（默认“SIGTERM”）    --stop-timeout int         # 停止容器的超时（以秒为单位）    --storage-opt list         # 容器的存储驱动程序选项    --sysctl map               # Sysctl 选项（默认 map[]）    --tmpfs list               # 挂载 tmpfs 目录-t, --tty                      # 分配一个伪 TTY    --ulimit ulimit            # ulimit 选项（默认 []）-u, --user string              # 用户名或 UID（格式：&lt;name|uid&gt;[:&lt;group|gid&gt;]）    --userns string            # 要使用的用户命名空间    --uts string               # 要使用的 UTS 命名空间-v, --volume list              # 绑定挂载卷    --volume-driver string     # 容器的可选卷驱动程序    --volumes-from list        # 从指定容器挂载卷-w, --workdir string           # 容器内的工作目录
 
+run&#x2F;create 大部分参数一致
+修改Docker镜像拉取地址您可以通过修改daemon配置文件&#x2F;etc&#x2F;docker&#x2F;daemon.json来使用加速器
+sudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;&#123;  &quot;registry-mirrors&quot;: [&quot;https://1ojaslt1.mirror.aliyuncs.com&quot;]&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker
 
-Reflect.defineProperty(target, propertyKey, attributes)
-和 Object.defineProperty() 类似。如果设置成功就会返回 true #
+修改 Docker 数据存储路径
 
 
-Reflect.deleteProperty(target, propertyKey)
-作为函数的delete操作符，相当于执行 delete target[name] #
+停止 Docker 服务：
+  sudo systemctl stop docker
 
+将现有的 Docker 数据移动到新的目录：
+  sudo mv /var/lib/docker /new/path/docker
 
-Reflect.get(target, propertyKey[, receiver])
-获取对象身上某个属性的值，类似于 target[name] #
+更新 Docker 的配置文件 /etc/docker/daemon.json，添加或修改 data-root 选项：
+  &#123; &quot;data-root&quot;: &quot;/new/path/docker&quot; &#125;
 
+重新启动 Docker 服务：
+  sudo systemctl start docker
 
-Reflect.getOwnPropertyDescriptor(target, propertyKey)
-类似于 Object.getOwnPropertyDescriptor()。如果对象中存在该属性，则返回对应的属性描述符，否则返回 undefined #
 
 
-Reflect.getPrototypeOf(target)
-类似于 Object.getPrototypeOf() #
+⚠️注意：当你执行此操作时，旧的容器和镜像可能无法正常工作，因为它们的路径已更改。建议在部署 Docker 时执行此操作，以避免这些问题。如有必要，重新启动容器或重新创建它们，以确保它们的配置指向新的路径。
+Docker降级版本的方法yum downgrade --setopt=obsoletes=0 \    -y docker-ce-$&#123;version&#125; docker-ce-selinux-$&#123;version&#125;
 
+$&#123;version&#125; 指定要降级的版本
+Docker 常用示例
 
-Reflect.has(target, propertyKey)
-判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同 #
+Docker Web 管理工具 portainer$ docker run -d --name portainer \  -p 8000:8000 \  -p 9443:9443 \  --restart=always \  -v /var/run/docker.sock:/var/run/docker.sock \  -v $HOME/portainer:/data \    portainer/portainer-ee:latest
 
+Nginx
 
-Reflect.isExtensible(target)
-类似于 Object.isExtensible() #
+docker run -itd -p 80:80 --restart=always --name Nginx \-v $HOME/nginx_data/html:/usr/share/nginx/html \-v $HOME/nginx_data/conf:/etc/nginx/conf.d \-v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf \nginx
 
+参数解释
+-itd: 启动容器并保持后台运行
+-p 80:80: 将主机的 80 端口映射到容器的 80 端口，用于访问 Nginx 站点页面
+--name Nginx: 给容器指定一个名称为 “Nginx”
+--restart=always: 在容器退出时，总是重新启动容器
 
-Reflect.ownKeys(target)
-返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 Object.keys(), 但不会受enumerable 影响) #
+持久化解释
 
 
-Reflect.preventExtensions(target)
-类似于 Object.preventExtensions()。返回一个Boolean #
+–
+–
 
 
-Reflect.set(target, propertyKey, value[, receiver])
-将值分配给属性的函数。返回一个Boolean，如果更新成功，则返回true #
 
+-v $HOME/nginx_data/html:/usr/share/nginx/html
+将容器中的 Nginx 站点页面路径映射到本地
 
-Reflect.setPrototypeOf(target, prototype)
-设置对象原型的函数。返回一个 Boolean，如果更新成功，则返回 true #
 
+-v $HOME/nginx_data/conf:/etc/nginx/conf.d
+将容器中的 Nginx 虚拟主机配置文件路径映射到本地 (需要提前准备好文件)
 
 
+-v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf
+将容器中的 Nginx 主配置文件路径映射到本地 (需要提前准备好文件)
 
-JavaScript this 绑定隐式绑定function foo() &#123;  console.log(this)&#125;let obj1 = &#123;  name: &quot;obj1&quot;,  foo: foo&#125;let obj2 = &#123;  name: &quot;obj2&quot;,  obj1: obj1&#125;obj2.obj1.foo() // [Object obj1]
 
-隐式丢失let a = obj2.obj1.foo()a() // Window
 
 
-指定隐式绑定：必须在调用的对象内部有一个对函数的引用（比如一个属性）
-将以上调用赋值给一个变量，结果最终会是 Window
-在 a 被调用的位置没有进行过任何显示绑定，最终全局对象 window 会调用它（Window.a）
+Tomcatdocker run -itd -p 8080:8080 --restart=always \--name Tomcat \-v $HOME/Tomcat_data/webapps:/usr/local/tomcat/webapps/ROOT \tomcat
 
+参数解释
+-itd: 以后台运行的方式启动容器，并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
+-p 8080:8080: 将主机的端口 8080 映射到容器的 8080 端口，用于访问 Tomcat 站点页面
+--name Tomcat: 为容器指定名称为 “Tomcat”
+--restart=always: 当容器退出时，总是重新启动容器
 
+持久化解释将容器中的 /usr/local/tomcat/webapps/ROOT 路径挂载到宿主机中的 $HOME/Tomcat_data/webapps 目录下。
+Weblogic
 
-显示绑定function getName(a1, a2) &#123;  console.log(&quot;此人&quot; + this.name, &quot;岁数&quot; + (a1 + a2))&#125;let person = &#123;  name: &quot;zhangsan&quot;&#125;
+docker run -itd \-p 7001:7001 \-p 7002:7002 \-p 5556:5556 \--restart=always --name Weblogic ismaleiva90/weblogic12
 
-callcall 第一个参数接受 this 作用域，剩余参数传递给其调用的函数
-getName.call(person, 18, 12)
+注意：ismaleiva90/weblogic12 是非官方或认证的 Docker 镜像！
+参数解释
+-itd: 后台运行容器，保持 STDIN 打开
+-p 7001:7001: 映射主机 7001 端口到容器 7001 端口，访问 Weblogic 控制台页面
+-p 7002:7002: 映射主机 7002 端口到容器 7002 端口，访问 Weblogic 站点页面
+-p 5556:5556: 映射主机 5556 端口到容器 5556 端口，访问 Weblogic 站点页面
+--name Weblogic: 容器名称为 “Weblogic”
+--restart=always: 容器退出时，总是重新启动容器
 
-applyapply 第一个参数与 call 相同，第二个参数是其调用函数的参数数组
-getName.apply(person, [18, 12])
+MySQL
 
-bindbind 函数会返回一个新函数
-getName.bind(person,18,12)()//或者可以这样getName.bind(person)(18, 12)//或者这样getName.bind(person).bind(null, 18)(12)
+docker run -d -it -p 3306:3306 --name MySQL --restart=always \-v $HOME/MySQL_Data/data:/var/lib/mysql \-v $HOME/MySQL_Data/conf:/etc/mysql/conf.d \--privileged=true \-e MYSQL_DATABASE=&#x27;test_db&#x27; \-e MYSQL_ROOT_PASSWORD=&#x27;abc$123&#x27; \-e MYSQL_USER=&#x27;testuser&#x27; -e MYSQL_PASSWORD=&#x27;abc$123&#x27; \mysql:8.0.31 \    --character-set-server=utf8mb4 \    --collation-server=utf8mb4_unicode_ci
 
-内置函数中的 this数组中的一些方法，类似于 map、forEach 等，可以自己设置绑定 this
-const obj = &#123;  name: &quot;zhangsan&quot;&#125;const array = [1, 2, 3];array.map(function(value)&#123;  console.log(this.name)&#125;, obj)// zhangsan x3 
+参数解释
 
-其中一些全局对象，如 setTimeout 等，它们和未显示绑定 this 的部分数组方法一样，都会指向全局对象（Window）
-setTimeout(function()&#123;   console.log(this)&#125;, 1000) // Window
 
-JavaScript Classes静态方法&#x2F;字段
+–
+–
 
-class Dog &#123;  constructor(name) &#123;    this._name = name;    &#125;    introduce() &#123;     console.log(&#x27;This is &#x27; + this._name + &#x27; !&#x27;);    &#125;    // 静态方法  static bark() &#123;    console.log(&#x27;Woof!&#x27;);    &#125;  static &#123;    console.log(&#x27;类静态初始化块调用&#x27;);  &#125;&#125;const myDog = new Dog(&#x27;Buster&#x27;);myDog.introduce();// 调用静态方法Dog.bark();
 
-公有静态字段class ClassStaticField &#123;  static staticField = &#x27;static field&#x27;&#125;console.log(ClassStaticField.staticField)// 预期输出值：&quot;static field&quot;​ 
 
-Classclass Song &#123;  constructor() &#123;    this.title;    this.author;  &#125;    play() &#123;    console.log(&#x27;Song playing!&#x27;);  &#125;&#125;const mySong = new Song();mySong.play();
+-d
+表示以后台运行的方式启动容器
 
-extends// Parent classclass Media &#123;  constructor(info) &#123;    this.publishDate = info.publishDate;    this.name = info.name;  &#125;&#125;// Child classclass Song extends Media &#123;  constructor(songData) &#123;    super(songData);    this.artist = songData.artist;  &#125;&#125;const mySong = new Song(&#123;   artist: &#x27;Queen&#x27;,   name: &#x27;Bohemian Rhapsody&#x27;,   publishDate: 1975&#125;);
 
-Class Constructorclass Song &#123;  constructor(title, artist) &#123;    this.title = title;    this.artist = artist;  &#125;&#125;const mySong = new Song(&#x27;Bohemian Rhapsody&#x27;, &#x27;Queen&#x27;);console.log(mySong.title);
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
 
-Class Methodsclass Song &#123;  play() &#123;    console.log(&#x27;Playing!&#x27;);  &#125;    stop() &#123;    console.log(&#x27;Stopping!&#x27;);  &#125;&#125;
 
-JavaScript Modules
+-p 3306:3306
+将主机的端口映射到容器的端口，这里是将主机的 3306 端口映射到容器的 3306 端口，用于访问 MySQL 数据库
 
-Export &#x2F; Import// myMath.js// 默认导出 Default exportexport default function add(x,y)&#123;  return x + y&#125;// 正常导出 Normal exportexport function subtract(x,y)&#123;  return x - y&#125;// 多重导出 Multiple exportsfunction multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;export &#123;  multiply, duplicate&#125;
 
-import 加载模块// main.jsimport add, &#123; subtract, multiply, duplicate &#125; from &#x27;./myMath.js&#x27;;console.log(add(6, 2));      // 8 console.log(subtract(6, 2))  // 4console.log(multiply(6, 2)); // 12console.log(duplicate(5))    // 10// index.html&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
+--name MySQL
+为容器指定一个名称，这里是 “MySQL”
 
-Export Module// myMath.jsfunction add(x,y)&#123;  return x + y&#125;function subtract(x,y)&#123;  return x - y&#125;function multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;// node.js 中的多个导出module.exports = &#123;  add,  subtract,  multiply,  duplicate&#125;
 
-require 加载模块// main.jsconst myMath = require(&#x27;./myMath.js&#x27;)console.log(myMath.add(6, 2));      // 8 console.log(myMath.subtract(6, 2))  // 4console.log(myMath.multiply(6, 2)); // 12console.log(myMath.duplicate(5))    // 10
+--restart=always
+表示当容器退出时，总是重新启动容器
 
-JavaScript PromisesPromise
 
-创建 promises
-new Promise((resolve, reject) =&gt; &#123;  if (ok) &#123;    resolve(result)  &#125; else &#123;    reject(error)  &#125;&#125;)
+--privileged=true
+若不加字段–privileged&#x3D;true可能会报权限错误
 
-使用 promisespromise  .then((result) =&gt; &#123; ··· &#125;)  .catch((error) =&gt; &#123; ··· &#125;)
 
-Promise 方法Promise.all(···)Promise.race(···)Promise.reject(···)Promise.resolve(···)
+--character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+这两个选项参数是改变所有表的默认编码和排序规则以使用 UTF-8 (utf8mb4)
 
-执行器函数const executorFn = (resolve, reject) =&gt; &#123;  resolve(&#x27;Resolved!&#x27;);&#125;;const promise = new Promise(executorFn);
 
-setTimeout()const loginAlert = () =&gt; &#123;  console.log(&#x27;Login&#x27;);&#125;;setTimeout(loginAlert, 6000);
 
-Promise 状态const promise = new Promise((resolve, reject) =&gt; &#123;  const res = true;  // 一个异步操作。  if (res) &#123;    resolve(&#x27;Resolved!&#x27;);  &#125;  else &#123;    reject(Error(&#x27;Error&#x27;));  &#125;&#125;);promise.then(  (res) =&gt; console.log(res),  (err) =&gt; console.error(err));
 
-.then() 方法const promise = new Promise((resolve, reject) =&gt; &#123;      setTimeout(() =&gt; &#123;    resolve(&#x27;Result&#x27;);  &#125;, 200);&#125;);promise.then((res) =&gt; &#123;  console.log(res);&#125;, (err) =&gt; &#123;  console.error(err);&#125;);
+持久化解释
 
-.catch() 方法const promise = new Promise(  (resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    reject(Error(&#x27;Promise 无条件拒绝。&#x27;));  &#125;, 1000);&#125;);promise.then((res) =&gt; &#123;  console.log(value);&#125;);promise.catch((err) =&gt; &#123;  console.error(err);&#125;);
 
-Promise.all()
+–
+–
 
-const promise1 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(3);  &#125;, 300);&#125;);const promise2 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(2);  &#125;, 200);&#125;);Promise.all([promise1, promise2]).then((res) =&gt; &#123;  console.log(res[0]);  console.log(res[1]);&#125;);
 
-链接多个 .then()const promise = new Promise(  resolve =&gt;     setTimeout(() =&gt; resolve(&#x27;dAlan&#x27;),100));promise.then(res =&gt; &#123;  return res === &#x27;Alan&#x27;     ? Promise.resolve(&#x27;Hey Alan!&#x27;)    : Promise.reject(&#x27;Who are you?&#x27;)&#125;).then((res) =&gt; &#123;  console.log(res)&#125;, (err) =&gt; &#123;  console.error(err)&#125;);
 
-避免嵌套的 Promise 和 .then()
+-v $HOME/MySQL_Data/data:/var/lib/mysql
+将容器中的 MySQL 数据库数据存储到本地，以确保在容器重启时数据得以保留。
 
-const promise = new Promise((resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    resolve(&#x27;*&#x27;);  &#125;, 1000);&#125;);const twoStars = (star) =&gt; &#123;    return (star + star);&#125;;const oneDot = (star) =&gt; &#123;    return (star + &#x27;.&#x27;);&#125;;const print = (val) =&gt; &#123;  console.log(val);&#125;;// 将它们链接在一起promise.then(twoStars).then(oneDot).then(print);
 
-JavaScript Async-Await
+-v $HOME/MySQL_Data/conf:/etc/mysql/conf.d
+将容器中的 MySQL 自定义配置文件路径映射到本地，以方便自定义配置。请确保提前准备好文件，否则可能会启动失败。
 
-异步
 
-function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;// 异步函数表达式const msg = async function() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;// 异步箭头函数const msg1 = async () =&gt; &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后msg1(); // Message: Hello World! &lt;-- 2 秒后
 
-解决 Promiseslet pro1 = Promise.resolve(5);let pro2 = 44;let pro3 = new Promise(function(resolve, reject) &#123;  setTimeout(resolve, 100, &#x27;foo&#x27;);&#125;);Promise.all([pro1, pro2, pro3]).then(function(values) &#123;  console.log(values);&#125;);// expected =&gt; Array [5, 44, &quot;foo&quot;]
 
-异步等待 Promisesfunction helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
+环境变量解释
 
-错误处理// 数据不完整let json = &#x27;&#123; &quot;age&quot;: 30 &#125;&#x27;;try &#123;  let user = JSON.parse(json); // &lt;-- 没有错误  console.log( user.name );    // no name!&#125; catch (e) &#123;  console.error( &quot;Invalid JSON data!&quot; );&#125;
 
-异步等待运算符function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
+–
+–
 
-JavaScript 请求JSONconst jsonObj = &#123;  &quot;name&quot;: &quot;Rick&quot;,  &quot;id&quot;: &quot;11A&quot;,  &quot;level&quot;: 4  &#125;;
 
-另见：JSON 备忘单
-XMLHttpRequestconst xhr = new XMLHttpRequest();xhr.open(&#x27;GET&#x27;, &#x27;mysite.com/getjson&#x27;);
 
-XMLHttpRequest 是一个浏览器级别的 API，它使客户端能够通过 JavaScript 编写数据传输脚本，而不是 JavaScript 语言的一部分。
-GETconst req = new XMLHttpRequest();req.responseType = &#x27;json&#x27;;req.open(&#x27;GET&#x27;, &#x27;/getdata?id=65&#x27;);req.onload = () =&gt; &#123;  console.log(xhr.response);&#125;;req.send();
+MYSQL_ROOT_PASSWORD 【必填】
+必需的变量，用于指定 MySQL 的 root 超级用户帐户的密码。如果设置了 MYSQL_RANDOM_ROOT_PASSWORD=yes ，则会随机生成一个密码，并打印到 stdout。
 
-POST
 
-const data = &#123; weight: &#x27;1.5 KG&#x27; &#125;;const xhr = new XMLHttpRequest();// 初始化一个请求。xhr.open(&#x27;POST&#x27;, &#x27;/inventory/add&#x27;);// 一个用于定义响应类型的枚举值xhr.responseType = &#x27;json&#x27;;// 发送请求以及数据。xhr.send(JSON.stringify(data));// 请求成功完成时触发。xhr.onload = () =&gt; &#123;  console.log(xhr.response);&#125;// 当 request 遭遇错误时触发。xhr.onerror = () =&gt; &#123;  console.log(xhr.response);&#125;
+MYSQL_USER 【可选】
+可选变量，用于创建新用户。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_PASSWORD 变量。
 
-fetch api
 
-fetch(url, &#123;    method: &#x27;POST&#x27;,    headers: &#123;      &#x27;Content-type&#x27;: &#x27;application/json&#x27;,      &#x27;apikey&#x27;: apiKey    &#125;,    body: data&#125;).then(response =&gt; &#123;  if (response.ok) &#123;    return response.json();  &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message)&#125;)
+MYSQL_PASSWORD 【可选】
+可选变量，用于创建新用户并设置密码。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_USER 变量。
 
-JSON 格式fetch(&#x27;url-that-returns-JSON&#x27;)  .then(response =&gt; response.json())  .then(jsonResponse =&gt; &#123;    console.log(jsonResponse);  &#125;);
 
-promise url 参数获取 APIfetch(&#x27;url&#x27;)  .then(response  =&gt; &#123;    console.log(response);  &#125;, rejection =&gt; &#123;    console.error(rejection.message);  &#125;);
+MYSQL_DATABASE 【可选】
+可选变量，允许在容器启动时指定要创建的数据库的名称。如果设置了 MYSQL_USER 和 MYSQL_PASSWORD，则该用户将被授予对此数据库的超级用户访问权限。
 
-Fetch API 函数fetch(&#x27;https://api-xxx.com/endpoint&#x27;, &#123;  method: &#x27;POST&#x27;,  body: JSON.stringify(&#123;id: &quot;200&quot;&#125;)&#125;).then(response =&gt; &#123;  if(response.ok)&#123;    return response.json();    &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message);&#125;).then(jsonResponse =&gt; &#123;  console.log(jsonResponse);&#125;)
 
-async await 语法
 
-const getSuggestions = async () =&gt; &#123;  const wordQuery = inputField.value;  const endpoint = `$&#123;url&#125;$&#123;queryParams&#125;$&#123;wordQuery&#125;`;  try&#123;    const response = await fetch(endpoint, &#123;cache: &#x27;no-cache&#x27;&#125;);    if(response.ok)&#123;      const jsonResponse = await response.json()    &#125;  &#125;  catch(error)&#123;    console.log(error)  &#125;&#125;
+
+Oracledocker run -d -it -p 1521:1521 --name Oracle_11g --restart=always \--mount source=oracle_vol,target=/home/oracle/app/oracle/oradata \registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
+
+注意：registry.cn-hangzhou.aliyuncs.com&#x2F;helowin&#x2F;oracle_11g 是非官方或认证的Docker镜像！
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 1521:1521
+将主机的端口映射到容器的端口，这里是将主机的 1521 端口映射到容器的 1521 端口，用于访问 Oracle 数据库
+
+
+--name Oracle_11g
+为容器指定一个名称，这里是 “Oracle_11g”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+--mount source=oracle_vol,target=/home/oracle/app/oracle/oradata
+将名为 “oracle_vol” 的 Docker 卷挂载到容器中的 “&#x2F;home&#x2F;oracle&#x2F;app&#x2F;oracle&#x2F;oradata” 路径。这样做的目的是将 Oracle 数据库的数据存储在持久化的卷中，以便数据在容器重启时得以保留
+
+
+
+
+PostgreSQLdocker run -d -p 5432:5432 --restart=always --name PostgreSQL \-e POSTGRES_USER=&#x27;postgres&#x27; \-e POSTGRES_PASSWORD=&#x27;abc$123&#x27; \-e POSTGRES_DB=&#x27;test&#x27; \-e PGDATA=/var/lib/postgresql/data/pgdata \-v $HOME/Postgres_Data:/var/lib/postgresql/data \-d postgres
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 5432:5432
+将主机的端口映射到容器的端口，这里是将主机的 5432 端口映射到容器的 5432 端口，用于访问 Postgre 数据库
+
+
+--name PostgreSQL
+为容器指定一个名称，这里是 “PostgreSQL”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/Postgres_Data:/var/lib/postgresql/data
+将到容器中的 “&#x2F;var&#x2F;lib&#x2F;postgresql&#x2F;data” 路径映射挂载到 宿主机中的 ”$HOME&#x2F;Postgres_Data“目录下,这样做的目的是将 Postgre 数据库的数据存储在本地中，以便数据在容器重启时得以保留
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+POSTGRES_PASSWORD 【必填】
+PostgreSQL 映像所需的环境变量。设置 PostgreSQL 超级用户的密码。不能为空或未定义。
+
+
+POSTGRES_USER 【可选】
+可选环境变量，用于创建用户及其密码。创建具有超级用户权限的指定用户和同名的数据库。默认用户是 “postgres”。
+
+
+POSTGRES_DB 【可选】
+可选环境变量，用于定义首次启动映像时创建的默认数据库的名称。默认值是 POSTGRES_USER 的值，如果未设置，则默认为 “postgres”。
+
+
+PGDATA 【可选】
+默认为 /var/lib/postgresql/data。如果使用的数据卷是文件系统挂载点或无法被用户 chowned 的远程文件夹，则需要设置此环境变量以包含数据。
+
+
+
+
+达梦docker run -d -p 5236:5236 --restart=always --name DaMengDB \--privileged=true \-e PAGE_SIZE=16 \-e LD_LIBRARY_PATH=/opt/dmdbms/bin \-e EXTENT_SIZE=32 \-e BLANK_PAD_MODE=1 \-e LOG_SIZE=1024 \-e UNICODE_FLAG=1 \-e LENGTH_IN_CHAR=1 \-e INSTANCE_NAME=dm8_test \-v $HOME/DaMeng_Data:/opt/dmdbms/data \if010/dameng
+
+注意：if010&#x2F;dameng 是从官网下载上传至 Docker Hub 的镜像！
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 5236:5236
+将主机的端口映射到容器的端口，这里是将主机的 5236 端口映射到容器的 5236 端口，用于访问达梦数据库
+
+
+--name DaMengDB
+为容器指定一个名称，这里是 “DaMengDB”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/DaMeng_Data:/opt/dmdbms/data
+将容器中的达梦数据库数据存储路径 “&#x2F;opt&#x2F;dmdbms&#x2F;data” 映射到本地主机的 “$HOME&#x2F;DaMeng_Data” 目录，以确保在容器重启时数据得以保留
+
+
+
+
+人大金仓docker run -idt -p 54321:54321 --restart=always \--name Kingbase --privileged=true \-e DB_MODE=oracle \-e NEED_START=yes \-e DB_USER=kingbase \-e DB_PASSWORD=abc123 \-e ENABLE_CI=yes \-v $HOME/Kingbase_Data:/home/kingbase/userdata \if010/kingbase:v009r001c001b0025 /usr/sbin/init
+
+注意：if010/kingbase:v009r001c001b0025 是从官网下载上传至 Docker Hub 的镜像，官网提供了两个下载版本，一个是 v008r006c008b0014，另一个是 v009r001c001b0025，可以拉取对应的 tag 镜像进行测试使用！
+参数解释
+
+
+–
+–
+
+
+
+-itd
+以后台方式启动容器，保持 STDIN 打开
+
+
+-p 54321:54321
+将主机的 54321 端口映射到容器的 54321 端口，访问数据库
+
+
+--name Kingbase
+给容器指定名称为 “Kingbase”
+
+
+--restart=always
+容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/Kingbase_Data:/home/kingbase/userdata
+将容器中的人大金仓数据库数据存储路径 “&#x2F;home&#x2F;kingbase&#x2F;userdata” 映射到本地主机的 “$HOME&#x2F;Kingbase_Data” 目录，以确保在容器重启时数据得以保留
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+DB_USER 【可选】
+设置用户及其密码，默认为 “system”
+
+
+DB_PASSWORD 【可选】
+设置用户密码，默认为 “123456”
+
+
+DB_MODE 【可选】
+设置数据库模式，支持的模式有 oracle、pg、mysql
+
+
+NEED_START 【可选】
+设置进入容器后是否启动数据库，默认为 “yes”
+
+
+ENABLE_CI 【可选】
+设置是否需要配置大小写敏感，默认为 “yes”
+
+
+
+
+Redisdocker run -d -p 6379:6379 --restart=always --name Redis \-v $HOME/Redis_Data/conf:/usr/local/etc/redis \-v $HOME/Redis_Data/data:/data \redis redis-server /usr/local/etc/redis/redis.conf
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 6379:6379
+将主机的端口映射到容器的端口，这里是将主机的 6379 端口映射到容器的 6379 端口，用于访问 Redis 数据库
+
+
+--name Redis
+为容器指定一个名称，这里是 “Redis”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/Redis_Data/conf:/usr/local/etc/redis
+(需提前准备好文件，否则可能会启动失败) 将到容器中的 “&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;conf”目录下,这样子做的目的是可以自定义Redis的配置文件
+
+
+-v $HOME/Redis_Data/data:/data
+将到容器中的 “&#x2F;data” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;data”目录下,这样做的目的是将 Redis 数据库的数据存储在本地中，以便数据在容器重启时得以保留
+
+
+
+
+关于启动命令
+
+
+–
+–
+
+
+
+redis-server /usr/local/etc/redis/redis.conf
+容器内部执行该命令是为了按照我们自定义的配置文件启动，这个不是必须的！！！
+
+
+
+
+Memcachedocker run -d -p 11211:11211 --name Memcached \    --restart=always memcached memcached -m 64
+
+参数解释
+-d: 以后台方式启动容器。
+-it: 分配一个伪终端（pseudo-TTY）并保持 STDIN 打开。
+-p 11211:11211: 将主机的 11211 端口映射到容器的 11211 端口，用于访问 Memcached 消息队列的 web 管理界面。
+--name Memcached: 容器的名称为 “Memcached”。
+--restart=always: 容器退出时，总是重新启动容器。
+
+命令执行解释
+memcached -m 64 这会将 Memcached 服务器设置为使用 64 MB 进行存储
+
+MongoDB
+
+docker run -d -p 27017:27017 --restart=always --name MongoDB \-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \-e MONGO_INITDB_ROOT_PASSWORD=abc123 \-v $HOME/MongoDB_Data/data:/data/db \-v $HOME/MongoDB_Data/conf:/etc/mongo \mongo --config /etc/mongo/mongod.conf --wiredTigerCacheSizeGB 1.5
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 27017:27017
+将主机的端口映射到容器的端口，这里是将主机的 27017 端口映射到容器的 27017 端口，用于访问 MongoDB 数据库
+
+
+--name MongoDB
+为容器指定一个名称，这里是 “MongoDB”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+--config /etc/mongo/mongod.conf
+指定配置文件路径 (这个不是必须的，设置此选项之前需准备好mongod.conf文件映射到Docker内部)
+
+
+--wiredTigerCacheSizeGB 1.5
+设置WiredTiger缓存大小限制为1.5G
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v $HOME/MongoDB_Data/conf:/etc/mongo
+将到容器中的 “&#x2F;etc&#x2F;mongo” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;conf”目录下,这样子做的目的是可以自定义MongoDB的配置文件 (需提前准备好文件，否则可能会启动失败)
+
+
+-v $HOME/Redis_Data/data:/data
+将到容器中的 “&#x2F;data&#x2F;db” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;data”目录下,这样做的目的是将 MongoDB 数据库的数据存储在本地中，以便数据在容器重启时得以保留
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+MONGO_INITDB_ROOT_USERNAME 【可选】
+该变量是创建管理员用户，该用户是在 admin 身份验证数据库中创建的，并被赋予角色 root，这是一个”超级用户”角色。
+
+
+MONGO_INITDB_ROOT_PASSWORD 【可选】
+该变量是为创建管理员用户设置密码，需配合 MONGO_INITDB_ROOT_USERNAME 变量参数使用
+
+
+
+
+RabbitMQdocker run -itd -p 15672:15672 --name RabbitMQ \--hostname rmq-test \-e RABBITMQ_DEFAULT_VHOST=rmq-test \-e RABBITMQ_DEFAULT_USER=admin \-e RABBITMQ_DEFAULT_PASS=abc123 \rabbitmq:3-management 
+
+参数解释
+
+
+–
+–
+
+
+
+-itd
+表示以后台运行的方式启动容器,并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
+
+
+-p 15672:15672
+将主机的端口映射到容器的端口，这里是将主机的 15672 端口映射到容器的 15672 端口，用于访问 RabbitMQ 控制台页面，内部除了该端口外，还开了4369&#x2F;tcp、5671-5672&#x2F;tcp、15671&#x2F;tcp、15691-15692&#x2F;tcp、25672&#x2F;tcp
+
+
+--name RabbitMQ
+为容器指定一个名称，这里是 “RabbitMQ”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+--hostname
+设置容器主机名称
+
+
+
+
+环境变量解释
+
+
+–
+–
+
+
+
+RABBITMQ_DEFAULT_VHOST 【可选】
+该变量是可选的，是设置 RabbitMQ 的主机名称
+
+
+RABBITMQ_DEFAULT_USER 【可选】
+该变量是可选的，是设置 RabbitMQ 的账户
+
+
+RABBITMQ_DEFAULT_PASS 【可选】
+该变量是可选的，是设置 RabbitMQ 的密码
+
+
+
+
+远程协助工具 Guacd
+
+docker run -d -p 4822:4822 --privileged=true \    --restart=always --name Guacd \    -e LANG=zh_CN.UTF-8 \    -v /docker_data/Guacd/rdp-rec:/rdp-rec \    -v /docker_data/Guacd/rdp-file:/rdp-file \    guacamole/guacd
+
+参数解释
+
+
+–
+–
+
+
+
+-d
+表示以后台运行的方式启动容器
+
+
+-it
+分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+
+
+-p 4822:4822
+将主机的端口映射到容器的端口，这里是将主机的 4822 端口映射到容器的 4822 端口，用于访问 Guacd远程的API接口
+
+
+--name Guacd
+为容器指定一个名称，这里是 “Guacd”
+
+
+--restart=always
+表示当容器退出时，总是重新启动容器
+
+
+--privileged=true
+若不加字段–privileged&#x3D;true可能会报权限错误
+
+
+
+
+持久化解释
+
+
+–
+–
+
+
+
+-v /docker_data/Guacd/rdp-rec:/rdp-rec
+代码内固定配置，guacd服务rdp录屏文件存放路径
+
+
+-v /docker_data/Guacd/rdp-file:/rdp-file
+代码内固定配置，guacd服务rdp远程磁盘文件存放路
+
+
+
+
+环境变量解释
+LANG 设置字符编码格式
+
+在线代码编辑器 Code Server$ mkdir -p ~/.config$ docker run -it --name code-server  \  -p 127.0.0.1:8080:8080 \  -v &quot;$HOME/.config/code-server:/home/coder/.config&quot; \  -v &quot;$PWD:/home/coder/project&quot; \  -u &quot;$(id -u):$(id -g)&quot; \  -e &quot;DOCKER_USER=$USER&quot; \    codercom/code-server:latest
+
+媒体管理工具 Dim$ docker run --name my-dim \   -p 8000:8000/tcp \   -v $HOME/.config/dim:/opt/dim/config \   -v $HOME/dim/media:/media:ro \   -d ghcr.io/dusk-labs/dim:dev
+
+Github
+Gitlab$ docker run -d --name gitlab \  --hostname gitlab.example.com \  --publish 8443:443 --publish 8081:80 -p 2222:22 \  --restart always \  --volume $HOME/gitlab/config:/etc/gitlab \  --volume $HOME/gitlab/logs:/var/log/gitlab \  --volume $HOME/gitlab/data:/var/opt/gitlab \  -v /etc/localtime:/etc/localtime \  --shm-size 256m \    gitlab/gitlab-ce:latest
+
+另见
+Dockerfile 备忘清单 (github.io)
+Docker 官方入门教程 (docker.com)
+Docker入门学习笔记 (github.io)
+快速安装Docker及配置及Docker配置、Docker常用命令
+
 ]]></content>
       <categories>
         <category>后端编程</category>
       </categories>
       <tags>
         <tag>后端编程</tag>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JQuery 备忘录</title>
-    <url>/2025/01/08/jquery/</url>
-    <content><![CDATA[jQuery 备忘清单jQuery 备忘单对于初学者和有经验的开发人员都是很好的参考
-入门引入 jQuery&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js&quot;&gt;&lt;/script&gt;
-
-
-官方 CDN&lt;script src=&quot;https://code.jquery.com/jquery-3.5.1.min.js&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
-
-
-jQuery 语法$(selector).methodOrFunction();
-
-例子$(&#x27;#menu&#x27;).on(&#x27;click&#x27;, () =&gt;&#123;  $(this).hide();  &#125;);$(&quot;body&quot;).css(&quot;background&quot;, &quot;red&quot;);
-
-jQuery 文档准备就绪$(document).ready(function() &#123;  // 在加载 DOM 后运行  alert(&#x27;DOM fully loaded!&#x27;);&#125;);
-
-$(function()&#123;  // 在加载 DOM 后运行  alert(&#x27;DOM fully loaded!&#x27;);&#125;);
-
-jQuery 选择器例子$(&quot;button&quot;).click(() =&gt; &#123;    $(&quot;:button&quot;).css(&quot;color&quot;, &quot;red&quot;);&#125;);
-
-组合选择器$(&quot;selector1, selector2 ...selectorn&quot;)
-
-基本
-* 选择所有元素
-.class 选择具有给定类的所有元素
-element 选择具有给定标签名称的所有元素
-#id 选择具有给定 id 属性的单个元素
-:hidden 选择所有隐藏的元素
-:visible 选择所有可见的元素
-:contains() 选择包含指定文本的所有元素
-:empty 选择所有没有子元素的元素(包括文本节点)
-:has() 选择至少包含一个与指定选择器匹配的元素的元素
-:parent 选择具有至少一个子节点(元素或文本)的所有元素
-parent &gt; child 选择由父元素指定的子元素指定的所有直接子元素
-ancestor descendant 选择作为给定祖先的后代的所有元素
-prev + next 选择所有与 next 匹配且紧接在其前面的同级 prev 的下一个元素
-prev ~ siblings 选择 prev 元素之后的所有同级元素，具有相同的父元素，并匹配过滤同级选择器
-
-
-
-基本过滤器
-:animated 在运行选择器时选择动画进度中的所有元素
-:eq() 选择匹配集中索引 n 处的元素
-:even 选择偶数元素，索引为零。 另见：奇数
-:first 选择第一个匹配的 DOM 元素
-:gt() 选择匹配集中索引大于索引的所有元素
-:header 选择所有标题元素，如 h1、h2、h3 等
-:lang() 选择指定语言的所有元素
-:last 选择最后一个匹配的元素
-:lt() 选择匹配集中索引小于索引的所有元素
-:not() 选择与给定选择器不匹配的所有元素
-:odd 选择奇数元素，索引为零。 另见：甚至
-:root 选择作为文档根的元素
-:target 选择由文档的 URI 的片段标识符指示的目标元素
-
-
-
-属性
-[name|&#x3D;”value”] 选择具有指定属性且值等于给定字符串或以该字符串开头后跟连字符 (-) 的元素
-[name*&#x3D;”value”] 选择具有指定属性且值包含给定子字符串的元素
-[name~&#x3D;”value”] 选择具有指定属性的元素，其值包含给定单词，由空格分隔
-[name$&#x3D;”value”] 选择具有指定属性且值恰好以给定字符串结尾的元素。 比较区分大小写
-[name&#x3D;”value”] 选择具有指定属性且值恰好等于特定值的元素
-[name!&#x3D;”value”] 选择不具有指定属性或具有指定属性但不具有特定值的元素
-[name^&#x3D;”value”] 选择具有指定属性且值恰好以给定字符串开头的元素
-[name] 选择具有指定属性和任意值的元素
-[name&#x3D;”value”] 匹配匹配所有指定属性过滤器的元素
-
-
-
-子过滤器
-:first-child 选择作为其父元素的第一个子元素的所有元素
-:first-of-type 选择具有相同元素名称的兄弟姐妹中第一个的所有元素
-:last-child 选择作为其父元素的最后一个子元素的所有元素
-:last-of-type 选择具有相同元素名称的兄弟中最后一个的所有元素
-:nth-child() 选择作为其父元素的第 n 个子元素的所有元素
-:nth-last-child() 选择作为其父元素的第 n 个子元素的所有元素，从最后一个元素到第一个元素计数
-:nth-last-of-type() 选择所有元素，这些元素是其父元素的第 n 个子元素，相对于具有相同元素名称的兄弟元素，从最后一个元素到第一个元素计数
-:nth-of-type() 选择所有元素，这些元素是其父元素相对于具有相同元素名称的兄弟元素的第 n 个子元素
-:only-child 选择作为其父元素的唯一子元素的所有元素
-:only-of-type() 选择所有没有同名元素的元素
-
-
-
-Forms
-:button 选择所有按钮元素和按钮类型的元素
-:checkbox 选择复选框类型的所有元素
-:checked 匹配所有选中或选择的元素
-:disabled 选择所有禁用的元素
-:enabled 选择所有启用的元素
-:focus 如果当前获得焦点，则选择元素
-:file 选择类型文件的所有元素
-:image 选择图像类型的所有元素
-:input 选择所有输入、文本区域、选择和按钮元素
-:password 选择密码类型的所有元素
-:radio 选择无线电类型的所有元素
-:reset 选择重置类型的所有元素
-:selected 选择所有选中的元素
-:submit 选择提交类型的所有元素
-:text 选择文本类型的所有输入元素
-
-
-
-jQuery 属性例子
-
-$(&#x27;h2&#x27;).css(&#123;  color: &#x27;blue&#x27;,  backgroundColor: &#x27;gray&#x27;,  fontSize: &#x27;24px&#x27;&#125;);
-
-jQuery 添加类$(&#x27;.button&#x27;).addClass(&#x27;active&#x27;); 
-
-jQuery 移除类$(&#x27;.button&#x27;).on(&#x27;mouseleave&#x27;, evt =&gt; &#123;   let e = evt.currentTarget;   $(e).removeClass(&#x27;active&#x27;);&#125;);
-
-jQuery 切换类$(&#x27;.choice&#x27;).toggleClass(&#x27;highlighted&#x27;);
-
-Attributes
-.attr() 获取匹配元素集中第一个元素的属性值
-.prop() 获取匹配元素集中第一个元素的属性值
-.removeAttr() 从匹配元素集中的每个元素中删除一个属性
-.removeProp() 删除匹配元素集的属性
-.val() 获取匹配元素集中第一个元素的当前值
-
-
-
-Data
-jQuery.data() 存储与指定元素关联的任意数据。 返回设置的值
-.data() 存储与匹配元素关联的任意数据
-jQuery.hasData() 确定一个元素是否有任何与之关联的 jQuery 数据
-jQuery.removeData() 删除以前存储的数据
-.removeData() 删除以前存储的数据
-
-
-
-CSS
-.addClass() 将指定的类添加到匹配元素集中的每个元素
-.hasClass() 确定是否有任何匹配的元素被分配给给定的类
-.removeClass() 从匹配元素集中的每个元素中删除单个类、多个类或所有类
-.toggleClass() 根据类的存在或状态参数的值，从匹配元素集中的每个元素添加或删除一个或多个类
-.css() 获取匹配元素集中第一个元素的计算样式属性
-jQuery.cssHooks 直接连接到 jQuery 以覆盖特定 CSS 属性的检索或设置方式、标准化 CSS 属性命名或创建自定义属性
-jQuery.cssNumber 包含所有可以在没有单位的情况下使用的 CSS 属性的对象。.css() 方法使用此对象来查看它是否可以将 px 附加到无单位值
-jQuery.escapeSelector() 转义任何在 CSS 选择器中具有特殊含义的字符
-
-
-
-Dimensions
-.height() 获取匹配元素集中第一个元素的当前计算高度
-.innerHeight() 获取匹配元素集中第一个元素的当前计算高度，包括填充但不包括边框
-.innerWidth() 获取匹配元素集中第一个元素的当前计算内部宽度，包括填充但不包括边框
-.outerHeight() 获取匹配元素集中第一个元素的当前计算外部高度(包括填充、边框和可选的边距)
-.outerWidth() 获取匹配元素集中第一个元素的当前计算外部宽度(包括填充、边框和可选的边距)
-.width() 获取匹配元素集中第一个元素的当前计算宽度
-
-
-
-Offset
-.offset() 获取匹配元素集中第一个元素相对于文档的当前坐标
-.offsetParent() 获取定位的最近的祖先元素
-.position() 获取匹配元素集中第一个元素相对于偏移父元素的当前坐标
-.scrollLeft() 获取匹配元素集中第一个元素的滚动条的当前水平位置
-.scrollTop() 获取匹配元素集中第一个元素的滚动条的当前垂直位置，或为每个匹配元素设置滚动条的垂直位置
-
-
-
-jQuery 操控Examples
-
-/*&lt;span&gt;Span.&lt;/span&gt;*/$(&#x27;span&#x27;).after(&#x27;&lt;p&gt;Paragraph.&lt;/p&gt;&#x27;);/*&lt;span&gt;Span.&lt;/span&gt;&lt;p&gt;Paragraph.&lt;/p&gt;*//*&lt;span&gt;Span.&lt;/span&gt;*/$(&#x27;&lt;span&gt;Span.&lt;/span&gt;&#x27;).replaceAll(&#x27;p&#x27;);/*&lt;p&gt;Span.&lt;/p&gt;*//*&lt;span&gt;This is span.&lt;/span&gt;*/$(&#x27;span&#x27;).wrap(&#x27;&lt;p&gt;&lt;/p&gt;&#x27;);/*&lt;p&gt;&lt;span&gt;This is span.&lt;/span&gt;&lt;/p&gt;*/
-
-复刻
-.clone() 创建匹配元素集的深层副本
-
-
-
-DOM 插入，环绕
-.wrap() 在匹配元素集中的每个元素周围包装一个 HTML 结构
-.wrapAll() 在匹配元素集中的所有元素周围包装一个 HTML 结构
-.wrapInner() 围绕匹配元素集中每个元素的内容包装一个 HTML 结构
-
-
-
-DOM 插入，内部
-.append() 在匹配的元素集中，插入由参数指定的内容插入每个元素的末尾
-.appendTo() 将匹配元素集中的每个元素插入目标末端
-.html() 在匹配元素集中获取第一个元素的HTML内容
-.prepend() 插入由参数指定的内容插入匹配元素集中每个元素的开始
-.prependTo() 将匹配元素集中的每个元素插入目标开始
-.text() 在匹配的元素集（包括其后代）中获取每个元素的组合文本内容
-
-
-
-DOM 插入，外部
-.after() 在匹配元素集中的每个元素之后，插入由参数指定的内容
-.before() 在匹配元素集中的每个元素之前，插入由参数指定的内容
-.insertAfter() 在目标之后插入匹配元素集中的每个元素
-.insertBefore() 在目标之前插入匹配元素集中的每个元素
-
-
-
-DOM 移除
-.detach() 从DOM上删除一组匹配的元素
-.empty() 从DOM中删除一组匹配元素的所有子节点
-.remove() 从DOM上删除一组匹配的元素
-.unwrap() 从DOM上删除一组匹配元素的父母，将匹配的元素留在其位置
-
-
-
-DOM 替换
-.replaceAll() 用匹配的元素集替换每个目标元素
-.replaceWith() 用提供的新内容替换一组匹配元素中的每个元素，然后返回已删除的元素集
-
-
-
-jQuery 遍历过滤
-.eq() 将匹配的元素集减少到指定索引处的集合
-.filter() 将匹配的元素集减少到匹配选择器或传递函数测试的元素
-.first() 将匹配的元素集减少到集合中的第一个
-.has() 将匹配的元素集减少到具有与选择器或DOM元素相匹配的后代的元素
-.is() 检查当前匹配的元素与选择器，元素或jQuery对象的元素集，如果至少其中一个元素与给定参数匹配，则返回true
-.last() 将匹配的元素集减少到集合中的最后一个元素
-.map() 将当前匹配的每个元素通过函数传递，从而产生包含返回值的新jQuery对象
-.not() 从匹配元素集中删除元素
-.slice() 将匹配的元素集减少为由一系列索引指定的子集
-
-
-
-杂项遍历
-.add() 创建一个新的jQuery对象，其中添加到匹配元素集中的元素
-.addBack() 将堆栈上的上一个元素添加到当前集合中，并由选择器进行过滤
-.andSelf() 将堆栈上的先前元素添加到当前集合中
-.contents() 在一组匹配元素中获取每个元素的孩子，包括文本和评论节点
-.each() 在jQuery对象上迭代，为每个匹配的元素执行一个函数
-.end() 结束当前链中最新的过滤操作，并将匹配元素集返回其先前状态
-
-
-
-树遍历
-.children() 在一组匹配元素中获取每个元素的孩子，并被选择器进行过滤
-.closest() 对于集合中的每个元素，通过测试元素本身并通过其祖先在DOM树中的祖先进行遍历来获取与选择器匹配的第一个元素
-.find() 在当前匹配元素集中获取每个元素的后代，并由选择器，jQuery对象或元素过滤
-.next() 在匹配的元素集中，立即获取每个元素的兄弟姐妹。 如果提供了选择器，则仅在匹配该选择器的情况下才能检索下一个兄弟姐妹
-.nextAll() 在一组匹配元素中获取每个元素的所有以下兄弟姐妹，并由选择器进行过滤
-.nextUntil() 将每个元素的所有以下兄弟姐妹添加到，但不包括通过选择器，DOM节点或jQuery对象匹配的元素
-.parent() 在当前匹配元素集中获取每个元素的父，由选择器选择过滤
-.parents() 在当前匹配元素集中获取每个元素的祖先，并被选择器进行过滤
-.parentsUntil() 在当前匹配元素集中获取每个元素的祖先，直到但不包括由选择器，DOM节点或jQuery对象匹配的元素
-.prev() 在匹配元素集中获取每个元素的立即兄弟姐妹。 如果提供了选择器，则仅在匹配该选择器时才检索先前的同胞
-.prevAll() 在一组匹配元素中获取每个元素的所有先前兄弟姐妹，并由选择器进行过滤
-.prevUntil() 将每个元素的所有先前兄弟姐妹添加到，但不包括由选择器，DOM节点或jQuery对象匹配的元素
-.siblings() 在匹配的元素集中获取每个元素的兄弟姐妹，并被选择器进行过滤
-
-
-
-jQuery 事件Examples
-
-// 鼠标事件“点击”$(&#x27;#menu-button&#x27;).on(&#x27;click&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;);// 键盘事件“键盘”$(&#x27;#textbox&#x27;).on(&#x27;keyup&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;);// 滚动事件“滚动”$(&#x27;#menu-button&#x27;).on(&#x27;scroll&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;);
-
-事件对象$(&#x27;#menu&#x27;).on(&#x27;click&#x27;, event =&gt; &#123;  $(event.currentTarget).hide();&#125;);
-
-方法链$(&#x27;#menu-btn&#x27;).on(&#x27;mouseenter&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;).on(&#x27;mouseleave&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).hide();&#125;);
-
-防止事件$( &quot;p&quot; ).click(function( event ) &#123;  event.stopPropagation();  // Do something&#125;);
-
-浏览器事件
-.error() 将事件处理程序绑定到错误 JavaScript 事件 
-.resize() 将事件处理程序绑定到调整大小的 JavaScript 事件，或在元素上触发该事件 
-.scroll() 将事件处理程序绑定到滚动 JavaScript 事件，或在元素上触发该事件 
-
-
-
-事件对象
-
-
-event.currentTarget 事件冒泡阶段中的当前 DOM 元素 
-event.delegateTarget 附加了当前调用的 jQuery 事件处理程序的元素 
-event.data 绑定当前正在执行的处理程序时传递给事件方法的可选数据对象 
-event.isDefaultPrevented() 返回是否曾在此事件对象上调用过 event.preventDefault() 
-event.isImmediatePropagationStopped() 返回是否曾在此事件对象上调用过 event.stopImmediatePropagation() 
-event.isPropagationStopped() 返回是否曾在此事件对象上调用过 event.stopPropagation() 
-event.metaKey 指示事件触发时是否按下了 META 键 
-event.namespace 触发事件时指定的命名空间 
-event.pageX 鼠标相对于文档左边缘的位置 
-event.pageY 鼠标位置相对于文档的上边缘 
-event.preventDefault() 如果调用该方法，则不会触发事件的默认动作 
-event.relatedTarget 事件中涉及的其他 DOM 元素（如果有） 
-event.result 由此事件触发的事件处理程序返回的最后一个值，除非该值未定义 
-event.stopImmediatePropagation() 保持其余的处理程序不被执行，并防止事件在 DOM 树中向上冒泡 
-event.stopPropagation() 防止事件在 DOM 树中向上冒泡，从而防止任何父处理程序收到事件通知 
-event.target 发起事件的 DOM 元素 
-event.timeStamp 浏览器创建事件的时间与 1970 年 1 月 1 日之间的毫秒差 
-event.type 描述事件的性质 
-event.which 对于键或鼠标事件，此属性指示按下的特定键或按钮 
-
-
-
-文档加载
-.load() 将事件处理程序绑定到加载 JavaScript 事件
-.ready() 指定在 DOM 完全加载时执行的函数
-.unload() 将事件处理程序绑定到卸载 JavaScript 事件
-
-
-
-事件处理程序附件
-.bind() 将处理程序附加到元素的事件
-.delegate() 基于一组特定的根元素，将处理程序附加到现在或将来与选择器匹配的所有元素的一个或多个事件
-.die() 从元素中删除先前使用 .live() 附加的事件处理程序
-.live() 现在和将来为所有匹配当前选择器的元素附加一个事件处理程序
-.off() 删除事件处理程序
-.on() 将一个或多个事件的事件处理函数附加到所选元素
-.one() 将处理程序附加到元素的事件。 每个事件类型的每个元素最多执行一次处理程序
-.trigger() 执行附加到给定事件类型的匹配元素的所有处理程序和行为
-.triggerHandler() 执行附加到事件元素的所有处理程序
-.unbind() 从元素中删除先前附加的事件处理程序
-.undelegate() 根据一组特定的根元素，从与当前选择器匹配的所有元素的事件中删除处理程序
-
-
-
-形式事件
-.blur() 将事件处理程序绑定到 blur JavaScript 事件，或在元素上触发该事件
-.change() 将事件处理程序绑定到更改 JavaScript 事件，或在元素上触发该事件
-.focus() 将事件处理程序绑定到焦点 JavaScript 事件，或在元素上触发该事件
-.focusin() 将事件处理程序绑定到 focusin 事件
-.focusout() 将事件处理程序绑定到 focusout JavaScript 事件
-.select() 将事件处理程序绑定到 select JavaScript 事件，或在元素上触发该事件
-.submit() 将事件处理程序绑定到提交 JavaScript 事件，或在元素上触发该事件
-
-
-
-键盘事件
-.keydown() 将事件处理程序绑定到 keydown JavaScript 事件，或在元素上触发该事件
-.keypress() 将事件处理程序绑定到按键 JavaScript 事件，或在元素上触发该事件
-.keyup() 将事件处理程序绑定到 keyup JavaScript 事件，或在元素上触发该事件
-
-
-
-鼠标事件
-.click() 将事件处理程序绑定到 click JavaScript 事件，或在元素上触发该事件
-.contextMenu() 将事件处理程序绑定到 contextmenu JavaScript 事件，或在元素上触发该事件
-.dblclick() 将事件处理程序绑定到 dblclick JavaScript 事件，或在元素上触发该事件
-.hover() 将两个处理程序绑定到匹配的元素，当鼠标指针进入和离开元素时执行
-.mousedown() 将事件处理程序绑定到 mousedown JavaScript 事件，或在元素上触发该事件
-.mouseenter() 绑定要在鼠标进入元素时触发的事件处理程序，或在元素上触发该处理程序
-.mouseleave() 绑定要在鼠标离开元素时触发的事件处理程序，或在元素上触发该处理程序
-.mousemove() 将事件处理程序绑定到 mousemove JavaScript 事件，或在元素上触发该事件
-.mouseout() 将事件处理程序绑定到 mouseout JavaScript 事件，或在元素上触发该事件
-.mouseover() 将事件处理程序绑定到 mouseover JavaScript 事件，或在元素上触发该事件
-.mouseup() 将事件处理程序绑定到 mouseup JavaScript 事件，或在元素上触发该事件
-.toggle() 将两个或多个处理程序绑定到匹配的元素，以在交替单击时执行
-
-
-
-jQuery Effects例子
-
-$(&#x27;#menu-button&#x27;).on(&#x27;click&#x27;, () =&gt; &#123;  // $(&#x27;#menu&#x27;).fadeIn(400, &#x27;swing&#x27;)  $(&#x27;#menu&#x27;).fadeIn();&#125;);
-
-淡出效果$(&#x27;#menu-button&#x27;).on(&#x27;click&#x27;, () =&gt; &#123;  // $(&#x27;#menu&#x27;).fadeOut(400, &#x27;swing&#x27;)  $(&#x27;#menu&#x27;).fadeOut();&#125;);
-
-基本
-.hide() 隐藏匹配的元素
-.show() 显示匹配的元素
-.toggle() 显示或隐藏匹配的元素
-
-
-
-滑动
-.slideDown() 以滑动方式显示匹配的元素
-.slideToggle() 通过滑动显示或隐藏匹配的元素
-.slideUp() 通过滑动隐藏匹配的元素
-
-
-
-自定义
-.animate() 执行一组 CSS 属性的自定义动画
-.clearQueue() 从队列中删除所有尚未运行的项目
-.delay() 设置一个计时器来延迟队列中后续项目的执行
-.dequeue() 为匹配的元素执行队列上的下一个函数
-jQuery.dequeue() 为匹配的元素执行队列上的下一个函数
-.finish() 停止当前运行的动画，移除所有排队的动画，并完成匹配元素的所有动画
-jQuery.fx.interval 动画触发的速率（以毫秒为单位）
-jQuery.fx.off 全局禁用所有动画
-jQuery.speed 创建一个对象，其中包含一组准备用于自定义动画定义的属性
-.queue() 显示要在匹配元素上执行的函数队列
-jQuery.queue() 显示要在匹配元素上执行的函数队列
-.stop() 停止匹配元素上当前运行的动画
-
-
-
-衰退
-.fadeIn() 通过将匹配的元素淡化为不透明来显示它们
-.fadeOut() 通过将它们淡化为透明来隐藏匹配的元素
-.fadeTo() 调整匹配元素的不透明度
-.fadeToggle() 通过设置不透明度动画来显示或隐藏匹配的元素
-
-
-
-jQuery AjaxExamples
-
-$.ajax(&#123;  url: this.action,  type: this.method,  data: $(this).serialize()&#125;).done(function(server_data)&#123;  console.log(&quot;success&quot; + server_data);&#125;).fail(function(jqXHR, status, err)&#123;  console.log(&quot;fail&quot; + err);&#125;);
-
-全局 Ajax 事件处理程序
-.ajaxComplete() 注册要在 Ajax 请求完成时调用的处理程序。 这是一个 AjaxEvent
-.ajaxError() 注册一个处理程序，当 Ajax 请求完成但出现错误时调用。 这是一个 Ajax 事件
-.ajaxSend() 附加一个要在发送 Ajax 请求之前执行的函数。 这是一个 Ajax 事件
-.ajaxStart() 注册一个处理程序，在第一个 Ajax 请求开始时调用。 这是一个 Ajax 事件
-.ajaxStop() 注册一个处理程序，在所有 Ajax 请求完成时调用。 这是一个 Ajax 事件
-.ajaxSuccess() 附加一个要在 Ajax 请求成功完成时执行的函数。 这是一个 Ajax 事件
-
-
-
-辅助功能
-jQuery.param() 创建适合在 URL 查询字符串或 Ajax 请求中使用的数组、普通对象或 jQuery 对象的序列化表示。 如果传递了 jQuery 对象，它应该包含具有名称&#x2F;值属性的输入元素
-.serialize() 将一组表单元素编码为字符串以供提交
-.serializeArray() 将一组表单元素编码为名称和值的数组
-
-
-
-底层接口
-jQuery.ajax() 执行异步 HTTP (Ajax) 请求
-jQuery.prefilter() 在发送每个请求之前和 $.ajax() 处理它们之前处理自定义 Ajax 选项或修改现有选项
-jQuery.ajaxSetup() 为将来的 Ajax 请求设置默认值。 不推荐使用它
-jQuery.ajaxTransport() 创建一个对象来处理 Ajax 数据的实际传输
-
-
-
-速记方法
-jQuery.get() 使用 HTTP GET 请求从服务器加载数据
-jQuery.getJSON() 使用 GET HTTP 请求从服务器加载 JSON 编码的数据
-jQuery.getScript() 使用 GET HTTP 请求从服务器加载 JavaScript 文件，然后执行它
-jQuery.post() 使用 HTTP POST 请求将数据发送到服务器
-.load() 从服务器加载数据并将返回的 HTML 放入匹配的元素中
-
-
-
-各种各样的jQuery 对象
-jQuery() 接受包含 CSS 选择器的字符串，然后用于匹配一组元
-jQuery.noConflict() 放弃 jQuery 对 $ 变量的控
-jQuery.sub() 创建一个新的 jQuery 副本，可以在不影响原始 jQuery 对象的情况下修改其属性和方
-jQuery.holdReady() 持有或释放jQuery的就绪事件的执
-jQuery.when() 提供一种基于零个或多个 Thenable 对象执行回调函数的方法，通常是表示异步事件的 Deferred 对
-
-
-
-延迟对象
-
-
-jQuery.Deferred() 返回可链接实用程序对象的工厂函数，该对象具有将多个回调注册到回调队列、调用回调队列以及中继任何同步或异步函数的成功或失败状态的方法
-deferred.always() 添加要在延迟对象被解析或拒绝时调用的处理程序
-deferred.done() 添加要在解析延迟对象时调用的处理程序
-deferred.fail() 添加处理程序以在延迟对象被拒绝时调用
-deferred.isRejected() 判断一个 Deferred 对象是否被拒绝
-deferred.isResolved() 判断一个 Deferred 对象是否已经解析
-deferred.notify() 使用给定的 args 在 Deferred 对象上调用 progressCallbacks
-deferred.notifyWith() 使用给定的上下文和参数调用 Deferred 对象的 progressCallbacks
-deferred.pipe() 过滤和&#x2F;或链接 Deferreds 的实用方法
-deferred.progress() 添加在 Deferred 对象生成进度通知时要调用的处理程序
-deferred.promise() 返回一个 Deferred 的 Promise 对象
-deferred.reject() 拒绝 Deferred 对象并使用给定的 args 调用任何 failCallbacks
-deferred.rejectWith() 拒绝 Deferred 对象并使用给定的上下文和参数调用任何 failCallbacks
-deferred.resolve() 解析一个 Deferred 对象并使用给定的 args 调用任何 doneCallbacks
-deferred.resolveWith() 解析延迟对象并使用给定的上下文和参数调用任何 doneCallbacks
-deferred.state() 确定 Deferred 对象的当前状态
-deferred.then() 添加要在延迟对象被解析、拒绝或仍在进行中时调用的处理程序
-.promise() 返回一个 Promise 对象以观察绑定到集合的特定类型的所有操作（无论是否排队）何时完成
-
-
-
-公用事业
-
-
-jQuery.boxModel 说明用户浏览器中的当前页面是否正在使用 W3C CSS 盒模型呈现
-jQuery.browser 包含用户代理的标志，从 navigator.userAgent 读取。 此属性在 jQuery 1.9 中被删除，只能通过 jQuery.migrate 插件使用。 请尝试改用特征检测
-jQuery.contains() 检查一个 DOM 元素是否是另一个 DOM 元素的后代
-jQuery.each() 通用迭代器函数，可用于无缝迭代对象和数组。 具有长度属性的数组和类似数组的对象（例如函数的参数对象）按数字索引迭代，从 0 到 length-1。 其他对象通过它们的命名属性迭代
-jQuery.extend() 将两个或多个对象的内容合并到第一个对象中
-jQuery.globalEval() 全局执行一些 JavaScript 代码
-jQuery.grep() 查找满足过滤功能的数组元素。 原数组不受影响
-jQuery.inArray() 在数组中搜索指定值并返回其索引（如果未找到，则返回 -1）
-jQuery.isArray() 判断参数是否为数组
-jQuery.isEmptyObject() 检查对象是否为空（不包含可枚举属性）
-jQuery.isFunction() 确定其参数是否可作为函数调用
-jQuery.isNumeric() 确定其参数是否表示 JavaScript 数字
-jQuery.isPlainObject() 检查对象是否为普通对象
-jQuery.isWindow() 判断参数是否为窗口
-jQuery.isXMLDoc() 检查 DOM 节点是否在 XML 文档中（或者是 XML 文档）
-jQuery.makeArray() 将类数组对象转换为真正的 JavaScript 数组
-jQuery.map() 将数组或对象中的所有项转换为新的项数组
-jQuery.merge() 将两个数组的内容合并到第一个数组中
-jQuery.noop() 空函数
-jQuery.now() 返回代表当前时间的数字
-jQuery.parseHTML() 将字符串解析为 DOM 节点数组
-jQuery.parseJSON() 获取格式正确的 JSON 字符串并返回生成的 JavaScript 值
-jQuery.parseXML() 将字符串解析为 XML 文档
-jQuery.proxy() 接受一个函数并返回一个总是有特定上下文的新函数
-jQuery.support 表示存在不同浏览器功能或错误的属性集合。 用于 jQuery 的内部使用； 当内部不再需要特定属性以提高页面启动性能时，可能会删除它们。 对于您自己项目的功能检测需求，我们强烈建议使用外部库（例如 Modernizr），而不是依赖于 jQuery.support 中的属性
-jQuery.trim() 删除字符串开头和结尾的空格
-jQuery.type() 确定对象的内部 JavaScript [[Class]]
-jQuery.unique() 对 DOM 元素数组进行适当的排序，并删除重复项。 请注意，这仅适用于 DOM 元素数组，不适用于字符串或数字
-jQuery.uniqueSort() 对 DOM 元素数组进行适当的排序，并删除重复项。 请注意，这仅适用于 DOM 元素数组，不适用于字符串或数字
-
-
-
-DOM 元素方法
-.get() 检索与 jQuery 对象匹配的元素之一
-.index() 从匹配的元素中搜索给定的元素
-.size() 返回 jQuery 对象中元素的数量
-.toArray() 检索 jQuery 集合中包含的所有元素，作为数组
-
-
-
-内部结构
-.jquery 包含 jQuery 版本号的字符串
-.context 最初传递给 jQuery() 的 DOM 节点上下文； 如果未通过，则上下文可能是文档
-jQuery.error() 获取一个字符串并抛出包含它的异常
-.length jQuery 对象中元素的数量
-.pushStack() 将一组 DOM 元素添加到 jQuery 堆栈中
-.selector 代表选择器的选择器在创建原始集合时传递给 jQuery()，如果有的话
-
-
-
-回调对象
-jQuery.Callbacks() 一个多用途回调列表对象，提供了一种管理回调列表的强大方法
-callbacks.add() 将回调或回调集合添加到回调列表
-callbacks.disable() 禁止回调列表做更多的事情
-callbacks.disabled() 确定回调列表是否已被禁用
-callbacks.empty() 从列表中删除所有回调
-callbacks.fire() 使用给定参数调用所有回调
-callbacks.fired() 确定回调是否已至少被调用一次
-callbacks.fireWith() 使用给定的上下文和参数调用列表中的所有回调
-callbacks.has() 确定列表是否附加了任何回调。如果回调作为参数提供，请确定它是否在列表中
-callbacks.lock() 将回调列表锁定在其当前状态
-callbacks.locked() 判断回调列表是否被锁定
-callbacks.remove() 从回调列表中删除回调或回调集合
-
-
-]]></content>
-      <categories>
-        <category>前端技术</category>
-      </categories>
-      <tags>
-        <tag>前端技术</tag>
-        <tag>JQuery</tag>
+        <tag>Docker</tag>
       </tags>
   </entry>
   <entry>
@@ -5522,6 +5369,546 @@ Learn X in Y minutes (learnxinyminutes.com)
       <tags>
         <tag>后端编程</tag>
         <tag>PHP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JQuery 备忘录</title>
+    <url>/2025/01/08/jquery/</url>
+    <content><![CDATA[jQuery 备忘清单jQuery 备忘单对于初学者和有经验的开发人员都是很好的参考
+入门引入 jQuery&lt;script src=&quot;https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js&quot;&gt;&lt;/script&gt;
+
+
+官方 CDN&lt;script src=&quot;https://code.jquery.com/jquery-3.5.1.min.js&quot; crossorigin=&quot;anonymous&quot;&gt;&lt;/script&gt;
+
+
+jQuery 语法$(selector).methodOrFunction();
+
+例子$(&#x27;#menu&#x27;).on(&#x27;click&#x27;, () =&gt;&#123;  $(this).hide();  &#125;);$(&quot;body&quot;).css(&quot;background&quot;, &quot;red&quot;);
+
+jQuery 文档准备就绪$(document).ready(function() &#123;  // 在加载 DOM 后运行  alert(&#x27;DOM fully loaded!&#x27;);&#125;);
+
+$(function()&#123;  // 在加载 DOM 后运行  alert(&#x27;DOM fully loaded!&#x27;);&#125;);
+
+jQuery 选择器例子$(&quot;button&quot;).click(() =&gt; &#123;    $(&quot;:button&quot;).css(&quot;color&quot;, &quot;red&quot;);&#125;);
+
+组合选择器$(&quot;selector1, selector2 ...selectorn&quot;)
+
+基本
+* 选择所有元素
+.class 选择具有给定类的所有元素
+element 选择具有给定标签名称的所有元素
+#id 选择具有给定 id 属性的单个元素
+:hidden 选择所有隐藏的元素
+:visible 选择所有可见的元素
+:contains() 选择包含指定文本的所有元素
+:empty 选择所有没有子元素的元素(包括文本节点)
+:has() 选择至少包含一个与指定选择器匹配的元素的元素
+:parent 选择具有至少一个子节点(元素或文本)的所有元素
+parent &gt; child 选择由父元素指定的子元素指定的所有直接子元素
+ancestor descendant 选择作为给定祖先的后代的所有元素
+prev + next 选择所有与 next 匹配且紧接在其前面的同级 prev 的下一个元素
+prev ~ siblings 选择 prev 元素之后的所有同级元素，具有相同的父元素，并匹配过滤同级选择器
+
+
+
+基本过滤器
+:animated 在运行选择器时选择动画进度中的所有元素
+:eq() 选择匹配集中索引 n 处的元素
+:even 选择偶数元素，索引为零。 另见：奇数
+:first 选择第一个匹配的 DOM 元素
+:gt() 选择匹配集中索引大于索引的所有元素
+:header 选择所有标题元素，如 h1、h2、h3 等
+:lang() 选择指定语言的所有元素
+:last 选择最后一个匹配的元素
+:lt() 选择匹配集中索引小于索引的所有元素
+:not() 选择与给定选择器不匹配的所有元素
+:odd 选择奇数元素，索引为零。 另见：甚至
+:root 选择作为文档根的元素
+:target 选择由文档的 URI 的片段标识符指示的目标元素
+
+
+
+属性
+[name|&#x3D;”value”] 选择具有指定属性且值等于给定字符串或以该字符串开头后跟连字符 (-) 的元素
+[name*&#x3D;”value”] 选择具有指定属性且值包含给定子字符串的元素
+[name~&#x3D;”value”] 选择具有指定属性的元素，其值包含给定单词，由空格分隔
+[name$&#x3D;”value”] 选择具有指定属性且值恰好以给定字符串结尾的元素。 比较区分大小写
+[name&#x3D;”value”] 选择具有指定属性且值恰好等于特定值的元素
+[name!&#x3D;”value”] 选择不具有指定属性或具有指定属性但不具有特定值的元素
+[name^&#x3D;”value”] 选择具有指定属性且值恰好以给定字符串开头的元素
+[name] 选择具有指定属性和任意值的元素
+[name&#x3D;”value”] 匹配匹配所有指定属性过滤器的元素
+
+
+
+子过滤器
+:first-child 选择作为其父元素的第一个子元素的所有元素
+:first-of-type 选择具有相同元素名称的兄弟姐妹中第一个的所有元素
+:last-child 选择作为其父元素的最后一个子元素的所有元素
+:last-of-type 选择具有相同元素名称的兄弟中最后一个的所有元素
+:nth-child() 选择作为其父元素的第 n 个子元素的所有元素
+:nth-last-child() 选择作为其父元素的第 n 个子元素的所有元素，从最后一个元素到第一个元素计数
+:nth-last-of-type() 选择所有元素，这些元素是其父元素的第 n 个子元素，相对于具有相同元素名称的兄弟元素，从最后一个元素到第一个元素计数
+:nth-of-type() 选择所有元素，这些元素是其父元素相对于具有相同元素名称的兄弟元素的第 n 个子元素
+:only-child 选择作为其父元素的唯一子元素的所有元素
+:only-of-type() 选择所有没有同名元素的元素
+
+
+
+Forms
+:button 选择所有按钮元素和按钮类型的元素
+:checkbox 选择复选框类型的所有元素
+:checked 匹配所有选中或选择的元素
+:disabled 选择所有禁用的元素
+:enabled 选择所有启用的元素
+:focus 如果当前获得焦点，则选择元素
+:file 选择类型文件的所有元素
+:image 选择图像类型的所有元素
+:input 选择所有输入、文本区域、选择和按钮元素
+:password 选择密码类型的所有元素
+:radio 选择无线电类型的所有元素
+:reset 选择重置类型的所有元素
+:selected 选择所有选中的元素
+:submit 选择提交类型的所有元素
+:text 选择文本类型的所有输入元素
+
+
+
+jQuery 属性例子
+
+$(&#x27;h2&#x27;).css(&#123;  color: &#x27;blue&#x27;,  backgroundColor: &#x27;gray&#x27;,  fontSize: &#x27;24px&#x27;&#125;);
+
+jQuery 添加类$(&#x27;.button&#x27;).addClass(&#x27;active&#x27;); 
+
+jQuery 移除类$(&#x27;.button&#x27;).on(&#x27;mouseleave&#x27;, evt =&gt; &#123;   let e = evt.currentTarget;   $(e).removeClass(&#x27;active&#x27;);&#125;);
+
+jQuery 切换类$(&#x27;.choice&#x27;).toggleClass(&#x27;highlighted&#x27;);
+
+Attributes
+.attr() 获取匹配元素集中第一个元素的属性值
+.prop() 获取匹配元素集中第一个元素的属性值
+.removeAttr() 从匹配元素集中的每个元素中删除一个属性
+.removeProp() 删除匹配元素集的属性
+.val() 获取匹配元素集中第一个元素的当前值
+
+
+
+Data
+jQuery.data() 存储与指定元素关联的任意数据。 返回设置的值
+.data() 存储与匹配元素关联的任意数据
+jQuery.hasData() 确定一个元素是否有任何与之关联的 jQuery 数据
+jQuery.removeData() 删除以前存储的数据
+.removeData() 删除以前存储的数据
+
+
+
+CSS
+.addClass() 将指定的类添加到匹配元素集中的每个元素
+.hasClass() 确定是否有任何匹配的元素被分配给给定的类
+.removeClass() 从匹配元素集中的每个元素中删除单个类、多个类或所有类
+.toggleClass() 根据类的存在或状态参数的值，从匹配元素集中的每个元素添加或删除一个或多个类
+.css() 获取匹配元素集中第一个元素的计算样式属性
+jQuery.cssHooks 直接连接到 jQuery 以覆盖特定 CSS 属性的检索或设置方式、标准化 CSS 属性命名或创建自定义属性
+jQuery.cssNumber 包含所有可以在没有单位的情况下使用的 CSS 属性的对象。.css() 方法使用此对象来查看它是否可以将 px 附加到无单位值
+jQuery.escapeSelector() 转义任何在 CSS 选择器中具有特殊含义的字符
+
+
+
+Dimensions
+.height() 获取匹配元素集中第一个元素的当前计算高度
+.innerHeight() 获取匹配元素集中第一个元素的当前计算高度，包括填充但不包括边框
+.innerWidth() 获取匹配元素集中第一个元素的当前计算内部宽度，包括填充但不包括边框
+.outerHeight() 获取匹配元素集中第一个元素的当前计算外部高度(包括填充、边框和可选的边距)
+.outerWidth() 获取匹配元素集中第一个元素的当前计算外部宽度(包括填充、边框和可选的边距)
+.width() 获取匹配元素集中第一个元素的当前计算宽度
+
+
+
+Offset
+.offset() 获取匹配元素集中第一个元素相对于文档的当前坐标
+.offsetParent() 获取定位的最近的祖先元素
+.position() 获取匹配元素集中第一个元素相对于偏移父元素的当前坐标
+.scrollLeft() 获取匹配元素集中第一个元素的滚动条的当前水平位置
+.scrollTop() 获取匹配元素集中第一个元素的滚动条的当前垂直位置，或为每个匹配元素设置滚动条的垂直位置
+
+
+
+jQuery 操控Examples
+
+/*&lt;span&gt;Span.&lt;/span&gt;*/$(&#x27;span&#x27;).after(&#x27;&lt;p&gt;Paragraph.&lt;/p&gt;&#x27;);/*&lt;span&gt;Span.&lt;/span&gt;&lt;p&gt;Paragraph.&lt;/p&gt;*//*&lt;span&gt;Span.&lt;/span&gt;*/$(&#x27;&lt;span&gt;Span.&lt;/span&gt;&#x27;).replaceAll(&#x27;p&#x27;);/*&lt;p&gt;Span.&lt;/p&gt;*//*&lt;span&gt;This is span.&lt;/span&gt;*/$(&#x27;span&#x27;).wrap(&#x27;&lt;p&gt;&lt;/p&gt;&#x27;);/*&lt;p&gt;&lt;span&gt;This is span.&lt;/span&gt;&lt;/p&gt;*/
+
+复刻
+.clone() 创建匹配元素集的深层副本
+
+
+
+DOM 插入，环绕
+.wrap() 在匹配元素集中的每个元素周围包装一个 HTML 结构
+.wrapAll() 在匹配元素集中的所有元素周围包装一个 HTML 结构
+.wrapInner() 围绕匹配元素集中每个元素的内容包装一个 HTML 结构
+
+
+
+DOM 插入，内部
+.append() 在匹配的元素集中，插入由参数指定的内容插入每个元素的末尾
+.appendTo() 将匹配元素集中的每个元素插入目标末端
+.html() 在匹配元素集中获取第一个元素的HTML内容
+.prepend() 插入由参数指定的内容插入匹配元素集中每个元素的开始
+.prependTo() 将匹配元素集中的每个元素插入目标开始
+.text() 在匹配的元素集（包括其后代）中获取每个元素的组合文本内容
+
+
+
+DOM 插入，外部
+.after() 在匹配元素集中的每个元素之后，插入由参数指定的内容
+.before() 在匹配元素集中的每个元素之前，插入由参数指定的内容
+.insertAfter() 在目标之后插入匹配元素集中的每个元素
+.insertBefore() 在目标之前插入匹配元素集中的每个元素
+
+
+
+DOM 移除
+.detach() 从DOM上删除一组匹配的元素
+.empty() 从DOM中删除一组匹配元素的所有子节点
+.remove() 从DOM上删除一组匹配的元素
+.unwrap() 从DOM上删除一组匹配元素的父母，将匹配的元素留在其位置
+
+
+
+DOM 替换
+.replaceAll() 用匹配的元素集替换每个目标元素
+.replaceWith() 用提供的新内容替换一组匹配元素中的每个元素，然后返回已删除的元素集
+
+
+
+jQuery 遍历过滤
+.eq() 将匹配的元素集减少到指定索引处的集合
+.filter() 将匹配的元素集减少到匹配选择器或传递函数测试的元素
+.first() 将匹配的元素集减少到集合中的第一个
+.has() 将匹配的元素集减少到具有与选择器或DOM元素相匹配的后代的元素
+.is() 检查当前匹配的元素与选择器，元素或jQuery对象的元素集，如果至少其中一个元素与给定参数匹配，则返回true
+.last() 将匹配的元素集减少到集合中的最后一个元素
+.map() 将当前匹配的每个元素通过函数传递，从而产生包含返回值的新jQuery对象
+.not() 从匹配元素集中删除元素
+.slice() 将匹配的元素集减少为由一系列索引指定的子集
+
+
+
+杂项遍历
+.add() 创建一个新的jQuery对象，其中添加到匹配元素集中的元素
+.addBack() 将堆栈上的上一个元素添加到当前集合中，并由选择器进行过滤
+.andSelf() 将堆栈上的先前元素添加到当前集合中
+.contents() 在一组匹配元素中获取每个元素的孩子，包括文本和评论节点
+.each() 在jQuery对象上迭代，为每个匹配的元素执行一个函数
+.end() 结束当前链中最新的过滤操作，并将匹配元素集返回其先前状态
+
+
+
+树遍历
+.children() 在一组匹配元素中获取每个元素的孩子，并被选择器进行过滤
+.closest() 对于集合中的每个元素，通过测试元素本身并通过其祖先在DOM树中的祖先进行遍历来获取与选择器匹配的第一个元素
+.find() 在当前匹配元素集中获取每个元素的后代，并由选择器，jQuery对象或元素过滤
+.next() 在匹配的元素集中，立即获取每个元素的兄弟姐妹。 如果提供了选择器，则仅在匹配该选择器的情况下才能检索下一个兄弟姐妹
+.nextAll() 在一组匹配元素中获取每个元素的所有以下兄弟姐妹，并由选择器进行过滤
+.nextUntil() 将每个元素的所有以下兄弟姐妹添加到，但不包括通过选择器，DOM节点或jQuery对象匹配的元素
+.parent() 在当前匹配元素集中获取每个元素的父，由选择器选择过滤
+.parents() 在当前匹配元素集中获取每个元素的祖先，并被选择器进行过滤
+.parentsUntil() 在当前匹配元素集中获取每个元素的祖先，直到但不包括由选择器，DOM节点或jQuery对象匹配的元素
+.prev() 在匹配元素集中获取每个元素的立即兄弟姐妹。 如果提供了选择器，则仅在匹配该选择器时才检索先前的同胞
+.prevAll() 在一组匹配元素中获取每个元素的所有先前兄弟姐妹，并由选择器进行过滤
+.prevUntil() 将每个元素的所有先前兄弟姐妹添加到，但不包括由选择器，DOM节点或jQuery对象匹配的元素
+.siblings() 在匹配的元素集中获取每个元素的兄弟姐妹，并被选择器进行过滤
+
+
+
+jQuery 事件Examples
+
+// 鼠标事件“点击”$(&#x27;#menu-button&#x27;).on(&#x27;click&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;);// 键盘事件“键盘”$(&#x27;#textbox&#x27;).on(&#x27;keyup&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;);// 滚动事件“滚动”$(&#x27;#menu-button&#x27;).on(&#x27;scroll&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;);
+
+事件对象$(&#x27;#menu&#x27;).on(&#x27;click&#x27;, event =&gt; &#123;  $(event.currentTarget).hide();&#125;);
+
+方法链$(&#x27;#menu-btn&#x27;).on(&#x27;mouseenter&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).show();&#125;).on(&#x27;mouseleave&#x27;, () =&gt; &#123;  $(&#x27;#menu&#x27;).hide();&#125;);
+
+防止事件$( &quot;p&quot; ).click(function( event ) &#123;  event.stopPropagation();  // Do something&#125;);
+
+浏览器事件
+.error() 将事件处理程序绑定到错误 JavaScript 事件 
+.resize() 将事件处理程序绑定到调整大小的 JavaScript 事件，或在元素上触发该事件 
+.scroll() 将事件处理程序绑定到滚动 JavaScript 事件，或在元素上触发该事件 
+
+
+
+事件对象
+
+
+event.currentTarget 事件冒泡阶段中的当前 DOM 元素 
+event.delegateTarget 附加了当前调用的 jQuery 事件处理程序的元素 
+event.data 绑定当前正在执行的处理程序时传递给事件方法的可选数据对象 
+event.isDefaultPrevented() 返回是否曾在此事件对象上调用过 event.preventDefault() 
+event.isImmediatePropagationStopped() 返回是否曾在此事件对象上调用过 event.stopImmediatePropagation() 
+event.isPropagationStopped() 返回是否曾在此事件对象上调用过 event.stopPropagation() 
+event.metaKey 指示事件触发时是否按下了 META 键 
+event.namespace 触发事件时指定的命名空间 
+event.pageX 鼠标相对于文档左边缘的位置 
+event.pageY 鼠标位置相对于文档的上边缘 
+event.preventDefault() 如果调用该方法，则不会触发事件的默认动作 
+event.relatedTarget 事件中涉及的其他 DOM 元素（如果有） 
+event.result 由此事件触发的事件处理程序返回的最后一个值，除非该值未定义 
+event.stopImmediatePropagation() 保持其余的处理程序不被执行，并防止事件在 DOM 树中向上冒泡 
+event.stopPropagation() 防止事件在 DOM 树中向上冒泡，从而防止任何父处理程序收到事件通知 
+event.target 发起事件的 DOM 元素 
+event.timeStamp 浏览器创建事件的时间与 1970 年 1 月 1 日之间的毫秒差 
+event.type 描述事件的性质 
+event.which 对于键或鼠标事件，此属性指示按下的特定键或按钮 
+
+
+
+文档加载
+.load() 将事件处理程序绑定到加载 JavaScript 事件
+.ready() 指定在 DOM 完全加载时执行的函数
+.unload() 将事件处理程序绑定到卸载 JavaScript 事件
+
+
+
+事件处理程序附件
+.bind() 将处理程序附加到元素的事件
+.delegate() 基于一组特定的根元素，将处理程序附加到现在或将来与选择器匹配的所有元素的一个或多个事件
+.die() 从元素中删除先前使用 .live() 附加的事件处理程序
+.live() 现在和将来为所有匹配当前选择器的元素附加一个事件处理程序
+.off() 删除事件处理程序
+.on() 将一个或多个事件的事件处理函数附加到所选元素
+.one() 将处理程序附加到元素的事件。 每个事件类型的每个元素最多执行一次处理程序
+.trigger() 执行附加到给定事件类型的匹配元素的所有处理程序和行为
+.triggerHandler() 执行附加到事件元素的所有处理程序
+.unbind() 从元素中删除先前附加的事件处理程序
+.undelegate() 根据一组特定的根元素，从与当前选择器匹配的所有元素的事件中删除处理程序
+
+
+
+形式事件
+.blur() 将事件处理程序绑定到 blur JavaScript 事件，或在元素上触发该事件
+.change() 将事件处理程序绑定到更改 JavaScript 事件，或在元素上触发该事件
+.focus() 将事件处理程序绑定到焦点 JavaScript 事件，或在元素上触发该事件
+.focusin() 将事件处理程序绑定到 focusin 事件
+.focusout() 将事件处理程序绑定到 focusout JavaScript 事件
+.select() 将事件处理程序绑定到 select JavaScript 事件，或在元素上触发该事件
+.submit() 将事件处理程序绑定到提交 JavaScript 事件，或在元素上触发该事件
+
+
+
+键盘事件
+.keydown() 将事件处理程序绑定到 keydown JavaScript 事件，或在元素上触发该事件
+.keypress() 将事件处理程序绑定到按键 JavaScript 事件，或在元素上触发该事件
+.keyup() 将事件处理程序绑定到 keyup JavaScript 事件，或在元素上触发该事件
+
+
+
+鼠标事件
+.click() 将事件处理程序绑定到 click JavaScript 事件，或在元素上触发该事件
+.contextMenu() 将事件处理程序绑定到 contextmenu JavaScript 事件，或在元素上触发该事件
+.dblclick() 将事件处理程序绑定到 dblclick JavaScript 事件，或在元素上触发该事件
+.hover() 将两个处理程序绑定到匹配的元素，当鼠标指针进入和离开元素时执行
+.mousedown() 将事件处理程序绑定到 mousedown JavaScript 事件，或在元素上触发该事件
+.mouseenter() 绑定要在鼠标进入元素时触发的事件处理程序，或在元素上触发该处理程序
+.mouseleave() 绑定要在鼠标离开元素时触发的事件处理程序，或在元素上触发该处理程序
+.mousemove() 将事件处理程序绑定到 mousemove JavaScript 事件，或在元素上触发该事件
+.mouseout() 将事件处理程序绑定到 mouseout JavaScript 事件，或在元素上触发该事件
+.mouseover() 将事件处理程序绑定到 mouseover JavaScript 事件，或在元素上触发该事件
+.mouseup() 将事件处理程序绑定到 mouseup JavaScript 事件，或在元素上触发该事件
+.toggle() 将两个或多个处理程序绑定到匹配的元素，以在交替单击时执行
+
+
+
+jQuery Effects例子
+
+$(&#x27;#menu-button&#x27;).on(&#x27;click&#x27;, () =&gt; &#123;  // $(&#x27;#menu&#x27;).fadeIn(400, &#x27;swing&#x27;)  $(&#x27;#menu&#x27;).fadeIn();&#125;);
+
+淡出效果$(&#x27;#menu-button&#x27;).on(&#x27;click&#x27;, () =&gt; &#123;  // $(&#x27;#menu&#x27;).fadeOut(400, &#x27;swing&#x27;)  $(&#x27;#menu&#x27;).fadeOut();&#125;);
+
+基本
+.hide() 隐藏匹配的元素
+.show() 显示匹配的元素
+.toggle() 显示或隐藏匹配的元素
+
+
+
+滑动
+.slideDown() 以滑动方式显示匹配的元素
+.slideToggle() 通过滑动显示或隐藏匹配的元素
+.slideUp() 通过滑动隐藏匹配的元素
+
+
+
+自定义
+.animate() 执行一组 CSS 属性的自定义动画
+.clearQueue() 从队列中删除所有尚未运行的项目
+.delay() 设置一个计时器来延迟队列中后续项目的执行
+.dequeue() 为匹配的元素执行队列上的下一个函数
+jQuery.dequeue() 为匹配的元素执行队列上的下一个函数
+.finish() 停止当前运行的动画，移除所有排队的动画，并完成匹配元素的所有动画
+jQuery.fx.interval 动画触发的速率（以毫秒为单位）
+jQuery.fx.off 全局禁用所有动画
+jQuery.speed 创建一个对象，其中包含一组准备用于自定义动画定义的属性
+.queue() 显示要在匹配元素上执行的函数队列
+jQuery.queue() 显示要在匹配元素上执行的函数队列
+.stop() 停止匹配元素上当前运行的动画
+
+
+
+衰退
+.fadeIn() 通过将匹配的元素淡化为不透明来显示它们
+.fadeOut() 通过将它们淡化为透明来隐藏匹配的元素
+.fadeTo() 调整匹配元素的不透明度
+.fadeToggle() 通过设置不透明度动画来显示或隐藏匹配的元素
+
+
+
+jQuery AjaxExamples
+
+$.ajax(&#123;  url: this.action,  type: this.method,  data: $(this).serialize()&#125;).done(function(server_data)&#123;  console.log(&quot;success&quot; + server_data);&#125;).fail(function(jqXHR, status, err)&#123;  console.log(&quot;fail&quot; + err);&#125;);
+
+全局 Ajax 事件处理程序
+.ajaxComplete() 注册要在 Ajax 请求完成时调用的处理程序。 这是一个 AjaxEvent
+.ajaxError() 注册一个处理程序，当 Ajax 请求完成但出现错误时调用。 这是一个 Ajax 事件
+.ajaxSend() 附加一个要在发送 Ajax 请求之前执行的函数。 这是一个 Ajax 事件
+.ajaxStart() 注册一个处理程序，在第一个 Ajax 请求开始时调用。 这是一个 Ajax 事件
+.ajaxStop() 注册一个处理程序，在所有 Ajax 请求完成时调用。 这是一个 Ajax 事件
+.ajaxSuccess() 附加一个要在 Ajax 请求成功完成时执行的函数。 这是一个 Ajax 事件
+
+
+
+辅助功能
+jQuery.param() 创建适合在 URL 查询字符串或 Ajax 请求中使用的数组、普通对象或 jQuery 对象的序列化表示。 如果传递了 jQuery 对象，它应该包含具有名称&#x2F;值属性的输入元素
+.serialize() 将一组表单元素编码为字符串以供提交
+.serializeArray() 将一组表单元素编码为名称和值的数组
+
+
+
+底层接口
+jQuery.ajax() 执行异步 HTTP (Ajax) 请求
+jQuery.prefilter() 在发送每个请求之前和 $.ajax() 处理它们之前处理自定义 Ajax 选项或修改现有选项
+jQuery.ajaxSetup() 为将来的 Ajax 请求设置默认值。 不推荐使用它
+jQuery.ajaxTransport() 创建一个对象来处理 Ajax 数据的实际传输
+
+
+
+速记方法
+jQuery.get() 使用 HTTP GET 请求从服务器加载数据
+jQuery.getJSON() 使用 GET HTTP 请求从服务器加载 JSON 编码的数据
+jQuery.getScript() 使用 GET HTTP 请求从服务器加载 JavaScript 文件，然后执行它
+jQuery.post() 使用 HTTP POST 请求将数据发送到服务器
+.load() 从服务器加载数据并将返回的 HTML 放入匹配的元素中
+
+
+
+各种各样的jQuery 对象
+jQuery() 接受包含 CSS 选择器的字符串，然后用于匹配一组元
+jQuery.noConflict() 放弃 jQuery 对 $ 变量的控
+jQuery.sub() 创建一个新的 jQuery 副本，可以在不影响原始 jQuery 对象的情况下修改其属性和方
+jQuery.holdReady() 持有或释放jQuery的就绪事件的执
+jQuery.when() 提供一种基于零个或多个 Thenable 对象执行回调函数的方法，通常是表示异步事件的 Deferred 对
+
+
+
+延迟对象
+
+
+jQuery.Deferred() 返回可链接实用程序对象的工厂函数，该对象具有将多个回调注册到回调队列、调用回调队列以及中继任何同步或异步函数的成功或失败状态的方法
+deferred.always() 添加要在延迟对象被解析或拒绝时调用的处理程序
+deferred.done() 添加要在解析延迟对象时调用的处理程序
+deferred.fail() 添加处理程序以在延迟对象被拒绝时调用
+deferred.isRejected() 判断一个 Deferred 对象是否被拒绝
+deferred.isResolved() 判断一个 Deferred 对象是否已经解析
+deferred.notify() 使用给定的 args 在 Deferred 对象上调用 progressCallbacks
+deferred.notifyWith() 使用给定的上下文和参数调用 Deferred 对象的 progressCallbacks
+deferred.pipe() 过滤和&#x2F;或链接 Deferreds 的实用方法
+deferred.progress() 添加在 Deferred 对象生成进度通知时要调用的处理程序
+deferred.promise() 返回一个 Deferred 的 Promise 对象
+deferred.reject() 拒绝 Deferred 对象并使用给定的 args 调用任何 failCallbacks
+deferred.rejectWith() 拒绝 Deferred 对象并使用给定的上下文和参数调用任何 failCallbacks
+deferred.resolve() 解析一个 Deferred 对象并使用给定的 args 调用任何 doneCallbacks
+deferred.resolveWith() 解析延迟对象并使用给定的上下文和参数调用任何 doneCallbacks
+deferred.state() 确定 Deferred 对象的当前状态
+deferred.then() 添加要在延迟对象被解析、拒绝或仍在进行中时调用的处理程序
+.promise() 返回一个 Promise 对象以观察绑定到集合的特定类型的所有操作（无论是否排队）何时完成
+
+
+
+公用事业
+
+
+jQuery.boxModel 说明用户浏览器中的当前页面是否正在使用 W3C CSS 盒模型呈现
+jQuery.browser 包含用户代理的标志，从 navigator.userAgent 读取。 此属性在 jQuery 1.9 中被删除，只能通过 jQuery.migrate 插件使用。 请尝试改用特征检测
+jQuery.contains() 检查一个 DOM 元素是否是另一个 DOM 元素的后代
+jQuery.each() 通用迭代器函数，可用于无缝迭代对象和数组。 具有长度属性的数组和类似数组的对象（例如函数的参数对象）按数字索引迭代，从 0 到 length-1。 其他对象通过它们的命名属性迭代
+jQuery.extend() 将两个或多个对象的内容合并到第一个对象中
+jQuery.globalEval() 全局执行一些 JavaScript 代码
+jQuery.grep() 查找满足过滤功能的数组元素。 原数组不受影响
+jQuery.inArray() 在数组中搜索指定值并返回其索引（如果未找到，则返回 -1）
+jQuery.isArray() 判断参数是否为数组
+jQuery.isEmptyObject() 检查对象是否为空（不包含可枚举属性）
+jQuery.isFunction() 确定其参数是否可作为函数调用
+jQuery.isNumeric() 确定其参数是否表示 JavaScript 数字
+jQuery.isPlainObject() 检查对象是否为普通对象
+jQuery.isWindow() 判断参数是否为窗口
+jQuery.isXMLDoc() 检查 DOM 节点是否在 XML 文档中（或者是 XML 文档）
+jQuery.makeArray() 将类数组对象转换为真正的 JavaScript 数组
+jQuery.map() 将数组或对象中的所有项转换为新的项数组
+jQuery.merge() 将两个数组的内容合并到第一个数组中
+jQuery.noop() 空函数
+jQuery.now() 返回代表当前时间的数字
+jQuery.parseHTML() 将字符串解析为 DOM 节点数组
+jQuery.parseJSON() 获取格式正确的 JSON 字符串并返回生成的 JavaScript 值
+jQuery.parseXML() 将字符串解析为 XML 文档
+jQuery.proxy() 接受一个函数并返回一个总是有特定上下文的新函数
+jQuery.support 表示存在不同浏览器功能或错误的属性集合。 用于 jQuery 的内部使用； 当内部不再需要特定属性以提高页面启动性能时，可能会删除它们。 对于您自己项目的功能检测需求，我们强烈建议使用外部库（例如 Modernizr），而不是依赖于 jQuery.support 中的属性
+jQuery.trim() 删除字符串开头和结尾的空格
+jQuery.type() 确定对象的内部 JavaScript [[Class]]
+jQuery.unique() 对 DOM 元素数组进行适当的排序，并删除重复项。 请注意，这仅适用于 DOM 元素数组，不适用于字符串或数字
+jQuery.uniqueSort() 对 DOM 元素数组进行适当的排序，并删除重复项。 请注意，这仅适用于 DOM 元素数组，不适用于字符串或数字
+
+
+
+DOM 元素方法
+.get() 检索与 jQuery 对象匹配的元素之一
+.index() 从匹配的元素中搜索给定的元素
+.size() 返回 jQuery 对象中元素的数量
+.toArray() 检索 jQuery 集合中包含的所有元素，作为数组
+
+
+
+内部结构
+.jquery 包含 jQuery 版本号的字符串
+.context 最初传递给 jQuery() 的 DOM 节点上下文； 如果未通过，则上下文可能是文档
+jQuery.error() 获取一个字符串并抛出包含它的异常
+.length jQuery 对象中元素的数量
+.pushStack() 将一组 DOM 元素添加到 jQuery 堆栈中
+.selector 代表选择器的选择器在创建原始集合时传递给 jQuery()，如果有的话
+
+
+
+回调对象
+jQuery.Callbacks() 一个多用途回调列表对象，提供了一种管理回调列表的强大方法
+callbacks.add() 将回调或回调集合添加到回调列表
+callbacks.disable() 禁止回调列表做更多的事情
+callbacks.disabled() 确定回调列表是否已被禁用
+callbacks.empty() 从列表中删除所有回调
+callbacks.fire() 使用给定参数调用所有回调
+callbacks.fired() 确定回调是否已至少被调用一次
+callbacks.fireWith() 使用给定的上下文和参数调用列表中的所有回调
+callbacks.has() 确定列表是否附加了任何回调。如果回调作为参数提供，请确定它是否在列表中
+callbacks.lock() 将回调列表锁定在其当前状态
+callbacks.locked() 判断回调列表是否被锁定
+callbacks.remove() 从回调列表中删除回调或回调集合
+
+
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>前端技术</tag>
+        <tag>JQuery</tag>
       </tags>
   </entry>
   <entry>
@@ -6584,6 +6971,969 @@ Python 中的正则表达式 (jaywcjlove.github.io)
       <tags>
         <tag>后端编程</tag>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HTML 备忘录</title>
+    <url>/2025/01/08/html/</url>
+    <content><![CDATA[HTML 备忘清单此 HTML 快速参考备忘单以可读布局列出了常见的 HTML 和 HTML5 标记。
+入门hello.html
+
+&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;    &lt;title&gt;HTML5 Boilerplate&lt;/title&gt;&lt;/head&gt;&lt;body&gt;    &lt;h1&gt;Hello world, hello 备忘清单!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;
+
+或者在 jsfiddle
+注释 Comment&lt;!-- 这是代码注释 --&gt;&lt;!--  或者你可以注释掉一个  大量的行。--&gt;
+
+段落 Paragraph&lt;p&gt;我来自快速参考&lt;/p&gt;&lt;p&gt;分享快速参考备忘单。&lt;/p&gt;
+
+请参阅：段落元素
+HTML 链接&lt;a href=&quot;https://github.com/jaywcjlove/reference&quot;&gt;  Github&lt;/a&gt;&lt;a href=&quot;mailto:jack@abc.com&quot;&gt;邮箱&lt;/a&gt;&lt;a href=&quot;tel:+123456789&quot;&gt;电话&lt;/a&gt;&lt;a href=&quot;sms:+123456789&amp;body=ha%20ha&quot;&gt;  短信&lt;/a&gt;
+
+
+
+
+
+:-
+:-
+
+
+
+href
+超链接指向的 URL
+
+
+rel
+链接 URL 的关系
+
+
+target
+链接目标位置：_self&#x2F;_blank&#x2F;_top&#x2F;_parent
+
+
+请参阅：&lt;a&gt; 属性
+Image 标签&lt;img loading=&quot;lazy&quot;  src=&quot;https://xxx.png&quot;  alt=&quot;在此处描述图像&quot;  width=&quot;400&quot; height=&quot;400&quot;&gt;
+
+
+
+
+
+
+
+
+
+
+
+
+
+src (URL&#x2F;路径)
+必填，图片位置
+
+
+
+alt
+描述图像
+
+
+
+width
+图像宽度
+
+
+
+height
+图像高度
+
+
+
+loading
+浏览器应该如何加载
+
+
+请参阅：图像嵌入元素
+文本格式标签&lt;b&gt;粗体文字&lt;/b&gt;&lt;strong&gt;这段文字很重要&lt;/strong&gt;&lt;i&gt;斜体文本&lt;/i&gt;&lt;em&gt;这段文字被强调&lt;/em&gt;&lt;u&gt;下划线文本&lt;/u&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;code&gt;源代码&lt;/code&gt;&lt;del&gt;删除的文字&lt;/del&gt;&lt;mark&gt;突出显示的文本 (HTML5)&lt;/mark&gt;&lt;ins&gt;插入的文本&lt;/ins&gt;&lt;sup&gt;使文本上标&lt;/sup&gt;&lt;sub&gt;使文本下标&lt;/sub&gt;&lt;small&gt;使文本变小&lt;/small&gt;&lt;pre&gt;预格式化文本&lt;/pre&gt;&lt;kbd&gt;Ctrl&lt;/kbd&gt;&lt;blockquote&gt;文本块引用&lt;/blockquote&gt;
+
+标题&lt;h1&gt; 这是标题 1 &lt;/h1&gt;&lt;h2&gt; 这是标题 2 &lt;/h2&gt;&lt;h3&gt; 这是标题 3 &lt;/h3&gt;&lt;h4&gt; 这是标题 4 &lt;/h4&gt;&lt;h5&gt; 这是标题 5 &lt;/h5&gt;&lt;h6&gt; 这是标题 6 &lt;/h6&gt;
+
+您的页面上应该只有一个 h1
+Section Divisions
+
+
+:-
+:-
+
+
+
+&lt;div&gt;&lt;/div&gt;
+页面内容的划分或部分
+
+
+&lt;span&gt;&lt;/span&gt;
+其他内容中的文本部分
+
+
+&lt;p&gt;&lt;/p&gt;
+文本段落
+
+
+&lt;br&gt;
+换行
+
+
+&lt;hr&gt;
+水平分割线
+
+
+这些标签用于将页面划分为多个部分
+内部框架
+
+&lt;iframe  id=&quot;inlineFrameExample&quot;  title=&quot;Inline Frame Example&quot;  width=&quot;100%&quot;  height=&quot;200&quot;  frameborder=&quot;0&quot;  src=&quot;https://www.openstreetmap.org/export/embed.html?bbox=-0.004017949104309083%2C51.47612752641776%2C0.00030577182769775396%2C51.478569861898606&amp;layer=mapnik&quot;&gt;&lt;/iframe&gt;
+
+
+↓ 预览
+
+
+请参阅：内联框架元素
+HTML 中的 JavaScript&lt;script type=&quot;text/javascript&quot;&gt;  let text = &quot;Hello 快速参考&quot;;  alert(text);&lt;/script&gt;
+
+外部 JavaScript&lt;body&gt;  ...  &lt;script src=&quot;app.js&quot;&gt;&lt;/script&gt;&lt;/body&gt;
+
+HTML 中的 CSS&lt;style type=&quot;text/css&quot;&gt;    h1 &#123;        color: purple;    &#125;&lt;/style&gt;
+
+外部样式表&lt;head&gt;  ...  &lt;link rel=&quot;stylesheet&quot; href=&quot;style.css&quot;/&gt;&lt;/head&gt;
+
+HTML5 标签页面&lt;body&gt;  &lt;header&gt;    &lt;nav&gt;...&lt;/nav&gt;  &lt;/header&gt;  &lt;main&gt;    &lt;h1&gt;快速参考&lt;/h1&gt;  &lt;/main&gt;  &lt;footer&gt;    &lt;p&gt;©2023 快速参考&lt;/p&gt;  &lt;/footer&gt;&lt;/body&gt;
+
+标题导航&lt;header&gt;  &lt;nav&gt;    &lt;ul&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;编辑页面&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Twitter&lt;/a&gt;&lt;/li&gt;      &lt;li&gt;&lt;a href=&quot;#&quot;&gt;Facebook&lt;/a&gt;&lt;/li&gt;    &lt;/ul&gt;  &lt;/nav&gt;&lt;/header&gt;
+
+HTML5 Tags
+
+
+
+
+:-
+:-
+
+
+
+article
+独立的内容
+
+
+aside
+次要内容
+
+
+audio
+嵌入声音或音频流
+
+
+bdi
+双向隔离元件
+
+
+canvas
+通过JavaScript绘制图形
+
+
+data
+机器可读内容
+
+
+datalist
+一组预定义选项
+
+
+details
+其他信息
+
+
+dialog
+对话框或子窗口
+
+
+embed
+嵌入外部应用程序
+
+
+figcaption
+图形的标题或图例
+
+
+figure
+插图
+
+
+footer
+页脚或最不重要的
+
+
+header
+刊头或重要信息
+
+
+main
+文件的主要内容
+
+
+mark
+突出显示的文本
+
+
+meter
+已知范围内的标量值
+
+
+nav
+导航链接的一部分
+
+
+output
+计算的结果
+
+
+picture
+用于多个图像源的容器
+
+
+progress
+任务的完成进度
+
+
+rp
+提供回退括号
+
+
+rt
+定义字符的发音
+
+
+ruby
+表示ruby注释
+
+
+section
+一系列相关内容中的组
+
+
+source
+媒体元素的资源
+
+
+summary
+元素的摘要
+
+
+template
+定义HTML片段
+
+
+time
+时间或日期
+
+
+track
+媒体元素的字幕信息
+
+
+video
+嵌入视频
+
+
+wbr
+换行机会
+
+
+HTML5 Video&lt;video controls=&quot;&quot; width=&quot;100%&quot;&gt;    &lt;source src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4&quot; type=&quot;video/mp4&quot;&gt;    很抱歉，您的浏览器不支持嵌入式视频。&lt;/video&gt;
+
+
+↓ 预览
+    
+    很抱歉，您的浏览器不支持嵌入式视频。
+
+
+HTML5 Audio&lt;audio  controls  src=&quot;https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3&quot;&gt;    您的浏览器不支持音频元素。&lt;/audio&gt;
+
+
+↓ 预览    您的浏览器不支持音频元素。
+HTML5 Ruby&lt;ruby&gt;  汉 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;hàn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  字 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;zì&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  拼 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;pīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;  音 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;yīn&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt;
+
+
+↓ 预览
+
+
+  汉 (hàn)
+  字 (zì)
+  拼 (pīn)
+  音 (yīn)
+
+
+HTML5 kdi&lt;ul&gt; &lt;li&gt;User &lt;bdi&gt;hrefs&lt;/bdi&gt;: 60 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;jdoe&lt;/bdi&gt;: 80 points&lt;/li&gt; &lt;li&gt;User &lt;bdi&gt;إيان&lt;/bdi&gt;: 90 points&lt;/li&gt;&lt;/ul&gt;
+
+↓ 预览
+ User hrefs: 60 points
+ User jdoe: 80 points
+ User إيان: 90 points
+
+
+HTML5 progress&lt;progress value=&quot;50&quot; max=&quot;100&quot;&gt;&lt;/progress&gt;
+
+
+HTML5 mark&lt;p&gt;我爱&lt;mark&gt;备忘清单&lt;/mark&gt;&lt;/p&gt;
+
+我爱备忘清单
+
+HTML 表格Table 示例
+
+&lt;table&gt;  &lt;thead&gt;      &lt;tr&gt;        &lt;td&gt;name&lt;/td&gt;        &lt;td&gt;age&lt;/td&gt;      &lt;/tr&gt;  &lt;/thead&gt;  &lt;tbody&gt;      &lt;tr&gt;        &lt;td&gt;Roberta&lt;/td&gt;        &lt;td&gt;39&lt;/td&gt;      &lt;/tr&gt;      &lt;tr&gt;        &lt;td&gt;Oliver&lt;/td&gt;        &lt;td&gt;25&lt;/td&gt;      &lt;/tr&gt;  &lt;/tbody&gt;&lt;/table&gt;
+
+HTML表格标签
+
+
+
+
+标签
+说明
+
+
+
+&lt;table&gt;
+定义表格
+
+
+&lt;th&gt;
+定义表格中的标题单元格
+
+
+&lt;tr&gt;
+定义表中的行
+
+
+&lt;td&gt;
+定义表格中的单元格
+
+
+&lt;caption&gt;
+定义表格标题
+
+
+&lt;colgroup&gt;
+定义一组列
+
+
+&lt;col&gt;
+定义表中的列
+
+
+&lt;thead&gt;
+对标题内容进行分组
+
+
+&lt;tbody&gt;
+将正文内容分组
+
+
+&lt;tfoot&gt;
+对页脚内容进行分组
+
+
+&lt;td&gt; 属性
+
+
+属性
+说明
+
+
+
+colspan
+单元格应跨越的列数
+
+
+headers
+单元格与一个或多个标题单元格相关
+
+
+rowspan
+单元格应跨越的行数
+
+
+请参阅：td#属性
+&lt;th&gt; 属性
+
+
+属性
+说明
+
+
+
+colspan
+单元格应跨越的列数
+
+
+headers
+单元格与一个或多个标题单元格相关
+
+
+rowspan
+单元格应跨越的行数
+
+
+abbr
+单元格内容的描述
+
+
+scope
+表头元素(在&lt;th&gt;中定义)关联的单元格
+
+
+请参阅：th#属性
+HTML 列表无序列表&lt;ul&gt;  &lt;li&gt;I&#x27;m an item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;  &lt;li&gt;I&#x27;m another item&lt;/li&gt;&lt;/ul&gt;
+
+请参阅：无序列表元素
+有序列表&lt;ol&gt;  &lt;li&gt;I&#x27;m the first item&lt;/li&gt;  &lt;li&gt;I&#x27;m the second item&lt;/li&gt;  &lt;li&gt;I&#x27;m the third item&lt;/li&gt;&lt;/ol&gt;
+
+请参阅：有序列表元素
+定义列表&lt;dl&gt;  &lt;dt&gt;A Term&lt;/dt&gt;  &lt;dd&gt;Definition of a term&lt;/dd&gt;  &lt;dt&gt;Another Term&lt;/dt&gt;  &lt;dd&gt;Definition of another term&lt;/dd&gt;&lt;/dl&gt;
+
+请参阅：描述列表元素
+HTML 表单Form 标签
+
+&lt;form method=&quot;POST&quot; action=&quot;api/login&quot;&gt;  &lt;label for=&quot;mail&quot;&gt;邮箱: &lt;/label&gt;  &lt;input type=&quot;email&quot; id=&quot;mail&quot; name=&quot;mail&quot;&gt;  &lt;br/&gt;  &lt;label for=&quot;pw&quot;&gt;密码:&lt;/label&gt;  &lt;input type=&quot;password&quot; id=&quot;pw&quot; name=&quot;pw&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;submit&quot; value=&quot;登录&quot;&gt;  &lt;br/&gt;  &lt;input type=&quot;checkbox&quot; id=&quot;ck&quot; name=&quot;ck&quot;&gt;  &lt;label for=&quot;ck&quot;&gt;记住我&lt;/label&gt;&lt;/form&gt;
+
+↓ 预览
+  邮箱: 
+  
+  
+  密码:
+  
+  
+  
+  
+  
+  记住我
+
+
+HTML &lt;form&gt; 元素用于收集信息并将其发送到外部源。
+Form 属性
+
+
+属性
+说明
+
+
+
+name
+脚本形式的名称
+
+
+action
+表单脚本的URL
+
+
+method
+HTTP方法，POST&#x2F;GET (默认)
+
+
+enctype
+介质类型，请参见enctype
+
+
+onsubmit
+提交表单时运行
+
+
+onreset
+在窗体重置时运行
+
+
+Label 标签&lt;!-- 嵌套标签 --&gt;&lt;label&gt;Click me &lt;input type=&quot;text&quot; id=&quot;user&quot; name=&quot;name&quot;/&gt;&lt;/label&gt;
+
+
+&lt;!-- &#x27;for&#x27; 属性 --&gt;&lt;label for=&quot;user&quot;&gt;Click me&lt;/label&gt;&lt;input id=&quot;user&quot; type=&quot;text&quot; name=&quot;name&quot;/&gt;
+
+for在标签中引用输入的id属性
+Input 标签&lt;label for=&quot;Name&quot;&gt;Name:&lt;/label&gt;&lt;input type=&quot;text&quot; name=&quot;Name&quot; id=&quot;&quot;&gt;
+
+↓ 预览
+  Username:
+  
+
+
+请参阅：HTML输入标记
+Textarea 标签&lt;textarea rows=&quot;2&quot; cols=&quot;30&quot; name=&quot;address&quot; id=&quot;address&quot;&gt;&lt;/textarea&gt;
+
+
+↓ 预览
+    
+
+
+Textarea 是一个多行文本输入控件
+Radio Buttons&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;m&quot;&gt;&lt;label for=&quot;m&quot;&gt;Male&lt;/label&gt;&lt;input type=&quot;radio&quot; name=&quot;gender&quot; id=&quot;f&quot;&gt;&lt;label for=&quot;f&quot;&gt;Female&lt;/label&gt;
+
+↓ 预览
+    
+    Male
+    
+    Female
+
+
+单选按钮用于让用户只选择一个
+Checkboxes&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;soc&quot;&gt;&lt;label for=&quot;soc&quot;&gt;Soccer&lt;/label&gt;&lt;input type=&quot;checkbox&quot; name=&quot;s&quot; id=&quot;bas&quot;&gt;&lt;label for=&quot;bas&quot;&gt;Baseball&lt;/label&gt;
+
+↓ 预览
+    
+    Soccer
+    
+    Baseball
+
+
+复选框允许用户选择一个或多个
+Select 标签&lt;label for=&quot;city&quot;&gt;City:&lt;/label&gt;&lt;select name=&quot;city&quot; id=&quot;city&quot;&gt;  &lt;option value=&quot;1&quot;&gt;Sydney&lt;/option&gt;  &lt;option value=&quot;2&quot;&gt;Melbourne&lt;/option&gt;  &lt;option value=&quot;3&quot;&gt;Cromwell&lt;/option&gt;&lt;/select&gt;
+
+↓ 预览
+  City:
+  
+      Sydney
+      Melbourne
+      Cromwell
+  
+
+
+选择框是选项的下拉列表
+Fieldset 标签&lt;fieldset&gt;  &lt;legend&gt;Your favorite monster&lt;/legend&gt;  &lt;input type=&quot;radio&quot; id=&quot;kra&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;kraken&quot;&gt;Kraken&lt;/label&gt;&lt;br/&gt;  &lt;input type=&quot;radio&quot; id=&quot;sas&quot; name=&quot;m&quot;&gt;  &lt;label for=&quot;sas&quot;&gt;Sasquatch&lt;/label&gt;&lt;/fieldset&gt;
+
+↓ 预览
+
+  Your favorite monster
+  
+  Kraken
+  
+  Sasquatch
+
+
+
+数据列表标签（HTML5）&lt;label for=&quot;b&quot;&gt;Choose a browser: &lt;/label&gt;&lt;input list=&quot;list&quot; id=&quot;b&quot; name=&quot;browser&quot;/&gt;&lt;datalist id=&quot;list&quot;&gt;  &lt;option value=&quot;Chrome&quot;&gt;  &lt;option value=&quot;Firefox&quot;&gt;  &lt;option value=&quot;Internet Explorer&quot;&gt;  &lt;option value=&quot;Opera&quot;&gt;  &lt;option value=&quot;Safari&quot;&gt;  &lt;option value=&quot;Microsoft Edge&quot;&gt;&lt;/datalist&gt;
+
+↓ 预览
+  Choose a browser:
+  
+  
+    
+    
+    
+    
+    
+    
+  
+
+
+提交和重置按钮&lt;form action=&quot;register.php&quot; method=&quot;post&quot;&gt;  &lt;label for=&quot;foo&quot;&gt;Name:&lt;/label&gt;  &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;foo&quot;&gt;  &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;  &lt;input type=&quot;reset&quot; value=&quot;重置&quot;&gt;&lt;/form&gt;
+
+↓ 预览
+  Name:
+  ]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>前端技术</tag>
+        <tag>HTML</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Yaml 备忘录</title>
+    <url>/2025/01/08/yaml/</url>
+    <content><![CDATA[YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。
+入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写
+
+YAML 不允许使用制表符
+元素部分之间必须有空间
+YAML 区分大小写
+以 .yaml 或 .yml 扩展名结束您的 YAML 文件
+YAML 是 JSON 的超集
+Ansible playbook 是 YAML 文件
+
+
+
+标量类型
+
+n1: 1            # 整数n2: 1.234        # 浮点s1: &#x27;abc&#x27;        # 字符串s2: &quot;abc&quot;        # 字符串s3: abc          # 字符串b: false         # 布尔类型d: 2015-04-05    # 日期类型
+
+↓ 等效的 JSON&#123;  &quot;n1&quot;: 1,  &quot;n2&quot;: 1.234,  &quot;s1&quot;: &quot;abc&quot;,  &quot;s2&quot;: &quot;abc&quot;,  &quot;s3&quot;: &quot;abc&quot;,  &quot;b&quot;: false,  &quot;d&quot;: &quot;2015-04-05&quot;&#125;
+
+使用空格缩进。 元素部分之间必须有空间。
+变量some_thing: &amp;VAR_NAME foobarother_thing: *VAR_NAME
+
+↓ 等效的 JSON&#123;  &quot;some_thing&quot;: &quot;foobar&quot;,  &quot;other_thing&quot;: &quot;foobar&quot;&#125;
+
+注释# A single line comment example# block level comment example# comment line 1# comment line 2# comment line 3
+
+多行字符串description: |  hello  world
+
+↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello\nworld\n&quot;&#125;
+
+继承
+
+parent: &amp;defaults  a: 2  b: 3child:  &lt;&lt;: *defaults  b: 4
+
+↓ 等效的 JSON&#123;  &quot;parent&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 3  &#125;,  &quot;child&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 4  &#125;&#125;
+
+参考
+
+values: &amp;ref  - Will be  - reused below  other_values:  i_am_ref: *ref
+
+↓ 等效的 JSON&#123;  &quot;values&quot;: [    &quot;Will be&quot;,    &quot;reused below&quot;  ],  &quot;other_values&quot;: &#123;    &quot;i_am_ref&quot;: [      &quot;Will be&quot;,      &quot;reused below&quot;    ]  &#125;&#125;
+
+折叠的字符串description: &gt;  hello  world
+
+↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello world\n&quot;&#125;
+
+两份文件---document: this is doc 1---document: this is doc 2
+
+YAML使用---将指令与文档内容分开。
+YAML Collections序列- Mark McGwire- Sammy Sosa- Ken Griffey
+
+↓ 等效的 JSON[  &quot;Mark McGwire&quot;,  &quot;Sammy Sosa&quot;,  &quot;Ken Griffey&quot;]
+
+映射hr:  65       # Home runsavg: 0.278    # Batting averagerbi: 147      # Runs Batted In
+
+↓ 等效的 JSON&#123;  &quot;hr&quot;: 65,  &quot;avg&quot;: 0.278,  &quot;rbi&quot;: 147&#125;
+
+映射到序列attributes:  - a1  - a2methods: [getter, setter]
+
+↓ 等效的 JSON&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;]&#125;
+
+映射序列children:  - name: Jimmy Smith    age: 15  - name: Jimmy Smith    age: 15  -    name: Sammy Sosa    age: 12
+
+↓ 等效的 JSON&#123;  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12&#125;  ]&#125;
+
+序列的序列my_sequences:  - [1, 2, 3]  - [4, 5, 6]  -      - 7    - 8    - 9    - 0 
+
+↓ 等效的 JSON&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0]  ]&#125;
+
+映射的映射Mark McGwire: &#123;hr: 65, avg: 0.278&#125;Sammy Sosa: &#123;    hr: 63,    avg: 0.288  &#125;
+
+↓ 等效的 JSON&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
+
+嵌套集合Jack:  id: 1  name: Franc  salary: 25000  hobby:    - a    - b  location: &#123;country: &quot;A&quot;, city: &quot;A-A&quot;&#125;
+
+↓ 等效的 JSON&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
+
+无序集set1: !!set  ? one  ? twoset2: !!set &#123;&#x27;one&#x27;, &quot;two&quot;&#125;
+
+↓ 等效的 JSON&#123;  &quot;set1&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;,  &quot;set2&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;&#125;
+
+集合表示为一个映射，其中每个键都与一个空值相关联
+有序映射ordered: !!omap- Mark McGwire: 65- Sammy Sosa: 63- Ken Griffy: 58
+
+↓ 等效的 JSON&#123;  &quot;ordered&quot;: [     &#123;&quot;Mark McGwire&quot;: 65&#125;,     &#123;&quot;Sammy Sosa&quot;: 63&#125;,     &#123;&quot;Ken Griffy&quot;: 58&#125;  ]&#125;
+
+YAML 参考条款
+序列又名数组或列表
+标量又名字符串或数字
+映射又名哈希或字典
+
+
+
+基于 YAML.org refcard。
+文档指标
+
+
+:-
+:-
+
+
+
+%
+指令指标
+
+
+---
+文档标题
+
+
+...
+文档终结者
+
+
+收集指标
+
+
+
+
+:-
+:-
+
+
+
+?
+关键指标
+
+
+:
+价值指标
+
+
+-
+嵌套系列条目指示器
+
+
+,
+单独的内联分支条目
+
+
+[]
+环绕串联系列分支
+
+
+&#123;&#125;
+环绕在线键控分支
+
+
+别名指标
+
+
+:-
+:-
+
+
+
+&amp;
+锚属性
+
+
+*
+别名指示符
+
+
+特殊键
+
+
+:-
+:-
+
+
+
+=
+默认“值”映射键
+
+
+&lt;&lt;
+合并来自另一个映射的键
+
+
+标量指标
+
+
+:-
+:-
+
+
+
+&#39;&#39;
+环绕内联未转义标量
+
+
+&quot;
+环绕内嵌转义标量
+
+
+&#96;
+&#96;
+
+
+&gt;
+折叠标量指示器
+
+
+-
+剥离 chomp 修饰符（|- 或 &gt;-）
+
+
++
+保留 chomp 修饰符（|+ 或 &gt;+）
+
+
+1-9
+显式缩进修饰符（|1 或 &gt;2）。  修饰符可以组合（|2-, &gt;+1）
+
+
+标签属性（通常未指定）
+
+
+
+
+:-
+:-
+
+
+
+none
+未指定的标签（由应用程序自动解析）
+
+
+!
+非特定标签（默认情况下，!!map&#x2F;!!seq&#x2F;!!str）
+
+
+!foo
+主要（按照惯例，表示本地 !foo 标记）
+
+
+!!foo
+次要的（按照惯例，表示 tag:yaml.org,2002:foo）
+
+
+!h!foo
+需要 %TAG !h! &lt;prefix&gt;（然后表示 &lt;prefix&gt;foo）
+
+
+!&lt;foo&gt;
+逐字标记（始终表示“foo”）
+
+
+
+
+杂项指标
+
+
+
+
+
+
+
+#
+一次性评论指示器
+
+
+`@
+两者都保留供将来使用
+
+
+核心类型（默认自动标签）
+
+
+
+
+
+
+
+
+
+!!map
+&#123;Hash table, dictionary, mapping&#125;
+
+
+!!seq
+&#123;List, array, tuple, vector, sequence&#125;
+
+
+!!str
+Unicode 字符串
+
+
+转义码
+
+Numeric
+\x12 (8-bit)
+\u1234 (16-bit)
+\U00102030 (32-bit)
+
+
+
+Protective
+\\ (\)
+\&quot; (“)
+\ ( )
+\&lt;TAB&gt; (TAB)
+
+
+
+C
+\0 (NUL)
+\a (BEL)
+\b (BS)
+\f (FF)
+\n (LF)
+\r (CR)
+\t (TAB)
+\v (VTAB)
+
+
+
+额外的
+\e (ESC)
+\_ (NBSP)
+\N (NEL)
+\L (LS)
+\P (PS)
+
+
+更多类型
+
+
+
+
+
+
+
+!!set
+&#123;cherries, plums, apples&#125;
+
+
+!!omap
+[one: 1, two: 2]
+
+
+与语言无关的标量类型
+
+
+
+
+
+
+
+
+
+&#123;~, null&#125;
+空（无值）。
+
+
+[1234, 0x4D2, 02333]
+[十进制整数、十六进制整数、八进制整数]
+
+
+[1_230.15, 12.3015e+02]
+[固定浮点数，指数浮点数]
+
+
+[.inf, -.Inf, .NAN]
+[无穷大（浮点数），负数，不是数字]
+
+
+&#123;Y, true, Yes, ON&#125;
+布尔真
+
+
+&#123;n, FALSE, No, off&#125;
+布尔假
+
+
+
+
+另见
+YAML Reference Card (yaml.org)
+Learn X in Y minutes (learnxinyminutes.com)
+YAML lint online (yamllint.com)
+INI 格式配置文件备忘清单 (jaywcjlove.github.io)
+TOML 格式配置文件备忘清单 (jaywcjlove.github.io)
+
+]]></content>
+      <categories>
+        <category>配置框架</category>
+      </categories>
+      <tags>
+        <tag>Yaml</tag>
+        <tag>配置框架</tag>
       </tags>
   </entry>
   <entry>
@@ -9064,224 +10414,131 @@ Vue 2 实例方法事件 (marozed.com)
       </tags>
   </entry>
   <entry>
-    <title>Yaml 备忘录</title>
-    <url>/2025/01/08/yaml/</url>
-    <content><![CDATA[YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。
-入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写
+    <title>JavaScript 备忘录</title>
+    <url>/2025/01/08/javascript/</url>
+    <content><![CDATA[JavaScript 备忘清单包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。
+入门介绍JavaScript 是一种轻量级的解释型编程语言。
 
-YAML 不允许使用制表符
-元素部分之间必须有空间
-YAML 区分大小写
-以 .yaml 或 .yml 扩展名结束您的 YAML 文件
-YAML 是 JSON 的超集
-Ansible playbook 是 YAML 文件
+JSON 备忘清单
+JavaScript 中的正则表达式
+TypeScript 备忘清单
 
+打印调试// =&gt; Hello world!console.log(&#x27;Hello world!&#x27;);// =&gt; Hello QuickReferenceconsole.warn(&#x27;hello %s&#x27;, &#x27;QuickReference&#x27;);// 将错误消息打印到 stderrconsole.error(new Error(&#x27;Oops!&#x27;));
 
+断点调试function potentiallyBuggyCode() &#123;  debugger;  // 做可能有问题的东西来检查，逐步通过等。&#125;
 
-标量类型
+debugger 语句调用任何可用的调试功能。
+数字let amount = 6;let price = 4.99;let home = 1e2;let num = 1_000_000; // 位数过多可以用 _ 分割let m = 0644;   // 八进制数字 420
 
-n1: 1            # 整数n2: 1.234        # 浮点s1: &#x27;abc&#x27;        # 字符串s2: &quot;abc&quot;        # 字符串s3: abc          # 字符串b: false         # 布尔类型d: 2015-04-05    # 日期类型
+let 关键字let count; console.log(count); // =&gt; undefinedcount = 10;console.log(count); // =&gt; 10
 
-↓ 等效的 JSON&#123;  &quot;n1&quot;: 1,  &quot;n2&quot;: 1.234,  &quot;s1&quot;: &quot;abc&quot;,  &quot;s2&quot;: &quot;abc&quot;,  &quot;s3&quot;: &quot;abc&quot;,  &quot;b&quot;: false,  &quot;d&quot;: &quot;2015-04-05&quot;&#125;
+const 关键字const numberOfColumns = 4;// TypeError: Assignment to constant...numberOfColumns = 8;
 
-使用空格缩进。 元素部分之间必须有空间。
-变量some_thing: &amp;VAR_NAME foobarother_thing: *VAR_NAME
+变量let x = null;let name = &quot;Tammy&quot;;const found = false;// =&gt; Tammy, false, nullconsole.log(name, found, x);var a;console.log(a); // =&gt; undefined
 
-↓ 等效的 JSON&#123;  &quot;some_thing&quot;: &quot;foobar&quot;,  &quot;other_thing&quot;: &quot;foobar&quot;&#125;
+字符串let single = &#x27;Wheres my bandit hat?&#x27;;let double = &quot;Wheres my bandit hat?&quot;;// =&gt; 21console.log(single.length);
 
-注释# A single line comment example# block level comment example# comment line 1# comment line 2# comment line 3
+算术运算符5 + 5 = 10     // 加法 Addition10 - 5 = 5     // 减法 Subtraction5 * 10 = 50    // 乘法 Multiplication10 / 5 = 2     // 除法 Division10 % 5 = 0     // 取模 Modulo
 
-多行字符串description: |  hello  world
+注释// 此行将表示注释/* 多行配置部署前必须更改以下配置。*/
 
-↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello\nworld\n&quot;&#125;
+赋值运算符let number = 100;// 两个语句都会加 10number = number + 10;number += 10;console.log(number); // =&gt; 120
 
-继承
+字符串插值let age = 7;// 字符串拼接&#x27;Tommy is &#x27; + age + &#x27; years old.&#x27;;// 字符串插值`Tommy is $&#123;age&#125; years old.`;
 
-parent: &amp;defaults  a: 2  b: 3child:  &lt;&lt;: *defaults  b: 4
+字符串
 
-↓ 等效的 JSON&#123;  &quot;parent&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 3  &#125;,  &quot;child&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 4  &#125;&#125;
+var abc = &quot;abcdefghijklmnopqrstuvwxyz&quot;;var esc = &#x27;I don\&#x27;t \n know&#x27;;    // \n 换行var len = abc.length;            // 字符串长度abc.indexOf(&quot;lmno&quot;);             // 查找子字符串，如果不包含则 -1abc.lastIndexOf(&quot;lmno&quot;);         // 最后一次出现abc.slice(3, 6);                 // 去掉“def”，负值从后面计算abc.replace(&quot;abc&quot;,&quot;123&quot;);        // 查找和替换，接受正则表达式abc.toUpperCase();               // 转换为大写abc.toLowerCase();               // 转换为小写abc.concat(&quot; &quot;, str2);           // abc + &quot; &quot; + str2abc.charAt(2);                   // 索引处的字符：“c”abc[2];                          // 不安全，abc[2] = &quot;C&quot; 不起作用// 索引处的字符代码：“c”-&gt; 99abc.charCodeAt(2);// 用逗号分割字符串给出一个数组abc.split(&quot;,&quot;);// 分割字符abc.split(&quot;&quot;);// 匹配开头字符串,如果忽略第二个参数，则从索引 0 开始匹配abc.startsWith(&quot;bc&quot;, 1);// 匹配结尾的字符串,如果忽略第二个参数，则默认是原字符串长度abc.endsWith(&quot;wxy&quot;, abc.length - 1);// padEnd 和 padStart 都用于填充长度，默认填充对象是空格&quot;200&quot;.padEnd(5); // &quot;200  &quot;&quot;200&quot;.padEnd(5, &quot;.&quot;); // &quot;200..&quot;// 重复字符&quot;abc&quot;.repeat(2); // &quot;abcabc&quot;// trim、trimEnd 和 trimStart 用于去除首尾空格&quot; ab c &quot;.trim(); // &quot;ab c&quot;// 数字转为十六进制 (16)、八进制 (8) 或二进制 (2)(128).toString(16);
 
-参考
+数字
 
-values: &amp;ref  - Will be  - reused below  other_values:  i_am_ref: *ref
+var pi = 3.141;pi.toFixed(0);    // 返回 3             pi.toFixed(2);    // 返回 3.14 - 使用金钱pi.toPrecision(2) // 返回 3.1pi.valueOf();     // 返回号码Number(true);     // 转换为数字// 自 1970 年以来的毫秒数Number(new Date())          // 返回第一个数字：3parseInt(&quot;3 months&quot;);       // 返回 3.5parseFloat(&quot;3.5 days&quot;);     // 最大可能的 JS 数Number.MAX_VALUE            // 最小可能的 JS 编号Number.MIN_VALUE            // -无穷Number.NEGATIVE_INFINITY    // 无穷Number.POSITIVE_INFINITY    
 
-↓ 等效的 JSON&#123;  &quot;values&quot;: [    &quot;Will be&quot;,    &quot;reused below&quot;  ],  &quot;other_values&quot;: &#123;    &quot;i_am_ref&quot;: [      &quot;Will be&quot;,      &quot;reused below&quot;    ]  &#125;&#125;
+Mathconst pi = Math.PI; // 3.141592653589793Math.round(4.4); // = 4 - 数字四舍五入Math.round(4.5); // = 5Math.pow(2,8);   // = 256 - 2 的 8 次方    Math.sqrt(49);   // = 7 - 平方根Math.abs(-3.14); // = 3.14 - 绝对，正值Math.ceil(3.14); // = 4 - 返回 &gt;= 最小整数// = 3 - 返回 &lt;= 最大整数Math.floor(3.99);       // = 0 - 正弦Math.sin(0);            // OTHERS: tan,atan,asin,acos,余弦值Math.cos(Math.PI);      // = -2 - 最低值Math.min(0, 3, -2, 2);  // = 3 - 最高值Math.max(0, 3, -2, 2);  // = 0 自然对数Math.log(1);            // = 2.7182pow(E,x) 自然对数的底数Math.exp(1);            // 0 到 1 之间的随机数Math.random();          // 随机整数，从 1Math.floor(Math.random() * 5) + 1;  
 
-折叠的字符串description: &gt;  hello  world
+全局函数
 
-↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello world\n&quot;&#125;
+// 像脚本代码一样执行字符串eval();                     // 从数字返回字符串String(23);                 // 从数字返回字符串(23).toString();            // 从字符串返回数字Number(&quot;23&quot;);               // 解码 URI。 结果：“my page.asp”decodeURI(enc);             // 编码 URI。 结果：“my%20page.asp”encodeURI(uri);             // 解码 URI 组件decodeURIComponent(enc);    // 对 URI 组件进行编码encodeURIComponent(uri);    // 是一个有限的合法数isFinite();                 // 是一个非法数字isNaN();                    // 返回字符串的浮点数parseFloat();               // 解析一个字符串并返回一个整数parseInt();                 
 
-两份文件---document: this is doc 1---document: this is doc 2
+JavaScript 条件操作符
 
-YAML使用---将指令与文档内容分开。
-YAML Collections序列- Mark McGwire- Sammy Sosa- Ken Griffey
+true || false;       // true10 &gt; 5 || 10 &gt; 20;   // truefalse || false;      // false10 &gt; 100 || 10 &gt; 20; // false
 
-↓ 等效的 JSON[  &quot;Mark McGwire&quot;,  &quot;Sammy Sosa&quot;,  &quot;Ken Griffey&quot;]
+逻辑运算符 &amp;&amp;true &amp;&amp; true;        // true1 &gt; 2 &amp;&amp; 2 &gt; 1;      // falsetrue &amp;&amp; false;       // false4 === 4 &amp;&amp; 3 &gt; 1;    // true
 
-映射hr:  65       # Home runsavg: 0.278    # Batting averagerbi: 147      # Runs Batted In
+比较运算符1 &gt; 3                 // false3 &gt; 1                 // true250 &gt;= 250            // true1 === 1               // true1 === 2               // false1 === &#x27;1&#x27;             // false
 
-↓ 等效的 JSON&#123;  &quot;hr&quot;: 65,  &quot;avg&quot;: 0.278,  &quot;rbi&quot;: 147&#125;
+逻辑运算符let lateToWork = true;let oppositeValue = !lateToWork;// =&gt; falseconsole.log(oppositeValue); 
 
-映射到序列attributes:  - a1  - a2methods: [getter, setter]
+空值合并运算符 ??null ?? &#x27;I win&#x27;;         //  &#x27;I win&#x27;undefined ?? &#x27;Me too&#x27;;   //  &#x27;Me too&#x27;false ?? &#x27;I lose&#x27;        //  false0 ?? &#x27;I lose again&#x27;      //  0&#x27;&#x27; ?? &#x27;Damn it&#x27;          //  &#x27;&#x27;
 
-↓ 等效的 JSON&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;]&#125;
+if Statement (if 语句)const isMailSent = true;if (isMailSent) &#123;  console.log(&#x27;Mail sent to recipient&#x27;);&#125;
 
-映射序列children:  - name: Jimmy Smith    age: 15  - name: Jimmy Smith    age: 15  -    name: Sammy Sosa    age: 12
+Ternary Operator (三元运算符)var age = 1;// =&gt; truevar status = (age &gt;= 18) ? true : false;
 
-↓ 等效的 JSON&#123;  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12&#125;  ]&#125;
+else ifconst size = 10;if (size &gt; 20) &#123;  console.log(&#x27;Medium&#x27;);&#125; else if (size &gt; 4) &#123;  console.log(&#x27;Small&#x27;);&#125; else &#123;  console.log(&#x27;Tiny&#x27;);&#125;// Print: Small
 
-序列的序列my_sequences:  - [1, 2, 3]  - [4, 5, 6]  -      - 7    - 8    - 9    - 0 
+&#x3D;&#x3D; vs &#x3D;&#x3D;&#x3D;0 == false     // true0 === false    // false, 不同类型1 == &quot;1&quot;       // true,  自动类型转换1 === &quot;1&quot;      // false, 不同类型null == undefined  // truenull === undefined // false&#x27;0&#x27; == false       // true&#x27;0&#x27; === false      // false
 
-↓ 等效的 JSON&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0]  ]&#125;
+== 只检查值，=== 检查值和类型。
+switch 语句const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;: console.log(&#x27;海的味道&#x27;);    break;  case &#x27;pizza&#x27;: console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
 
-映射的映射Mark McGwire: &#123;hr: 65, avg: 0.278&#125;Sammy Sosa: &#123;    hr: 63,    avg: 0.288  &#125;
+switch 多 case - 单一操作const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;:  case &#x27;pizza&#x27;:    console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
 
-↓ 等效的 JSON&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
+JavaScript Functions 函数函数// 定义函数：function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数：sum(3, 6); // 9
 
-嵌套集合Jack:  id: 1  name: Franc  salary: 25000  hobby:    - a    - b  location: &#123;country: &quot;A&quot;, city: &quot;A-A&quot;&#125;
+匿名函数// 命名函数function rocketToMars() &#123;  return &#x27;BOOM!&#x27;;&#125;// 匿名函数const rocketToMars = function() &#123;  return &#x27;BOOM!&#x27;;&#125;
 
-↓ 等效的 JSON&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
+箭头函数 (ES6)
 
-无序集set1: !!set  ? one  ? twoset2: !!set &#123;&#x27;one&#x27;, &quot;two&quot;&#125;
+有两个参数const sum = (param1, param2) =&gt; &#123;   return param1 + param2; &#125;; console.log(sum(2,5)); // =&gt; 7 
 
-↓ 等效的 JSON&#123;  &quot;set1&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;,  &quot;set2&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;&#125;
+没有参数const printHello = () =&gt; &#123;   console.log(&#x27;hello&#x27;); &#125;; printHello(); // =&gt; hello
 
-集合表示为一个映射，其中每个键都与一个空值相关联
-有序映射ordered: !!omap- Mark McGwire: 65- Sammy Sosa: 63- Ken Griffy: 58
+只有一个参数const checkWeight = weight =&gt; &#123;   console.log(`Weight : $&#123;weight&#125;`); &#125;; checkWeight(25); // =&gt; Weight : 25 
 
-↓ 等效的 JSON&#123;  &quot;ordered&quot;: [     &#123;&quot;Mark McGwire&quot;: 65&#125;,     &#123;&quot;Sammy Sosa&quot;: 63&#125;,     &#123;&quot;Ken Griffy&quot;: 58&#125;  ]&#125;
+简洁箭头函数const multiply = (a, b) =&gt; a * b; // =&gt; 60 console.log(multiply(2, 30)); 
 
-YAML 参考条款
-序列又名数组或列表
-标量又名字符串或数字
-映射又名哈希或字典
+从 ES2015 开始提供箭头函数
+返回关键字// 有 returnfunction sum(num1, num2) &#123;  return num1 + num2;&#125;// 该函数不输出总和function sum(num1, num2) &#123;  num1 + num2;&#125;
 
+调用函数// 定义函数function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数sum(2, 4); // 6
 
+立即执行函数//命名函数并立即执行一次(function sum(num1, num2) &#123;  return num1 + num2;&#125;)(2,4)//6
 
-基于 YAML.org refcard。
-文档指标
+函数表达式const dog = function() &#123;  return &#x27;Woof!&#x27;;&#125;
 
+函数参数// 参数是 namefunction sayHello(name) &#123;  return `Hello, $&#123;name&#125;!`;&#125;
 
-:-
-:-
+函数声明function add(num1, num2) &#123;  return num1 + num2;&#125;
 
+JavaScript 范围范围
 
+function myFunction() &#123;  var pizzaName = &quot;Margarita&quot;;  // 这里的代码可以使用 PizzaName  &#125;// ❌ PizzaName 不能在这里使用
 
-%
-指令指标
+&#123; &#125; 块内声明的变量
+&#123;  let x = 2;&#125;// ❌ x 不能在这里使用&#123;  var x = 2;&#125;// ✅ x 能在这里使用
 
+var x = 2;       // Global scopelet x = 2;       // Global scopeconst x = 2;       // Global scope
 
----
-文档标题
+ES6 引入了两个重要的新 JavaScript 关键字：let 和 const。这两个关键字在 JavaScript 中提供了块作用域。
+块作用域变量const isLoggedIn = true;if (isLoggedIn == true) &#123;  const statusMessage = &#x27;Logged in.&#x27;;&#125;// Uncaught ReferenceError...// 未捕获的引用错误...console.log(statusMessage);
 
+全局变量// 全局声明的变量const color = &#x27;blue&#x27;;function printColor() &#123;  console.log(color);&#125;printColor(); // =&gt; blue
 
-...
-文档终结者
+let vs varfor (let i = 0; i &lt; 3; i++) &#123;  // 这是“let”的最大范围  // i 可以访问 ✔️&#125;// i 不能访问 ❌
 
 
-收集指标
+for (var i = 0; i &lt; 3; i++) &#123;  // i 可以访问 ✔️&#125;// i 可以访问 ✔️
 
+var 的范围是最近的函数块，而 let 的范围是最近的封闭块。
+带闭包的循环// 打印三次，不是我们的意思。for (var i = 0; i &lt; 3; i++) &#123;  setTimeout(_ =&gt; console.log(i), 10);&#125;
 
 
+// 按预期打印 0、1 和 2。for (let j = 0; j &lt; 3; j++) &#123;   setTimeout(_ =&gt; console.log(j), 10);&#125;
 
-:-
-:-
-
-
-
-?
-关键指标
-
-
-:
-价值指标
-
-
--
-嵌套系列条目指示器
-
-
-,
-单独的内联分支条目
-
-
-[]
-环绕串联系列分支
-
-
-&#123;&#125;
-环绕在线键控分支
-
-
-别名指标
-
-
-:-
-:-
-
-
-
-&amp;
-锚属性
-
-
-*
-别名指示符
-
-
-特殊键
-
-
-:-
-:-
-
-
-
-=
-默认“值”映射键
-
-
-&lt;&lt;
-合并来自另一个映射的键
-
-
-标量指标
-
-
-:-
-:-
-
-
-
-&#39;&#39;
-环绕内联未转义标量
-
-
-&quot;
-环绕内嵌转义标量
-
-
-&#96;
-&#96;
-
-
-&gt;
-折叠标量指示器
-
-
--
-剥离 chomp 修饰符（|- 或 &gt;-）
-
-
-+
-保留 chomp 修饰符（|+ 或 &gt;+）
-
-
-1-9
-显式缩进修饰符（|1 或 &gt;2）。  修饰符可以组合（|2-, &gt;+1）
-
-
-标签属性（通常未指定）
+变量使用 let 有自己的副本，变量有使用 var 的共享副本。
+JavaScript Arrays方法
 
 
 
@@ -9291,913 +10548,307 @@ YAML 参考条款
 
 
 
-none
-未指定的标签（由应用程序自动解析）
+Array.from()
+类似数组对象创建一个新的 #
 
 
-!
-非特定标签（默认情况下，!!map&#x2F;!!seq&#x2F;!!str）
+Array.isArray()
+值是否是一个 Array #
 
 
-!foo
-主要（按照惯例，表示本地 !foo 标记）
+Array.of()
+创建一个新数组示例 #
 
 
-!!foo
-次要的（按照惯例，表示 tag:yaml.org,2002:foo）
+.at()
+返回值索引对应的元素 #
 
 
-!h!foo
-需要 %TAG !h! &lt;prefix&gt;（然后表示 &lt;prefix&gt;foo）
+.concat()
+合并两个或多个数组 #
 
 
-!&lt;foo&gt;
-逐字标记（始终表示“foo”）
+.copyWithin()
+浅复制替换某个位置 #
 
 
+.entries()
+新的 Array Iterator 对象 #
 
 
-杂项指标
+.every()
+是否能通过回调函数的测试 #
 
 
+.fill()
+固定值填充一个数组中 #
 
 
+.filter()
+返回过滤后的数组 #
 
 
+.find()
+第一个元素的值 #
 
-#
-一次性评论指示器
 
+.findIndex()
+第一个元素的索引 #
 
-`@
-两者都保留供将来使用
 
+.findLast()
+最后一个元素的值 #
 
-核心类型（默认自动标签）
 
+.findLastIndex()
+最后一个元素的索引 #
 
 
+.flat()
+扁平化嵌套数组 #
 
 
+.flatMap()
+与 flat 相同 #
 
 
+.forEach()
+升序循环执行 #
 
 
-!!map
-&#123;Hash table, dictionary, mapping&#125;
+.includes()
+是否包含一个指定的值 #
 
 
-!!seq
-&#123;List, array, tuple, vector, sequence&#125;
+.indexOf()
+找到给定元素的第一个索引 #
 
 
-!!str
-Unicode 字符串
+.join()
+数组链接成一个字符串 #
 
 
-转义码
+.keys()
+每个索引键 #
 
-Numeric
-\x12 (8-bit)
-\u1234 (16-bit)
-\U00102030 (32-bit)
 
+.lastIndexOf()
+给定元素的最后一个索引 #
 
 
-Protective
-\\ (\)
-\&quot; (“)
-\ ( )
-\&lt;TAB&gt; (TAB)
+.map()
+循环返回一个新数组 #
 
 
+.pop()
+删除最后一个元素 #
 
-C
-\0 (NUL)
-\a (BEL)
-\b (BS)
-\f (FF)
-\n (LF)
-\r (CR)
-\t (TAB)
-\v (VTAB)
 
+.push()
+元素添加到数组的末尾 #
 
 
-额外的
-\e (ESC)
-\_ (NBSP)
-\N (NEL)
-\L (LS)
-\P (PS)
+.reduce()
+循环函数传递当前和上一个值 #
 
 
-更多类型
+.reduceRight()
+类似 reduce 从右往左循环 #
 
 
+.reverse()
+数组元素的位置颠倒 #
 
 
+.shift()
+删除第一个元素 #
 
 
+.slice()
+提取元素 #
 
-!!set
-&#123;cherries, plums, apples&#125;
 
+.some()
+至少有一个通过测试函数 #
 
-!!omap
-[one: 1, two: 2]
 
+.sort()
+元素进行排序 #
 
-与语言无关的标量类型
 
+.splice()
+删除或替换或添加元素 #
 
 
+.toLocaleString()
+字符串表示数组中的元素 #
 
 
+.toString()
+返回字符串 #
 
 
+.unshift()
+元素添加到数组的开头 #
 
 
-&#123;~, null&#125;
-空（无值）。
+.values()
+返回新的 ArrayIterator 对象 #
 
 
-[1234, 0x4D2, 02333]
-[十进制整数、十六进制整数、八进制整数]
+数组const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];// 不同的数据类型const data = [1, &#x27;chicken&#x27;, false];
 
+属性 .lengthconst numbers = [1, 2, 3, 4];numbers.length // 4
 
-[1_230.15, 12.3015e+02]
-[固定浮点数，指数浮点数]
+索引// 访问数组元素const myArray = [100, 200, 300];console.log(myArray[0]); // 100console.log(myArray[1]); // 200
 
+可变图表
 
-[.inf, -.Inf, .NAN]
-[无穷大（浮点数），负数，不是数字]
 
 
-&#123;Y, true, Yes, ON&#125;
-布尔真
-
-
-&#123;n, FALSE, No, off&#125;
-布尔假
-
-
-
-
-另见
-YAML Reference Card (yaml.org)
-Learn X in Y minutes (learnxinyminutes.com)
-YAML lint online (yamllint.com)
-INI 格式配置文件备忘清单 (jaywcjlove.github.io)
-TOML 格式配置文件备忘清单 (jaywcjlove.github.io)
-
-]]></content>
-      <categories>
-        <category>配置框架</category>
-      </categories>
-      <tags>
-        <tag>Yaml</tag>
-        <tag>配置框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker 备忘录</title>
-    <url>/2025/01/08/docker/</url>
-    <content><![CDATA[Docker 备忘清单这是 Docker 的快速参考备忘单。 你可以在这里找到最常见的 Docker 命令。
-入门
-
-入门安装curl -sSL https://get.docker.com/ | shsudo chmod 777 /var/run/docker.sock
-
-在后台创建和运行容器
-$ docker run -d -p 80:80 docker/getting-started
-
-
-
--d - 以分离（后台）模式运行容器
--p 80:80 -  将端口 80 映射到容器中的端口 80，格式：宿主机端口:容器端口
-docker/getting-started - 要使用的镜像
-
-在前台创建并运行容器（之后如果要退出容器但是不关闭容器，按Ctrl+P+Q即可）
-$ docker run -it --rm -p  8001:8080 --name my-nginx nginx
-
-
-
--it - 交互式 bash 模式
---rm - 容器终止运行后自动删除容器文件
--p 8001:8080 - 将 8001 端口映射到容器中的 8080 端口
---name my-nginx - 指定名称
-nginx - 要使用的镜像
-
-一般命令
-
-
-Example
-Description
-
-
-
-docker ps
-列出正在运行的容器
-
-
-docker ps -a
-列出所有容器
-
-
-docker ps -s
-列出正在运行的容器 (带 CPU &#x2F; 内存)
-
-
-docker images
-列出所有镜像
-
-
-docker exec -it &lt;container&gt;  bash
-连接到容器
-
-
-docker logs &lt;container&gt;
-显示容器的控制台日志
-
-
-docker stop &lt;container&gt;
-停止容器
-
-
-docker restart &lt;container&gt;
-重启一个容器
-
-
-docker rm &lt;container&gt;
-移除一个容器
-
-
-docker port &lt;container&gt;
-显示容器的端口映射
-
-
-docker top &lt;container&gt;
-列出进程
-
-
-docker kill &lt;container&gt;
-杀死一个容器
-
-
-参数 &lt;container&gt; 可以是容器 id 或名称
-Docker 容器
-
-启动和停止
-
-
-Description
-Example
-
-
-
-docker start nginx-server
+添加
+删除
 开始
+结束
 
-
-docker stop nginx-server
-停止
-
-
-docker restart nginx-server
-重启
-
-
-docker pause nginx-server
-暂停
-
-
-docker unpause nginx-server
-取消暂停
-
-
-docker wait nginx-server
-阻塞容器
-
-
-docker kill nginx-server
-发送 SIGKILL
-
-
-docker attach nginx-server
-连接到现有容器
-
-
-说明
-
-
-Example
-Description
-
-
-
-docker ps
-列出正在运行的容器
-
-
-docker ps -a
-列出所有容器
-
-
-docker logs nginx-server
-容器日志
-
-
-docker inspect nginx-server
-检查容器
-
-
-docker events nginx-server
-容器事件
-
-
-docker port nginx-server
-公共端口
-
-
-docker top nginx-server
-运行进程
-
-
-docker stats nginx-server
-容器资源使用
-
-
-docker diff nginx-server
-列出对容器所做的更改
-
-
-创建容器docker create [options] IMAGE  -a, --attach               # 附加标准输出/错误  -i, --interactive          # 附加标准输入（交互式）  -t, --tty                  # 伪终端 pseudo-tty      --name NAME            # 命名你的镜像  -p, --publish 5000:5000    # 端口映射（主机:容器）      --expose 5432          # 向容器公开端口   -P, --publish-all          # 发布所有端口      --link container:alias # 链接 linking  -v, --volume `pwd`:/app    # mount（需要绝对路径）  -e, --env NAME=hello       # 环境变量 env vars
-
-实例$ docker create --name my_redis --expose 6379 redis:3.0.2
-
-操控重命名容器
-docker rename my-nginx nginx-server
-
-移除容器
-docker rm nginx-server
-
-更新容器
-docker update --cpu-shares 512 -m 300M nginx-server
-
-Docker 镜像
-
-操控
-
-
-
-
-Example
-Description
-
-
-
-docker images
-列出镜像
-
-
-docker rmi nginx
-删除镜像
-
-
-docker load &lt; ubuntu.tar.gz
-加载一个 tarred 存储库
-
-
-docker load --input ubuntu.tar
-加载一个 tarred 存储库
-
-
-docker save busybox &gt; ubuntu.tar
-将镜像保存到 tar 存档
-
-
-docker history
-显示镜像的历史
-
-
-docker commit nginx my_nginx
-将容器另存为镜像
-
-
-docker tag nginx eon01/nginx
-标记镜像
-
-
-docker push eon01/nginx
-推送镜像
-
-
-构建镜像# 注意有的最后面是英文 .$ docker build .$ docker build github.com/creack/docker-firefox$ docker build - &lt; Dockerfile$ docker build - &lt; context.tar.gz$ docker build -t eon/nginx-server .$ docker build -f myOtherDockerfile .$ docker build --build-arg https_proxy=127.0.0.1:8088 # 使用http代理构建$ curl example.com/remote/Dockerfile | docker build -f - .$ docker save -o &lt;保存路径&gt;/myimage.tar myimage:latest # 导出$ docker load -i &lt;路径&gt;/myimage.tar # 导入
-
-删除 &lt;none&gt; 镜像$ docker rmi -f $(docker images | grep &quot;none&quot; | awk &#x27;&#123;print $3&#125;&#x27;)
-
-Docker 网络
-
-创建网络docker network create -d overlay MyOverlayNetworkdocker network create -d bridge MyBridgeNetwork
-
-自定义网络子网和网关
-docker network create -d overlay \  --subnet=192.168.0.0/16 \  --subnet=192.170.0.0/16 \  --gateway=192.168.0.100 \  --gateway=192.170.0.100 \  --ip-range=192.168.1.0/24 \  --aux-address=&quot;my-router=192.168.1.5&quot; \  --aux-address=&quot;my-switch=192.168.1.6&quot; \  --aux-address=&quot;my-printer=192.170.1.5&quot; \  --aux-address=&quot;my-nas=192.170.1.6&quot; \  MyOverlayNetwork
-
-操作
-
-获取容器连接的网络
-docker inspect MyContainer | grep Network
-
-获取有关网络的信息
-docker network inspect &lt;network_name&gt;
-
-将正在运行的容器连接到网络
-docker network connect &lt;network_name&gt; &lt;container_name&gt;
-
-启动时将容器连接到网络
-docker run -it -d --network=&lt;network_name&gt; &lt;container_name&gt;
-
-断开容器与网络的连接
-docker network disconnect &lt;network_name&gt; &lt;container_name&gt;
-
-删除网络docker network rm &lt;network_name&gt;
-
-列出网络docker network ls
-
-Docker 快捷键需要特别注意的是，退出快捷键中的删除容器实例，只对于使用 docker attach 进入的容器生效，使用 docker exec 进入容器后，使用上面的快捷键后将隔离容器，且不会删除容器实例。
-退出 - 关闭容器
-
-
-Docker 快捷键
-说明
-
-
-
-ctrl c
-将关闭容器
-
-
-
-
-将关闭容器, 并删除当前的容器实例
-退出 - 保留容器
-
-
-Docker 快捷键
-说明
-
-
-
-ctrl d
-保留容器
-
-
-
-
-将保留容器，并退出到Docker主机的命令行界面
-退出 - 容器分离
-
-
-Docker 快捷键
-说明
-
-
-
-ctrl p q
-容器分离
-
-
-
-
-将容器分离，保留容器，但是不退出
-各种各样的
-
-Docker Hub$ docker search search_word  # 在 docker hub 中搜索镜像$ docker pull user/image     # 从 docker hub 下载镜像$ docker login               # 向 docker hub 进行身份验证$ docker push user/image     # 将镜像上传到 docker hub
-
-镜像仓库命令
-
-登录到镜像仓库
-$ docker login$ docker login localhost:8080
-
-从镜像仓库注销
-$ docker logout$ docker logout localhost:8080
-
-搜索镜像
-$ docker search nginx$ docker search nginx --stars=3 --no-trunc busybox
-
-拉取镜像
-$ docker pull nginx$ docker pull eon01/nginx localhost:5000/myadmin/nginx
-
-推送镜像
-$ docker push eon01/nginx$ docker push eon01/nginx localhost:5000/myadmin/nginx
-
-批量清除
-
-
-实例
-说明
-
-
-
-docker stop -f $(docker ps -a -q)
-停止所有容器
-
-
-docker rm -f $(docker ps -a -q)
-删除所有容器
-
-
-docker rmi -f $(docker images -q)
-删除所有镜像
-
-
-docker volume prune
-删除所有未使用的Docker Volume
-
-
-docker network prune
-删除所有未使用的Docker网络
-
-
-docker system prune
-清理所有空闲或与任何Docker容器无关的资源
-
-
-docker image prune
-删除悬空的Docker镜像
-
-
-docker container prune
-删除所有未使用的Docker 容器
-
-
-
-
-卷 volume$ docker volume ls    # 检查卷$ docker volume prune # 清理未使用的卷
-
-Docker Compose
-
-
-
-
-:-
-:-
-
-
-
-docker-compose up
-创建和启动容器
-
-
-docker-compose up -d
-以分离模式创建和启动容器
-
-
-docker-compose down
-停止和删除容器、网络、映像和卷
-
-
-docker-compose logs
-查看容器的输出
-
-
-docker-compose restart
-重启所有服务
-
-
-docker-compose pull
-拉取所有服务的镜像
-
-
-docker-compose build
-构建所有服务的镜像
-
-
-docker-compose config
-验证并查看 Compose 文件
-
-
-docker-compose scale &lt;service_name&gt;=&lt;replica&gt;
-为服务指定容器个数
-
-
-docker-compose top
-显示正在运行的进程
-
-
-docker-compose run -rm -p 2022:22 web bash
-启动 Web 服务并运行 bash 作为其命令，删除旧容器
-
-
-
-
-Docker Services
-
-
-:-
-:-
-
-
-
-docker service create &lt;options&gt; &lt;image&gt; &lt;command&gt;
-创建新服务
-
-
-docker service inspect --pretty &lt;service_name&gt;
-显示详细信息服务
-
-
-docker service ls
-列出服务
-
-
-docker service ps
-列出服务的任务
-
-
-docker service scale &lt;service_name&gt;=&lt;replica&gt;
-规模特殊服务
-
-
-docker service update &lt;options&gt; &lt;service_name&gt;
-更新服务选项
-
-
-
-
-Docker Stack
-
-
-
-
-:-
-:-
-
-
-
-docker stack ls
-列出此 Docker 主机上所有正在运行的应用程序
-
-
-docker stack deploy -c &lt;composefile&gt; &lt;appname&gt;
-运行指定的 Compose 文件
-
-
-docker stack services &lt;appname&gt;
-列出与应用关联的服务
-
-
-docker stack ps &lt;appname&gt;
-列出与应用关联的正在运行的容器
-
-
-docker stack rm &lt;appname&gt;
-拆掉一个应用程序
-
-
-
-
-Docker Machine
-
-
-
-
-:-
-:-
-
-
-
-docker-machine create --driver virtualbox myvm1
-创建虚拟机（Mac、Win7、Linux）
-
-
-docker-machine create -d hyperv --hyperv-virtual-switch &quot;myswitch&quot; myvm1
-Win10
-
-
-docker-machine env myvm1
-查看有关您的节点的基本信息
-
-
-docker-machine ssh myvm1 &quot;docker node ls&quot;
-列出集群中的节点
-
-
-docker-machine ssh myvm1 &quot;docker node inspect &lt;node ID&gt;&quot;
-检查节点
-
-
-docker-machine ssh myvm1 &quot;docker swarm join-token -q worker&quot;
-查看加入令牌
-
-
-docker-machine ssh myvm1
-打开与 VM 的 SSH 会话； 输入“exit”结束
-
-
-docker-machine ssh myvm2 &quot;docker swarm leave&quot;
-让工人离开群体
-
-
-docker-machine ssh myvm1 &quot;docker swarm leave -f&quot;
-让主人离开，杀群
-
-
-docker-machine start myvm1
-启动当前未运行的 VM
-
-
-docker-machine stop $(docker-machine ls -q)
-停止所有正在运行的虚拟机
-
-
-docker-machine rm $(docker-machine ls -q)
-删除所有虚拟机及其磁盘映像
-
-
-docker-machine scp docker-compose.yml myvm1:~
-将文件复制到节点的主目录
-
-
-docker-machine ssh myvm1 &quot;docker stack deploy -c &lt;file&gt; &lt;app&gt;&quot;
-部署应用
-
-
-
-
-docker 主要命令
-
-
-
-
-:-
-:-
-
-
-
-attach
-将本地标准输入、输出和错误流附加到正在运行的容器
-
-
-build
-从 Dockerfile 构建镜像
-
-
-commit
-从容器的更改创建新镜像
-
-
-cp
-在容器和本地文件系统之间复制文件&#x2F;文件夹
-
-
-create
-创建一个新容器
-
-
-diff
-检查容器文件系统上文件或目录的更改
-
-
-events
-从服务器获取实时事件
-
-
-exec
-在正在运行的容器中运行命令
-
-
-export
-将容器的文件系统导出为 tar 存档
-
-
-history
-显示镜像的历史
-
-
-images
-列出镜像
-
-
-import
-从 tarball 导入内容以创建文件系统映像
-
-
-info
-显示系统范围的信息
-
-
-inspect
-返回有关 Docker 对象的低级信息
-
-
-kill
-杀死一个或多个正在运行的容器
-
-
-load
-从 tar 存档或 STDIN 加载镜像
-
-
-login
-登录到 Docker 注册表
-
-
-logout
-从 Docker 注册表中注销
-
-
-logs
-获取容器的日志
-
-
-pause
-暂停一个或多个容器内的所有进程
-
-
-port
-列出容器的端口映射或特定映射
-
-
-ps
-列出容器
-
-
-pull
-从注册表中提取镜像或存储库
 
 
 push
-将镜像或存储库推送到注册表
+✅
 
 
-rename
-重命名容器
+✅
 
 
-restart
-重启一个或多个容器
+pop
+
+✅
+
+✅
 
 
-rm
-移除一个或多个容器
+unshift
+✅
+
+✅
 
 
-rmi
-移除一张或多张镜像
 
+shift
 
-run
-在新容器中运行命令
-
-
-save
-将一个或多个镜像保存到 tar 存档（默认流式传输到 STDOUT）
-
-
-search
-在 Docker Hub 中搜索镜像
-
-
-start
-启动一个或多个停止的容器
-
-
-stats
-显示容器资源使用统计的实时流
-
-
-stop
-停止一个或多个正在运行的容器
-
-
-tag
-创建一个引用 SOURCE_IMAGE 的标记 TARGET_IMAGE
-
-
-top
-显示容器的运行进程
-
-
-unpause
-取消暂停一个或多个容器中的所有进程
-
-
-update
-更新一个或多个容器的配置
-
-
-version
-显示 Docker 版本信息
-
-
-wait
-阻塞直到一个或多个容器停止，然后打印它们的退出代码
+✅
+✅
 
 
 
 
-docker 管理命令
+
+方法 .push()// 添加单个元素：const cart = [&#x27;apple&#x27;, &#x27;orange&#x27;];cart.push(&#x27;pear&#x27;); // 添加多个元素：const numbers = [1, 2];numbers.push(3, 4, 5);
+
+将项目添加到末尾并返回新的数组长度。
+方法 .pop()const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];const fruit = fruits.pop(); // &#x27;banana&#x27;console.log(fruits); // [&quot;apple&quot;, &quot;dew&quot;]
+
+从末尾删除一个项目并返回已删除的项目。
+方法 .shift()const array1 = [1, 2, 3];const firstElement = array1.shift();console.log(array1); // 输出: Array [2, 3]console.log(firstElement); // 输出: 1
+
+从头删除一个项目并返回已删除的项目。
+方法 .some()const array = [1, 2, 3, 4, 5];// 检查元素是否为偶数const even = (element) =&gt; element % 2 === 0;console.log(array.some(even));// 预期输出: true
+
+方法 .concat()const numbers = [3, 2, 1]const newFirstNumber = 4    // =&gt; [ 4, 3, 2, 1 ][newFirstNumber].concat(numbers)    // =&gt; [ 3, 2, 1, 4 ]numbers.concat(newFirstNumber)
+
+如果你想避免改变你的原始数组，你可以使用 concat。
+方法 .splice()const months = [&#x27;Jan&#x27;, &#x27;March&#x27;];months.splice(1, 0, &#x27;Feb&#x27;);// 在索引 1 处插入console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;]months.splice(2, 1, &#x27;May&#x27;);// 替换索引 2 处的 1 个元素console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;May&quot;]
+
+方法 .unshift()let cats = [&#x27;Bob&#x27;];// =&gt; [&#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Willy&#x27;);// =&gt; [&#x27;Puff&#x27;, &#x27;George&#x27;, &#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Puff&#x27;, &#x27;George&#x27;);
+
+将项目添加到开头并返回新的数组长度。
+方法 .filter()const words = [&#x27;js&#x27;, &#x27;java&#x27;, &#x27;golang&#x27;];const result = words.filter(word =&gt; &#123;  return  word.length &gt; 3&#125;);console.log(result);// 预期输出: Array [&quot;java&quot;, &quot;golang&quot;]
+
+JavaScript 循环While 循环while (condition) &#123;  // 要执行的代码块&#125;let i = 0;while (i &lt; 5) &#123;          console.log(i);  i++;&#125;
+
+反向循环const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;berry&quot;];for (let i = fruits.length - 1; i &gt;= 0; i--) &#123;  console.log(`$&#123;i&#125;. $&#123;fruits[i]&#125;`);&#125;// =&gt; 2. berry// =&gt; 1. dew// =&gt; 0. apple
+
+Do…While 语句x = 0i = 0do &#123;  x = x + i;  console.log(x)  i++;&#125; while (i &lt; 5);// =&gt; 0 1 3 6 10
+
+For 循环for (let i = 0; i &lt; 4; i += 1) &#123;  console.log(i);&#125;;// =&gt; 0, 1, 2, 3
+
+遍历数组for (let i = 0; i &lt; array.length; i++)&#123;  console.log(array[i]);&#125;// =&gt; 数组中的每一项
+
+Breakfor (let i = 0; i &lt; 99; i += 1) &#123;  if (i &gt; 5) break;  console.log(i)&#125;// =&gt; 0 1 2 3 4 5
+
+Continuefor (i = 0; i &lt; 10; i++) &#123;  if (i === 3) &#123;    continue;  &#125;  text += &quot;The number is &quot; + i + &quot;&lt;br&gt;&quot;;&#125;
+
+嵌套循环for (let i = 0; i &lt; 2; i += 1) &#123;  for (let j = 0; j &lt; 3; j += 1) &#123;    console.log(`$&#123;i&#125;-$&#123;j&#125;`);  &#125;&#125;
+
+for…in 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let index in fruits) &#123;  console.log(index);&#125;// =&gt; 0// =&gt; 1// =&gt; 2
+
+label 语句
+
+var num = 0;outPoint:for(var i = 0; i &lt; 10; i++) &#123;  for(var j = 0; j &lt; 10; j++) &#123;    if(i == 5 &amp;&amp; j == 5) &#123;      continue outPoint;    &#125;    num++;  &#125;&#125;alert(num);  // 95
+
+从 alert(num) 的值可以看出，continue outPoint; 语句的作用是跳出当前循环，并跳转到 outPoint（标签）下的 for 循环继续执行。
+for…of 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let fruit of fruits) &#123;  console.log(fruit);&#125;// =&gt; apple// =&gt; orange// =&gt; banana
+
+for await…of
+
+async function* asyncGenerator() &#123;  var i = 0;  while (i &lt; 3) &#123;    yield i++;  &#125;&#125;(async function() &#123;  for await (num of asyncGenerator()) &#123;    console.log(num);  &#125;&#125;)();// 0// 1// 2
+
+可选的 for 表达式var i = 0;for (;;) &#123;  if (i &gt; 3) break;  console.log(i);  i++;&#125;
+
+JavaScript 迭代器(Iterators)
+
+分配给变量的函数let plusFive = (number) =&gt; &#123;  return number + 5;  &#125;;// f 被赋值为 plusFivelet f = plusFive;plusFive(3); // 8// 由于 f 具有函数值，因此可以调用它。f(9); // 14
+
+回调函数const isEven = (n) =&gt; &#123;  return n % 2 == 0;&#125;let printMsg = (evenFunc, num) =&gt; &#123;  const isNumEven = evenFunc(num);  console.log(`$&#123;num&#125; is an even number: $&#123;isNumEven&#125;.`)&#125;// Pass in isEven as the callback functionprintMsg(isEven, 4); // =&gt; The number 4 is an even number: True.
+
+数组方法 .reduce()const numbers = [1, 2, 3, 4];const sum = numbers.reduce((accumulator, curVal) =&gt; &#123;    return accumulator + curVal;&#125;);console.log(sum); // 10
+
+数组方法 .map()const members = [&quot;Taylor&quot;, &quot;Donald&quot;, &quot;Don&quot;, &quot;Natasha&quot;, &quot;Bobby&quot;];const announcements = members.map((member) =&gt; &#123;  return member + &quot; joined the contest.&quot;;&#125;);console.log(announcements);
+
+数组方法 .forEach()const numbers = [28, 77, 45, 99, 27];numbers.forEach(number =&gt; &#123;    console.log(number);&#125;); 
+
+数组方法 .filter()const randomNumbers = [4, 11, 42, 14, 39];const filteredArray = randomNumbers.filter(n =&gt; &#123;    return n &gt; 5;&#125;);
+
+JavaScript 对象(Objects)
+
+访问属性const apple = &#123;   color: &#x27;Green&#x27;,  price: &#123; bulk: &#x27;$3/kg&#x27;, smallQty: &#x27;$4/kg&#x27; &#125;&#125;;console.log(apple.color);      // =&gt; Greenconsole.log(apple.price.bulk); // =&gt; $3/kg
+
+命名属性// 无效键名示例const trainSchedule = &#123;  // 由于单词之间的空格而无效。  platform num: 10,   // 表达式不能是键。  40 - 10 + 2: 30,  // 除非用引号括起来，否则 + 号无效。  +compartment: &#x27;C&#x27;&#125;
+
+不存在的属性const classElection = &#123;  date: &#x27;January 12&#x27;&#125;;console.log(classElection.place); // undefined
+
+可变的
+
+const student = &#123;  name: &#x27;Sheldon&#x27;,  score: 100,  grade: &#x27;A&#x27;,&#125;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, score: 100, grade: &#x27;A&#x27; &#125;delete student.scorestudent.grade = &#x27;F&#x27;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, grade: &#x27;F&#x27; &#125;student = &#123;&#125;// TypeError: TypeError：分配给常量变量。
+
+赋值简写语法const person = &#123;  name: &#x27;Tom&#x27;,  age: &#x27;22&#x27;,&#125;;const &#123;name, age&#125; = person;console.log(name); // &#x27;Tom&#x27;console.log(age);  // &#x27;22&#x27;
+
+删除运算符const person = &#123;  firstName: &quot;Matilda&quot;,  hobby: &quot;knitting&quot;,  goal: &quot;learning JavaScript&quot;&#125;;delete person.hobby; // 或 delete person[&#x27;hobby&#x27;];console.log(person);/*&#123;  firstName: &quot;Matilda&quot;  goal: &quot;learning JavaScript&quot;&#125; */
+
+对象作为参数const origNum = 8;const origObj = &#123;color: &#x27;blue&#x27;&#125;;const changeItUp = (num, obj) =&gt; &#123;  num = 7;  obj.color = &#x27;red&#x27;;&#125;;changeItUp(origNum, origObj);// 将输出 8，因为整数是按值传递的。console.log(origNum);// 由于传递了对象，将输出“red”// 通过引用，因此是可变的。console.log(origObj.color);
+
+工厂函数
+
+// 一个接受 &#x27;name&#x27;，&#x27;age&#x27; 和 &#x27;breed&#x27; 的工厂函数，//  参数返回一个自定义的 dog 对象。const dogFactory = (name, age, breed) =&gt; &#123;  return &#123;    name: name,    age: age,    breed: breed,    bark() &#123;      console.log(&#x27;Woof!&#x27;);      &#125;  &#125;;&#125;;
+
+速记对象创建const activity = &#x27;Surfing&#x27;;const beach = &#123; activity &#125;;console.log(beach); // &#123; activity: &#x27;Surfing&#x27; &#125;
+
+this 关键字const cat = &#123;  name: &#x27;Pipey&#x27;,  age: 8,  whatName() &#123;    return this.name    &#125;&#125;;console.log(cat.whatName()); // =&gt; Pipey
+
+方法const engine = &#123;  // 方法简写，有一个参数  start(adverb) &#123;    console.log(`The engine starts up $&#123;adverb&#125;...`);  &#125;,    // 不带参数的匿名箭头函数表达式  sputter: () =&gt; &#123;    console.log(&#x27;The engine sputters...&#x27;);  &#125;,&#125;;engine.start(&#x27;noisily&#x27;);engine.sputter();
+
+Getters 和 settersconst myCat = &#123;  _name: &#x27;Dottie&#x27;,  get name() &#123;    return this._name;    &#125;,  set name(newName) &#123;    this._name = newName;    &#125;&#125;;// 引用调用 getterconsole.log(myCat.name);// 赋值调用 settermyCat.name = &#x27;Yankee&#x27;;
+
+ProxyProxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
+// 用于拦截对象的读取属性操作。const handler = &#123;    get: function(obj, prop) &#123;        return prop in obj ? obj[prop] : 37;    &#125;&#125;;const p = new Proxy(&#123;&#125;, handler);p.a = 1;p.b = undefined;console.log(p.a, p.b);      // 1, undefinedconsole.log(&#x27;c&#x27; in p, p.c); // false, 37
+
+语法const p = new Proxy(target, handler)
+
+
+target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
+handler 一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。
+
+方法
 
 
 :-
@@ -10205,787 +10856,264 @@ docker 管理命令
 
 
 
-docker builder
-管理构建
+Proxy.revocable()
+创建一个可撤销的Proxy对象 #
 
 
-docker buildx*
-Docker Buildx（Docker Inc.，v0.7.1）
+handler 对象的方法
 
 
-docker compose*
-Docker Compose（Docker Inc.，v2.2.3）
+:-
+:-
 
 
-docker config
-管理 Docker 配置
 
+handler.getPrototypeOf()
+Object.getPrototypeOf 方法的捕捉器 #
 
-docker container
-管理容器
 
+handler.setPrototypeOf()
+Object.setPrototypeOf 方法的捕捉器 #
 
-docker context
-管理上下文
 
+handler.isExtensible()
+Object.isExtensible 方法的捕捉器 #
 
-docker image
-管理镜像
 
+handler.preventExtensions()
+Object.preventExtensions 方法的捕捉器 #
 
-docker manifest
-管理 Docker 镜像清单和清单列表
 
+handler.getOwnPropertyDescriptor()
+Object.getOwnPropertyDescriptor 方法的捕捉器 #
 
-docker network
-管理网络
 
+handler.defineProperty()
+Object.defineProperty 方法的捕捉器 #
 
-docker node
-管理 Swarm 节点
 
+handler.has()
+in 操作符的捕捉器 #
 
-docker plugin
-管理插件
 
+handler.get()
+属性读取操作的捕捉器 #
 
-docker scan*
-Docker 扫描（Docker Inc.，v0.16.0）
 
+handler.set()
+属性设置操作的捕捉器 #
 
-docker secret
-管理 Docker 机密
 
+handler.deleteProperty()
+delete 操作符的捕捉器 #
 
-docker service
-管理服务
 
+handler.ownKeys()
+Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器 #
 
-docker stack
-管理 Docker 堆栈
 
+handler.apply()
+函数调用操作的捕捉器 #
 
-docker swarm
-管理群
 
+handler.construct()
+new 操作符的捕捉器 #
 
-docker system
-管理 Docker
 
 
-docker trust
-管理对 Docker 映像的信任
 
+ReflectReflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。这些方法与proxy handlers (en-US)的方法相同。Reflect不是一个函数对象，因此它是不可构造的。
+// 检测一个对象是否存在特定属性const duck = &#123;  name: &#x27;Maurice&#x27;,  color: &#x27;white&#x27;,  greeting: function() &#123;    console.log(`Quaaaack! My name is $&#123;this.name&#125;`);  &#125;&#125;Reflect.has(duck, &#x27;color&#x27;);// trueReflect.has(duck, &#x27;haircut&#x27;);// false
 
-docker volume
-管理卷
+静态方法
 
 
+:-
+:-
 
 
-docker 全局参数    --config string     # 客户端配置文件的位置（默认“~/.docker”）-c, --context string    # 用于连接到守护程序的上下文的名称（                        # 覆盖 DOCKER_HOST 环境变量和使用                        # “docker context use” 设置的默认上下文）-D, --debug             # 启用调试模式-H, --host list         # 要连接的守护进程套接字-l, --log-level string  # 设置日志级别        # （默认“info”） (&quot;debug&quot;|&quot;info&quot;|&quot;warn&quot;|&quot;error&quot;|&quot;fatal&quot;)     --tls               # 使用 TLS； 由 --tlsverify 暗示    --tlscacert string  # 仅由该 CA 签署的信任证书        #（默认为“~/.docker/ca.pem”）    --tlscert string    # TLS证书文件路径        #（默认“~/.docker/cert.pem”）    --tlskey string     # TLS 密钥文件的路径        #（默认为“~/.docker/key.pem”）    --tlsverify         # 使用 TLS 并验证远程-v, --version           # 打印版本信息并退出
 
-docker images-a, --all             显示所有镜像（默认隐藏中间镜像）    --digests         显示摘要-f, --filter filter   根据提供的条件过滤输出    --format string   使用 Go 模板打印漂亮的镜像    --no-trunc        不要截断输出-q, --quiet           仅显示镜像 ID
+Reflect.apply(target, thisArgument, argumentsList)
+对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 Function.prototype.apply() 功能类似 #
 
-docker run&#x2F;create
 
-    --add-host list            # 添加自定义主机到 IP 映射 (host:ip)-a, --attach list              # 连接到 STDIN、STDOUT 或 STDERR    --blkio-weight uint16      # 块 IO（相对权重），介于 10 和 1000 之间，或 0 禁用（默认 0）    --blkio-weight-device list # 块 IO 权重（相对设备权重）（默认 []）    --cap-add list             # 添加 Linux 功能    --cap-drop list            # 放弃 Linux 功能    --cgroup-parent string     # 容器的可选父 cgroup    --cgroupns string          # 要使用的 Cgroup 命名空间（主机|私有）                               #  &#x27;host&#x27;:    在 Docker 主机的 cgroup 命名空间中运行容器                               #  &#x27;private&#x27;: 在自己的私有 cgroup 命名空间中运行容器                               #  &#x27;&#x27;:        使用由守护进程上的                                #        default-cgroupns-mode 选项配置的 cgroup 命名空间（默认）    --cidfile string           # 将容器 ID 写入文件    --cpu-period int           # 限制 CPU CFS（完全公平调度器）周期    --cpu-quota int            # 限制 CPU CFS（完全公平调度器）配额    --cpu-rt-period int        # 以微秒为单位限制 CPU 实时周期    --cpu-rt-runtime int       # 以微秒为单位限制 CPU 实时运行时间-c, --cpu-shares int           # CPU 份额（相对权重）    --cpus decimal             # CPU 数量    --cpuset-cpus string       # 允许执行的 CPU (0-3, 0,1)    --cpuset-mems string       # 允许执行的 MEM (0-3, 0,1)    --device list              # 将主机设备添加到容器    --device-cgroup-rule list  # 将规则添加到 cgroup 允许的设备列表    --device-read-bps list     # 限制设备的读取速率（每秒字节数）（默认 []）    --device-read-iops list    # 限制设备的读取速率（每秒 IO）（默认 []）    --device-write-bps list    # 限制设备的写入速率（每秒字节数）（默认 []）    --device-write-iops list   # 限制设备的写入速率（每秒 IO）（默认 []）    --disable-content-trust    # 跳过镜像验证（默认为 true）    --dns list                 # 设置自定义 DNS 服务器    --dns-option list          # 设置 DNS 选项    --dns-search list          # 设置自定义 DNS 搜索域    --domainname string        # 容器 NIS 域名    --entrypoint string        # 覆盖镜像的默认入口点-e, --env list                 # 设置环境变量    --env-file list            # 读入环境变量文件    --expose list              # 公开一个端口或一系列端口    --gpus gpu-request         # 要添加到容器中的 GPU 设备（“全部”以传递所有 GPU）    --group-add list           # 添加其他组以加入    --health-cmd string        # 运行以检查运行状况的命令    --health-interval duration # 运行检查之间的时间 (ms|s|m|h) (默认 0s)    --health-retries int           # 需要报告不健康的连续失败    --health-start-period duration # 开始健康重试倒计时之前容器初始化的开始时间（ms|s|m|h）（默认 0s）    --health-timeout duration      # 允许运行一项检查的最长时间 (ms|s|m|h) (默认 0s)    --help                     # 打印使用-h, --hostname string          # 容器主机名    --init                     # 在容器内运行一个 init 来转发信号并收获进程-i, --interactive              # 即使没有连接，也保持 STDIN 打开    --ip string                # IPv4 地址（例如 172.30.100.104）    --ip6 string               # IPv6 地址（例如，2001:db8::33）    --ipc string               # 要使用的 IPC 模式    --isolation string         # 容器隔离技术    --kernel-memory bytes      # 内核内存限制-l, --label list               # 在容器上设置元数据    --label-file list          # 读入以行分隔的标签文件    --link list                # 添加到另一个容器的链接    --link-local-ip list       # 容器 IPv4/IPv6 链路本地地址    --log-driver string        # 容器的日志记录驱动程序    --log-opt list             # 日志驱动程序选项    --mac-address string       # 容器 MAC 地址（例如 92:d0:c6:0a:29:33）-m, --memory bytes             # 内存限制    --memory-reservation bytes # 内存软限制    --memory-swap bytes        # 交换限制等于内存加上交换：&#x27;-1&#x27; 启用无限交换    --memory-swappiness int    # 调整容器内存交换（0 到 100）（默认 -1）    --mount mount              # 将文件系统挂载附加到容器    --name string              # 为容器分配名称    --network network          # 将容器连接到网络    --network-alias list       # 为容器添加网络范围的别名    --no-healthcheck           # 禁用任何容器指定的 HEALTHCHECK    --oom-kill-disable         # 禁用 OOM 杀手    --oom-score-adj int        # 调整主机的 OOM 首选项（-1000 到 1000）    --pid string               # 要使用的 PID 命名空间    --pids-limit int           # 调整容器 pids 限制（设置 -1 表示无限制）    --platform string          # 如果服务器支持多平台，则设置平台    --privileged               # 授予此容器扩展权限-p, --publish list             # 将容器的端口发布到主机-P, --publish-all              # 将所有暴露的端口发布到随机端口    --pull string              # 创建前拉取镜像(&quot;always&quot;|&quot;missing&quot;|&quot;never&quot;)(默认&quot;missing&quot;)    --read-only                # 将容器的根文件系统挂载为只读    --restart string           # 容器退出时应用的重启策略（默认“否”）    --rm                       # 容器退出时自动移除    --runtime string           # 用于此容器的运行时    --security-opt list        # 安全选项    --shm-size bytes           # /dev/shm 的大小    --stop-signal string       # 停止容器的信号（默认“SIGTERM”）    --stop-timeout int         # 停止容器的超时（以秒为单位）    --storage-opt list         # 容器的存储驱动程序选项    --sysctl map               # Sysctl 选项（默认 map[]）    --tmpfs list               # 挂载 tmpfs 目录-t, --tty                      # 分配一个伪 TTY    --ulimit ulimit            # ulimit 选项（默认 []）-u, --user string              # 用户名或 UID（格式：&lt;name|uid&gt;[:&lt;group|gid&gt;]）    --userns string            # 要使用的用户命名空间    --uts string               # 要使用的 UTS 命名空间-v, --volume list              # 绑定挂载卷    --volume-driver string     # 容器的可选卷驱动程序    --volumes-from list        # 从指定容器挂载卷-w, --workdir string           # 容器内的工作目录
+Reflect.construct(target, argumentsList[, newTarget])
+对构造函数进行 new 操作，相当于执行 new target(…args) #
 
-run&#x2F;create 大部分参数一致
-修改Docker镜像拉取地址您可以通过修改daemon配置文件&#x2F;etc&#x2F;docker&#x2F;daemon.json来使用加速器
-sudo mkdir -p /etc/dockersudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;&#123;  &quot;registry-mirrors&quot;: [&quot;https://1ojaslt1.mirror.aliyuncs.com&quot;]&#125;EOFsudo systemctl daemon-reloadsudo systemctl restart docker
 
-修改 Docker 数据存储路径
+Reflect.defineProperty(target, propertyKey, attributes)
+和 Object.defineProperty() 类似。如果设置成功就会返回 true #
 
 
-停止 Docker 服务：
-  sudo systemctl stop docker
+Reflect.deleteProperty(target, propertyKey)
+作为函数的delete操作符，相当于执行 delete target[name] #
 
-将现有的 Docker 数据移动到新的目录：
-  sudo mv /var/lib/docker /new/path/docker
 
-更新 Docker 的配置文件 /etc/docker/daemon.json，添加或修改 data-root 选项：
-  &#123; &quot;data-root&quot;: &quot;/new/path/docker&quot; &#125;
+Reflect.get(target, propertyKey[, receiver])
+获取对象身上某个属性的值，类似于 target[name] #
 
-重新启动 Docker 服务：
-  sudo systemctl start docker
 
+Reflect.getOwnPropertyDescriptor(target, propertyKey)
+类似于 Object.getOwnPropertyDescriptor()。如果对象中存在该属性，则返回对应的属性描述符，否则返回 undefined #
 
 
-⚠️注意：当你执行此操作时，旧的容器和镜像可能无法正常工作，因为它们的路径已更改。建议在部署 Docker 时执行此操作，以避免这些问题。如有必要，重新启动容器或重新创建它们，以确保它们的配置指向新的路径。
-Docker降级版本的方法yum downgrade --setopt=obsoletes=0 \    -y docker-ce-$&#123;version&#125; docker-ce-selinux-$&#123;version&#125;
+Reflect.getPrototypeOf(target)
+类似于 Object.getPrototypeOf() #
 
-$&#123;version&#125; 指定要降级的版本
-Docker 常用示例
 
-Docker Web 管理工具 portainer$ docker run -d --name portainer \  -p 8000:8000 \  -p 9443:9443 \  --restart=always \  -v /var/run/docker.sock:/var/run/docker.sock \  -v $HOME/portainer:/data \    portainer/portainer-ee:latest
+Reflect.has(target, propertyKey)
+判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同 #
 
-Nginx
 
-docker run -itd -p 80:80 --restart=always --name Nginx \-v $HOME/nginx_data/html:/usr/share/nginx/html \-v $HOME/nginx_data/conf:/etc/nginx/conf.d \-v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf \nginx
+Reflect.isExtensible(target)
+类似于 Object.isExtensible() #
 
-参数解释
--itd: 启动容器并保持后台运行
--p 80:80: 将主机的 80 端口映射到容器的 80 端口，用于访问 Nginx 站点页面
---name Nginx: 给容器指定一个名称为 “Nginx”
---restart=always: 在容器退出时，总是重新启动容器
 
-持久化解释
+Reflect.ownKeys(target)
+返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 Object.keys(), 但不会受enumerable 影响) #
 
 
-–
-–
+Reflect.preventExtensions(target)
+类似于 Object.preventExtensions()。返回一个Boolean #
 
 
+Reflect.set(target, propertyKey, value[, receiver])
+将值分配给属性的函数。返回一个Boolean，如果更新成功，则返回true #
 
--v $HOME/nginx_data/html:/usr/share/nginx/html
-将容器中的 Nginx 站点页面路径映射到本地
 
+Reflect.setPrototypeOf(target, prototype)
+设置对象原型的函数。返回一个 Boolean，如果更新成功，则返回 true #
 
--v $HOME/nginx_data/conf:/etc/nginx/conf.d
-将容器中的 Nginx 虚拟主机配置文件路径映射到本地 (需要提前准备好文件)
 
 
--v $HOME/nginx_data/nginx.conf:/etc/nginx/nginx.conf
-将容器中的 Nginx 主配置文件路径映射到本地 (需要提前准备好文件)
 
+JavaScript this 绑定隐式绑定function foo() &#123;  console.log(this)&#125;let obj1 = &#123;  name: &quot;obj1&quot;,  foo: foo&#125;let obj2 = &#123;  name: &quot;obj2&quot;,  obj1: obj1&#125;obj2.obj1.foo() // [Object obj1]
 
+隐式丢失let a = obj2.obj1.foo()a() // Window
 
 
-Tomcatdocker run -itd -p 8080:8080 --restart=always \--name Tomcat \-v $HOME/Tomcat_data/webapps:/usr/local/tomcat/webapps/ROOT \tomcat
+指定隐式绑定：必须在调用的对象内部有一个对函数的引用（比如一个属性）
+将以上调用赋值给一个变量，结果最终会是 Window
+在 a 被调用的位置没有进行过任何显示绑定，最终全局对象 window 会调用它（Window.a）
 
-参数解释
--itd: 以后台运行的方式启动容器，并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
--p 8080:8080: 将主机的端口 8080 映射到容器的 8080 端口，用于访问 Tomcat 站点页面
---name Tomcat: 为容器指定名称为 “Tomcat”
---restart=always: 当容器退出时，总是重新启动容器
 
-持久化解释将容器中的 /usr/local/tomcat/webapps/ROOT 路径挂载到宿主机中的 $HOME/Tomcat_data/webapps 目录下。
-Weblogic
 
-docker run -itd \-p 7001:7001 \-p 7002:7002 \-p 5556:5556 \--restart=always --name Weblogic ismaleiva90/weblogic12
+显示绑定function getName(a1, a2) &#123;  console.log(&quot;此人&quot; + this.name, &quot;岁数&quot; + (a1 + a2))&#125;let person = &#123;  name: &quot;zhangsan&quot;&#125;
 
-注意：ismaleiva90/weblogic12 是非官方或认证的 Docker 镜像！
-参数解释
--itd: 后台运行容器，保持 STDIN 打开
--p 7001:7001: 映射主机 7001 端口到容器 7001 端口，访问 Weblogic 控制台页面
--p 7002:7002: 映射主机 7002 端口到容器 7002 端口，访问 Weblogic 站点页面
--p 5556:5556: 映射主机 5556 端口到容器 5556 端口，访问 Weblogic 站点页面
---name Weblogic: 容器名称为 “Weblogic”
---restart=always: 容器退出时，总是重新启动容器
+callcall 第一个参数接受 this 作用域，剩余参数传递给其调用的函数
+getName.call(person, 18, 12)
 
-MySQL
+applyapply 第一个参数与 call 相同，第二个参数是其调用函数的参数数组
+getName.apply(person, [18, 12])
 
-docker run -d -it -p 3306:3306 --name MySQL --restart=always \-v $HOME/MySQL_Data/data:/var/lib/mysql \-v $HOME/MySQL_Data/conf:/etc/mysql/conf.d \--privileged=true \-e MYSQL_DATABASE=&#x27;test_db&#x27; \-e MYSQL_ROOT_PASSWORD=&#x27;abc$123&#x27; \-e MYSQL_USER=&#x27;testuser&#x27; -e MYSQL_PASSWORD=&#x27;abc$123&#x27; \mysql:8.0.31 \    --character-set-server=utf8mb4 \    --collation-server=utf8mb4_unicode_ci
+bindbind 函数会返回一个新函数
+getName.bind(person,18,12)()//或者可以这样getName.bind(person)(18, 12)//或者这样getName.bind(person).bind(null, 18)(12)
 
-参数解释
+内置函数中的 this数组中的一些方法，类似于 map、forEach 等，可以自己设置绑定 this
+const obj = &#123;  name: &quot;zhangsan&quot;&#125;const array = [1, 2, 3];array.map(function(value)&#123;  console.log(this.name)&#125;, obj)// zhangsan x3 
 
+其中一些全局对象，如 setTimeout 等，它们和未显示绑定 this 的部分数组方法一样，都会指向全局对象（Window）
+setTimeout(function()&#123;   console.log(this)&#125;, 1000) // Window
 
-–
-–
+JavaScript Classes静态方法&#x2F;字段
 
+class Dog &#123;  constructor(name) &#123;    this._name = name;    &#125;    introduce() &#123;     console.log(&#x27;This is &#x27; + this._name + &#x27; !&#x27;);    &#125;    // 静态方法  static bark() &#123;    console.log(&#x27;Woof!&#x27;);    &#125;  static &#123;    console.log(&#x27;类静态初始化块调用&#x27;);  &#125;&#125;const myDog = new Dog(&#x27;Buster&#x27;);myDog.introduce();// 调用静态方法Dog.bark();
 
+公有静态字段class ClassStaticField &#123;  static staticField = &#x27;static field&#x27;&#125;console.log(ClassStaticField.staticField)// 预期输出值：&quot;static field&quot;​ 
 
--d
-表示以后台运行的方式启动容器
+Classclass Song &#123;  constructor() &#123;    this.title;    this.author;  &#125;    play() &#123;    console.log(&#x27;Song playing!&#x27;);  &#125;&#125;const mySong = new Song();mySong.play();
 
+extends// Parent classclass Media &#123;  constructor(info) &#123;    this.publishDate = info.publishDate;    this.name = info.name;  &#125;&#125;// Child classclass Song extends Media &#123;  constructor(songData) &#123;    super(songData);    this.artist = songData.artist;  &#125;&#125;const mySong = new Song(&#123;   artist: &#x27;Queen&#x27;,   name: &#x27;Bohemian Rhapsody&#x27;,   publishDate: 1975&#125;);
 
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
+Class Constructorclass Song &#123;  constructor(title, artist) &#123;    this.title = title;    this.artist = artist;  &#125;&#125;const mySong = new Song(&#x27;Bohemian Rhapsody&#x27;, &#x27;Queen&#x27;);console.log(mySong.title);
 
+Class Methodsclass Song &#123;  play() &#123;    console.log(&#x27;Playing!&#x27;);  &#125;    stop() &#123;    console.log(&#x27;Stopping!&#x27;);  &#125;&#125;
 
--p 3306:3306
-将主机的端口映射到容器的端口，这里是将主机的 3306 端口映射到容器的 3306 端口，用于访问 MySQL 数据库
+JavaScript Modules
 
+Export &#x2F; Import// myMath.js// 默认导出 Default exportexport default function add(x,y)&#123;  return x + y&#125;// 正常导出 Normal exportexport function subtract(x,y)&#123;  return x - y&#125;// 多重导出 Multiple exportsfunction multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;export &#123;  multiply, duplicate&#125;
 
---name MySQL
-为容器指定一个名称，这里是 “MySQL”
+import 加载模块// main.jsimport add, &#123; subtract, multiply, duplicate &#125; from &#x27;./myMath.js&#x27;;console.log(add(6, 2));      // 8 console.log(subtract(6, 2))  // 4console.log(multiply(6, 2)); // 12console.log(duplicate(5))    // 10// index.html&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
 
+Export Module// myMath.jsfunction add(x,y)&#123;  return x + y&#125;function subtract(x,y)&#123;  return x - y&#125;function multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;// node.js 中的多个导出module.exports = &#123;  add,  subtract,  multiply,  duplicate&#125;
 
---restart=always
-表示当容器退出时，总是重新启动容器
+require 加载模块// main.jsconst myMath = require(&#x27;./myMath.js&#x27;)console.log(myMath.add(6, 2));      // 8 console.log(myMath.subtract(6, 2))  // 4console.log(myMath.multiply(6, 2)); // 12console.log(myMath.duplicate(5))    // 10
 
+JavaScript PromisesPromise
 
---privileged=true
-若不加字段–privileged&#x3D;true可能会报权限错误
+创建 promises
+new Promise((resolve, reject) =&gt; &#123;  if (ok) &#123;    resolve(result)  &#125; else &#123;    reject(error)  &#125;&#125;)
 
+使用 promisespromise  .then((result) =&gt; &#123; ··· &#125;)  .catch((error) =&gt; &#123; ··· &#125;)
 
---character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-这两个选项参数是改变所有表的默认编码和排序规则以使用 UTF-8 (utf8mb4)
+Promise 方法Promise.all(···)Promise.race(···)Promise.reject(···)Promise.resolve(···)
 
+执行器函数const executorFn = (resolve, reject) =&gt; &#123;  resolve(&#x27;Resolved!&#x27;);&#125;;const promise = new Promise(executorFn);
 
+setTimeout()const loginAlert = () =&gt; &#123;  console.log(&#x27;Login&#x27;);&#125;;setTimeout(loginAlert, 6000);
 
+Promise 状态const promise = new Promise((resolve, reject) =&gt; &#123;  const res = true;  // 一个异步操作。  if (res) &#123;    resolve(&#x27;Resolved!&#x27;);  &#125;  else &#123;    reject(Error(&#x27;Error&#x27;));  &#125;&#125;);promise.then(  (res) =&gt; console.log(res),  (err) =&gt; console.error(err));
 
-持久化解释
+.then() 方法const promise = new Promise((resolve, reject) =&gt; &#123;      setTimeout(() =&gt; &#123;    resolve(&#x27;Result&#x27;);  &#125;, 200);&#125;);promise.then((res) =&gt; &#123;  console.log(res);&#125;, (err) =&gt; &#123;  console.error(err);&#125;);
 
+.catch() 方法const promise = new Promise(  (resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    reject(Error(&#x27;Promise 无条件拒绝。&#x27;));  &#125;, 1000);&#125;);promise.then((res) =&gt; &#123;  console.log(value);&#125;);promise.catch((err) =&gt; &#123;  console.error(err);&#125;);
 
-–
-–
+Promise.all()
 
+const promise1 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(3);  &#125;, 300);&#125;);const promise2 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(2);  &#125;, 200);&#125;);Promise.all([promise1, promise2]).then((res) =&gt; &#123;  console.log(res[0]);  console.log(res[1]);&#125;);
 
+链接多个 .then()const promise = new Promise(  resolve =&gt;     setTimeout(() =&gt; resolve(&#x27;dAlan&#x27;),100));promise.then(res =&gt; &#123;  return res === &#x27;Alan&#x27;     ? Promise.resolve(&#x27;Hey Alan!&#x27;)    : Promise.reject(&#x27;Who are you?&#x27;)&#125;).then((res) =&gt; &#123;  console.log(res)&#125;, (err) =&gt; &#123;  console.error(err)&#125;);
 
--v $HOME/MySQL_Data/data:/var/lib/mysql
-将容器中的 MySQL 数据库数据存储到本地，以确保在容器重启时数据得以保留。
+避免嵌套的 Promise 和 .then()
 
+const promise = new Promise((resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    resolve(&#x27;*&#x27;);  &#125;, 1000);&#125;);const twoStars = (star) =&gt; &#123;    return (star + star);&#125;;const oneDot = (star) =&gt; &#123;    return (star + &#x27;.&#x27;);&#125;;const print = (val) =&gt; &#123;  console.log(val);&#125;;// 将它们链接在一起promise.then(twoStars).then(oneDot).then(print);
 
--v $HOME/MySQL_Data/conf:/etc/mysql/conf.d
-将容器中的 MySQL 自定义配置文件路径映射到本地，以方便自定义配置。请确保提前准备好文件，否则可能会启动失败。
+JavaScript Async-Await
 
+异步
 
+function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;// 异步函数表达式const msg = async function() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;// 异步箭头函数const msg1 = async () =&gt; &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后msg1(); // Message: Hello World! &lt;-- 2 秒后
 
+解决 Promiseslet pro1 = Promise.resolve(5);let pro2 = 44;let pro3 = new Promise(function(resolve, reject) &#123;  setTimeout(resolve, 100, &#x27;foo&#x27;);&#125;);Promise.all([pro1, pro2, pro3]).then(function(values) &#123;  console.log(values);&#125;);// expected =&gt; Array [5, 44, &quot;foo&quot;]
 
-环境变量解释
+异步等待 Promisesfunction helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
 
+错误处理// 数据不完整let json = &#x27;&#123; &quot;age&quot;: 30 &#125;&#x27;;try &#123;  let user = JSON.parse(json); // &lt;-- 没有错误  console.log( user.name );    // no name!&#125; catch (e) &#123;  console.error( &quot;Invalid JSON data!&quot; );&#125;
 
-–
-–
+异步等待运算符function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
 
+JavaScript 请求JSONconst jsonObj = &#123;  &quot;name&quot;: &quot;Rick&quot;,  &quot;id&quot;: &quot;11A&quot;,  &quot;level&quot;: 4  &#125;;
 
+另见：JSON 备忘单
+XMLHttpRequestconst xhr = new XMLHttpRequest();xhr.open(&#x27;GET&#x27;, &#x27;mysite.com/getjson&#x27;);
 
-MYSQL_ROOT_PASSWORD 【必填】
-必需的变量，用于指定 MySQL 的 root 超级用户帐户的密码。如果设置了 MYSQL_RANDOM_ROOT_PASSWORD=yes ，则会随机生成一个密码，并打印到 stdout。
+XMLHttpRequest 是一个浏览器级别的 API，它使客户端能够通过 JavaScript 编写数据传输脚本，而不是 JavaScript 语言的一部分。
+GETconst req = new XMLHttpRequest();req.responseType = &#x27;json&#x27;;req.open(&#x27;GET&#x27;, &#x27;/getdata?id=65&#x27;);req.onload = () =&gt; &#123;  console.log(xhr.response);&#125;;req.send();
 
+POST
 
-MYSQL_USER 【可选】
-可选变量，用于创建新用户。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_PASSWORD 变量。
+const data = &#123; weight: &#x27;1.5 KG&#x27; &#125;;const xhr = new XMLHttpRequest();// 初始化一个请求。xhr.open(&#x27;POST&#x27;, &#x27;/inventory/add&#x27;);// 一个用于定义响应类型的枚举值xhr.responseType = &#x27;json&#x27;;// 发送请求以及数据。xhr.send(JSON.stringify(data));// 请求成功完成时触发。xhr.onload = () =&gt; &#123;  console.log(xhr.response);&#125;// 当 request 遭遇错误时触发。xhr.onerror = () =&gt; &#123;  console.log(xhr.response);&#125;
 
+fetch api
 
-MYSQL_PASSWORD 【可选】
-可选变量，用于创建新用户并设置密码。此用户将被授予指定数据库的超级用户权限。需要同时设置 MYSQL_USER 变量。
+fetch(url, &#123;    method: &#x27;POST&#x27;,    headers: &#123;      &#x27;Content-type&#x27;: &#x27;application/json&#x27;,      &#x27;apikey&#x27;: apiKey    &#125;,    body: data&#125;).then(response =&gt; &#123;  if (response.ok) &#123;    return response.json();  &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message)&#125;)
 
+JSON 格式fetch(&#x27;url-that-returns-JSON&#x27;)  .then(response =&gt; response.json())  .then(jsonResponse =&gt; &#123;    console.log(jsonResponse);  &#125;);
 
-MYSQL_DATABASE 【可选】
-可选变量，允许在容器启动时指定要创建的数据库的名称。如果设置了 MYSQL_USER 和 MYSQL_PASSWORD，则该用户将被授予对此数据库的超级用户访问权限。
+promise url 参数获取 APIfetch(&#x27;url&#x27;)  .then(response  =&gt; &#123;    console.log(response);  &#125;, rejection =&gt; &#123;    console.error(rejection.message);  &#125;);
 
+Fetch API 函数fetch(&#x27;https://api-xxx.com/endpoint&#x27;, &#123;  method: &#x27;POST&#x27;,  body: JSON.stringify(&#123;id: &quot;200&quot;&#125;)&#125;).then(response =&gt; &#123;  if(response.ok)&#123;    return response.json();    &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message);&#125;).then(jsonResponse =&gt; &#123;  console.log(jsonResponse);&#125;)
 
+async await 语法
 
-
-Oracledocker run -d -it -p 1521:1521 --name Oracle_11g --restart=always \--mount source=oracle_vol,target=/home/oracle/app/oracle/oradata \registry.cn-hangzhou.aliyuncs.com/helowin/oracle_11g
-
-注意：registry.cn-hangzhou.aliyuncs.com&#x2F;helowin&#x2F;oracle_11g 是非官方或认证的Docker镜像！
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 1521:1521
-将主机的端口映射到容器的端口，这里是将主机的 1521 端口映射到容器的 1521 端口，用于访问 Oracle 数据库
-
-
---name Oracle_11g
-为容器指定一个名称，这里是 “Oracle_11g”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
---mount source=oracle_vol,target=/home/oracle/app/oracle/oradata
-将名为 “oracle_vol” 的 Docker 卷挂载到容器中的 “&#x2F;home&#x2F;oracle&#x2F;app&#x2F;oracle&#x2F;oradata” 路径。这样做的目的是将 Oracle 数据库的数据存储在持久化的卷中，以便数据在容器重启时得以保留
-
-
-
-
-PostgreSQLdocker run -d -p 5432:5432 --restart=always --name PostgreSQL \-e POSTGRES_USER=&#x27;postgres&#x27; \-e POSTGRES_PASSWORD=&#x27;abc$123&#x27; \-e POSTGRES_DB=&#x27;test&#x27; \-e PGDATA=/var/lib/postgresql/data/pgdata \-v $HOME/Postgres_Data:/var/lib/postgresql/data \-d postgres
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 5432:5432
-将主机的端口映射到容器的端口，这里是将主机的 5432 端口映射到容器的 5432 端口，用于访问 Postgre 数据库
-
-
---name PostgreSQL
-为容器指定一个名称，这里是 “PostgreSQL”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/Postgres_Data:/var/lib/postgresql/data
-将到容器中的 “&#x2F;var&#x2F;lib&#x2F;postgresql&#x2F;data” 路径映射挂载到 宿主机中的 ”$HOME&#x2F;Postgres_Data“目录下,这样做的目的是将 Postgre 数据库的数据存储在本地中，以便数据在容器重启时得以保留
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-POSTGRES_PASSWORD 【必填】
-PostgreSQL 映像所需的环境变量。设置 PostgreSQL 超级用户的密码。不能为空或未定义。
-
-
-POSTGRES_USER 【可选】
-可选环境变量，用于创建用户及其密码。创建具有超级用户权限的指定用户和同名的数据库。默认用户是 “postgres”。
-
-
-POSTGRES_DB 【可选】
-可选环境变量，用于定义首次启动映像时创建的默认数据库的名称。默认值是 POSTGRES_USER 的值，如果未设置，则默认为 “postgres”。
-
-
-PGDATA 【可选】
-默认为 /var/lib/postgresql/data。如果使用的数据卷是文件系统挂载点或无法被用户 chowned 的远程文件夹，则需要设置此环境变量以包含数据。
-
-
-
-
-达梦docker run -d -p 5236:5236 --restart=always --name DaMengDB \--privileged=true \-e PAGE_SIZE=16 \-e LD_LIBRARY_PATH=/opt/dmdbms/bin \-e EXTENT_SIZE=32 \-e BLANK_PAD_MODE=1 \-e LOG_SIZE=1024 \-e UNICODE_FLAG=1 \-e LENGTH_IN_CHAR=1 \-e INSTANCE_NAME=dm8_test \-v $HOME/DaMeng_Data:/opt/dmdbms/data \if010/dameng
-
-注意：if010&#x2F;dameng 是从官网下载上传至 Docker Hub 的镜像！
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 5236:5236
-将主机的端口映射到容器的端口，这里是将主机的 5236 端口映射到容器的 5236 端口，用于访问达梦数据库
-
-
---name DaMengDB
-为容器指定一个名称，这里是 “DaMengDB”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/DaMeng_Data:/opt/dmdbms/data
-将容器中的达梦数据库数据存储路径 “&#x2F;opt&#x2F;dmdbms&#x2F;data” 映射到本地主机的 “$HOME&#x2F;DaMeng_Data” 目录，以确保在容器重启时数据得以保留
-
-
-
-
-人大金仓docker run -idt -p 54321:54321 --restart=always \--name Kingbase --privileged=true \-e DB_MODE=oracle \-e NEED_START=yes \-e DB_USER=kingbase \-e DB_PASSWORD=abc123 \-e ENABLE_CI=yes \-v $HOME/Kingbase_Data:/home/kingbase/userdata \if010/kingbase:v009r001c001b0025 /usr/sbin/init
-
-注意：if010/kingbase:v009r001c001b0025 是从官网下载上传至 Docker Hub 的镜像，官网提供了两个下载版本，一个是 v008r006c008b0014，另一个是 v009r001c001b0025，可以拉取对应的 tag 镜像进行测试使用！
-参数解释
-
-
-–
-–
-
-
-
--itd
-以后台方式启动容器，保持 STDIN 打开
-
-
--p 54321:54321
-将主机的 54321 端口映射到容器的 54321 端口，访问数据库
-
-
---name Kingbase
-给容器指定名称为 “Kingbase”
-
-
---restart=always
-容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/Kingbase_Data:/home/kingbase/userdata
-将容器中的人大金仓数据库数据存储路径 “&#x2F;home&#x2F;kingbase&#x2F;userdata” 映射到本地主机的 “$HOME&#x2F;Kingbase_Data” 目录，以确保在容器重启时数据得以保留
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-DB_USER 【可选】
-设置用户及其密码，默认为 “system”
-
-
-DB_PASSWORD 【可选】
-设置用户密码，默认为 “123456”
-
-
-DB_MODE 【可选】
-设置数据库模式，支持的模式有 oracle、pg、mysql
-
-
-NEED_START 【可选】
-设置进入容器后是否启动数据库，默认为 “yes”
-
-
-ENABLE_CI 【可选】
-设置是否需要配置大小写敏感，默认为 “yes”
-
-
-
-
-Redisdocker run -d -p 6379:6379 --restart=always --name Redis \-v $HOME/Redis_Data/conf:/usr/local/etc/redis \-v $HOME/Redis_Data/data:/data \redis redis-server /usr/local/etc/redis/redis.conf
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 6379:6379
-将主机的端口映射到容器的端口，这里是将主机的 6379 端口映射到容器的 6379 端口，用于访问 Redis 数据库
-
-
---name Redis
-为容器指定一个名称，这里是 “Redis”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/Redis_Data/conf:/usr/local/etc/redis
-(需提前准备好文件，否则可能会启动失败) 将到容器中的 “&#x2F;usr&#x2F;local&#x2F;etc&#x2F;redis” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;conf”目录下,这样子做的目的是可以自定义Redis的配置文件
-
-
--v $HOME/Redis_Data/data:/data
-将到容器中的 “&#x2F;data” 路径映射挂载到 宿主机中的”$HOME&#x2F;Redis_Data&#x2F;data”目录下,这样做的目的是将 Redis 数据库的数据存储在本地中，以便数据在容器重启时得以保留
-
-
-
-
-关于启动命令
-
-
-–
-–
-
-
-
-redis-server /usr/local/etc/redis/redis.conf
-容器内部执行该命令是为了按照我们自定义的配置文件启动，这个不是必须的！！！
-
-
-
-
-Memcachedocker run -d -p 11211:11211 --name Memcached \    --restart=always memcached memcached -m 64
-
-参数解释
--d: 以后台方式启动容器。
--it: 分配一个伪终端（pseudo-TTY）并保持 STDIN 打开。
--p 11211:11211: 将主机的 11211 端口映射到容器的 11211 端口，用于访问 Memcached 消息队列的 web 管理界面。
---name Memcached: 容器的名称为 “Memcached”。
---restart=always: 容器退出时，总是重新启动容器。
-
-命令执行解释
-memcached -m 64 这会将 Memcached 服务器设置为使用 64 MB 进行存储
-
-MongoDB
-
-docker run -d -p 27017:27017 --restart=always --name MongoDB \-e MONGO_INITDB_ROOT_USERNAME=mongoadmin \-e MONGO_INITDB_ROOT_PASSWORD=abc123 \-v $HOME/MongoDB_Data/data:/data/db \-v $HOME/MongoDB_Data/conf:/etc/mongo \mongo --config /etc/mongo/mongod.conf --wiredTigerCacheSizeGB 1.5
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 27017:27017
-将主机的端口映射到容器的端口，这里是将主机的 27017 端口映射到容器的 27017 端口，用于访问 MongoDB 数据库
-
-
---name MongoDB
-为容器指定一个名称，这里是 “MongoDB”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
---config /etc/mongo/mongod.conf
-指定配置文件路径 (这个不是必须的，设置此选项之前需准备好mongod.conf文件映射到Docker内部)
-
-
---wiredTigerCacheSizeGB 1.5
-设置WiredTiger缓存大小限制为1.5G
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v $HOME/MongoDB_Data/conf:/etc/mongo
-将到容器中的 “&#x2F;etc&#x2F;mongo” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;conf”目录下,这样子做的目的是可以自定义MongoDB的配置文件 (需提前准备好文件，否则可能会启动失败)
-
-
--v $HOME/Redis_Data/data:/data
-将到容器中的 “&#x2F;data&#x2F;db” 路径映射挂载到 宿主机中的”$HOME&#x2F;MongoDB_Data&#x2F;data”目录下,这样做的目的是将 MongoDB 数据库的数据存储在本地中，以便数据在容器重启时得以保留
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-MONGO_INITDB_ROOT_USERNAME 【可选】
-该变量是创建管理员用户，该用户是在 admin 身份验证数据库中创建的，并被赋予角色 root，这是一个”超级用户”角色。
-
-
-MONGO_INITDB_ROOT_PASSWORD 【可选】
-该变量是为创建管理员用户设置密码，需配合 MONGO_INITDB_ROOT_USERNAME 变量参数使用
-
-
-
-
-RabbitMQdocker run -itd -p 15672:15672 --name RabbitMQ \--hostname rmq-test \-e RABBITMQ_DEFAULT_VHOST=rmq-test \-e RABBITMQ_DEFAULT_USER=admin \-e RABBITMQ_DEFAULT_PASS=abc123 \rabbitmq:3-management 
-
-参数解释
-
-
-–
-–
-
-
-
--itd
-表示以后台运行的方式启动容器,并分配一个伪终端（pseudo-TTY）和保持 STDIN 打开
-
-
--p 15672:15672
-将主机的端口映射到容器的端口，这里是将主机的 15672 端口映射到容器的 15672 端口，用于访问 RabbitMQ 控制台页面，内部除了该端口外，还开了4369&#x2F;tcp、5671-5672&#x2F;tcp、15671&#x2F;tcp、15691-15692&#x2F;tcp、25672&#x2F;tcp
-
-
---name RabbitMQ
-为容器指定一个名称，这里是 “RabbitMQ”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
---hostname
-设置容器主机名称
-
-
-
-
-环境变量解释
-
-
-–
-–
-
-
-
-RABBITMQ_DEFAULT_VHOST 【可选】
-该变量是可选的，是设置 RabbitMQ 的主机名称
-
-
-RABBITMQ_DEFAULT_USER 【可选】
-该变量是可选的，是设置 RabbitMQ 的账户
-
-
-RABBITMQ_DEFAULT_PASS 【可选】
-该变量是可选的，是设置 RabbitMQ 的密码
-
-
-
-
-远程协助工具 Guacd
-
-docker run -d -p 4822:4822 --privileged=true \    --restart=always --name Guacd \    -e LANG=zh_CN.UTF-8 \    -v /docker_data/Guacd/rdp-rec:/rdp-rec \    -v /docker_data/Guacd/rdp-file:/rdp-file \    guacamole/guacd
-
-参数解释
-
-
-–
-–
-
-
-
--d
-表示以后台运行的方式启动容器
-
-
--it
-分别表示分配一个伪终端（pseudo-TTY）并保持 STDIN 打开
-
-
--p 4822:4822
-将主机的端口映射到容器的端口，这里是将主机的 4822 端口映射到容器的 4822 端口，用于访问 Guacd远程的API接口
-
-
---name Guacd
-为容器指定一个名称，这里是 “Guacd”
-
-
---restart=always
-表示当容器退出时，总是重新启动容器
-
-
---privileged=true
-若不加字段–privileged&#x3D;true可能会报权限错误
-
-
-
-
-持久化解释
-
-
-–
-–
-
-
-
--v /docker_data/Guacd/rdp-rec:/rdp-rec
-代码内固定配置，guacd服务rdp录屏文件存放路径
-
-
--v /docker_data/Guacd/rdp-file:/rdp-file
-代码内固定配置，guacd服务rdp远程磁盘文件存放路
-
-
-
-
-环境变量解释
-LANG 设置字符编码格式
-
-在线代码编辑器 Code Server$ mkdir -p ~/.config$ docker run -it --name code-server  \  -p 127.0.0.1:8080:8080 \  -v &quot;$HOME/.config/code-server:/home/coder/.config&quot; \  -v &quot;$PWD:/home/coder/project&quot; \  -u &quot;$(id -u):$(id -g)&quot; \  -e &quot;DOCKER_USER=$USER&quot; \    codercom/code-server:latest
-
-媒体管理工具 Dim$ docker run --name my-dim \   -p 8000:8000/tcp \   -v $HOME/.config/dim:/opt/dim/config \   -v $HOME/dim/media:/media:ro \   -d ghcr.io/dusk-labs/dim:dev
-
-Github
-Gitlab$ docker run -d --name gitlab \  --hostname gitlab.example.com \  --publish 8443:443 --publish 8081:80 -p 2222:22 \  --restart always \  --volume $HOME/gitlab/config:/etc/gitlab \  --volume $HOME/gitlab/logs:/var/log/gitlab \  --volume $HOME/gitlab/data:/var/opt/gitlab \  -v /etc/localtime:/etc/localtime \  --shm-size 256m \    gitlab/gitlab-ce:latest
-
-另见
-Dockerfile 备忘清单 (github.io)
-Docker 官方入门教程 (docker.com)
-Docker入门学习笔记 (github.io)
-快速安装Docker及配置及Docker配置、Docker常用命令
-
+const getSuggestions = async () =&gt; &#123;  const wordQuery = inputField.value;  const endpoint = `$&#123;url&#125;$&#123;queryParams&#125;$&#123;wordQuery&#125;`;  try&#123;    const response = await fetch(endpoint, &#123;cache: &#x27;no-cache&#x27;&#125;);    if(response.ok)&#123;      const jsonResponse = await response.json()    &#125;  &#125;  catch(error)&#123;    console.log(error)  &#125;&#125;
 ]]></content>
       <categories>
         <category>后端编程</category>
       </categories>
       <tags>
         <tag>后端编程</tag>
-        <tag>Docker</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>

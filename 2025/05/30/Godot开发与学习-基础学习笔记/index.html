@@ -7,16 +7,24 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="浮生记">
-<meta property="og:url" content="https://blog.tdcqcx.top/tags/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/index.html">
+<meta name="description" content="Godot开发与学习Godot开发思想 节点的特征与优势   节点使Godot内最常用最基本的开发组件 大部分节点都具有非常具体的功能，它们往往直接涉及人类的视听感官，如显示图片、播放音乐、显示模型、模拟物理体等 节点之间可以用上下级的方式组合，一个节点可以有多个子节点 节点的开发思想与人类相接近   场景树与服务器控制节点运行（节点实在场景树与服务器的控制下运行的）   场景树是游戏的主循环对象">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Godot开发与学习-基础学习笔记">
+<meta property="og:url" content="https://blog.tdcqcx.top/2025/05/30/Godot%E5%BC%80%E5%8F%91%E4%B8%8E%E5%AD%A6%E4%B9%A0-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
 <meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="Godot开发与学习Godot开发思想 节点的特征与优势   节点使Godot内最常用最基本的开发组件 大部分节点都具有非常具体的功能，它们往往直接涉及人类的视听感官，如显示图片、播放音乐、显示模型、模拟物理体等 节点之间可以用上下级的方式组合，一个节点可以有多个子节点 节点的开发思想与人类相接近   场景树与服务器控制节点运行（节点实在场景树与服务器的控制下运行的）   场景树是游戏的主循环对象">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-30T02:40:26.000Z">
+<meta property="article:modified_time" content="2025-09-03T07:19:41.575Z">
 <meta property="article:author" content="浮生记">
+<meta property="article:tag" content="Godot">
+<meta property="article:tag" content="游戏开发">
 <meta name="twitter:card" content="summary">
 
+    <meta name="keywords" content="Godot, 游戏开发, 基础笔记, 学习">
 
-<title >浮生记</title>
+
+<title >Godot开发与学习-基础学习笔记</title>
 
 <!-- Favicon -->
 
@@ -55,7 +63,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.top","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top","categorie_card":{"enable":true,"len":5,"list":["后端开发","前端技术","DevOps","架构设计","技术杂谈"],"colors":["#2196F3","#4CAF50","#FF9800","#9C27B0","#E91E63"]}},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":false,"isHome":false,"postUpdate":"2025-09-03 15:20:12"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-09-03 15:19:41"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
@@ -222,7 +230,7 @@
     <div class="trm-banner">
     
     <!-- banner cover -->
-    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="https://free.picui.cn/free/2025/05/06/68195a0a61dfa.jpg">
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="https://free.picui.cn/free/2025/05/06/681959dfbb96d.jpg">
     <!-- banner cover end -->
     
 
@@ -238,10 +246,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            The article archive
+                            Godot开发与学习-基础学习笔记
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            云间连下榻，<br>天上接行杯。
+                            Godot开发与学习-基础学习笔记
                         </h1>
 
                         
@@ -251,7 +259,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        tags
+                                        2025
                                     </span>
                                 </li>
                             </ul>
@@ -373,215 +381,183 @@
             
             <div class="trm-page-content col-lg-8">
                 <div id="trm-content" class="trm-content">
-                    <div class="row">
-    <div class="col-lg-12">
-        <div class="trm-card">
-            <div style="padding: 0 20px;">
-                
-                    <ul class="trm-tag-list" itemprop="keywords"><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/C/" rel="tag">C++</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/CSS/" rel="tag">CSS</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/Docker/" rel="tag">Docker</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/Godot/" rel="tag">Godot</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/HEXO/" rel="tag">HEXO</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/HTML/" rel="tag">HTML</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/JQuery/" rel="tag">JQuery</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/JSON/" rel="tag">JSON</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/JavaScript/" rel="tag">JavaScript</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/PHP/" rel="tag">PHP</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/Vue2/" rel="tag">Vue2</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/Vue3/" rel="tag">Vue3</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/Yaml/" rel="tag">Yaml</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/java/" rel="tag">java</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E5%89%8D%E7%AB%AF%E6%8A%80%E6%9C%AF/" rel="tag">前端技术</a><span class="tag-list-count">6</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%AB%AF%E7%BC%96%E7%A8%8B/" rel="tag">后端编程</a><span class="tag-list-count">7</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E6%8A%80%E6%9C%AF%E6%95%99%E7%A8%8B/" rel="tag">技术教程</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/" rel="tag">游戏开发</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E9%85%8D%E7%BD%AE%E6%A1%86%E6%9E%B6/" rel="tag">配置框架</a><span class="tag-list-count">1</span></li></ul>
-                
-            </div>
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/03
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            15:19
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
         </div>
     </div>
 </div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="Godot开发与学习"><a href="#Godot开发与学习" class="headerlink" title="Godot开发与学习"></a>Godot开发与学习</h1><h2 id="Godot开发思想"><a href="#Godot开发思想" class="headerlink" title="Godot开发思想"></a>Godot开发思想</h2><ol>
+<li>节点的特征与优势</li>
+</ol>
+<ul>
+<li>节点使Godot内最常用最基本的开发组件</li>
+<li>大部分节点都具有非常具体的功能，它们往往直接涉及人类的视听感官，如显示图片、播放音乐、显示模型、模拟物理体等</li>
+<li>节点之间可以用上下级的方式组合，一个节点可以有多个子节点</li>
+<li>节点的开发思想与人类相接近</li>
+</ul>
+<ol start="2">
+<li>场景树与服务器控制节点运行（节点实在场景树与服务器的控制下运行的）</li>
+</ol>
+<ul>
+<li>场景树是游戏的主循环对象，只有在“树”下的节点才可以正常行使节点的主要功能。（节点初始化时并不在“树”下）</li>
+<li>“服务器”指的是Godot内置的各类Server，节点的主要功能都要使用Server实现，节点本身不具备实际功能。二者通过场景树进行协调沟通</li>
+<li>“服务器”的编码比较接近底层，保障了游戏运行的效率。节点的设计思路比较接近人类，加速了游戏开发者开发游戏的效率。场景树起到了协调二者的作用</li>
+</ul>
+<ol start="3">
+<li>节点的组织方式————场景</li>
+</ol>
+<ul>
+<li>场景是若干节点的集合</li>
+<li>场景文件时记录若干节点集合的文件</li>
+<li>游戏实际运行时不存在“场景”，场景是节点在文件系统中储存和加载的单位</li>
+<li>游戏从主场景开始运行</li>
+</ul>
+<ol start="4">
+<li>Godot软件的界面介绍————围绕节点</li>
+</ol>
+<ul>
+<li>1 场景栏：显示场景内节点，可以在这里增删一个场景内的节点（还可以在这里为节点附加脚本）</li>
+<li>2 文件系统：显示场景文件与游戏素材文件</li>
+<li>3 视图区；预览场景内的可视节点（编写代码与查看素材库）</li>
+<li>4 检查器：查看节点的属性（显示节点的信号连接，节点组情况与游戏素材文件属性）</li>
+</ul>
+<h2 id="GD-Script语言————Godot的原生脚本语言"><a href="#GD-Script语言————Godot的原生脚本语言" class="headerlink" title="GD Script语言————Godot的原生脚本语言"></a>GD Script语言————Godot的原生脚本语言</h2><ol>
+<li>GD Script入门介绍</li>
+</ol>
+<ul>
+<li>GD Script是Godot的原生脚本语言，是最适合Godot开发的脚本语言</li>
+<li>在入门阶段，我们只需要知道GD Script可以为节点拓展功能即可</li>
+</ul>
+<ol start="2">
+<li>GD Script与节点的关系</li>
+</ol>
+<ul>
+<li>节点对电脑而言具有非常具体的功能，可以令游戏程序执行显示图片、播放音频、模拟物理体等功能，但也仅限于此</li>
+<li>游戏出来上述的具体功能外，往往还需要具有一套内在的逻辑。就像我们现实中下的象棋，棋子本身只是普通的木头和石头，只是能让我们看得见“象棋”，而要让这些木头和石头能勾起人的兴趣，我们还要制定一套象棋的规则，规定这些棋子在何种情况下如何行走</li>
+<li>GDS负责实现内在逻辑，同时控制节点展示具体的功能。比如一个角色被一个怪物攻击掉血死亡的功能，出来要在GDS中进行角色生命值的削减和角色存活的判断，还要在判断角色死亡后控制节点播放死亡动画和音效</li>
+</ul>
+<h2 id="GD-Script语言入门————变量"><a href="#GD-Script语言入门————变量" class="headerlink" title="GD Script语言入门————变量"></a>GD Script语言入门————变量</h2><ol>
+<li>变量的概念与简单操作</li>
+</ol>
+<ul>
+<li>变量是可以代表数据的一种抽象概念，可以通过对变量名的操作来对变量代表的数据进行操作</li>
+<li>在GDS中，你可以创建自定义的变量，也可以使用系统内置的变量</li>
+<li>变量可以进行计算与转换</li>
+<li>即使是同一脚本文件，绑定不同的对象从而产生了同名的变量，这两个变量以及变量代表的数据也分别属于不同的对象，互相独立，因此使用变量前必须指明变量所属的对象</li>
+</ul>
+<ol start="2">
+<li>四种基本数据类型</li>
+</ol>
+<ul>
+<li>布尔类型（bool）：true和false</li>
+<li>整数类型（int）：-1，0，1，2，3，4，5，6，7，8，9</li>
+<li>浮点数类型（float）：-1.0，0.0，1.0，2.0，3.0，4.0，5.0，6.0，7.0，8.0，9.0</li>
+<li>字符串类型（String）：”Hello World”，”123”，”true”，”false”，”1.0”，”2.0”，”3.0”，”4.0”，”5.0”，”6.0”，”7.0”，”8.0”，”9.0”</li>
+</ul>
+<ol start="3">
+<li>由四种基本变了组成的其他值类型变量</li>
+</ol>
+<ul>
+<li>值变量：执行 变量A &#x3D; 变量B 时，变量A的值会被变量B的值所替换，对于A的修改不会影响B的值</li>
+<li>引用变量：执行 变量A &#x3D; 变量B 时，变量A的值会被变量B的值所替换，对于A的修改会影响B的值</li>
+<li>大部分变量都是值变量</li>
+<li>二维向量变量：由两个浮点数组成的向量，用Vector2表示，如Vector2(1.0, 2.0)</li>
+</ul>
+<ol start="4">
+<li>变量的作用</li>
+</ol>
+<ul>
+<li>变量除定义的过程外，必须在函数内进行数值的修改，内置代码中的许多变量在修改后，会直接对一下内容产生实质性的影响。而自定义的变量则不会。因此，可以用自定义的变量来定义逻辑上的影响数据，而后通过判断逻辑上的数据情况来调整内置代码中的变量，对一下的画面、音效等产生实际的影响</li>
+</ul>
+<h2 id="GD-Script语言入门————函数"><a href="#GD-Script语言入门————函数" class="headerlink" title="GD Script语言入门————函数"></a>GD Script语言入门————函数</h2><ol>
+<li>函数的概念</li>
+</ol>
+<ul>
+<li>函数也叫方法或模块，是一套操作的集合。函数也包括自定义函数与内置函数</li>
+<li>大部分内置函数可以对游戏内容产生实质性的影响或在代码中起到传递数据的作用，少部分函数比较特殊</li>
+<li>一个函数除名称外，还包括了【输入信息、处理流程、处理结果】等关键信息。在程序中，一切数据的处理都是通过函数来实现的</li>
+<li>函数调用一般必须指明调用对象</li>
+</ul>
+<ol start="2">
+<li>内置函数的调用</li>
+</ol>
+<ul>
+<li>虚函数是指没有实际处理流程的函数，这部分函数的内容可以由开发者自行编写。而内置虚函数则是指开发者规定了特定名称却没有实际处理流程的函数，节点内的虚函数会在特定的条件下自动被触发</li>
+<li>条件1：当节点本身或其周围节点状态发送改变时。【节点创建、节点入“树”、节点出“树”、节点死亡前、节点的子节点全部加入场景树】</li>
+<li>条件2：当场景树的状态发送改变时，且节点自身处于“树”中。【画面刷新、物理引擎刷新、硬件设备输入】</li>
+<li>条件3：当节点的属性发生改变时。【节点属性改变、节点的子节点改变】</li>
+<li>条件4：当节点的信号连接发生改变时。【节点的信号连接改变】</li>
+<li>条件5：当节点的子节点发生改变时。【节点的子节点改变】</li>
+<li>常用虚函数：<ul>
+<li>_ready()：节点创建后自动调用</li>
+<li>_process(delta)：节点处于“树”中时自动调用</li>
+<li>_physics_process(delta)：物理引擎刷新时自动调用</li>
+</ul>
+</li>
+</ul>
+<ol start="3">
+<li>函数中的变量</li>
+</ol>
+<ul>
+<li>函数中也可以定义变量，各个函数都拥有一个独立的作用域，在一个函数内部定义的变量无法再另一个函数中直接访问变量名   </li>
+<li>子啊函数运行结束后变量和变量所代表的数据会自动销毁。某些情况下，变量所代表的数据不会自动销毁，但变量一定会自动销毁</li>
+</ul>
 
-<!-- history -->
+</article>
+    
+    
 
-<div class="row">
+</div>
+<div class="trm-post-next-prev row">
     <div class="col-lg-12">
         <!-- title -->
         <h5 class="trm-title-with-divider">
-            
-                前端技术
-            
-            <span data-number="01"></span>
+            其他文章
+            <span data-number="02"></span>
         </h5>
     </div>
-    <div class="col-lg-12">
-        <!-- timeline -->
-        <div class="trm-timeline">
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
             
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2025/01/08/css/" class="trm-anima-link">
-                                        CSS 备忘录
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">01/08</li>
-                                        <li class="trm-accent-color">10:35</li>
-                                        
-                                        <li>6.2k</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2025/01/08/json/" class="trm-anima-link">
-                                        JSON 备忘录
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">01/08</li>
-                                        <li class="trm-accent-color">10:35</li>
-                                        
-                                        <li>1.3k</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2025/01/08/jquery/" class="trm-anima-link">
-                                        JQuery 备忘录
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">01/08</li>
-                                        <li class="trm-accent-color">10:35</li>
-                                        
-                                        <li>7.6k</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2025/01/08/html/" class="trm-anima-link">
-                                        HTML 备忘录
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">01/08</li>
-                                        <li class="trm-accent-color">10:35</li>
-                                        
-                                        <li>2.9k</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2025/01/08/vue%20(1)/" class="trm-anima-link">
-                                        Vue3 备忘录
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">01/08</li>
-                                        <li class="trm-accent-color">10:35</li>
-                                        
-                                        <li>8k</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2025/01/08/vue2%20(1)/" class="trm-anima-link">
-                                        Vue2 备忘录
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">01/08</li>
-                                        <li class="trm-accent-color">10:35</li>
-                                        
-                                        <li>8.8k</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
+            <a class="trm-op-top trm-anima-link" href="/2025/04/17/%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://free.picui.cn/free/2025/05/06/68195a04b57a2.jpg">
+                </span>
+                <h6 class="trm-op-title">如何使用hexo创建一个博客网站</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/04/17</li>
+                <li>10:41</li>
+                <li>技术教程</li>
+            </ul>
         </div>
-        <!-- timeline end -->
     </div>
 </div>
+    
+</div>
 
-<!-- history end -->
-
-
-    <div class="trm-pagination">
-        <span class="page-number current">1</span>
-    </div>
-
-
+    
 
 
 
@@ -628,9 +604,29 @@
 
             
 
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="Godot开发与学习"><a rel="nofollow" class="trm-toc-link" href="#Godot开发与学习"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">Godot开发与学习</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="Godot开发思想"><a rel="nofollow" class="trm-toc-link" href="#Godot开发思想"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">Godot开发思想</span></a></li><li class="trm-toc-item trm-toc-level-2" title="GD Script语言————Godot的原生脚本语言"><a rel="nofollow" class="trm-toc-link" href="#GD-Script语言————Godot的原生脚本语言"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">GD Script语言————Godot的原生脚本语言</span></a></li><li class="trm-toc-item trm-toc-level-2" title="GD Script语言入门————变量"><a rel="nofollow" class="trm-toc-link" href="#GD-Script语言入门————变量"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">GD Script语言入门————变量</span></a></li><li class="trm-toc-item trm-toc-level-2" title="GD Script语言入门————函数"><a rel="nofollow" class="trm-toc-link" href="#GD-Script语言入门————函数"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">GD Script语言入门————函数</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
             
 <div class="trm-fixed-container">
     
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
     
     
         <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
@@ -711,6 +707,10 @@
     
 
     <!-- 评论插件 -->
+    
+        
+
+        
     
 
 		
