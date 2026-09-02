@@ -6,19 +6,19 @@
 <meta name="x5-fullscreen" content="true">
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="description" content="C 备忘清单提供基本语法和方法的 C 快速参考备忘单。 入门hello.c123456#include &lt;stdio.h&gt;int main() &#123;  printf(&quot;Hello World!&quot;);  return 0;&#125;  使用 gcc 编译 hello.c 源文件 1$ gcc -o hello hello.c  运行编译后的二进制文件可执行文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C 备忘录">
-<meta property="og:url" content="https://blog.tdcqcx.top/2025/01/08/c/index.html">
+<meta property="og:url" content="https://blog.tdcqcx.cn/2025/01/08/c/index.html">
 <meta property="og:site_name" content="浮生记">
 <meta property="og:description" content="C 备忘清单提供基本语法和方法的 C 快速参考备忘单。 入门hello.c123456#include &lt;stdio.h&gt;int main() &#123;  printf(&quot;Hello World!&quot;);  return 0;&#125;  使用 gcc 编译 hello.c 源文件 1$ gcc -o hello hello.c  运行编译后的二进制文件可执行文">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-01-08T02:40:26.000Z">
-<meta property="article:modified_time" content="2025-09-03T07:19:41.576Z">
+<meta property="article:modified_time" content="2026-09-02T12:41:27.023Z">
 <meta property="article:author" content="浮生记">
-<meta property="article:tag" content="后端编程">
 <meta property="article:tag" content="C">
+<meta property="article:tag" content="后端编程">
 <meta name="twitter:card" content="summary">
 
     <meta name="keywords" content="C, 速记, 语法, 速查, 备忘录，速查表，速记手册">
@@ -45,8 +45,6 @@
 <link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
 
     
-<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
-
     
     
 
@@ -62,8 +60,8 @@
 
 
 <!-- Variable -->
-<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.top","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top","categorie_card":{"enable":true,"len":5,"list":["后端开发","前端技术","DevOps","架构设计","技术杂谈"],"colors":["#2196F3","#4CAF50","#FF9800","#9C27B0","#E91E63"]}},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-09-03 15:19:41"};</script>
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner","avatar":false,"delayRange":5000,"speed":80},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top","categorie_card":{"enable":true,"len":5,"list":["后端开发","前端技术","DevOps","架构设计","技术杂谈"],"colors":["#2196F3","#4CAF50","#FF9800","#9C27B0","#E91E63"]}},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-02 20:41:27"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
@@ -230,7 +228,7 @@
     <div class="trm-banner">
     
     <!-- banner cover -->
-    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="https://free.picui.cn/free/2025/05/06/68195a01eca35.jpg">
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/images/covers/c.svg">
     <!-- banner cover end -->
     
 
@@ -291,7 +289,7 @@
         <!-- card header -->
 <div class="trm-mc-header">
     <div class="trm-avatar-frame trm-mb-20">
-        <img alt="Avatar" class="trm-avatar" src="https://free.picui.cn/free/2025/05/06/68195c4adb9b6.webp">
+        <img alt="Avatar" class="trm-avatar" src="/images/site-avatar.jpg">
     </div>
     <h5 class="trm-name trm-mb-15">
         TDCQCX
@@ -385,13 +383,13 @@
     <div class="col-sm-4">
         <div class="trm-card trm-label trm-label-light text-center">
             <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
-            09/03
+            09/02
         </div>
     </div>
     <div class="col-sm-4">
         <div class="trm-card trm-label trm-label-light text-center">
             <i class="iconfont far fa-clock trm-icon"></i><br>
-            15:19
+            20:41
         </div>
     </div>
     <div class="col-sm-4">
@@ -1469,13 +1467,13 @@
 <h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> sock = <span class="number">0</span>;  <span class="comment">// 客户端的套接字描述符</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> serv_addr;  <span class="comment">// 定义服务器地址结构体</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建套接字</span></span><br><span class="line"><span class="keyword">if</span> ((sock = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM, <span class="number">0</span>)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;Socket creation failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="绑定套接字"><a href="#绑定套接字" class="headerlink" title="绑定套接字"></a>绑定套接字</h3><p>服务端创建套接字后，需要将其绑定到特定的 IP 地址和端口，以便客户端能够连接。</p>
-<h4 id="服务端-1"><a href="#服务端-1" class="headerlink" title="服务端"></a>服务端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> address;  <span class="comment">// 定义存储地址信息的结构体</span></span><br><span class="line">address.sin_family = AF_INET;  <span class="comment">// 设置地址族为 IPv4</span></span><br><span class="line">address.sin_addr.s_addr = INADDR_ANY;  <span class="comment">// 将服务器绑定到所有可用的网络接口（即本机的所有 IP 地址）</span></span><br><span class="line">address.sin_port = <span class="built_in">htons</span>(port);  <span class="comment">// 将端口号转换为网络字节序，大端模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将套接字绑定到指定的地址和端口上</span></span><br><span class="line"><span class="comment">// bind() 将服务器的文件描述符与 IP 地址和端口号进行绑定，以便客户端能够通过该地址和端口访问服务器</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">bind</span>(server_fd, (<span class="keyword">struct</span> sockaddr *)&amp;address, <span class="built_in">sizeof</span>(address)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;bind failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="服务端-1"><a href="#服务端-1" class="headerlink" title="服务端"></a>服务端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> address;  <span class="comment">// 定义存储地址信息的结构体</span></span><br><span class="line">address.sin_family = AF_INET;  <span class="comment">// 设置地址族为 IPv4</span></span><br><span class="line">address.sin_addr.s_addr = INADDR_ANY;  <span class="comment">// 将服务器绑定到所有可用的网络接口（即本机的所有 IP 地址）</span></span><br><span class="line">address.sin_port = <span class="built_in">htons</span>(port);  <span class="comment">// 将端口号转换为网络字节序，大端模式</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将套接字绑定到指定的地址和端口上</span></span><br><span class="line"><span class="comment">// bind() 将服务器的文件描述符与 IP 地址和端口号进行绑定，以便客户端能够通过该地址和端口访问服务器</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">bind</span>(server_fd, (<span class="keyword">struct</span> sockaddr *)&amp;address, <span class="keyword">sizeof</span>(address)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;bind failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="监听和接收连接"><a href="#监听和接收连接" class="headerlink" title="监听和接收连接"></a>监听和接收连接</h3><p>服务端在绑定套接字之后，需要进入监听状态，以等待客户端的连接请求。</p>
-<h4 id="服务端-2"><a href="#服务端-2" class="headerlink" title="服务端"></a>服务端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 开始监听客户端连接</span></span><br><span class="line"><span class="comment">// 监听连接请求</span></span><br><span class="line"><span class="comment">// listen() 函数将套接字设置为被动模式，准备接收来自客户端的连接请求</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">listen</span>(server_fd, <span class="number">3</span>) &lt; <span class="number">0</span>) &#123;  <span class="comment">// 第二个参数 3 表示连接请求的队列大小</span></span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;listen failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> addrlen = <span class="built_in">sizeof</span>(address);  <span class="comment">// 获取地址结构体的大小</span></span><br><span class="line"><span class="comment">// accept() 函数会阻塞等待客户端的连接请求，一旦连接请求到来，创建一个新的套接字 new_socket 用于数据传输</span></span><br><span class="line"><span class="keyword">if</span> ((new_socket = <span class="built_in">accept</span>(server_fd, (<span class="keyword">struct</span> sockaddr *)&amp;address, (<span class="type">socklen_t</span>*)&amp;addrlen)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;accept failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="服务端-2"><a href="#服务端-2" class="headerlink" title="服务端"></a>服务端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 开始监听客户端连接</span></span><br><span class="line"><span class="comment">// 监听连接请求</span></span><br><span class="line"><span class="comment">// listen() 函数将套接字设置为被动模式，准备接收来自客户端的连接请求</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">listen</span>(server_fd, <span class="number">3</span>) &lt; <span class="number">0</span>) &#123;  <span class="comment">// 第二个参数 3 表示连接请求的队列大小</span></span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;listen failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> addrlen = <span class="keyword">sizeof</span>(address);  <span class="comment">// 获取地址结构体的大小</span></span><br><span class="line"><span class="comment">// accept() 函数会阻塞等待客户端的连接请求，一旦连接请求到来，创建一个新的套接字 new_socket 用于数据传输</span></span><br><span class="line"><span class="keyword">if</span> ((new_socket = <span class="built_in">accept</span>(server_fd, (<span class="keyword">struct</span> sockaddr *)&amp;address, (<span class="type">socklen_t</span>*)&amp;addrlen)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;accept failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="连接到服务端"><a href="#连接到服务端" class="headerlink" title="连接到服务端"></a>连接到服务端</h3><p>客户端使用 <code>connect()</code> 函数连接到服务器的 IP 地址和端口。</p>
-<h4 id="客户端-1"><a href="#客户端-1" class="headerlink" title="客户端"></a>客户端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置服务器地址</span></span><br><span class="line">serv_addr.sin_family = AF_INET;  <span class="comment">// 设置地址族为 IPv4</span></span><br><span class="line">serv_addr.sin_port = <span class="built_in">htons</span>(port);  <span class="comment">// 将端口号转换为网络字节序</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 IP 地址转换为二进制并存储在 serv_addr 结构体中</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">inet_pton</span>(AF_INET, <span class="string">&quot;127.0.0.1&quot;</span>, &amp;serv_addr.sin_addr) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;Invalid address/ Address not supported&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接服务器</span></span><br><span class="line"><span class="comment">// connect() 函数将客户端的套接字与服务器的地址绑定，从而建立连接</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">connect</span>(sock, (<span class="keyword">struct</span> sockaddr *)&amp;serv_addr, <span class="built_in">sizeof</span>(serv_addr)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;Connection Failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="客户端-1"><a href="#客户端-1" class="headerlink" title="客户端"></a>客户端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置服务器地址</span></span><br><span class="line">serv_addr.sin_family = AF_INET;  <span class="comment">// 设置地址族为 IPv4</span></span><br><span class="line">serv_addr.sin_port = <span class="built_in">htons</span>(port);  <span class="comment">// 将端口号转换为网络字节序</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 IP 地址转换为二进制并存储在 serv_addr 结构体中</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">inet_pton</span>(AF_INET, <span class="string">&quot;127.0.0.1&quot;</span>, &amp;serv_addr.sin_addr) &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;Invalid address/ Address not supported&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 连接服务器</span></span><br><span class="line"><span class="comment">// connect() 函数将客户端的套接字与服务器的地址绑定，从而建立连接</span></span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">connect</span>(sock, (<span class="keyword">struct</span> sockaddr *)&amp;serv_addr, <span class="keyword">sizeof</span>(serv_addr)) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">perror</span>(<span class="string">&quot;Connection Failed&quot;</span>);</span><br><span class="line">    <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="发送和接收数据"><a href="#发送和接收数据" class="headerlink" title="发送和接收数据"></a>发送和接收数据</h3><p>一旦连接建立，服务端和客户端可以通过套接字发送和接收数据。</p>
 <h4 id="服务端-3"><a href="#服务端-3" class="headerlink" title="服务端"></a>服务端</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 服务端从客户端接收数据</span></span><br><span class="line"><span class="type">char</span> buffer[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;  <span class="comment">// 缓冲区，用于存储接收的数据</span></span><br><span class="line"><span class="type">int</span> valread = <span class="built_in">read</span>(new_socket, buffer, <span class="number">1024</span>);  <span class="comment">// 从客户端读取数据</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Client: %s\n&quot;</span>, buffer);  <span class="comment">// 打印接收到的客户端数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务端发送响应数据给客户端</span></span><br><span class="line"><span class="type">const</span> <span class="type">char</span> *response = <span class="string">&quot;Hello from server&quot;</span>;  <span class="comment">// 响应消息</span></span><br><span class="line"><span class="built_in">send</span>(new_socket, response, <span class="built_in">strlen</span>(response), <span class="number">0</span>);  <span class="comment">// 发送数据到客户端</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Server message sent\n&quot;</span>);</span><br></pre></td></tr></table></figure>
@@ -1539,7 +1537,7 @@
             
             <a class="trm-op-top trm-anima-link" href="/2025/01/08/%E4%B8%80%E4%BA%9B%E6%83%B3%E8%AF%B4%E7%9A%84%E8%AF%9D/">
                 <span class="trm-op-cover">
-                    <img alt="cover" class="no-fancybox" src="https://free.picui.cn/free/2025/05/06/68195a03cc92b.png">
+                    <img alt="cover" class="no-fancybox" src="/images/covers/words.svg">
                 </span>
                 <h6 class="trm-op-title">一些想说的话</h6>
             </a>
@@ -1560,7 +1558,7 @@
             
             <a class="trm-op-top trm-anima-link" href="/2025/01/08/cpp/">
                 <span class="trm-op-cover">
-                    <img alt="cover" class="no-fancybox" src="https://free.picui.cn/free/2025/05/06/68195a0107fcd.jpg">
+                    <img alt="cover" class="no-fancybox" src="/images/covers/cpp.svg">
                 </span>
                 <h6 class="trm-op-title">C++ 备忘录</h6>
             </a>
@@ -1593,7 +1591,7 @@
 
     
         <div class="trm-footer-item">
-            <span>© 2025 - 2025</span>
+            <span>© 2025 - 2026</span>
             <span class="footer-separator"data-separator=" · "></span>
             <span class="trm-accent-color">TDCQCX</span>
         </div>
@@ -1610,7 +1608,34 @@
             你已经看到这了，很累了，休息一下吧。
         </div>
      
-<script defer src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+<script>
+    // Live2D 优化加载：仅桌面端(≥993px)且非触屏设备加载；
+    // 页面 load 完成后再延迟请求，CDN 失败自动切备用源并静默降级，不阻塞也不拖慢页面。
+    (function () {
+        try {
+            if (window.__L2D_LOADED__) return;
+            if (!window.matchMedia('(min-width: 993px)').matches) return;
+            if (window.matchMedia('(pointer: coarse)').matches) return;
+            var sources = [
+                'https://cdn.jsdelivr.net/npm/live2d-widgets@0/autoload.js',
+                'https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js'
+            ];
+            var idx = 0;
+            function load() {
+                if (idx >= sources.length) return;
+                var s = document.createElement('script');
+                s.src = sources[idx++];
+                s.async = true;
+                s.onload = function () { window.__L2D_LOADED__ = true; };
+                s.onerror = function () { load(); };
+                document.body.appendChild(s);
+            }
+            var start = function () { setTimeout(load, 1000); };
+            if (document.readyState === 'complete') start();
+            else window.addEventListener('load', start, { once: true });
+        } catch (e) { /* 忽略，保证不影响页面 */ }
+    })();
+</script>
 </footer>
                     <!-- footer end -->
 
@@ -1707,8 +1732,6 @@
 
     
     
-<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-
     
 
     
@@ -1716,9 +1739,7 @@
     
 
     
-        
-<script src="https://unpkg.com/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
-
+        <script src="/js/plugins/searchdb.js?v=2.2.4"></script>
         <script src="/js/plugins/local_search.js?v=2.2.4"></script>
     
 
@@ -1732,8 +1753,6 @@
         
     
 
-		
-			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
 		
 
 

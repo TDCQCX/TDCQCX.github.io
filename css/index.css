@@ -3920,3 +3920,68 @@ pre .coffeescript .title {
   --primary-weak: #82df7a;
   --primary-weak-50: rgba(130, 223, 122, 0.5);
 }
+/* =====================================================
+   本地站点优化（追加在主题样式之后，可安全覆盖）
+   ===================================================== */
+/* 防止极端窄屏出现横向滚动 */
+html {
+  overflow-x: hidden;
+}
+/* 横幅视频在窄屏保持填充且不溢出 */
+.trm-banner video.trm-banner-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* ---- Live2D：固定右下角、避开右侧功能按钮、降低层级不遮挡操作 ---- */
+#live2d-widget {
+  position: fixed !important;
+  right: 92px !important;
+  bottom: 0 !important;
+  left: auto !important;
+  z-index: 60 !important;
+  transform-origin: right bottom;
+  pointer-events: none;
+}
+#live2d-widget canvas,
+#live2d-widget a,
+#live2d-widget button,
+#live2d-widget [data-role] {
+  pointer-events: auto;
+}
+/* 小屏一律隐藏 Live2D（与 footer 按设备加载逻辑配套） */
+@media (max-width: 992px) {
+  #live2d-widget {
+    display: none !important;
+  }
+}
+/* ---- 移动端细节优化 ---- */
+@media (max-width: 768px) {
+  /* 横幅标题紧凑化，避免折行溢出 */
+  .trm-banner .trm-banner-text h1,
+  .trm-banner .trm-hsmb-font {
+    font-size: 1.4rem !important;
+    line-height: 1.45;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    padding: 0 14px !important;
+  }
+  /* 文章正文字号略微缩小 */
+  .trm-publication {
+    font-size: 0.95rem;
+  }
+  /* 代码块 / 表格窄屏下横向滚动而非撑破布局 */
+  .trm-publication pre,
+  .trm-publication figure.highlight,
+  .trm-publication .highlight,
+  .trm-publication .highlight table,
+  .trm-publication table {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+  /* 正文图片自适应宽度 */
+  .trm-publication img {
+    height: auto !important;
+  }
+}
