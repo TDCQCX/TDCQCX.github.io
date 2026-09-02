@@ -37,5 +37,32 @@
             <%- theme.footer.custom_text %>
         </div>
     <% } %> 
-<script defer src="https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js"></script>
+<script>
+    // Live2D 优化加载：仅桌面端(≥993px)且非触屏设备加载；
+    // 页面 load 完成后再延迟请求，CDN 失败自动切备用源并静默降级，不阻塞也不拖慢页面。
+    (function () {
+        try {
+            if (window.__L2D_LOADED__) return;
+            if (!window.matchMedia('(min-width: 993px)').matches) return;
+            if (window.matchMedia('(pointer: coarse)').matches) return;
+            var sources = [
+                'https://cdn.jsdelivr.net/npm/live2d-widgets@0/autoload.js',
+                'https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js'
+            ];
+            var idx = 0;
+            function load() {
+                if (idx >= sources.length) return;
+                var s = document.createElement('script');
+                s.src = sources[idx++];
+                s.async = true;
+                s.onload = function () { window.__L2D_LOADED__ = true; };
+                s.onerror = function () { load(); };
+                document.body.appendChild(s);
+            }
+            var start = function () { setTimeout(load, 1000); };
+            if (document.readyState === 'complete') start();
+            else window.addEventListener('load', start, { once: true });
+        } catch (e) { /* 忽略，保证不影响页面 */ }
+    })();
+</script>
 </footer>

@@ -8,19 +8,26 @@ isKatex = theme.katex.global || page?.katex;
 isSearch = theme.search.enable && theme.search.type === 'local'
 
 plugin = theme.assets.plugin;
+
+let pageContent = page && (page.content || '');
+let needFancybox = /(data-fancybox|fj-gallery)/i.test(pageContent) || (page && page.post && /(<img\b|<video\b)/i.test(pageContent));
 %>
 
 <% if(loadtype ==='css') {%>
 
     <%- css(plugin.hexo_theme_async.rowcss) %>
-    <%- css(plugin.fancybox.css) %>
+    <% if(needFancybox){ %>
+        <%- css(plugin.fancybox.css) %>
+    <% } %>
     <%- isSwiper ? css(plugin.swiper.css) : '' %>
     <%- isKatex ? css(plugin.katex.css) : '' %>
 
 <% } else { %>
 
     <%- theme.swup ? js(plugin.swup) : '' %>
-    <%- js(plugin.fancybox.js) %>
+    <% if(needFancybox){ %>
+        <%- js(plugin.fancybox.js) %>
+    <% } %>
     <%- isSwiper ? js(plugin.swiper.js) : '' %>
 
     <% if(isTyping) {%>
@@ -28,7 +35,7 @@ plugin = theme.assets.plugin;
     <% } %>
 
     <% if(isSearch) {%>
-        <%- js(plugin.search) %>
+        <script src="<%= url_for(plugin.hexo_theme_async.searchdb) %>?v=<%= theme.version %>"></script>
         <script src="<%= url_for(plugin.hexo_theme_async.search) %>?v=<%= theme.version %>"></script>
     <% } %>
 

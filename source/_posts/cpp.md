@@ -7,10 +7,10 @@ tags:
     - C++
     - 后端编程
 keywords: C++, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: https://free.picui.cn/free/2025/05/06/68195a0107fcd.jpg
+cover: /images/covers/cpp.svg
 banner:
       type: img
-      bgurl: https://free.picui.cn/free/2025/05/06/68195a0107fcd.jpg
+      bgurl: /images/covers/cpp.svg
       banner_text: C++ 备忘录
       toc: true # 无需显示目录
       comments: true

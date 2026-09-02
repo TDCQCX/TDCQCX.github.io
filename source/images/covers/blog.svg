@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f46e5"/>
+      <stop offset="1" stop-color="#0ea5e9"/>
+    </linearGradient>
+    <radialGradient id="r1" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="r2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#818cf8" stop-opacity="0.5"/>
+      <stop offset="1" stop-color="#818cf8" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <circle cx="456" cy="247" r="560" fill="url(#r1)"/>
+  <circle cx="1075" cy="579" r="620" fill="url(#r2)"/>
+  <g stroke="#ffffff" stroke-opacity="0.10" stroke-width="3" fill="none">
+    <line x1="47.9%" y1="-10%" x2="63.3%" y2="110%" transform="skewX(0.5)"/>
+    <line x1="47.99%" y1="-10%" x2="63.39%" y2="110%" transform="skewX(0.5)"/>
+    <line x1="47.918%" y1="-10%" x2="63.318%" y2="110%" transform="skewX(0.5)"/>
+  </g>
+</svg>
