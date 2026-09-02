@@ -44,7 +44,6 @@ assets:
       rowcss: css/plugins/bootstrap.row.css
       typing: js/plugins/typing.js
       search: js/plugins/local_search.js
-      searchdb: js/plugins/searchdb.js
       danmu: js/plugins/danmu.js
       main: js/main.js
   icons: ## Icon configuration

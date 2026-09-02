@@ -7,10 +7,10 @@ tags:
     - PHP
     - 后端编程
 keywords: PHP, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: /images/covers/php.svg
+cover: https://free.picui.cn/free/2025/05/06/681959edd406f.jpg
 banner:
       type: img
-      bgurl: /images/covers/php.svg
+      bgurl: https://free.picui.cn/free/2025/05/06/681959edd406f.jpg
       banner_text: PHP 备忘录
       toc: true # 无需显示目录
       comments: true

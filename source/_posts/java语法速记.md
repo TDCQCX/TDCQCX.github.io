@@ -7,10 +7,10 @@ tags:
   - java
   - 后端编程
 keywords: java, 速记, 语法, 速查, 备忘录
-cover: /images/covers/java.svg
+cover: https://free.picui.cn/free/2025/05/06/681959f91f007.jpg
 banner:
   type: img
-  bgurl: /images/covers/java.svg
+  bgurl: https://free.picui.cn/free/2025/05/06/681959f91f007.jpg
   banner_text: Java 备忘录
 toc: true # 无需显示目录
 comments: true

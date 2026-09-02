@@ -7,10 +7,10 @@ tags:
     - JQuery
     - 前端技术
 keywords: JQuery, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: /images/covers/jquery.svg
+cover: https://free.picui.cn/free/2025/05/06/681959f809705.jpg
 banner:
       type: img
-      bgurl: /images/covers/jquery.svg
+      bgurl: https://free.picui.cn/free/2025/05/06/681959f809705.jpg
       banner_text: JQuery 备忘录
       toc: true # 无需显示目录
       comments: true

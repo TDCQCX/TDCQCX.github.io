@@ -7,10 +7,10 @@ tags:
     - Godot
     - 游戏开发
 keywords: Godot, 游戏开发, 基础笔记, 学习
-cover: /images/covers/godot.svg
+cover: https://free.picui.cn/free/2025/05/06/681959dfbb96d.jpg
 banner:
       type: img
-      bgurl: /images/covers/godot.svg
+      bgurl: https://free.picui.cn/free/2025/05/06/681959dfbb96d.jpg
       banner_text: Godot开发与学习-基础学习笔记
       toc: true 
       comments: true
