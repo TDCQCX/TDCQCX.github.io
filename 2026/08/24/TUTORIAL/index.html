@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="OCR 助手 — 从零开始的新手使用教程 本文从零开始,手把手带你安装、配置并使用 OCR 助手(开源免费)。即使你完全没接触过 Python 与编程,也能按步骤走通全流程。  目录 这个软件是做什么的 核心功能一览 准备工作:两种使用方式怎么选 方式一:直接使用打包版(推荐新手) 方式二:源码运行(完整环境安装) 快速上手:完成第一次识别 配置:让程序认识你的 AI 平台 进阶:直接编辑 con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OCR 助手 — 从零开始的新手使用教程">
+<meta property="og:url" content="https://blog.tdcqcx.top/2026/08/24/TUTORIAL/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="OCR 助手 — 从零开始的新手使用教程 本文从零开始,手把手带你安装、配置并使用 OCR 助手(开源免费)。即使你完全没接触过 Python 与编程,也能按步骤走通全流程。  目录 这个软件是做什么的 核心功能一览 准备工作:两种使用方式怎么选 方式一:直接使用打包版(推荐新手) 方式二:源码运行(完整环境安装) 快速上手:完成第一次识别 配置:让程序认识你的 AI 平台 进阶:直接编辑 con">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-24T02:35:26.000Z">
+<meta property="article:modified_time" content="2026-09-12T10:12:38.189Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="OCR助手">
+<meta property="article:tag" content="使用教程">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="OCR助手, 新手教程, 截图OCR, AI答题, 环境安装, 使用指南, RapidOCR, 大模型">
+
+
+<title >OCR 助手 — 从零开始的新手使用教程</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.top","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://unpkg.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top","categorie_card":{"enable":true,"len":5,"list":["后端开发","前端技术","DevOps","架构设计","技术杂谈"],"colors":["#2196F3","#4CAF50","#FF9800","#9C27B0","#E91E63"]}},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-12 18:12:38"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="https://hefollo.cn/apis.php?type=%E7%94%B5%E8%84%91%E7%AB%AF-4K%E5%9B%BE%E7%89%87/4K%E9%A3%8E%E6%99%AF%E7%B3%BB%E5%88%97&r=ocr">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            OCR 助手 — 从零开始的新手使用教程
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            OCR 助手 — 从零开始的新手使用教程
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2026
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/12
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            18:12
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="OCR-助手-—-从零开始的新手使用教程"><a href="#OCR-助手-—-从零开始的新手使用教程" class="headerlink" title="OCR 助手 — 从零开始的新手使用教程"></a>OCR 助手 — 从零开始的新手使用教程</h1><blockquote>
+<p>本文从零开始,手把手带你安装、配置并使用 <strong>OCR 助手</strong>(开源免费)。即使你完全没接触过 Python 与编程,也能按步骤走通全流程。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-%E8%BF%99%E4%B8%AA%E8%BD%AF%E4%BB%B6%E6%98%AF%E5%81%9A%E4%BB%80%E4%B9%88%E7%9A%84">这个软件是做什么的</a></li>
+<li><a href="#2-%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E4%B8%80%E8%A7%88">核心功能一览</a></li>
+<li><a href="#3-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C%E4%B8%A4%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F%E6%80%8E%E4%B9%88%E9%80%89">准备工作:两种使用方式怎么选</a></li>
+<li><a href="#4-%E6%96%B9%E5%BC%8F%E4%B8%80%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%89%93%E5%8C%85%E7%89%88%E6%8E%A8%E8%8D%90%E6%96%B0%E6%89%8B">方式一:直接使用打包版(推荐新手)</a></li>
+<li><a href="#5-%E6%96%B9%E5%BC%8F%E4%BA%8C%E6%BA%90%E7%A0%81%E8%BF%90%E8%A1%8C%E5%AE%8C%E6%95%B4%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85">方式二:源码运行(完整环境安装)</a></li>
+<li><a href="#6-%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B%E5%AE%8C%E6%88%90%E7%AC%AC%E4%B8%80%E6%AC%A1%E8%AF%86%E5%88%AB">快速上手:完成第一次识别</a></li>
+<li><a href="#7-%E9%85%8D%E7%BD%AE%E8%AE%A9%E7%A8%8B%E5%BA%8F%E8%AE%A4%E8%AF%86%E4%BD%A0%E7%9A%84-ai-%E5%B9%B3%E5%8F%B0">配置:让程序认识你的 AI 平台</a></li>
+<li><a href="#8-%E8%BF%9B%E9%98%B6%E7%9B%B4%E6%8E%A5%E7%BC%96%E8%BE%91-configjson">进阶:直接编辑 config.json</a></li>
+<li><a href="#9-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-faq">常见问题 FAQ</a></li>
+<li><a href="#10-%E6%9B%B4%E6%96%B0%E4%B8%8E%E5%8D%B8%E8%BD%BD">更新与卸载</a></li>
+</ol>
+<hr>
+<h2 id="1-这个软件是做什么的"><a href="#1-这个软件是做什么的" class="headerlink" title="1. 这个软件是做什么的"></a>1. 这个软件是做什么的</h2><p><strong>OCR 助手</strong> 是一款 Windows 桌面工具:屏幕上悬浮一个”透明窗口”,窗口中间有一个<strong>透明的洞口</strong>。把洞口对准屏幕上的任意内容(题目、文档、网页、代码…),一键完成三件事:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">对准内容 → 截图 → 文字识别(OCR) → 大模型理解并回答 → 结果折叠展示</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>示例场景 1:<strong>线上答题</strong>。把洞口对准题目,点击”截图并识别”,AI 直接给出答案。</li>
+<li>示例场景 2:<strong>看图文资料</strong>。对准一段英文&#x2F;图片文字,自动转成可读文本并总结。</li>
+<li>示例场景 3:<strong>本地文档</strong>。无需联网也能识别文字(切换到本地 OCR 模式)。</li>
+</ul>
+<blockquote>
+<p>它会记住你的设置,支持多套 AI 平台、双 OCR 引擎、多主题外观,完全本地保存配置,不上传任何隐私。</p>
+</blockquote>
+<hr>
+<h2 id="2-核心功能一览"><a href="#2-核心功能一览" class="headerlink" title="2. 核心功能一览"></a>2. 核心功能一览</h2><table>
+<thead>
+<tr>
+<th>功能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>透明洞口悬浮窗</td>
+<td>仅洞口透看目标,其余不透明;可拖动、可缩放,尺寸自动记忆</td>
+</tr>
+<tr>
+<td>双 OCR 模式</td>
+<td>云端(大模型识别,精度高)&#x2F; 本地(RapidOCR,离线免费)</td>
+</tr>
+<tr>
+<td>多 AI 平台</td>
+<td>阿里云百炼、OpenAI、DeepSeek、智谱GLM、Kimi、Ollama,支持自定义</td>
+</tr>
+<tr>
+<td>图文答题</td>
+<td>图片+文字同时发给模型,可关思考模式提速</td>
+</tr>
+<tr>
+<td>本地知识库</td>
+<td>常见题关键词命中即秒回,不消耗 API</td>
+</tr>
+<tr>
+<td>JSON 请求模板</td>
+<td>底层请求可完全自定义,实时预览</td>
+</tr>
+<tr>
+<td>多主题</td>
+<td>黑 &#x2F; 白 &#x2F; 灰 + 图片背景</td>
+</tr>
+<tr>
+<td>全局快捷键</td>
+<td><code>Ctrl+F1</code> 识别、<code>Ctrl+Q</code> 退出</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-准备工作-两种使用方式怎么选"><a href="#3-准备工作-两种使用方式怎么选" class="headerlink" title="3. 准备工作:两种使用方式怎么选"></a>3. 准备工作:两种使用方式怎么选</h2><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>适合人群</th>
+<th>需要装 Python?</th>
+<th>难度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>打包版 exe</strong></td>
+<td>绝大多数新手</td>
+<td>不需要</td>
+<td>★</td>
+</tr>
+<tr>
+<td><strong>源码运行</strong></td>
+<td>想研究代码 &#x2F; 二次开发</td>
+<td>需要</td>
+<td>★★★</td>
+</tr>
+</tbody></table>
+<ul>
+<li>只是想<strong>用</strong>这个软件 → 直接看 <a href="#4-%E6%96%B9%E5%BC%8F%E4%B8%80%E7%9B%B4%E6%8E%A5%E4%BD%BF%E7%94%A8%E6%89%93%E5%8C%85%E7%89%88%E6%8E%A8%E8%8D%90%E6%96%B0%E6%89%8B">第 4 章</a>。</li>
+<li>想<strong>从源码跑起来</strong>、改代码 → 看 <a href="#5-%E6%96%B9%E5%BC%8F%E4%BA%8C%E6%BA%90%E7%A0%81%E8%BF%90%E8%A1%8C%E5%AE%8C%E6%95%B4%E7%8E%AF%E5%A2%83%E5%AE%89%E8%A3%85">第 5 章</a>。</li>
+</ul>
+<p><strong>系统要求(两种方式相同)</strong>:</p>
+<ul>
+<li>Windows 10 &#x2F; 11(64 位)</li>
+<li>屏幕无特殊限制,支持多显示器与 100%&#x2F;125%&#x2F;150%&#x2F;200% 缩放</li>
+<li>网络:使用云端模式需要能访问你选择的 AI 平台 API;本地 OCR 模式可完全离线</li>
+</ul>
+<hr>
+<h2 id="4-方式一-直接使用打包版-推荐新手"><a href="#4-方式一-直接使用打包版-推荐新手" class="headerlink" title="4. 方式一:直接使用打包版(推荐新手)"></a>4. 方式一:直接使用打包版(推荐新手)</h2><h3 id="4-1-获取安装包"><a href="#4-1-获取安装包" class="headerlink" title="4.1 获取安装包"></a>4.1 获取安装包</h3><ol>
+<li>打开项目主页:<a target="_blank" rel="noopener" href="https://github.com/TDCQCX/OCR-Assistant">https://github.com/TDCQCX/OCR-Assistant</a></li>
+<li>点击页面右侧 <strong>Releases</strong>,进入发布页。</li>
+</ol>
+<p>[图片说明:此位置为 GitHub Releases 页面,操作为点击仓库主页右侧 “Releases” 进入发布列表]</p>
+<ol start="3">
+<li>在最新版本(如 <code>v1.0.0</code>)的 Assets 中找到 <code>OCR助手-v1.0.0.exe</code>,点击下载(约 137MB)。</li>
+</ol>
+<p>[图片说明:此位置为 Release 的 Assets 列表,操作为点击 “OCR助手-v1.0.0.exe” 下载]</p>
+<h3 id="4-2-运行安装包"><a href="#4-2-运行安装包" class="headerlink" title="4.2 运行安装包"></a>4.2 运行安装包</h3><p>下载完成后,双击 exe 即可运行(单文件、免安装、绿色运行):</p>
+<p>[图片说明:此位置为 Windows 文件资源管理器中的 exe 图标,操作为双击 OCR助手-v1.0.0.exe]</p>
+<ul>
+<li>若弹出 <strong>SmartScreen(Windows 已保护你的电脑)</strong>,点击”更多信息 → 仍要运行”即可。这是因为软件暂无代码签名,属正常提示。</li>
+</ul>
+<p>[图片说明:此位置为 SmartScreen 弹窗,操作为点击”更多信息”后再点击”仍要运行”]</p>
+<p>首次启动需要解压(约几秒),之后程序窗口就会出现在屏幕上。</p>
+<blockquote>
+<p>💡 打包版会把配置保存在 <strong>exe 同目录</strong>的 <code>config.json</code> 中(首次关闭时自动生成),方便你备份或拷贝整个文件夹实现”绿色便携”。</p>
+</blockquote>
+<hr>
+<h2 id="5-方式二-源码运行-完整环境安装"><a href="#5-方式二-源码运行-完整环境安装" class="headerlink" title="5. 方式二:源码运行(完整环境安装)"></a>5. 方式二:源码运行(完整环境安装)</h2><blockquote>
+<p>如果你希望研究或修改代码,请按本章节安装完整环境。</p>
+</blockquote>
+<h3 id="5-1-安装-Python-3-10-或更高版本"><a href="#5-1-安装-Python-3-10-或更高版本" class="headerlink" title="5.1 安装 Python(3.10 或更高版本)"></a>5.1 安装 Python(3.10 或更高版本)</h3><ol>
+<li>打开 Python 官网下载页:<a target="_blank" rel="noopener" href="https://www.python.org/downloads/windows/">https://www.python.org/downloads/windows/</a></li>
+</ol>
+<p>[图片说明:此位置为 Python 官网 Windows 下载页,操作为点击黄色 “Download Python 3.12.x” 按钮下载 64 位安装包]</p>
+<ol start="2">
+<li>双击安装包开始安装,<strong>务必勾选最下方的 <code>Add python.exe to PATH</code></strong>。</li>
+</ol>
+<p>[图片说明:此位置为 Python 安装向导首页,操作为勾选 “Add python.exe to PATH” 后点击 “Install Now”]</p>
+<ol start="3">
+<li>安装完成后,验证是否成功:按 <code>Win + R</code>,输入 <code>cmd</code> 回车,在命令行输入:</li>
+</ol>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
+
+<p>看到 <code>Python 3.12.x</code> 之类的输出版本号即代表成功:</p>
+<p>[图片说明:此位置为 cmd 命令行窗口,操作为输入 python –version 并看到版本号输出]</p>
+<h3 id="5-2-获取项目代码"><a href="#5-2-获取项目代码" class="headerlink" title="5.2 获取项目代码"></a>5.2 获取项目代码</h3><p><strong>方式 A:使用 Git(推荐)</strong></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/TDCQCX/OCR<span class="literal">-Assistant</span>.git</span><br><span class="line"><span class="built_in">cd</span> OCR<span class="literal">-Assistant</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>若未安装 Git,可到 <a target="_blank" rel="noopener" href="https://git-scm.com/download/win">https://git-scm.com/download/win</a> 下载安装(一路 Next 即可)。</p>
+</blockquote>
+<p>[图片说明:此位置为 Git 官网下载页,操作为点击 64-bit Windows Setup 下载并安装]</p>
+<p><strong>方式 B:直接下载 ZIP</strong></p>
+<p>在仓库主页点击绿色 <strong>Code → Download ZIP</strong>,解压到任意目录即可。</p>
+<p>[图片说明:此位置为 GitHub 仓库主页,操作为点击 Code 按钮后选择 Download ZIP]</p>
+<h3 id="5-3-创建虚拟环境-重要"><a href="#5-3-创建虚拟环境-重要" class="headerlink" title="5.3 创建虚拟环境(重要)"></a>5.3 创建虚拟环境(重要)</h3><blockquote>
+<p>虚拟环境可以把本项目依赖与系统隔离,避免污染全局 Python。强烈建议执行。</p>
+</blockquote>
+<p>在项目根目录打开命令行(可在资源管理器地址栏输入 <code>cmd</code> 回车):</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python <span class="literal">-m</span> venv .venv</span><br></pre></td></tr></table></figure>
+
+<p>创建成功后,项目内会出现一个 <code>.venv</code> 文件夹。</p>
+<p>[图片说明:此位置为资源管理器,操作为确认项目目录下出现 .venv 文件夹]</p>
+<h3 id="5-4-安装项目依赖"><a href="#5-4-安装项目依赖" class="headerlink" title="5.4 安装项目依赖"></a>5.4 安装项目依赖</h3><p>激活虚拟环境并安装依赖:</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.\.venv\Scripts\activate</span><br><span class="line">python <span class="literal">-m</span> pip install <span class="literal">-r</span> requirements.txt</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>首次安装会下载 PySide6(界面库,约 200MB)与 RapidOCR(本地识别模型)等,请耐心等待。</p>
+</blockquote>
+<p>[图片说明:此位置为命令行窗口,操作为输入 pip install 命令并看到 “Successfully installed …” 输出]</p>
+<h3 id="5-5-启动程序"><a href="#5-5-启动程序" class="headerlink" title="5.5 启动程序"></a>5.5 启动程序</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python main.py</span><br></pre></td></tr></table></figure>
+
+<p>或直接双击项目根目录的 <strong><code>start.bat</code></strong>(以无控制台窗口方式后台启动,cmd 窗口会自动关闭)。</p>
+<p>[图片说明:此位置为项目根目录,操作为双击 start.bat 启动程序]</p>
+<p>看到悬浮窗口出现即代表环境搭建成功。</p>
+<hr>
+<h2 id="6-快速上手-完成第一次识别"><a href="#6-快速上手-完成第一次识别" class="headerlink" title="6. 快速上手:完成第一次识别"></a>6. 快速上手:完成第一次识别</h2><blockquote>
+<p>⚠️ 第一次使用请先按 <a href="#7-%E9%85%8D%E7%BD%AE%E8%AE%A9%E7%A8%8B%E5%BA%8F%E8%AE%A4%E8%AF%86%E4%BD%A0%E7%9A%84-ai-%E5%B9%B3%E5%8F%B0">第 7 章</a> 配置好 AI 平台(填 API Key),否则会提示”Key 未配置”。</p>
+</blockquote>
+<h3 id="6-1-认识主窗口"><a href="#6-1-认识主窗口" class="headerlink" title="6.1 认识主窗口"></a>6.1 认识主窗口</h3><p>主窗口分上中下三部分:</p>
+<ul>
+<li><strong>上部</strong>:蓝色圆角标题”OCR 助手”、提问输入框、置顶&#x2F;配置&#x2F;主题&#x2F;退出按钮。</li>
+<li><strong>中部</strong>:红色边框的<strong>透明洞口</strong>——对准这里。</li>
+<li><strong>下部</strong>:「截图并识别」等按钮 + 状态,以及可折叠的【识别结果】【回答】区块。</li>
+</ul>
+<p>[图片说明:此位置为主窗口整体截图,操作为指出上中下三块区域与红色洞口]</p>
+<h3 id="6-2-对准目标区域"><a href="#6-2-对准目标区域" class="headerlink" title="6.2 对准目标区域"></a>6.2 对准目标区域</h3><ol>
+<li>按住<strong>上部设置区</strong>或<strong>下部空白处</strong>拖动窗口,让洞口套住目标内容。</li>
+<li>拖动窗口<strong>边缘&#x2F;角落</strong>可缩放洞口大小,程序会自动记住窗口尺寸。</li>
+</ol>
+<p>[图片说明:此位置为窗口对准某道题目的场景,操作为拖动悬浮窗使题目完整处于红色洞口内]</p>
+<h3 id="6-3-填写提问-可选"><a href="#6-3-填写提问-可选" class="headerlink" title="6.3 填写提问(可选)"></a>6.3 填写提问(可选)</h3><p>顶部”提问&#x2F;指令”默认是 <strong>“请给出该题目的答案”</strong>;识别网页、总结文档时可改成你自己的问题,例如”翻译这段文字”。</p>
+<h3 id="6-4-开始识别"><a href="#6-4-开始识别" class="headerlink" title="6.4 开始识别"></a>6.4 开始识别</h3><p>点击 <strong>「截图并识别」</strong> 或按全局快捷键 <strong><code>Ctrl+F1</code></strong>:</p>
+<ol>
+<li>程序瞬间隐藏红色边框并截图(约 0.06 秒,保证截图干净);</li>
+<li>云端&#x2F;本地 OCR 识别洞口内的文字;</li>
+<li>解析题型&#x2F;题目&#x2F;选项;</li>
+<li>交给大模型图文理解并回答。</li>
+</ol>
+<p>结果会分区块显示:</p>
+<p>[图片说明:此位置为识别完成后的界面,操作为展示【识别结果】与【回答】两个区块,按钮行显示”题型·来源·OCR耗时·回答耗时”]</p>
+<ul>
+<li>点击<strong>区块标题</strong>可折叠&#x2F;展开,折叠后窗口高度自动跟随,洞口大小不变。</li>
+</ul>
+<h3 id="6-5-常用操作"><a href="#6-5-常用操作" class="headerlink" title="6.5 常用操作"></a>6.5 常用操作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>复制回答</td>
+<td>点击「复制结果」</td>
+</tr>
+<tr>
+<td>清空结果</td>
+<td>点击「清空」</td>
+</tr>
+<tr>
+<td>再次识别</td>
+<td>重新对准后按 <code>Ctrl+F1</code></td>
+</tr>
+<tr>
+<td>退出</td>
+<td><code>Ctrl+Q</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="7-配置-让程序认识你的-AI-平台"><a href="#7-配置-让程序认识你的-AI-平台" class="headerlink" title="7. 配置:让程序认识你的 AI 平台"></a>7. 配置:让程序认识你的 AI 平台</h2><p>点击顶部 <strong>「配置」</strong> 打开设置窗口。左侧是导航(模型设置 &#x2F; 常规设置 &#x2F; 关于应用),选中项为浅蓝高亮。</p>
+<h3 id="7-1-模型设置-必做"><a href="#7-1-模型设置-必做" class="headerlink" title="7.1 模型设置(必做)"></a>7.1 模型设置(必做)</h3><p>模型设置页采用 <strong>左中右</strong> 布局:</p>
+<p><strong>中部 —— AI平台管理</strong></p>
+<p>预置了 6 家主流平台:</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>默认官网</th>
+<th>默认 Base URL(请求地址)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>阿里云百炼</td>
+<td>bailian.console.aliyun.com</td>
+<td><code>https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions</code></td>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td>platform.openai.com</td>
+<td><code>https://api.openai.com/v1</code></td>
+</tr>
+<tr>
+<td>DeepSeek</td>
+<td>platform.deepseek.com</td>
+<td><code>https://api.deepseek.com/v1</code></td>
+</tr>
+<tr>
+<td>智谱 GLM</td>
+<td>open.bigmodel.cn</td>
+<td><code>https://open.bigmodel.cn/api/paas/v4</code></td>
+</tr>
+<tr>
+<td>月之暗面 Kimi</td>
+<td>platform.moonshot.cn</td>
+<td><code>https://api.moonshot.cn/v1</code></td>
+</tr>
+<tr>
+<td>Ollama(本地)</td>
+<td>ollama.com</td>
+<td><code>http://localhost:11434/v1</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>已配置</strong>(填了 API Key)的平台显示正常色,排在上方;<strong>未配置</strong>的平台以暗色虚化排在下部;</li>
+<li>鼠标悬浮某平台卡片,右侧会出现 <strong>×</strong>,点击可删除该平台;</li>
+<li>点击 <strong>「+ 自定义平台」</strong> 可添加你自己的平台(名称可点击编辑,需自行填写模型ID 与请求地址)。</li>
+</ul>
+<p>[图片说明:此位置为模型设置页,操作为展示中部平台列表(已配置&#x2F;未配置分区)与右侧设置表单]</p>
+<p><strong>右侧 —— 具体设置区</strong></p>
+<ol>
+<li>在平台列表中<strong>选中</strong>你要用的平台;</li>
+<li>点击 <strong>「测试连通性」</strong> 按钮前的 logo 名称旁(名称可点击修改),随后依次填写:</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>必填</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>API Key</td>
+<td>是</td>
+<td>各平台控制台申请的密钥(输入框内眼睛图标可切换明文&#x2F;密文)</td>
+</tr>
+<tr>
+<td>模型ID</td>
+<td>是</td>
+<td>例如百炼可填 <code>qwen3.7-flash-2026-07-15</code>、OpenAI 可填 <code>gpt-4o-mini</code></td>
+</tr>
+<tr>
+<td>Base URL</td>
+<td>否</td>
+<td>上表默认值一般无需修改</td>
+</tr>
+<tr>
+<td>官网链接</td>
+<td>否</td>
+<td>便于一键跳转申请密钥</td>
+</tr>
+<tr>
+<td>备注</td>
+<td>否</td>
+<td>自由备注</td>
+</tr>
+<tr>
+<td>是否开启思考</td>
+<td>否</td>
+<td>关闭&#x3D;响应快(默认);开启&#x3D;推理更强但更慢</td>
+</tr>
+</tbody></table>
+<ol start="3">
+<li>填写完成后点击 <strong>「测试连通性」</strong>:按钮初始为绿色,点击后变灰”测试中…”,成功变绿并显示”响应 X.Xs”,失败变红”测试失败”。</li>
+</ol>
+<p>[图片说明:此位置为测试连通性按钮三种状态,操作为点击后按钮由绿→灰→绿并左侧显示响应耗时]</p>
+<ol start="4">
+<li>窗口下方是 <strong>JSON 请求预览</strong>,会随你的填写实时生成将要发送的请求体(无需手动修改;想改底层模板点”编辑模板”)。</li>
+</ol>
+<blockquote>
+<p>💡 <strong>关闭设置窗口即自动保存</strong>,无需找保存按钮。</p>
+</blockquote>
+<h3 id="7-2-常规设置"><a href="#7-2-常规设置" class="headerlink" title="7.2 常规设置"></a>7.2 常规设置</h3><p><strong>保存设置</strong></p>
+<ul>
+<li>应用缓存位置 &#x2F; 题目保存位置:默认在程序目录下(<code>cache/</code>、<code>questions/</code>),可点”浏览”改到其他位置;</li>
+<li>勾选”将 AI 回答自动添加到本地知识库”后,识别过的题目会自动入库,下次同题直接秒回。</li>
+</ul>
+<p><strong>AI设置</strong></p>
+<ul>
+<li><strong>是否启用云端OCR</strong>:右侧”云端 &#x2F; 本地”二选一。<ul>
+<li>云端:用你选的平台大模型识别文字,精度高但消耗 token;</li>
+<li>本地:内置 RapidOCR,离线免费、轻量快速(约 50MB,CPU 约 100-300ms)。</li>
+</ul>
+</li>
+<li>模型最长响应时间:默认 180 秒;</li>
+<li>失败自动尝试次数:默认 3 次(网络错误会自动重试)。</li>
+</ul>
+<p>[图片说明:此位置为常规设置页,操作为指出”云端&#x2F;本地”互斥按钮与下方小字说明]</p>
+<p><strong>提示词设置</strong></p>
+<ul>
+<li>OCR 提示词与回答提示词均可自定义;回答提示词支持占位符 <code>&#123;question&#125;</code>&#x2F;<code>&#123;ocr_text&#125;</code>&#x2F;<code>&#123;qtype&#125;</code>&#x2F;<code>&#123;qtitle&#125;</code>&#x2F;<code>&#123;options&#125;</code>。</li>
+</ul>
+<h3 id="7-3-关于应用"><a href="#7-3-关于应用" class="headerlink" title="7.3 关于应用"></a>7.3 关于应用</h3><p>展示应用信息、请求记录(最近 20 周,GitHub 风格灰→绿方块)、项目 GitHub 地址与 QQ 群(1108236960)、开源许可证。</p>
+<p>[图片说明:此位置为关于应用页,操作为展示应用信息卡片与请求记录色块图]</p>
+<h3 id="7-4-主题外观"><a href="#7-4-主题外观" class="headerlink" title="7.4 主题外观"></a>7.4 主题外观</h3><p>点击主窗口顶部 <strong>「主题」</strong> 可切换黑&#x2F;白&#x2F;灰配色,还支持选择图片作为背景,实时预览后自动保存。</p>
+<hr>
+<h2 id="8-进阶-直接编辑-config-json"><a href="#8-进阶-直接编辑-config-json" class="headerlink" title="8. 进阶:直接编辑 config.json"></a>8. 进阶:直接编辑 config.json</h2><blockquote>
+<p>想手动改配置时,可直接编辑配置文件(源码运行时在项目根目录;打包版在 exe 同目录)。<strong>编辑前请先退出程序</strong>,否则退出时会被覆盖。</p>
+</blockquote>
+<p>主要分组:</p>
+<table>
+<thead>
+<tr>
+<th>分组</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>active_provider</code> &#x2F; <code>providers</code></td>
+<td>当前平台 ID 与各平台完整配置(含 API Key)</td>
+</tr>
+<tr>
+<td><code>prompts</code></td>
+<td>OCR 提示词与回答提示词</td>
+</tr>
+<tr>
+<td><code>request_template</code></td>
+<td>请求体 JSON 模板(占位符 <code>&#123;model&#125;</code>&#x2F;<code>&#123;prompt&#125;</code>&#x2F;<code>&#123;image_url&#125;</code>)</td>
+</tr>
+<tr>
+<td><code>window</code></td>
+<td>置顶、窗口尺寸、圆角、洞口边框色</td>
+</tr>
+<tr>
+<td><code>theme</code></td>
+<td>主题预设与图片背景</td>
+</tr>
+<tr>
+<td><code>capture</code></td>
+<td>截图压缩上限、瞬隐时长</td>
+</tr>
+<tr>
+<td><code>timeout</code> &#x2F; <code>retry</code></td>
+<td>最长响应时间、失败重试</td>
+</tr>
+<tr>
+<td><code>ocr.mode</code></td>
+<td><code>cloud</code>(云端)&#x2F; <code>local</code>(本地)</td>
+</tr>
+<tr>
+<td><code>knowledge</code></td>
+<td>本地知识库条目</td>
+</tr>
+<tr>
+<td><code>hotkeys</code></td>
+<td>全局快捷键</td>
+</tr>
+<tr>
+<td><code>behavior</code></td>
+<td>默认提问</td>
+</tr>
+<tr>
+<td><code>app</code></td>
+<td>关于页信息</td>
+</tr>
+</tbody></table>
+<p>本地知识库示例:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;knowledge&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;keys&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;中国的首都是&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span> <span class="attr">&quot;answer&quot;</span><span class="punctuation">:</span> <span class="string">&quot;北京&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;detail&quot;</span><span class="punctuation">:</span> <span class="string">&quot;常识题&quot;</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>命中任意关键词即直接返回答案,不调用 API。</p>
+<hr>
+<h2 id="9-常见问题-FAQ"><a href="#9-常见问题-FAQ" class="headerlink" title="9. 常见问题 FAQ"></a>9. 常见问题 FAQ</h2><p><strong>Q1:状态栏一直显示”Key 未配置”?</strong></p>
+<p>A:进入「配置 → 模型设置」,选中你的平台并填写 API Key 后关闭窗口即可;也可直接编辑 <code>config.json</code> 中该平台的 <code>api_key</code>。</p>
+<p><strong>Q2:点击识别提示”接口返回 401&#x2F;403”?</strong></p>
+<p>A:API Key 无效、平台未开通该模型或请求地址错误。核对 Key 与模型ID,可用”测试连通性”按钮快速排查。</p>
+<p><strong>Q3:本地 OCR 报错”模型未安装”?</strong></p>
+<p>A:源码运行请执行 <code>python -m pip install rapidocr_onnxruntime</code>;打包版则下载完整版 exe。</p>
+<p><strong>Q4:识别慢怎么办?</strong></p>
+<p>A:① 关闭思考模式(模型设置 → 是否开启思考取消勾选);② 切换到本地 OCR;③ 减小洞口范围。</p>
+<p><strong>Q5:屏幕是 125%&#x2F;150% 缩放,截图会偏吗?</strong></p>
+<p>A:不会。程序已做 Per-Monitor V2 DPI 感知,支持多显示器与不同缩放。</p>
+<p><strong>Q6:想换一个 AI 平台?</strong></p>
+<p>A:「配置 → 模型设置」中部列表选择其他平台,填写对应 API Key&#x2F;模型ID 即可,互不影响。</p>
+<p><strong>Q7:数据安全吗?</strong></p>
+<p>A:API Key 仅保存在本地 <code>config.json</code>(已加入 .gitignore,不会随代码上传);图片只发送给你选择的 AI 平台用于识别。</p>
+<hr>
+<h2 id="10-更新与卸载"><a href="#10-更新与卸载" class="headerlink" title="10. 更新与卸载"></a>10. 更新与卸载</h2><p><strong>更新</strong></p>
+<ul>
+<li>打包版:去 GitHub Releases 下载新版本 exe 覆盖旧文件即可,配置(同目录 config.json)不受影响;</li>
+<li>源码版:<code>git pull</code> 拉取最新代码后,重跑 <code>pip install -r requirements.txt</code>。</li>
+</ul>
+<p><strong>卸载</strong></p>
+<ul>
+<li>打包版:直接删除 exe 及其同目录生成的 <code>config.json</code>、<code>cache/</code>、<code>questions/</code>、<code>request_log.json</code> 即可(无注册表残留);</li>
+<li>源码版:删除项目文件夹与虚拟环境 <code>.venv</code> 即可。</li>
+</ul>
+<hr>
+<p><strong>项目主页</strong>:<a target="_blank" rel="noopener" href="https://github.com/TDCQCX/OCR-Assistant">https://github.com/TDCQCX/OCR-Assistant</a><br><strong>QQ 交流群</strong>:1108236960<br><strong>开源协议</strong>:MIT License</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            <a class="trm-op-top trm-anima-link" href="/2025/05/30/Godot%E5%BC%80%E5%8F%91%E4%B8%8E%E5%AD%A6%E4%B9%A0-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" src="https://hefollo.cn/apis.php?type=%E7%94%B5%E8%84%91%E7%AB%AF-4K%E5%9B%BE%E7%89%87/4K%E9%A3%8E%E6%99%AF%E7%B3%BB%E5%88%97&r=godot">
+                </span>
+                <h6 class="trm-op-title">Godot开发与学习-基础学习笔记</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/05/30</li>
+                <li>10:40</li>
+                <li>游戏开发</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="OCR 助手 — 从零开始的新手使用教程"><a rel="nofollow" class="trm-toc-link" href="#OCR-助手-—-从零开始的新手使用教程"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">OCR 助手 — 从零开始的新手使用教程</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="目录"><a rel="nofollow" class="trm-toc-link" href="#目录"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">目录</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1. 这个软件是做什么的"><a rel="nofollow" class="trm-toc-link" href="#1-这个软件是做什么的"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">1. 这个软件是做什么的</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2. 核心功能一览"><a rel="nofollow" class="trm-toc-link" href="#2-核心功能一览"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">2. 核心功能一览</span></a></li><li class="trm-toc-item trm-toc-level-2" title="3. 准备工作:两种使用方式怎么选"><a rel="nofollow" class="trm-toc-link" href="#3-准备工作-两种使用方式怎么选"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">3. 准备工作:两种使用方式怎么选</span></a></li><li class="trm-toc-item trm-toc-level-2" title="4. 方式一:直接使用打包版(推荐新手)"><a rel="nofollow" class="trm-toc-link" href="#4-方式一-直接使用打包版-推荐新手"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">4. 方式一:直接使用打包版(推荐新手)</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="4.1 获取安装包"><a rel="nofollow" class="trm-toc-link" href="#4-1-获取安装包"><span class="trm-toc-number">1.5.1.</span> <span class="trm-toc-text">4.1 获取安装包</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.2 运行安装包"><a rel="nofollow" class="trm-toc-link" href="#4-2-运行安装包"><span class="trm-toc-number">1.5.2.</span> <span class="trm-toc-text">4.2 运行安装包</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="5. 方式二:源码运行(完整环境安装)"><a rel="nofollow" class="trm-toc-link" href="#5-方式二-源码运行-完整环境安装"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">5. 方式二:源码运行(完整环境安装)</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="5.1 安装 Python(3.10 或更高版本)"><a rel="nofollow" class="trm-toc-link" href="#5-1-安装-Python-3-10-或更高版本"><span class="trm-toc-number">1.6.1.</span> <span class="trm-toc-text">5.1 安装 Python(3.10 或更高版本)</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.2 获取项目代码"><a rel="nofollow" class="trm-toc-link" href="#5-2-获取项目代码"><span class="trm-toc-number">1.6.2.</span> <span class="trm-toc-text">5.2 获取项目代码</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.3 创建虚拟环境(重要)"><a rel="nofollow" class="trm-toc-link" href="#5-3-创建虚拟环境-重要"><span class="trm-toc-number">1.6.3.</span> <span class="trm-toc-text">5.3 创建虚拟环境(重要)</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.4 安装项目依赖"><a rel="nofollow" class="trm-toc-link" href="#5-4-安装项目依赖"><span class="trm-toc-number">1.6.4.</span> <span class="trm-toc-text">5.4 安装项目依赖</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.5 启动程序"><a rel="nofollow" class="trm-toc-link" href="#5-5-启动程序"><span class="trm-toc-number">1.6.5.</span> <span class="trm-toc-text">5.5 启动程序</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="6. 快速上手:完成第一次识别"><a rel="nofollow" class="trm-toc-link" href="#6-快速上手-完成第一次识别"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">6. 快速上手:完成第一次识别</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="6.1 认识主窗口"><a rel="nofollow" class="trm-toc-link" href="#6-1-认识主窗口"><span class="trm-toc-number">1.7.1.</span> <span class="trm-toc-text">6.1 认识主窗口</span></a></li><li class="trm-toc-item trm-toc-level-3" title="6.2 对准目标区域"><a rel="nofollow" class="trm-toc-link" href="#6-2-对准目标区域"><span class="trm-toc-number">1.7.2.</span> <span class="trm-toc-text">6.2 对准目标区域</span></a></li><li class="trm-toc-item trm-toc-level-3" title="6.3 填写提问(可选)"><a rel="nofollow" class="trm-toc-link" href="#6-3-填写提问-可选"><span class="trm-toc-number">1.7.3.</span> <span class="trm-toc-text">6.3 填写提问(可选)</span></a></li><li class="trm-toc-item trm-toc-level-3" title="6.4 开始识别"><a rel="nofollow" class="trm-toc-link" href="#6-4-开始识别"><span class="trm-toc-number">1.7.4.</span> <span class="trm-toc-text">6.4 开始识别</span></a></li><li class="trm-toc-item trm-toc-level-3" title="6.5 常用操作"><a rel="nofollow" class="trm-toc-link" href="#6-5-常用操作"><span class="trm-toc-number">1.7.5.</span> <span class="trm-toc-text">6.5 常用操作</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="7. 配置:让程序认识你的 AI 平台"><a rel="nofollow" class="trm-toc-link" href="#7-配置-让程序认识你的-AI-平台"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">7. 配置:让程序认识你的 AI 平台</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="7.1 模型设置(必做)"><a rel="nofollow" class="trm-toc-link" href="#7-1-模型设置-必做"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">7.1 模型设置(必做)</span></a></li><li class="trm-toc-item trm-toc-level-3" title="7.2 常规设置"><a rel="nofollow" class="trm-toc-link" href="#7-2-常规设置"><span class="trm-toc-number">1.8.2.</span> <span class="trm-toc-text">7.2 常规设置</span></a></li><li class="trm-toc-item trm-toc-level-3" title="7.3 关于应用"><a rel="nofollow" class="trm-toc-link" href="#7-3-关于应用"><span class="trm-toc-number">1.8.3.</span> <span class="trm-toc-text">7.3 关于应用</span></a></li><li class="trm-toc-item trm-toc-level-3" title="7.4 主题外观"><a rel="nofollow" class="trm-toc-link" href="#7-4-主题外观"><span class="trm-toc-number">1.8.4.</span> <span class="trm-toc-text">7.4 主题外观</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="8. 进阶:直接编辑 config.json"><a rel="nofollow" class="trm-toc-link" href="#8-进阶-直接编辑-config-json"><span class="trm-toc-number">1.9.</span> <span class="trm-toc-text">8. 进阶:直接编辑 config.json</span></a></li><li class="trm-toc-item trm-toc-level-2" title="9. 常见问题 FAQ"><a rel="nofollow" class="trm-toc-link" href="#9-常见问题-FAQ"><span class="trm-toc-number">1.10.</span> <span class="trm-toc-text">9. 常见问题 FAQ</span></a></li><li class="trm-toc-item trm-toc-level-2" title="10. 更新与卸载"><a rel="nofollow" class="trm-toc-link" href="#10-更新与卸载"><span class="trm-toc-number">1.11.</span> <span class="trm-toc-text">10. 更新与卸载</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://unpkg.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="https://unpkg.com/hexo-generator-searchdb@1.4.0/dist/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <script>
+        "serviceWorker" in navigator ?
+        navigator.serviceWorker.register('/sw.js').then(function () {
+            navigator.serviceWorker.controller ? 
+             console.log("Assets cached by the controlling service worker.") :
+             console.log("Please reload this page to allow the service worker to handle network operations.")
+        }).catch(function (e) {
+            console.log("ERROR: " + e)
+        }) : console.log("Service workers are not supported in the current browser.")
+    </script>
+
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

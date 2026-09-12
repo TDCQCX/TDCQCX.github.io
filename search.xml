@@ -1,6 +1,462 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>OCR 助手 — 从零开始的新手使用教程</title>
+    <url>/2026/08/24/TUTORIAL/</url>
+    <content><![CDATA[OCR 助手 — 从零开始的新手使用教程
+本文从零开始,手把手带你安装、配置并使用 OCR 助手(开源免费)。即使你完全没接触过 Python 与编程,也能按步骤走通全流程。
+
+目录
+这个软件是做什么的
+核心功能一览
+准备工作:两种使用方式怎么选
+方式一:直接使用打包版(推荐新手)
+方式二:源码运行(完整环境安装)
+快速上手:完成第一次识别
+配置:让程序认识你的 AI 平台
+进阶:直接编辑 config.json
+常见问题 FAQ
+更新与卸载
+
+
+1. 这个软件是做什么的OCR 助手 是一款 Windows 桌面工具:屏幕上悬浮一个”透明窗口”,窗口中间有一个透明的洞口。把洞口对准屏幕上的任意内容(题目、文档、网页、代码…),一键完成三件事:
+对准内容 → 截图 → 文字识别(OCR) → 大模型理解并回答 → 结果折叠展示
+
+
+示例场景 1:线上答题。把洞口对准题目,点击”截图并识别”,AI 直接给出答案。
+示例场景 2:看图文资料。对准一段英文&#x2F;图片文字,自动转成可读文本并总结。
+示例场景 3:本地文档。无需联网也能识别文字(切换到本地 OCR 模式)。
+
+
+它会记住你的设置,支持多套 AI 平台、双 OCR 引擎、多主题外观,完全本地保存配置,不上传任何隐私。
+
+
+2. 核心功能一览
+
+
+功能
+说明
+
+
+
+透明洞口悬浮窗
+仅洞口透看目标,其余不透明;可拖动、可缩放,尺寸自动记忆
+
+
+双 OCR 模式
+云端(大模型识别,精度高)&#x2F; 本地(RapidOCR,离线免费)
+
+
+多 AI 平台
+阿里云百炼、OpenAI、DeepSeek、智谱GLM、Kimi、Ollama,支持自定义
+
+
+图文答题
+图片+文字同时发给模型,可关思考模式提速
+
+
+本地知识库
+常见题关键词命中即秒回,不消耗 API
+
+
+JSON 请求模板
+底层请求可完全自定义,实时预览
+
+
+多主题
+黑 &#x2F; 白 &#x2F; 灰 + 图片背景
+
+
+全局快捷键
+Ctrl+F1 识别、Ctrl+Q 退出
+
+
+
+3. 准备工作:两种使用方式怎么选
+
+
+方式
+适合人群
+需要装 Python?
+难度
+
+
+
+打包版 exe
+绝大多数新手
+不需要
+★
+
+
+源码运行
+想研究代码 &#x2F; 二次开发
+需要
+★★★
+
+
+
+只是想用这个软件 → 直接看 第 4 章。
+想从源码跑起来、改代码 → 看 第 5 章。
+
+系统要求(两种方式相同):
+
+Windows 10 &#x2F; 11(64 位)
+屏幕无特殊限制,支持多显示器与 100%&#x2F;125%&#x2F;150%&#x2F;200% 缩放
+网络:使用云端模式需要能访问你选择的 AI 平台 API;本地 OCR 模式可完全离线
+
+
+4. 方式一:直接使用打包版(推荐新手)4.1 获取安装包
+打开项目主页:https://github.com/TDCQCX/OCR-Assistant
+点击页面右侧 Releases,进入发布页。
+
+[图片说明:此位置为 GitHub Releases 页面,操作为点击仓库主页右侧 “Releases” 进入发布列表]
+
+在最新版本(如 v1.0.0)的 Assets 中找到 OCR助手-v1.0.0.exe,点击下载(约 137MB)。
+
+[图片说明:此位置为 Release 的 Assets 列表,操作为点击 “OCR助手-v1.0.0.exe” 下载]
+4.2 运行安装包下载完成后,双击 exe 即可运行(单文件、免安装、绿色运行):
+[图片说明:此位置为 Windows 文件资源管理器中的 exe 图标,操作为双击 OCR助手-v1.0.0.exe]
+
+若弹出 SmartScreen(Windows 已保护你的电脑),点击”更多信息 → 仍要运行”即可。这是因为软件暂无代码签名,属正常提示。
+
+[图片说明:此位置为 SmartScreen 弹窗,操作为点击”更多信息”后再点击”仍要运行”]
+首次启动需要解压(约几秒),之后程序窗口就会出现在屏幕上。
+
+💡 打包版会把配置保存在 exe 同目录的 config.json 中(首次关闭时自动生成),方便你备份或拷贝整个文件夹实现”绿色便携”。
+
+
+5. 方式二:源码运行(完整环境安装)
+如果你希望研究或修改代码,请按本章节安装完整环境。
+
+5.1 安装 Python(3.10 或更高版本)
+打开 Python 官网下载页:https://www.python.org/downloads/windows/
+
+[图片说明:此位置为 Python 官网 Windows 下载页,操作为点击黄色 “Download Python 3.12.x” 按钮下载 64 位安装包]
+
+双击安装包开始安装,务必勾选最下方的 Add python.exe to PATH。
+
+[图片说明:此位置为 Python 安装向导首页,操作为勾选 “Add python.exe to PATH” 后点击 “Install Now”]
+
+安装完成后,验证是否成功:按 Win + R,输入 cmd 回车,在命令行输入:
+
+python --version
+
+看到 Python 3.12.x 之类的输出版本号即代表成功:
+[图片说明:此位置为 cmd 命令行窗口,操作为输入 python –version 并看到版本号输出]
+5.2 获取项目代码方式 A:使用 Git(推荐)
+git clone https://github.com/TDCQCX/OCR-Assistant.gitcd OCR-Assistant
+
+
+若未安装 Git,可到 https://git-scm.com/download/win 下载安装(一路 Next 即可)。
+
+[图片说明:此位置为 Git 官网下载页,操作为点击 64-bit Windows Setup 下载并安装]
+方式 B:直接下载 ZIP
+在仓库主页点击绿色 Code → Download ZIP,解压到任意目录即可。
+[图片说明:此位置为 GitHub 仓库主页,操作为点击 Code 按钮后选择 Download ZIP]
+5.3 创建虚拟环境(重要)
+虚拟环境可以把本项目依赖与系统隔离,避免污染全局 Python。强烈建议执行。
+
+在项目根目录打开命令行(可在资源管理器地址栏输入 cmd 回车):
+python -m venv .venv
+
+创建成功后,项目内会出现一个 .venv 文件夹。
+[图片说明:此位置为资源管理器,操作为确认项目目录下出现 .venv 文件夹]
+5.4 安装项目依赖激活虚拟环境并安装依赖:
+.\.venv\Scripts\activatepython -m pip install -r requirements.txt
+
+
+首次安装会下载 PySide6(界面库,约 200MB)与 RapidOCR(本地识别模型)等,请耐心等待。
+
+[图片说明:此位置为命令行窗口,操作为输入 pip install 命令并看到 “Successfully installed …” 输出]
+5.5 启动程序python main.py
+
+或直接双击项目根目录的 start.bat(以无控制台窗口方式后台启动,cmd 窗口会自动关闭)。
+[图片说明:此位置为项目根目录,操作为双击 start.bat 启动程序]
+看到悬浮窗口出现即代表环境搭建成功。
+
+6. 快速上手:完成第一次识别
+⚠️ 第一次使用请先按 第 7 章 配置好 AI 平台(填 API Key),否则会提示”Key 未配置”。
+
+6.1 认识主窗口主窗口分上中下三部分:
+
+上部:蓝色圆角标题”OCR 助手”、提问输入框、置顶&#x2F;配置&#x2F;主题&#x2F;退出按钮。
+中部:红色边框的透明洞口——对准这里。
+下部:「截图并识别」等按钮 + 状态,以及可折叠的【识别结果】【回答】区块。
+
+[图片说明:此位置为主窗口整体截图,操作为指出上中下三块区域与红色洞口]
+6.2 对准目标区域
+按住上部设置区或下部空白处拖动窗口,让洞口套住目标内容。
+拖动窗口边缘&#x2F;角落可缩放洞口大小,程序会自动记住窗口尺寸。
+
+[图片说明:此位置为窗口对准某道题目的场景,操作为拖动悬浮窗使题目完整处于红色洞口内]
+6.3 填写提问(可选)顶部”提问&#x2F;指令”默认是 “请给出该题目的答案”;识别网页、总结文档时可改成你自己的问题,例如”翻译这段文字”。
+6.4 开始识别点击 「截图并识别」 或按全局快捷键 Ctrl+F1:
+
+程序瞬间隐藏红色边框并截图(约 0.06 秒,保证截图干净);
+云端&#x2F;本地 OCR 识别洞口内的文字;
+解析题型&#x2F;题目&#x2F;选项;
+交给大模型图文理解并回答。
+
+结果会分区块显示:
+[图片说明:此位置为识别完成后的界面,操作为展示【识别结果】与【回答】两个区块,按钮行显示”题型·来源·OCR耗时·回答耗时”]
+
+点击区块标题可折叠&#x2F;展开,折叠后窗口高度自动跟随,洞口大小不变。
+
+6.5 常用操作
+
+
+操作
+方法
+
+
+
+复制回答
+点击「复制结果」
+
+
+清空结果
+点击「清空」
+
+
+再次识别
+重新对准后按 Ctrl+F1
+
+
+退出
+Ctrl+Q
+
+
+
+7. 配置:让程序认识你的 AI 平台点击顶部 「配置」 打开设置窗口。左侧是导航(模型设置 &#x2F; 常规设置 &#x2F; 关于应用),选中项为浅蓝高亮。
+7.1 模型设置(必做)模型设置页采用 左中右 布局:
+中部 —— AI平台管理
+预置了 6 家主流平台:
+
+
+
+平台
+默认官网
+默认 Base URL(请求地址)
+
+
+
+阿里云百炼
+bailian.console.aliyun.com
+https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions
+
+
+OpenAI
+platform.openai.com
+https://api.openai.com/v1
+
+
+DeepSeek
+platform.deepseek.com
+https://api.deepseek.com/v1
+
+
+智谱 GLM
+open.bigmodel.cn
+https://open.bigmodel.cn/api/paas/v4
+
+
+月之暗面 Kimi
+platform.moonshot.cn
+https://api.moonshot.cn/v1
+
+
+Ollama(本地)
+ollama.com
+http://localhost:11434/v1
+
+
+
+已配置(填了 API Key)的平台显示正常色,排在上方;未配置的平台以暗色虚化排在下部;
+鼠标悬浮某平台卡片,右侧会出现 ×,点击可删除该平台;
+点击 「+ 自定义平台」 可添加你自己的平台(名称可点击编辑,需自行填写模型ID 与请求地址)。
+
+[图片说明:此位置为模型设置页,操作为展示中部平台列表(已配置&#x2F;未配置分区)与右侧设置表单]
+右侧 —— 具体设置区
+
+在平台列表中选中你要用的平台;
+点击 「测试连通性」 按钮前的 logo 名称旁(名称可点击修改),随后依次填写:
+
+
+
+
+字段
+必填
+说明
+
+
+
+API Key
+是
+各平台控制台申请的密钥(输入框内眼睛图标可切换明文&#x2F;密文)
+
+
+模型ID
+是
+例如百炼可填 qwen3.7-flash-2026-07-15、OpenAI 可填 gpt-4o-mini
+
+
+Base URL
+否
+上表默认值一般无需修改
+
+
+官网链接
+否
+便于一键跳转申请密钥
+
+
+备注
+否
+自由备注
+
+
+是否开启思考
+否
+关闭&#x3D;响应快(默认);开启&#x3D;推理更强但更慢
+
+
+
+填写完成后点击 「测试连通性」:按钮初始为绿色,点击后变灰”测试中…”,成功变绿并显示”响应 X.Xs”,失败变红”测试失败”。
+
+[图片说明:此位置为测试连通性按钮三种状态,操作为点击后按钮由绿→灰→绿并左侧显示响应耗时]
+
+窗口下方是 JSON 请求预览,会随你的填写实时生成将要发送的请求体(无需手动修改;想改底层模板点”编辑模板”)。
+
+
+💡 关闭设置窗口即自动保存,无需找保存按钮。
+
+7.2 常规设置保存设置
+
+应用缓存位置 &#x2F; 题目保存位置:默认在程序目录下(cache/、questions/),可点”浏览”改到其他位置;
+勾选”将 AI 回答自动添加到本地知识库”后,识别过的题目会自动入库,下次同题直接秒回。
+
+AI设置
+
+是否启用云端OCR:右侧”云端 &#x2F; 本地”二选一。
+云端:用你选的平台大模型识别文字,精度高但消耗 token;
+本地:内置 RapidOCR,离线免费、轻量快速(约 50MB,CPU 约 100-300ms)。
+
+
+模型最长响应时间:默认 180 秒;
+失败自动尝试次数:默认 3 次(网络错误会自动重试)。
+
+[图片说明:此位置为常规设置页,操作为指出”云端&#x2F;本地”互斥按钮与下方小字说明]
+提示词设置
+
+OCR 提示词与回答提示词均可自定义;回答提示词支持占位符 &#123;question&#125;&#x2F;&#123;ocr_text&#125;&#x2F;&#123;qtype&#125;&#x2F;&#123;qtitle&#125;&#x2F;&#123;options&#125;。
+
+7.3 关于应用展示应用信息、请求记录(最近 20 周,GitHub 风格灰→绿方块)、项目 GitHub 地址与 QQ 群(1108236960)、开源许可证。
+[图片说明:此位置为关于应用页,操作为展示应用信息卡片与请求记录色块图]
+7.4 主题外观点击主窗口顶部 「主题」 可切换黑&#x2F;白&#x2F;灰配色,还支持选择图片作为背景,实时预览后自动保存。
+
+8. 进阶:直接编辑 config.json
+想手动改配置时,可直接编辑配置文件(源码运行时在项目根目录;打包版在 exe 同目录)。编辑前请先退出程序,否则退出时会被覆盖。
+
+主要分组:
+
+
+
+分组
+作用
+
+
+
+active_provider &#x2F; providers
+当前平台 ID 与各平台完整配置(含 API Key)
+
+
+prompts
+OCR 提示词与回答提示词
+
+
+request_template
+请求体 JSON 模板(占位符 &#123;model&#125;&#x2F;&#123;prompt&#125;&#x2F;&#123;image_url&#125;)
+
+
+window
+置顶、窗口尺寸、圆角、洞口边框色
+
+
+theme
+主题预设与图片背景
+
+
+capture
+截图压缩上限、瞬隐时长
+
+
+timeout &#x2F; retry
+最长响应时间、失败重试
+
+
+ocr.mode
+cloud(云端)&#x2F; local(本地)
+
+
+knowledge
+本地知识库条目
+
+
+hotkeys
+全局快捷键
+
+
+behavior
+默认提问
+
+
+app
+关于页信息
+
+
+本地知识库示例:
+&quot;knowledge&quot;: [  &#123; &quot;keys&quot;: [&quot;中国的首都是&quot;], &quot;answer&quot;: &quot;北京&quot;, &quot;detail&quot;: &quot;常识题&quot; &#125;]
+
+命中任意关键词即直接返回答案,不调用 API。
+
+9. 常见问题 FAQQ1:状态栏一直显示”Key 未配置”?
+A:进入「配置 → 模型设置」,选中你的平台并填写 API Key 后关闭窗口即可;也可直接编辑 config.json 中该平台的 api_key。
+Q2:点击识别提示”接口返回 401&#x2F;403”?
+A:API Key 无效、平台未开通该模型或请求地址错误。核对 Key 与模型ID,可用”测试连通性”按钮快速排查。
+Q3:本地 OCR 报错”模型未安装”?
+A:源码运行请执行 python -m pip install rapidocr_onnxruntime;打包版则下载完整版 exe。
+Q4:识别慢怎么办?
+A:① 关闭思考模式(模型设置 → 是否开启思考取消勾选);② 切换到本地 OCR;③ 减小洞口范围。
+Q5:屏幕是 125%&#x2F;150% 缩放,截图会偏吗?
+A:不会。程序已做 Per-Monitor V2 DPI 感知,支持多显示器与不同缩放。
+Q6:想换一个 AI 平台?
+A:「配置 → 模型设置」中部列表选择其他平台,填写对应 API Key&#x2F;模型ID 即可,互不影响。
+Q7:数据安全吗?
+A:API Key 仅保存在本地 config.json(已加入 .gitignore,不会随代码上传);图片只发送给你选择的 AI 平台用于识别。
+
+10. 更新与卸载更新
+
+打包版:去 GitHub Releases 下载新版本 exe 覆盖旧文件即可,配置(同目录 config.json)不受影响;
+源码版:git pull 拉取最新代码后,重跑 pip install -r requirements.txt。
+
+卸载
+
+打包版:直接删除 exe 及其同目录生成的 config.json、cache/、questions/、request_log.json 即可(无注册表残留);
+源码版:删除项目文件夹与虚拟环境 .venv 即可。
+
+
+项目主页:https://github.com/TDCQCX/OCR-AssistantQQ 交流群:1108236960开源协议:MIT License
+]]></content>
+      <categories>
+        <category>技术教程</category>
+      </categories>
+      <tags>
+        <tag>OCR助手</tag>
+        <tag>使用教程</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Godot开发与学习-基础学习笔记</title>
     <url>/2025/05/30/Godot%E5%BC%80%E5%8F%91%E4%B8%8E%E5%AD%A6%E4%B9%A0-%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[Godot开发与学习Godot开发思想
@@ -3650,6 +4106,709 @@ Fieldset 标签&lt;fieldset&gt;  &lt;legend&gt;Your favorite monster&lt;/legend&
       </tags>
   </entry>
   <entry>
+    <title>JavaScript 备忘录</title>
+    <url>/2025/01/08/javascript/</url>
+    <content><![CDATA[JavaScript 备忘清单包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。
+入门介绍JavaScript 是一种轻量级的解释型编程语言。
+
+JSON 备忘清单
+JavaScript 中的正则表达式
+TypeScript 备忘清单
+
+打印调试// =&gt; Hello world!console.log(&#x27;Hello world!&#x27;);// =&gt; Hello QuickReferenceconsole.warn(&#x27;hello %s&#x27;, &#x27;QuickReference&#x27;);// 将错误消息打印到 stderrconsole.error(new Error(&#x27;Oops!&#x27;));
+
+断点调试function potentiallyBuggyCode() &#123;  debugger;  // 做可能有问题的东西来检查，逐步通过等。&#125;
+
+debugger 语句调用任何可用的调试功能。
+数字let amount = 6;let price = 4.99;let home = 1e2;let num = 1_000_000; // 位数过多可以用 _ 分割let m = 0644;   // 八进制数字 420
+
+let 关键字let count; console.log(count); // =&gt; undefinedcount = 10;console.log(count); // =&gt; 10
+
+const 关键字const numberOfColumns = 4;// TypeError: Assignment to constant...numberOfColumns = 8;
+
+变量let x = null;let name = &quot;Tammy&quot;;const found = false;// =&gt; Tammy, false, nullconsole.log(name, found, x);var a;console.log(a); // =&gt; undefined
+
+字符串let single = &#x27;Wheres my bandit hat?&#x27;;let double = &quot;Wheres my bandit hat?&quot;;// =&gt; 21console.log(single.length);
+
+算术运算符5 + 5 = 10     // 加法 Addition10 - 5 = 5     // 减法 Subtraction5 * 10 = 50    // 乘法 Multiplication10 / 5 = 2     // 除法 Division10 % 5 = 0     // 取模 Modulo
+
+注释// 此行将表示注释/* 多行配置部署前必须更改以下配置。*/
+
+赋值运算符let number = 100;// 两个语句都会加 10number = number + 10;number += 10;console.log(number); // =&gt; 120
+
+字符串插值let age = 7;// 字符串拼接&#x27;Tommy is &#x27; + age + &#x27; years old.&#x27;;// 字符串插值`Tommy is $&#123;age&#125; years old.`;
+
+字符串
+
+var abc = &quot;abcdefghijklmnopqrstuvwxyz&quot;;var esc = &#x27;I don\&#x27;t \n know&#x27;;    // \n 换行var len = abc.length;            // 字符串长度abc.indexOf(&quot;lmno&quot;);             // 查找子字符串，如果不包含则 -1abc.lastIndexOf(&quot;lmno&quot;);         // 最后一次出现abc.slice(3, 6);                 // 去掉“def”，负值从后面计算abc.replace(&quot;abc&quot;,&quot;123&quot;);        // 查找和替换，接受正则表达式abc.toUpperCase();               // 转换为大写abc.toLowerCase();               // 转换为小写abc.concat(&quot; &quot;, str2);           // abc + &quot; &quot; + str2abc.charAt(2);                   // 索引处的字符：“c”abc[2];                          // 不安全，abc[2] = &quot;C&quot; 不起作用// 索引处的字符代码：“c”-&gt; 99abc.charCodeAt(2);// 用逗号分割字符串给出一个数组abc.split(&quot;,&quot;);// 分割字符abc.split(&quot;&quot;);// 匹配开头字符串,如果忽略第二个参数，则从索引 0 开始匹配abc.startsWith(&quot;bc&quot;, 1);// 匹配结尾的字符串,如果忽略第二个参数，则默认是原字符串长度abc.endsWith(&quot;wxy&quot;, abc.length - 1);// padEnd 和 padStart 都用于填充长度，默认填充对象是空格&quot;200&quot;.padEnd(5); // &quot;200  &quot;&quot;200&quot;.padEnd(5, &quot;.&quot;); // &quot;200..&quot;// 重复字符&quot;abc&quot;.repeat(2); // &quot;abcabc&quot;// trim、trimEnd 和 trimStart 用于去除首尾空格&quot; ab c &quot;.trim(); // &quot;ab c&quot;// 数字转为十六进制 (16)、八进制 (8) 或二进制 (2)(128).toString(16);
+
+数字
+
+var pi = 3.141;pi.toFixed(0);    // 返回 3             pi.toFixed(2);    // 返回 3.14 - 使用金钱pi.toPrecision(2) // 返回 3.1pi.valueOf();     // 返回号码Number(true);     // 转换为数字// 自 1970 年以来的毫秒数Number(new Date())          // 返回第一个数字：3parseInt(&quot;3 months&quot;);       // 返回 3.5parseFloat(&quot;3.5 days&quot;);     // 最大可能的 JS 数Number.MAX_VALUE            // 最小可能的 JS 编号Number.MIN_VALUE            // -无穷Number.NEGATIVE_INFINITY    // 无穷Number.POSITIVE_INFINITY    
+
+Mathconst pi = Math.PI; // 3.141592653589793Math.round(4.4); // = 4 - 数字四舍五入Math.round(4.5); // = 5Math.pow(2,8);   // = 256 - 2 的 8 次方    Math.sqrt(49);   // = 7 - 平方根Math.abs(-3.14); // = 3.14 - 绝对，正值Math.ceil(3.14); // = 4 - 返回 &gt;= 最小整数// = 3 - 返回 &lt;= 最大整数Math.floor(3.99);       // = 0 - 正弦Math.sin(0);            // OTHERS: tan,atan,asin,acos,余弦值Math.cos(Math.PI);      // = -2 - 最低值Math.min(0, 3, -2, 2);  // = 3 - 最高值Math.max(0, 3, -2, 2);  // = 0 自然对数Math.log(1);            // = 2.7182pow(E,x) 自然对数的底数Math.exp(1);            // 0 到 1 之间的随机数Math.random();          // 随机整数，从 1Math.floor(Math.random() * 5) + 1;  
+
+全局函数
+
+// 像脚本代码一样执行字符串eval();                     // 从数字返回字符串String(23);                 // 从数字返回字符串(23).toString();            // 从字符串返回数字Number(&quot;23&quot;);               // 解码 URI。 结果：“my page.asp”decodeURI(enc);             // 编码 URI。 结果：“my%20page.asp”encodeURI(uri);             // 解码 URI 组件decodeURIComponent(enc);    // 对 URI 组件进行编码encodeURIComponent(uri);    // 是一个有限的合法数isFinite();                 // 是一个非法数字isNaN();                    // 返回字符串的浮点数parseFloat();               // 解析一个字符串并返回一个整数parseInt();                 
+
+JavaScript 条件操作符
+
+true || false;       // true10 &gt; 5 || 10 &gt; 20;   // truefalse || false;      // false10 &gt; 100 || 10 &gt; 20; // false
+
+逻辑运算符 &amp;&amp;true &amp;&amp; true;        // true1 &gt; 2 &amp;&amp; 2 &gt; 1;      // falsetrue &amp;&amp; false;       // false4 === 4 &amp;&amp; 3 &gt; 1;    // true
+
+比较运算符1 &gt; 3                 // false3 &gt; 1                 // true250 &gt;= 250            // true1 === 1               // true1 === 2               // false1 === &#x27;1&#x27;             // false
+
+逻辑运算符let lateToWork = true;let oppositeValue = !lateToWork;// =&gt; falseconsole.log(oppositeValue); 
+
+空值合并运算符 ??null ?? &#x27;I win&#x27;;         //  &#x27;I win&#x27;undefined ?? &#x27;Me too&#x27;;   //  &#x27;Me too&#x27;false ?? &#x27;I lose&#x27;        //  false0 ?? &#x27;I lose again&#x27;      //  0&#x27;&#x27; ?? &#x27;Damn it&#x27;          //  &#x27;&#x27;
+
+if Statement (if 语句)const isMailSent = true;if (isMailSent) &#123;  console.log(&#x27;Mail sent to recipient&#x27;);&#125;
+
+Ternary Operator (三元运算符)var age = 1;// =&gt; truevar status = (age &gt;= 18) ? true : false;
+
+else ifconst size = 10;if (size &gt; 20) &#123;  console.log(&#x27;Medium&#x27;);&#125; else if (size &gt; 4) &#123;  console.log(&#x27;Small&#x27;);&#125; else &#123;  console.log(&#x27;Tiny&#x27;);&#125;// Print: Small
+
+&#x3D;&#x3D; vs &#x3D;&#x3D;&#x3D;0 == false     // true0 === false    // false, 不同类型1 == &quot;1&quot;       // true,  自动类型转换1 === &quot;1&quot;      // false, 不同类型null == undefined  // truenull === undefined // false&#x27;0&#x27; == false       // true&#x27;0&#x27; === false      // false
+
+== 只检查值，=== 检查值和类型。
+switch 语句const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;: console.log(&#x27;海的味道&#x27;);    break;  case &#x27;pizza&#x27;: console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
+
+switch 多 case - 单一操作const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;:  case &#x27;pizza&#x27;:    console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
+
+JavaScript Functions 函数函数// 定义函数：function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数：sum(3, 6); // 9
+
+匿名函数// 命名函数function rocketToMars() &#123;  return &#x27;BOOM!&#x27;;&#125;// 匿名函数const rocketToMars = function() &#123;  return &#x27;BOOM!&#x27;;&#125;
+
+箭头函数 (ES6)
+
+有两个参数const sum = (param1, param2) =&gt; &#123;   return param1 + param2; &#125;; console.log(sum(2,5)); // =&gt; 7 
+
+没有参数const printHello = () =&gt; &#123;   console.log(&#x27;hello&#x27;); &#125;; printHello(); // =&gt; hello
+
+只有一个参数const checkWeight = weight =&gt; &#123;   console.log(`Weight : $&#123;weight&#125;`); &#125;; checkWeight(25); // =&gt; Weight : 25 
+
+简洁箭头函数const multiply = (a, b) =&gt; a * b; // =&gt; 60 console.log(multiply(2, 30)); 
+
+从 ES2015 开始提供箭头函数
+返回关键字// 有 returnfunction sum(num1, num2) &#123;  return num1 + num2;&#125;// 该函数不输出总和function sum(num1, num2) &#123;  num1 + num2;&#125;
+
+调用函数// 定义函数function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数sum(2, 4); // 6
+
+立即执行函数//命名函数并立即执行一次(function sum(num1, num2) &#123;  return num1 + num2;&#125;)(2,4)//6
+
+函数表达式const dog = function() &#123;  return &#x27;Woof!&#x27;;&#125;
+
+函数参数// 参数是 namefunction sayHello(name) &#123;  return `Hello, $&#123;name&#125;!`;&#125;
+
+函数声明function add(num1, num2) &#123;  return num1 + num2;&#125;
+
+JavaScript 范围范围
+
+function myFunction() &#123;  var pizzaName = &quot;Margarita&quot;;  // 这里的代码可以使用 PizzaName  &#125;// ❌ PizzaName 不能在这里使用
+
+&#123; &#125; 块内声明的变量
+&#123;  let x = 2;&#125;// ❌ x 不能在这里使用&#123;  var x = 2;&#125;// ✅ x 能在这里使用
+
+var x = 2;       // Global scopelet x = 2;       // Global scopeconst x = 2;       // Global scope
+
+ES6 引入了两个重要的新 JavaScript 关键字：let 和 const。这两个关键字在 JavaScript 中提供了块作用域。
+块作用域变量const isLoggedIn = true;if (isLoggedIn == true) &#123;  const statusMessage = &#x27;Logged in.&#x27;;&#125;// Uncaught ReferenceError...// 未捕获的引用错误...console.log(statusMessage);
+
+全局变量// 全局声明的变量const color = &#x27;blue&#x27;;function printColor() &#123;  console.log(color);&#125;printColor(); // =&gt; blue
+
+let vs varfor (let i = 0; i &lt; 3; i++) &#123;  // 这是“let”的最大范围  // i 可以访问 ✔️&#125;// i 不能访问 ❌
+
+
+for (var i = 0; i &lt; 3; i++) &#123;  // i 可以访问 ✔️&#125;// i 可以访问 ✔️
+
+var 的范围是最近的函数块，而 let 的范围是最近的封闭块。
+带闭包的循环// 打印三次，不是我们的意思。for (var i = 0; i &lt; 3; i++) &#123;  setTimeout(_ =&gt; console.log(i), 10);&#125;
+
+
+// 按预期打印 0、1 和 2。for (let j = 0; j &lt; 3; j++) &#123;   setTimeout(_ =&gt; console.log(j), 10);&#125;
+
+变量使用 let 有自己的副本，变量有使用 var 的共享副本。
+JavaScript Arrays方法
+
+
+
+
+:-
+:-
+
+
+
+Array.from()
+类似数组对象创建一个新的 #
+
+
+Array.isArray()
+值是否是一个 Array #
+
+
+Array.of()
+创建一个新数组示例 #
+
+
+.at()
+返回值索引对应的元素 #
+
+
+.concat()
+合并两个或多个数组 #
+
+
+.copyWithin()
+浅复制替换某个位置 #
+
+
+.entries()
+新的 Array Iterator 对象 #
+
+
+.every()
+是否能通过回调函数的测试 #
+
+
+.fill()
+固定值填充一个数组中 #
+
+
+.filter()
+返回过滤后的数组 #
+
+
+.find()
+第一个元素的值 #
+
+
+.findIndex()
+第一个元素的索引 #
+
+
+.findLast()
+最后一个元素的值 #
+
+
+.findLastIndex()
+最后一个元素的索引 #
+
+
+.flat()
+扁平化嵌套数组 #
+
+
+.flatMap()
+与 flat 相同 #
+
+
+.forEach()
+升序循环执行 #
+
+
+.includes()
+是否包含一个指定的值 #
+
+
+.indexOf()
+找到给定元素的第一个索引 #
+
+
+.join()
+数组链接成一个字符串 #
+
+
+.keys()
+每个索引键 #
+
+
+.lastIndexOf()
+给定元素的最后一个索引 #
+
+
+.map()
+循环返回一个新数组 #
+
+
+.pop()
+删除最后一个元素 #
+
+
+.push()
+元素添加到数组的末尾 #
+
+
+.reduce()
+循环函数传递当前和上一个值 #
+
+
+.reduceRight()
+类似 reduce 从右往左循环 #
+
+
+.reverse()
+数组元素的位置颠倒 #
+
+
+.shift()
+删除第一个元素 #
+
+
+.slice()
+提取元素 #
+
+
+.some()
+至少有一个通过测试函数 #
+
+
+.sort()
+元素进行排序 #
+
+
+.splice()
+删除或替换或添加元素 #
+
+
+.toLocaleString()
+字符串表示数组中的元素 #
+
+
+.toString()
+返回字符串 #
+
+
+.unshift()
+元素添加到数组的开头 #
+
+
+.values()
+返回新的 ArrayIterator 对象 #
+
+
+数组const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];// 不同的数据类型const data = [1, &#x27;chicken&#x27;, false];
+
+属性 .lengthconst numbers = [1, 2, 3, 4];numbers.length // 4
+
+索引// 访问数组元素const myArray = [100, 200, 300];console.log(myArray[0]); // 100console.log(myArray[1]); // 200
+
+可变图表
+
+
+
+添加
+删除
+开始
+结束
+
+
+
+push
+✅
+
+
+✅
+
+
+pop
+
+✅
+
+✅
+
+
+unshift
+✅
+
+✅
+
+
+
+shift
+
+✅
+✅
+
+
+
+
+
+方法 .push()// 添加单个元素：const cart = [&#x27;apple&#x27;, &#x27;orange&#x27;];cart.push(&#x27;pear&#x27;); // 添加多个元素：const numbers = [1, 2];numbers.push(3, 4, 5);
+
+将项目添加到末尾并返回新的数组长度。
+方法 .pop()const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];const fruit = fruits.pop(); // &#x27;banana&#x27;console.log(fruits); // [&quot;apple&quot;, &quot;dew&quot;]
+
+从末尾删除一个项目并返回已删除的项目。
+方法 .shift()const array1 = [1, 2, 3];const firstElement = array1.shift();console.log(array1); // 输出: Array [2, 3]console.log(firstElement); // 输出: 1
+
+从头删除一个项目并返回已删除的项目。
+方法 .some()const array = [1, 2, 3, 4, 5];// 检查元素是否为偶数const even = (element) =&gt; element % 2 === 0;console.log(array.some(even));// 预期输出: true
+
+方法 .concat()const numbers = [3, 2, 1]const newFirstNumber = 4    // =&gt; [ 4, 3, 2, 1 ][newFirstNumber].concat(numbers)    // =&gt; [ 3, 2, 1, 4 ]numbers.concat(newFirstNumber)
+
+如果你想避免改变你的原始数组，你可以使用 concat。
+方法 .splice()const months = [&#x27;Jan&#x27;, &#x27;March&#x27;];months.splice(1, 0, &#x27;Feb&#x27;);// 在索引 1 处插入console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;]months.splice(2, 1, &#x27;May&#x27;);// 替换索引 2 处的 1 个元素console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;May&quot;]
+
+方法 .unshift()let cats = [&#x27;Bob&#x27;];// =&gt; [&#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Willy&#x27;);// =&gt; [&#x27;Puff&#x27;, &#x27;George&#x27;, &#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Puff&#x27;, &#x27;George&#x27;);
+
+将项目添加到开头并返回新的数组长度。
+方法 .filter()const words = [&#x27;js&#x27;, &#x27;java&#x27;, &#x27;golang&#x27;];const result = words.filter(word =&gt; &#123;  return  word.length &gt; 3&#125;);console.log(result);// 预期输出: Array [&quot;java&quot;, &quot;golang&quot;]
+
+JavaScript 循环While 循环while (condition) &#123;  // 要执行的代码块&#125;let i = 0;while (i &lt; 5) &#123;          console.log(i);  i++;&#125;
+
+反向循环const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;berry&quot;];for (let i = fruits.length - 1; i &gt;= 0; i--) &#123;  console.log(`$&#123;i&#125;. $&#123;fruits[i]&#125;`);&#125;// =&gt; 2. berry// =&gt; 1. dew// =&gt; 0. apple
+
+Do…While 语句x = 0i = 0do &#123;  x = x + i;  console.log(x)  i++;&#125; while (i &lt; 5);// =&gt; 0 1 3 6 10
+
+For 循环for (let i = 0; i &lt; 4; i += 1) &#123;  console.log(i);&#125;;// =&gt; 0, 1, 2, 3
+
+遍历数组for (let i = 0; i &lt; array.length; i++)&#123;  console.log(array[i]);&#125;// =&gt; 数组中的每一项
+
+Breakfor (let i = 0; i &lt; 99; i += 1) &#123;  if (i &gt; 5) break;  console.log(i)&#125;// =&gt; 0 1 2 3 4 5
+
+Continuefor (i = 0; i &lt; 10; i++) &#123;  if (i === 3) &#123;    continue;  &#125;  text += &quot;The number is &quot; + i + &quot;&lt;br&gt;&quot;;&#125;
+
+嵌套循环for (let i = 0; i &lt; 2; i += 1) &#123;  for (let j = 0; j &lt; 3; j += 1) &#123;    console.log(`$&#123;i&#125;-$&#123;j&#125;`);  &#125;&#125;
+
+for…in 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let index in fruits) &#123;  console.log(index);&#125;// =&gt; 0// =&gt; 1// =&gt; 2
+
+label 语句
+
+var num = 0;outPoint:for(var i = 0; i &lt; 10; i++) &#123;  for(var j = 0; j &lt; 10; j++) &#123;    if(i == 5 &amp;&amp; j == 5) &#123;      continue outPoint;    &#125;    num++;  &#125;&#125;alert(num);  // 95
+
+从 alert(num) 的值可以看出，continue outPoint; 语句的作用是跳出当前循环，并跳转到 outPoint（标签）下的 for 循环继续执行。
+for…of 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let fruit of fruits) &#123;  console.log(fruit);&#125;// =&gt; apple// =&gt; orange// =&gt; banana
+
+for await…of
+
+async function* asyncGenerator() &#123;  var i = 0;  while (i &lt; 3) &#123;    yield i++;  &#125;&#125;(async function() &#123;  for await (num of asyncGenerator()) &#123;    console.log(num);  &#125;&#125;)();// 0// 1// 2
+
+可选的 for 表达式var i = 0;for (;;) &#123;  if (i &gt; 3) break;  console.log(i);  i++;&#125;
+
+JavaScript 迭代器(Iterators)
+
+分配给变量的函数let plusFive = (number) =&gt; &#123;  return number + 5;  &#125;;// f 被赋值为 plusFivelet f = plusFive;plusFive(3); // 8// 由于 f 具有函数值，因此可以调用它。f(9); // 14
+
+回调函数const isEven = (n) =&gt; &#123;  return n % 2 == 0;&#125;let printMsg = (evenFunc, num) =&gt; &#123;  const isNumEven = evenFunc(num);  console.log(`$&#123;num&#125; is an even number: $&#123;isNumEven&#125;.`)&#125;// Pass in isEven as the callback functionprintMsg(isEven, 4); // =&gt; The number 4 is an even number: True.
+
+数组方法 .reduce()const numbers = [1, 2, 3, 4];const sum = numbers.reduce((accumulator, curVal) =&gt; &#123;    return accumulator + curVal;&#125;);console.log(sum); // 10
+
+数组方法 .map()const members = [&quot;Taylor&quot;, &quot;Donald&quot;, &quot;Don&quot;, &quot;Natasha&quot;, &quot;Bobby&quot;];const announcements = members.map((member) =&gt; &#123;  return member + &quot; joined the contest.&quot;;&#125;);console.log(announcements);
+
+数组方法 .forEach()const numbers = [28, 77, 45, 99, 27];numbers.forEach(number =&gt; &#123;    console.log(number);&#125;); 
+
+数组方法 .filter()const randomNumbers = [4, 11, 42, 14, 39];const filteredArray = randomNumbers.filter(n =&gt; &#123;    return n &gt; 5;&#125;);
+
+JavaScript 对象(Objects)
+
+访问属性const apple = &#123;   color: &#x27;Green&#x27;,  price: &#123; bulk: &#x27;$3/kg&#x27;, smallQty: &#x27;$4/kg&#x27; &#125;&#125;;console.log(apple.color);      // =&gt; Greenconsole.log(apple.price.bulk); // =&gt; $3/kg
+
+命名属性// 无效键名示例const trainSchedule = &#123;  // 由于单词之间的空格而无效。  platform num: 10,   // 表达式不能是键。  40 - 10 + 2: 30,  // 除非用引号括起来，否则 + 号无效。  +compartment: &#x27;C&#x27;&#125;
+
+不存在的属性const classElection = &#123;  date: &#x27;January 12&#x27;&#125;;console.log(classElection.place); // undefined
+
+可变的
+
+const student = &#123;  name: &#x27;Sheldon&#x27;,  score: 100,  grade: &#x27;A&#x27;,&#125;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, score: 100, grade: &#x27;A&#x27; &#125;delete student.scorestudent.grade = &#x27;F&#x27;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, grade: &#x27;F&#x27; &#125;student = &#123;&#125;// TypeError: TypeError：分配给常量变量。
+
+赋值简写语法const person = &#123;  name: &#x27;Tom&#x27;,  age: &#x27;22&#x27;,&#125;;const &#123;name, age&#125; = person;console.log(name); // &#x27;Tom&#x27;console.log(age);  // &#x27;22&#x27;
+
+删除运算符const person = &#123;  firstName: &quot;Matilda&quot;,  hobby: &quot;knitting&quot;,  goal: &quot;learning JavaScript&quot;&#125;;delete person.hobby; // 或 delete person[&#x27;hobby&#x27;];console.log(person);/*&#123;  firstName: &quot;Matilda&quot;  goal: &quot;learning JavaScript&quot;&#125; */
+
+对象作为参数const origNum = 8;const origObj = &#123;color: &#x27;blue&#x27;&#125;;const changeItUp = (num, obj) =&gt; &#123;  num = 7;  obj.color = &#x27;red&#x27;;&#125;;changeItUp(origNum, origObj);// 将输出 8，因为整数是按值传递的。console.log(origNum);// 由于传递了对象，将输出“red”// 通过引用，因此是可变的。console.log(origObj.color);
+
+工厂函数
+
+// 一个接受 &#x27;name&#x27;，&#x27;age&#x27; 和 &#x27;breed&#x27; 的工厂函数，//  参数返回一个自定义的 dog 对象。const dogFactory = (name, age, breed) =&gt; &#123;  return &#123;    name: name,    age: age,    breed: breed,    bark() &#123;      console.log(&#x27;Woof!&#x27;);      &#125;  &#125;;&#125;;
+
+速记对象创建const activity = &#x27;Surfing&#x27;;const beach = &#123; activity &#125;;console.log(beach); // &#123; activity: &#x27;Surfing&#x27; &#125;
+
+this 关键字const cat = &#123;  name: &#x27;Pipey&#x27;,  age: 8,  whatName() &#123;    return this.name    &#125;&#125;;console.log(cat.whatName()); // =&gt; Pipey
+
+方法const engine = &#123;  // 方法简写，有一个参数  start(adverb) &#123;    console.log(`The engine starts up $&#123;adverb&#125;...`);  &#125;,    // 不带参数的匿名箭头函数表达式  sputter: () =&gt; &#123;    console.log(&#x27;The engine sputters...&#x27;);  &#125;,&#125;;engine.start(&#x27;noisily&#x27;);engine.sputter();
+
+Getters 和 settersconst myCat = &#123;  _name: &#x27;Dottie&#x27;,  get name() &#123;    return this._name;    &#125;,  set name(newName) &#123;    this._name = newName;    &#125;&#125;;// 引用调用 getterconsole.log(myCat.name);// 赋值调用 settermyCat.name = &#x27;Yankee&#x27;;
+
+ProxyProxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
+// 用于拦截对象的读取属性操作。const handler = &#123;    get: function(obj, prop) &#123;        return prop in obj ? obj[prop] : 37;    &#125;&#125;;const p = new Proxy(&#123;&#125;, handler);p.a = 1;p.b = undefined;console.log(p.a, p.b);      // 1, undefinedconsole.log(&#x27;c&#x27; in p, p.c); // false, 37
+
+语法const p = new Proxy(target, handler)
+
+
+target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
+handler 一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。
+
+方法
+
+
+:-
+:-
+
+
+
+Proxy.revocable()
+创建一个可撤销的Proxy对象 #
+
+
+handler 对象的方法
+
+
+:-
+:-
+
+
+
+handler.getPrototypeOf()
+Object.getPrototypeOf 方法的捕捉器 #
+
+
+handler.setPrototypeOf()
+Object.setPrototypeOf 方法的捕捉器 #
+
+
+handler.isExtensible()
+Object.isExtensible 方法的捕捉器 #
+
+
+handler.preventExtensions()
+Object.preventExtensions 方法的捕捉器 #
+
+
+handler.getOwnPropertyDescriptor()
+Object.getOwnPropertyDescriptor 方法的捕捉器 #
+
+
+handler.defineProperty()
+Object.defineProperty 方法的捕捉器 #
+
+
+handler.has()
+in 操作符的捕捉器 #
+
+
+handler.get()
+属性读取操作的捕捉器 #
+
+
+handler.set()
+属性设置操作的捕捉器 #
+
+
+handler.deleteProperty()
+delete 操作符的捕捉器 #
+
+
+handler.ownKeys()
+Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器 #
+
+
+handler.apply()
+函数调用操作的捕捉器 #
+
+
+handler.construct()
+new 操作符的捕捉器 #
+
+
+
+
+ReflectReflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。这些方法与proxy handlers (en-US)的方法相同。Reflect不是一个函数对象，因此它是不可构造的。
+// 检测一个对象是否存在特定属性const duck = &#123;  name: &#x27;Maurice&#x27;,  color: &#x27;white&#x27;,  greeting: function() &#123;    console.log(`Quaaaack! My name is $&#123;this.name&#125;`);  &#125;&#125;Reflect.has(duck, &#x27;color&#x27;);// trueReflect.has(duck, &#x27;haircut&#x27;);// false
+
+静态方法
+
+
+:-
+:-
+
+
+
+Reflect.apply(target, thisArgument, argumentsList)
+对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 Function.prototype.apply() 功能类似 #
+
+
+Reflect.construct(target, argumentsList[, newTarget])
+对构造函数进行 new 操作，相当于执行 new target(…args) #
+
+
+Reflect.defineProperty(target, propertyKey, attributes)
+和 Object.defineProperty() 类似。如果设置成功就会返回 true #
+
+
+Reflect.deleteProperty(target, propertyKey)
+作为函数的delete操作符，相当于执行 delete target[name] #
+
+
+Reflect.get(target, propertyKey[, receiver])
+获取对象身上某个属性的值，类似于 target[name] #
+
+
+Reflect.getOwnPropertyDescriptor(target, propertyKey)
+类似于 Object.getOwnPropertyDescriptor()。如果对象中存在该属性，则返回对应的属性描述符，否则返回 undefined #
+
+
+Reflect.getPrototypeOf(target)
+类似于 Object.getPrototypeOf() #
+
+
+Reflect.has(target, propertyKey)
+判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同 #
+
+
+Reflect.isExtensible(target)
+类似于 Object.isExtensible() #
+
+
+Reflect.ownKeys(target)
+返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 Object.keys(), 但不会受enumerable 影响) #
+
+
+Reflect.preventExtensions(target)
+类似于 Object.preventExtensions()。返回一个Boolean #
+
+
+Reflect.set(target, propertyKey, value[, receiver])
+将值分配给属性的函数。返回一个Boolean，如果更新成功，则返回true #
+
+
+Reflect.setPrototypeOf(target, prototype)
+设置对象原型的函数。返回一个 Boolean，如果更新成功，则返回 true #
+
+
+
+
+JavaScript this 绑定隐式绑定function foo() &#123;  console.log(this)&#125;let obj1 = &#123;  name: &quot;obj1&quot;,  foo: foo&#125;let obj2 = &#123;  name: &quot;obj2&quot;,  obj1: obj1&#125;obj2.obj1.foo() // [Object obj1]
+
+隐式丢失let a = obj2.obj1.foo()a() // Window
+
+
+指定隐式绑定：必须在调用的对象内部有一个对函数的引用（比如一个属性）
+将以上调用赋值给一个变量，结果最终会是 Window
+在 a 被调用的位置没有进行过任何显示绑定，最终全局对象 window 会调用它（Window.a）
+
+
+
+显示绑定function getName(a1, a2) &#123;  console.log(&quot;此人&quot; + this.name, &quot;岁数&quot; + (a1 + a2))&#125;let person = &#123;  name: &quot;zhangsan&quot;&#125;
+
+callcall 第一个参数接受 this 作用域，剩余参数传递给其调用的函数
+getName.call(person, 18, 12)
+
+applyapply 第一个参数与 call 相同，第二个参数是其调用函数的参数数组
+getName.apply(person, [18, 12])
+
+bindbind 函数会返回一个新函数
+getName.bind(person,18,12)()//或者可以这样getName.bind(person)(18, 12)//或者这样getName.bind(person).bind(null, 18)(12)
+
+内置函数中的 this数组中的一些方法，类似于 map、forEach 等，可以自己设置绑定 this
+const obj = &#123;  name: &quot;zhangsan&quot;&#125;const array = [1, 2, 3];array.map(function(value)&#123;  console.log(this.name)&#125;, obj)// zhangsan x3 
+
+其中一些全局对象，如 setTimeout 等，它们和未显示绑定 this 的部分数组方法一样，都会指向全局对象（Window）
+setTimeout(function()&#123;   console.log(this)&#125;, 1000) // Window
+
+JavaScript Classes静态方法&#x2F;字段
+
+class Dog &#123;  constructor(name) &#123;    this._name = name;    &#125;    introduce() &#123;     console.log(&#x27;This is &#x27; + this._name + &#x27; !&#x27;);    &#125;    // 静态方法  static bark() &#123;    console.log(&#x27;Woof!&#x27;);    &#125;  static &#123;    console.log(&#x27;类静态初始化块调用&#x27;);  &#125;&#125;const myDog = new Dog(&#x27;Buster&#x27;);myDog.introduce();// 调用静态方法Dog.bark();
+
+公有静态字段class ClassStaticField &#123;  static staticField = &#x27;static field&#x27;&#125;console.log(ClassStaticField.staticField)// 预期输出值：&quot;static field&quot;​ 
+
+Classclass Song &#123;  constructor() &#123;    this.title;    this.author;  &#125;    play() &#123;    console.log(&#x27;Song playing!&#x27;);  &#125;&#125;const mySong = new Song();mySong.play();
+
+extends// Parent classclass Media &#123;  constructor(info) &#123;    this.publishDate = info.publishDate;    this.name = info.name;  &#125;&#125;// Child classclass Song extends Media &#123;  constructor(songData) &#123;    super(songData);    this.artist = songData.artist;  &#125;&#125;const mySong = new Song(&#123;   artist: &#x27;Queen&#x27;,   name: &#x27;Bohemian Rhapsody&#x27;,   publishDate: 1975&#125;);
+
+Class Constructorclass Song &#123;  constructor(title, artist) &#123;    this.title = title;    this.artist = artist;  &#125;&#125;const mySong = new Song(&#x27;Bohemian Rhapsody&#x27;, &#x27;Queen&#x27;);console.log(mySong.title);
+
+Class Methodsclass Song &#123;  play() &#123;    console.log(&#x27;Playing!&#x27;);  &#125;    stop() &#123;    console.log(&#x27;Stopping!&#x27;);  &#125;&#125;
+
+JavaScript Modules
+
+Export &#x2F; Import// myMath.js// 默认导出 Default exportexport default function add(x,y)&#123;  return x + y&#125;// 正常导出 Normal exportexport function subtract(x,y)&#123;  return x - y&#125;// 多重导出 Multiple exportsfunction multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;export &#123;  multiply, duplicate&#125;
+
+import 加载模块// main.jsimport add, &#123; subtract, multiply, duplicate &#125; from &#x27;./myMath.js&#x27;;console.log(add(6, 2));      // 8 console.log(subtract(6, 2))  // 4console.log(multiply(6, 2)); // 12console.log(duplicate(5))    // 10// index.html&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
+
+Export Module// myMath.jsfunction add(x,y)&#123;  return x + y&#125;function subtract(x,y)&#123;  return x - y&#125;function multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;// node.js 中的多个导出module.exports = &#123;  add,  subtract,  multiply,  duplicate&#125;
+
+require 加载模块// main.jsconst myMath = require(&#x27;./myMath.js&#x27;)console.log(myMath.add(6, 2));      // 8 console.log(myMath.subtract(6, 2))  // 4console.log(myMath.multiply(6, 2)); // 12console.log(myMath.duplicate(5))    // 10
+
+JavaScript PromisesPromise
+
+创建 promises
+new Promise((resolve, reject) =&gt; &#123;  if (ok) &#123;    resolve(result)  &#125; else &#123;    reject(error)  &#125;&#125;)
+
+使用 promisespromise  .then((result) =&gt; &#123; ··· &#125;)  .catch((error) =&gt; &#123; ··· &#125;)
+
+Promise 方法Promise.all(···)Promise.race(···)Promise.reject(···)Promise.resolve(···)
+
+执行器函数const executorFn = (resolve, reject) =&gt; &#123;  resolve(&#x27;Resolved!&#x27;);&#125;;const promise = new Promise(executorFn);
+
+setTimeout()const loginAlert = () =&gt; &#123;  console.log(&#x27;Login&#x27;);&#125;;setTimeout(loginAlert, 6000);
+
+Promise 状态const promise = new Promise((resolve, reject) =&gt; &#123;  const res = true;  // 一个异步操作。  if (res) &#123;    resolve(&#x27;Resolved!&#x27;);  &#125;  else &#123;    reject(Error(&#x27;Error&#x27;));  &#125;&#125;);promise.then(  (res) =&gt; console.log(res),  (err) =&gt; console.error(err));
+
+.then() 方法const promise = new Promise((resolve, reject) =&gt; &#123;      setTimeout(() =&gt; &#123;    resolve(&#x27;Result&#x27;);  &#125;, 200);&#125;);promise.then((res) =&gt; &#123;  console.log(res);&#125;, (err) =&gt; &#123;  console.error(err);&#125;);
+
+.catch() 方法const promise = new Promise(  (resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    reject(Error(&#x27;Promise 无条件拒绝。&#x27;));  &#125;, 1000);&#125;);promise.then((res) =&gt; &#123;  console.log(value);&#125;);promise.catch((err) =&gt; &#123;  console.error(err);&#125;);
+
+Promise.all()
+
+const promise1 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(3);  &#125;, 300);&#125;);const promise2 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(2);  &#125;, 200);&#125;);Promise.all([promise1, promise2]).then((res) =&gt; &#123;  console.log(res[0]);  console.log(res[1]);&#125;);
+
+链接多个 .then()const promise = new Promise(  resolve =&gt;     setTimeout(() =&gt; resolve(&#x27;dAlan&#x27;),100));promise.then(res =&gt; &#123;  return res === &#x27;Alan&#x27;     ? Promise.resolve(&#x27;Hey Alan!&#x27;)    : Promise.reject(&#x27;Who are you?&#x27;)&#125;).then((res) =&gt; &#123;  console.log(res)&#125;, (err) =&gt; &#123;  console.error(err)&#125;);
+
+避免嵌套的 Promise 和 .then()
+
+const promise = new Promise((resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    resolve(&#x27;*&#x27;);  &#125;, 1000);&#125;);const twoStars = (star) =&gt; &#123;    return (star + star);&#125;;const oneDot = (star) =&gt; &#123;    return (star + &#x27;.&#x27;);&#125;;const print = (val) =&gt; &#123;  console.log(val);&#125;;// 将它们链接在一起promise.then(twoStars).then(oneDot).then(print);
+
+JavaScript Async-Await
+
+异步
+
+function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;// 异步函数表达式const msg = async function() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;// 异步箭头函数const msg1 = async () =&gt; &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后msg1(); // Message: Hello World! &lt;-- 2 秒后
+
+解决 Promiseslet pro1 = Promise.resolve(5);let pro2 = 44;let pro3 = new Promise(function(resolve, reject) &#123;  setTimeout(resolve, 100, &#x27;foo&#x27;);&#125;);Promise.all([pro1, pro2, pro3]).then(function(values) &#123;  console.log(values);&#125;);// expected =&gt; Array [5, 44, &quot;foo&quot;]
+
+异步等待 Promisesfunction helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
+
+错误处理// 数据不完整let json = &#x27;&#123; &quot;age&quot;: 30 &#125;&#x27;;try &#123;  let user = JSON.parse(json); // &lt;-- 没有错误  console.log( user.name );    // no name!&#125; catch (e) &#123;  console.error( &quot;Invalid JSON data!&quot; );&#125;
+
+异步等待运算符function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
+
+JavaScript 请求JSONconst jsonObj = &#123;  &quot;name&quot;: &quot;Rick&quot;,  &quot;id&quot;: &quot;11A&quot;,  &quot;level&quot;: 4  &#125;;
+
+另见：JSON 备忘单
+XMLHttpRequestconst xhr = new XMLHttpRequest();xhr.open(&#x27;GET&#x27;, &#x27;mysite.com/getjson&#x27;);
+
+XMLHttpRequest 是一个浏览器级别的 API，它使客户端能够通过 JavaScript 编写数据传输脚本，而不是 JavaScript 语言的一部分。
+GETconst req = new XMLHttpRequest();req.responseType = &#x27;json&#x27;;req.open(&#x27;GET&#x27;, &#x27;/getdata?id=65&#x27;);req.onload = () =&gt; &#123;  console.log(xhr.response);&#125;;req.send();
+
+POST
+
+const data = &#123; weight: &#x27;1.5 KG&#x27; &#125;;const xhr = new XMLHttpRequest();// 初始化一个请求。xhr.open(&#x27;POST&#x27;, &#x27;/inventory/add&#x27;);// 一个用于定义响应类型的枚举值xhr.responseType = &#x27;json&#x27;;// 发送请求以及数据。xhr.send(JSON.stringify(data));// 请求成功完成时触发。xhr.onload = () =&gt; &#123;  console.log(xhr.response);&#125;// 当 request 遭遇错误时触发。xhr.onerror = () =&gt; &#123;  console.log(xhr.response);&#125;
+
+fetch api
+
+fetch(url, &#123;    method: &#x27;POST&#x27;,    headers: &#123;      &#x27;Content-type&#x27;: &#x27;application/json&#x27;,      &#x27;apikey&#x27;: apiKey    &#125;,    body: data&#125;).then(response =&gt; &#123;  if (response.ok) &#123;    return response.json();  &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message)&#125;)
+
+JSON 格式fetch(&#x27;url-that-returns-JSON&#x27;)  .then(response =&gt; response.json())  .then(jsonResponse =&gt; &#123;    console.log(jsonResponse);  &#125;);
+
+promise url 参数获取 APIfetch(&#x27;url&#x27;)  .then(response  =&gt; &#123;    console.log(response);  &#125;, rejection =&gt; &#123;    console.error(rejection.message);  &#125;);
+
+Fetch API 函数fetch(&#x27;https://api-xxx.com/endpoint&#x27;, &#123;  method: &#x27;POST&#x27;,  body: JSON.stringify(&#123;id: &quot;200&quot;&#125;)&#125;).then(response =&gt; &#123;  if(response.ok)&#123;    return response.json();    &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message);&#125;).then(jsonResponse =&gt; &#123;  console.log(jsonResponse);&#125;)
+
+async await 语法
+
+const getSuggestions = async () =&gt; &#123;  const wordQuery = inputField.value;  const endpoint = `$&#123;url&#125;$&#123;queryParams&#125;$&#123;wordQuery&#125;`;  try&#123;    const response = await fetch(endpoint, &#123;cache: &#x27;no-cache&#x27;&#125;);    if(response.ok)&#123;      const jsonResponse = await response.json()    &#125;  &#125;  catch(error)&#123;    console.log(error)  &#125;&#125;
+]]></content>
+      <categories>
+        <category>后端编程</category>
+      </categories>
+      <tags>
+        <tag>后端编程</tag>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker 备忘录</title>
     <url>/2025/01/08/docker/</url>
     <content><![CDATA[Docker 备忘清单这是 Docker 的快速参考备忘单。 你可以在这里找到最常见的 Docker 命令。
@@ -5178,373 +6337,6 @@ Docker入门学习笔记 (github.io)
       </tags>
   </entry>
   <entry>
-    <title>JSON 备忘录</title>
-    <url>/2025/01/08/json/</url>
-    <content><![CDATA[JSON 备忘清单这是理解和编写 JSON 格式配置文件的快速参考备忘单。
-入门介绍JSON 是一种基于文本的轻量级开放标准，专为人类可读的数据交换而设计。
-
-JSON 代表 JavaScript 对象表示法
-JSON 易于读写。
-JSON 是与语言无关的数据交换格式
-JSON 文件扩展名为 .json
-JSON Internet 媒体类型为 application/json
-
-示例&#123;  &quot;name&quot;: &quot;Jason&quot;,  &quot;age&quot;: 39,  &quot;height&quot;: 1.92,  &quot;gender&quot;: &quot;M&quot;,  &quot;salary&quot;: 70000,  &quot;married&quot;: true,  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Tom&quot;, &quot;age&quot;: 9&#125;,    &#123;&quot;name&quot;: &quot;Ava&quot;, &quot;age&quot;: 7&#125;  ]&#125;
-
-类型
-
-
-类型
-描述
-
-
-
-Number
-双精度浮点
-
-
-String
-字符系列
-
-
-Boolean
-“true”或“false”
-
-
-Array
-有序的值序列
-
-
-Value
-字符串、数字、布尔值、空值等
-
-
-Object
-键&#x2F;值对的无序集合
-
-
-null
-Null 或 Empty
-
-
-字符串
-
-
-
-
-
-
-
-
-
-\&quot;
-双引号 Double quote
-
-
-\\
-反斜杠 Backslash
-
-
-\/
-正斜杠 Forward slash
-
-
-\b
-退格 Backspace
-
-
-\f
-换页 Form feed
-
-
-\n
-换行 Newline
-
-
-\r
-回车 Carriage return
-
-
-\t
-标签 Tab
-
-
-\u
-后跟四个十六进制数字
-
-
-示例&#123;  &quot;url&quot;: &quot;https://jaywcjlove.github.io&quot;,  &quot;msg&quot; : &quot;Hi,\n\&quot;Quick Reference\&quot;&quot;,  &quot;intro&quot;: &quot;为开发人员分享快速参考和备忘单&quot;&#125;
-
-无效字符串&#123; &quot;foo&quot;: &#x27;bar&#x27; &#125;
-
-Have to be delimited by double quotes
-数字
-
-
-
-
-类型
-说明
-
-
-
-Integer
-数字 1-9、0 和正数或负数
-
-
-Fraction
-0.3、3.9 等分数
-
-
-Exponent
-指数，如 e、e+、e-、E、E+、E
-
-
-
-
-示例&#123;  &quot;positive&quot; : 12,  &quot;negative&quot; : -1,  &quot;fraction&quot; : 10.25,  &quot;exponent&quot; : 1.0E+2,  &quot;zero&quot; : 0&#125;
-
-无效的数字&#123; &quot;foo&quot;: 0xFF &#125;
-
-在JSON中，只能使用十进制文字
-对象 Objects&#123;  &quot;color&quot;: &quot;Purple&quot;,  &quot;id&quot;: &quot;210&quot;,  &quot;composition&quot;: &#123;    &quot;R&quot;: 70,    &quot;G&quot;: 39,    &quot;B&quot;: 89  &#125;,  &quot;empty_object&quot;: &#123;&#125;&#125;
-
-用逗号分隔的多个键&#x2F;值对
-数组 Arrays[1, 2, 3, 4, 5]
-
-以 [ 开始并以 ] 结束
-对象数组&#123;  &quot;children&quot;: [    &#123; &quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15 &#125;,    &#123; &quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12 &#125;  ]&#125;
-
-数组对象&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;],  &quot;empty_array&quot;: []&#125;
-
-二维阵列&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0],    [10, 11]  ]&#125;
-
-对象的对象&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
-
-嵌套&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
-
-JSON 5Objects对象键可以是 ECMAScript 5.1 IdentifierName
-&#123;    width: 1920,    height: 1080,&#125;
-
-数组可以有一个尾随逗号
-[    1,    true,    &#x27;three&#x27;,]
-
-允许单行和多行注释&#123;  // 一行注释  &quot;name&quot;: &quot;Kenny&quot;&#125;
-
-多行注释
-&#123;/* 这是一个   多行注释 */  &quot;name&quot;: &quot;Kenny&quot;&#125;
-
-允许附加空白字符
-
-
-代码点
-描述
-
-
-
-U+0009
-水平制表符
-
-
-U+000A
-换行符
-
-
-U+000B
-垂直制表符
-
-
-U+000C
-换页符
-
-
-U+000D
-回车符
-
-
-U+0020
-空格
-
-
-U+00A0
-不间断空格
-
-
-U+2028
-行分隔符
-
-
-U+2029
-段落分隔符
-
-
-U+FEFF
-字节顺序标记
-
-
-Unicode Zs 类别
-空格分隔符 Unicode 类别中的任何其他字符
-
-
-
-
-数字数字可能有前导或尾随小数点
-&#123;    integer: 123,    withFractionPart: 123.456,    onlyFractionPart: .456,    withExponent: 123e-456,&#125;
-
-数字可以是十六进制
-&#123;    positiveHex: 0xdecaf,    negativeHex: -0xC0FFEE,&#125;
-
-数字可以是正无穷大、负无穷大和 NaN。
-&#123;    positiveInfinity: Infinity,    negativeInfinity: -Infinity,    notANumber: NaN,&#125;
-
-数字可以以明确的加号开头
-字符串
-
-&#x27;Lorem ipsum dolor sit amet, \consectetur adipiscing elit.&#x27;
-
-以下是代表相同的意思
-&#x27;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&#x27;
-
-&#x27;\A\C\/\D\C&#x27;
-
-以下是代表相同的意思
-&#x27;AC/DC&#x27;
-
-在 JavaScript 中访问 JSON访问对象let myObject = &#123;  &quot;name&quot;: &quot;Jason&quot;,  &quot;last&quot;: &quot;Doe&quot;,  &quot;age&quot;: 39,  &quot;gender&quot;: &quot;M&quot;,  &quot;salary&quot;: 70000,  &quot;married&quot;: true&#125;;
-
-
-
-
-
-
-
-
-
-
-myObject.name
-“Jason”
-
-
-myObject[&quot;name&quot;]
-“Jason”
-
-
-myObject.age
-39
-
-
-myObject.other
-undefined
-
-
-myObject[0]
-undefined
-
-
-访问嵌套
-
-let myObject = &#123;    &quot;ref&quot;: &#123;        &quot;name&quot;: 0,        &quot;last&quot;: 1,        &quot;age&quot;: 2,        &quot;gender&quot;: 3,        &quot;salary&quot;: 4,        &quot;married&quot;: 5    &#125;,    &quot;jdoe&quot;: [        &quot;Jason&quot;,        &quot;Doe&quot;,        39,        &quot;M&quot;,        70000,        true    ],    &quot;jsmith&quot;: [        &quot;Tom&quot;,        &quot;Smith&quot;,        42,        &quot;F&quot;,        80000,        true    ]&#125;;
-
-
-
-
-
-
-
-
-
-
-myObject.ref.age
-2
-
-
-myObject[&quot;ref&quot;][&quot;age&quot;]
-2
-
-
-myObject.jdoe
-[“Jason”, “Doe”, 39 …]
-
-
-myObject.jsmith[3]
-“F”
-
-
-myObject[1]
-undefined
-
-
-访问对象数组
-
-let myArray = [  &#123;    &quot;name&quot;: &quot;Jason&quot;,    &quot;last&quot;: &quot;Doe&quot;,    &quot;age&quot;: 39,    &quot;gender&quot;: &quot;M&quot;,    &quot;salary&quot;: 70000,    &quot;married&quot;: true  &#125;,  &#123;    &quot;name&quot;: &quot;Tom&quot;,    &quot;last&quot;: &quot;Smith&quot;,    &quot;age&quot;: 42,    &quot;gender&quot;: &quot;F&quot;,    &quot;salary&quot;: 80000,    &quot;married&quot;: true  &#125;,  &#123;    &quot;name&quot;: &quot;Amy&quot;,    &quot;last&quot;: &quot;Burnquist&quot;,    &quot;age&quot;: 29,    &quot;gender&quot;: &quot;F&quot;,    &quot;salary&quot;: 60000,    &quot;married&quot;: false  &#125;];
-
-
-
-
-
-
-
-
-
-
-myArray[0]
-&#123;“name”: “Jason”, …&#125;
-
-
-myArray[1].name
-“Tom”
-
-
-myArray[1][2]
-42
-
-
-myArray[3]
-undefined
-
-
-myArray[3].gender
-TypeError: Cannot read…
-
-
-访问阵列let myArray = [  &quot;Jason&quot;,  &quot;Doe&quot;,  39,  &quot;M&quot;,  70000,  true];
-
-
-
-
-
-
-
-
-
-
-myArray[1]
-“Doe”
-
-
-myArray[5]
-true
-
-
-myArray[6]
-undefined
-
-
-另见
-JSON (json.org)
-JSON Editor Online (jsoneditoronline.org)
-Convert JSON Array to Markdown Table, CSV and more (tableconvert.com)
-
-]]></content>
-      <categories>
-        <category>前端技术</category>
-      </categories>
-      <tags>
-        <tag>前端技术</tag>
-        <tag>JSON</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>JQuery 备忘录</title>
     <url>/2025/01/08/jquery/</url>
     <content><![CDATA[jQuery 备忘清单jQuery 备忘单对于初学者和有经验的开发人员都是很好的参考
@@ -6085,6 +6877,373 @@ callbacks.remove() 从回调列表中删除回调或回调集合
       </tags>
   </entry>
   <entry>
+    <title>JSON 备忘录</title>
+    <url>/2025/01/08/json/</url>
+    <content><![CDATA[JSON 备忘清单这是理解和编写 JSON 格式配置文件的快速参考备忘单。
+入门介绍JSON 是一种基于文本的轻量级开放标准，专为人类可读的数据交换而设计。
+
+JSON 代表 JavaScript 对象表示法
+JSON 易于读写。
+JSON 是与语言无关的数据交换格式
+JSON 文件扩展名为 .json
+JSON Internet 媒体类型为 application/json
+
+示例&#123;  &quot;name&quot;: &quot;Jason&quot;,  &quot;age&quot;: 39,  &quot;height&quot;: 1.92,  &quot;gender&quot;: &quot;M&quot;,  &quot;salary&quot;: 70000,  &quot;married&quot;: true,  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Tom&quot;, &quot;age&quot;: 9&#125;,    &#123;&quot;name&quot;: &quot;Ava&quot;, &quot;age&quot;: 7&#125;  ]&#125;
+
+类型
+
+
+类型
+描述
+
+
+
+Number
+双精度浮点
+
+
+String
+字符系列
+
+
+Boolean
+“true”或“false”
+
+
+Array
+有序的值序列
+
+
+Value
+字符串、数字、布尔值、空值等
+
+
+Object
+键&#x2F;值对的无序集合
+
+
+null
+Null 或 Empty
+
+
+字符串
+
+
+
+
+
+
+
+
+
+\&quot;
+双引号 Double quote
+
+
+\\
+反斜杠 Backslash
+
+
+\/
+正斜杠 Forward slash
+
+
+\b
+退格 Backspace
+
+
+\f
+换页 Form feed
+
+
+\n
+换行 Newline
+
+
+\r
+回车 Carriage return
+
+
+\t
+标签 Tab
+
+
+\u
+后跟四个十六进制数字
+
+
+示例&#123;  &quot;url&quot;: &quot;https://jaywcjlove.github.io&quot;,  &quot;msg&quot; : &quot;Hi,\n\&quot;Quick Reference\&quot;&quot;,  &quot;intro&quot;: &quot;为开发人员分享快速参考和备忘单&quot;&#125;
+
+无效字符串&#123; &quot;foo&quot;: &#x27;bar&#x27; &#125;
+
+Have to be delimited by double quotes
+数字
+
+
+
+
+类型
+说明
+
+
+
+Integer
+数字 1-9、0 和正数或负数
+
+
+Fraction
+0.3、3.9 等分数
+
+
+Exponent
+指数，如 e、e+、e-、E、E+、E
+
+
+
+
+示例&#123;  &quot;positive&quot; : 12,  &quot;negative&quot; : -1,  &quot;fraction&quot; : 10.25,  &quot;exponent&quot; : 1.0E+2,  &quot;zero&quot; : 0&#125;
+
+无效的数字&#123; &quot;foo&quot;: 0xFF &#125;
+
+在JSON中，只能使用十进制文字
+对象 Objects&#123;  &quot;color&quot;: &quot;Purple&quot;,  &quot;id&quot;: &quot;210&quot;,  &quot;composition&quot;: &#123;    &quot;R&quot;: 70,    &quot;G&quot;: 39,    &quot;B&quot;: 89  &#125;,  &quot;empty_object&quot;: &#123;&#125;&#125;
+
+用逗号分隔的多个键&#x2F;值对
+数组 Arrays[1, 2, 3, 4, 5]
+
+以 [ 开始并以 ] 结束
+对象数组&#123;  &quot;children&quot;: [    &#123; &quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15 &#125;,    &#123; &quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12 &#125;  ]&#125;
+
+数组对象&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;],  &quot;empty_array&quot;: []&#125;
+
+二维阵列&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0],    [10, 11]  ]&#125;
+
+对象的对象&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
+
+嵌套&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
+
+JSON 5Objects对象键可以是 ECMAScript 5.1 IdentifierName
+&#123;    width: 1920,    height: 1080,&#125;
+
+数组可以有一个尾随逗号
+[    1,    true,    &#x27;three&#x27;,]
+
+允许单行和多行注释&#123;  // 一行注释  &quot;name&quot;: &quot;Kenny&quot;&#125;
+
+多行注释
+&#123;/* 这是一个   多行注释 */  &quot;name&quot;: &quot;Kenny&quot;&#125;
+
+允许附加空白字符
+
+
+代码点
+描述
+
+
+
+U+0009
+水平制表符
+
+
+U+000A
+换行符
+
+
+U+000B
+垂直制表符
+
+
+U+000C
+换页符
+
+
+U+000D
+回车符
+
+
+U+0020
+空格
+
+
+U+00A0
+不间断空格
+
+
+U+2028
+行分隔符
+
+
+U+2029
+段落分隔符
+
+
+U+FEFF
+字节顺序标记
+
+
+Unicode Zs 类别
+空格分隔符 Unicode 类别中的任何其他字符
+
+
+
+
+数字数字可能有前导或尾随小数点
+&#123;    integer: 123,    withFractionPart: 123.456,    onlyFractionPart: .456,    withExponent: 123e-456,&#125;
+
+数字可以是十六进制
+&#123;    positiveHex: 0xdecaf,    negativeHex: -0xC0FFEE,&#125;
+
+数字可以是正无穷大、负无穷大和 NaN。
+&#123;    positiveInfinity: Infinity,    negativeInfinity: -Infinity,    notANumber: NaN,&#125;
+
+数字可以以明确的加号开头
+字符串
+
+&#x27;Lorem ipsum dolor sit amet, \consectetur adipiscing elit.&#x27;
+
+以下是代表相同的意思
+&#x27;Lorem ipsum dolor sit amet, consectetur adipiscing elit.&#x27;
+
+&#x27;\A\C\/\D\C&#x27;
+
+以下是代表相同的意思
+&#x27;AC/DC&#x27;
+
+在 JavaScript 中访问 JSON访问对象let myObject = &#123;  &quot;name&quot;: &quot;Jason&quot;,  &quot;last&quot;: &quot;Doe&quot;,  &quot;age&quot;: 39,  &quot;gender&quot;: &quot;M&quot;,  &quot;salary&quot;: 70000,  &quot;married&quot;: true&#125;;
+
+
+
+
+
+
+
+
+
+
+myObject.name
+“Jason”
+
+
+myObject[&quot;name&quot;]
+“Jason”
+
+
+myObject.age
+39
+
+
+myObject.other
+undefined
+
+
+myObject[0]
+undefined
+
+
+访问嵌套
+
+let myObject = &#123;    &quot;ref&quot;: &#123;        &quot;name&quot;: 0,        &quot;last&quot;: 1,        &quot;age&quot;: 2,        &quot;gender&quot;: 3,        &quot;salary&quot;: 4,        &quot;married&quot;: 5    &#125;,    &quot;jdoe&quot;: [        &quot;Jason&quot;,        &quot;Doe&quot;,        39,        &quot;M&quot;,        70000,        true    ],    &quot;jsmith&quot;: [        &quot;Tom&quot;,        &quot;Smith&quot;,        42,        &quot;F&quot;,        80000,        true    ]&#125;;
+
+
+
+
+
+
+
+
+
+
+myObject.ref.age
+2
+
+
+myObject[&quot;ref&quot;][&quot;age&quot;]
+2
+
+
+myObject.jdoe
+[“Jason”, “Doe”, 39 …]
+
+
+myObject.jsmith[3]
+“F”
+
+
+myObject[1]
+undefined
+
+
+访问对象数组
+
+let myArray = [  &#123;    &quot;name&quot;: &quot;Jason&quot;,    &quot;last&quot;: &quot;Doe&quot;,    &quot;age&quot;: 39,    &quot;gender&quot;: &quot;M&quot;,    &quot;salary&quot;: 70000,    &quot;married&quot;: true  &#125;,  &#123;    &quot;name&quot;: &quot;Tom&quot;,    &quot;last&quot;: &quot;Smith&quot;,    &quot;age&quot;: 42,    &quot;gender&quot;: &quot;F&quot;,    &quot;salary&quot;: 80000,    &quot;married&quot;: true  &#125;,  &#123;    &quot;name&quot;: &quot;Amy&quot;,    &quot;last&quot;: &quot;Burnquist&quot;,    &quot;age&quot;: 29,    &quot;gender&quot;: &quot;F&quot;,    &quot;salary&quot;: 60000,    &quot;married&quot;: false  &#125;];
+
+
+
+
+
+
+
+
+
+
+myArray[0]
+&#123;“name”: “Jason”, …&#125;
+
+
+myArray[1].name
+“Tom”
+
+
+myArray[1][2]
+42
+
+
+myArray[3]
+undefined
+
+
+myArray[3].gender
+TypeError: Cannot read…
+
+
+访问阵列let myArray = [  &quot;Jason&quot;,  &quot;Doe&quot;,  39,  &quot;M&quot;,  70000,  true];
+
+
+
+
+
+
+
+
+
+
+myArray[1]
+“Doe”
+
+
+myArray[5]
+true
+
+
+myArray[6]
+undefined
+
+
+另见
+JSON (json.org)
+JSON Editor Online (jsoneditoronline.org)
+Convert JSON Array to Markdown Table, CSV and more (tableconvert.com)
+
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>前端技术</tag>
+        <tag>JSON</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PHP 备忘录</title>
     <url>/2025/01/08/php/</url>
     <content><![CDATA[PHP 备忘清单这份 PHP 备忘单为快速查找最常用代码的正确语法提供了参考
@@ -6475,2334 +7634,6 @@ Learn X in Y minutes (learnxinyminutes.com)
       <tags>
         <tag>后端编程</tag>
         <tag>PHP</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>JavaScript 备忘录</title>
-    <url>/2025/01/08/javascript/</url>
-    <content><![CDATA[JavaScript 备忘清单包含最重要概念、函数、方法等的 JavaScript 备忘单。 初学者的完整快速参考。
-入门介绍JavaScript 是一种轻量级的解释型编程语言。
-
-JSON 备忘清单
-JavaScript 中的正则表达式
-TypeScript 备忘清单
-
-打印调试// =&gt; Hello world!console.log(&#x27;Hello world!&#x27;);// =&gt; Hello QuickReferenceconsole.warn(&#x27;hello %s&#x27;, &#x27;QuickReference&#x27;);// 将错误消息打印到 stderrconsole.error(new Error(&#x27;Oops!&#x27;));
-
-断点调试function potentiallyBuggyCode() &#123;  debugger;  // 做可能有问题的东西来检查，逐步通过等。&#125;
-
-debugger 语句调用任何可用的调试功能。
-数字let amount = 6;let price = 4.99;let home = 1e2;let num = 1_000_000; // 位数过多可以用 _ 分割let m = 0644;   // 八进制数字 420
-
-let 关键字let count; console.log(count); // =&gt; undefinedcount = 10;console.log(count); // =&gt; 10
-
-const 关键字const numberOfColumns = 4;// TypeError: Assignment to constant...numberOfColumns = 8;
-
-变量let x = null;let name = &quot;Tammy&quot;;const found = false;// =&gt; Tammy, false, nullconsole.log(name, found, x);var a;console.log(a); // =&gt; undefined
-
-字符串let single = &#x27;Wheres my bandit hat?&#x27;;let double = &quot;Wheres my bandit hat?&quot;;// =&gt; 21console.log(single.length);
-
-算术运算符5 + 5 = 10     // 加法 Addition10 - 5 = 5     // 减法 Subtraction5 * 10 = 50    // 乘法 Multiplication10 / 5 = 2     // 除法 Division10 % 5 = 0     // 取模 Modulo
-
-注释// 此行将表示注释/* 多行配置部署前必须更改以下配置。*/
-
-赋值运算符let number = 100;// 两个语句都会加 10number = number + 10;number += 10;console.log(number); // =&gt; 120
-
-字符串插值let age = 7;// 字符串拼接&#x27;Tommy is &#x27; + age + &#x27; years old.&#x27;;// 字符串插值`Tommy is $&#123;age&#125; years old.`;
-
-字符串
-
-var abc = &quot;abcdefghijklmnopqrstuvwxyz&quot;;var esc = &#x27;I don\&#x27;t \n know&#x27;;    // \n 换行var len = abc.length;            // 字符串长度abc.indexOf(&quot;lmno&quot;);             // 查找子字符串，如果不包含则 -1abc.lastIndexOf(&quot;lmno&quot;);         // 最后一次出现abc.slice(3, 6);                 // 去掉“def”，负值从后面计算abc.replace(&quot;abc&quot;,&quot;123&quot;);        // 查找和替换，接受正则表达式abc.toUpperCase();               // 转换为大写abc.toLowerCase();               // 转换为小写abc.concat(&quot; &quot;, str2);           // abc + &quot; &quot; + str2abc.charAt(2);                   // 索引处的字符：“c”abc[2];                          // 不安全，abc[2] = &quot;C&quot; 不起作用// 索引处的字符代码：“c”-&gt; 99abc.charCodeAt(2);// 用逗号分割字符串给出一个数组abc.split(&quot;,&quot;);// 分割字符abc.split(&quot;&quot;);// 匹配开头字符串,如果忽略第二个参数，则从索引 0 开始匹配abc.startsWith(&quot;bc&quot;, 1);// 匹配结尾的字符串,如果忽略第二个参数，则默认是原字符串长度abc.endsWith(&quot;wxy&quot;, abc.length - 1);// padEnd 和 padStart 都用于填充长度，默认填充对象是空格&quot;200&quot;.padEnd(5); // &quot;200  &quot;&quot;200&quot;.padEnd(5, &quot;.&quot;); // &quot;200..&quot;// 重复字符&quot;abc&quot;.repeat(2); // &quot;abcabc&quot;// trim、trimEnd 和 trimStart 用于去除首尾空格&quot; ab c &quot;.trim(); // &quot;ab c&quot;// 数字转为十六进制 (16)、八进制 (8) 或二进制 (2)(128).toString(16);
-
-数字
-
-var pi = 3.141;pi.toFixed(0);    // 返回 3             pi.toFixed(2);    // 返回 3.14 - 使用金钱pi.toPrecision(2) // 返回 3.1pi.valueOf();     // 返回号码Number(true);     // 转换为数字// 自 1970 年以来的毫秒数Number(new Date())          // 返回第一个数字：3parseInt(&quot;3 months&quot;);       // 返回 3.5parseFloat(&quot;3.5 days&quot;);     // 最大可能的 JS 数Number.MAX_VALUE            // 最小可能的 JS 编号Number.MIN_VALUE            // -无穷Number.NEGATIVE_INFINITY    // 无穷Number.POSITIVE_INFINITY    
-
-Mathconst pi = Math.PI; // 3.141592653589793Math.round(4.4); // = 4 - 数字四舍五入Math.round(4.5); // = 5Math.pow(2,8);   // = 256 - 2 的 8 次方    Math.sqrt(49);   // = 7 - 平方根Math.abs(-3.14); // = 3.14 - 绝对，正值Math.ceil(3.14); // = 4 - 返回 &gt;= 最小整数// = 3 - 返回 &lt;= 最大整数Math.floor(3.99);       // = 0 - 正弦Math.sin(0);            // OTHERS: tan,atan,asin,acos,余弦值Math.cos(Math.PI);      // = -2 - 最低值Math.min(0, 3, -2, 2);  // = 3 - 最高值Math.max(0, 3, -2, 2);  // = 0 自然对数Math.log(1);            // = 2.7182pow(E,x) 自然对数的底数Math.exp(1);            // 0 到 1 之间的随机数Math.random();          // 随机整数，从 1Math.floor(Math.random() * 5) + 1;  
-
-全局函数
-
-// 像脚本代码一样执行字符串eval();                     // 从数字返回字符串String(23);                 // 从数字返回字符串(23).toString();            // 从字符串返回数字Number(&quot;23&quot;);               // 解码 URI。 结果：“my page.asp”decodeURI(enc);             // 编码 URI。 结果：“my%20page.asp”encodeURI(uri);             // 解码 URI 组件decodeURIComponent(enc);    // 对 URI 组件进行编码encodeURIComponent(uri);    // 是一个有限的合法数isFinite();                 // 是一个非法数字isNaN();                    // 返回字符串的浮点数parseFloat();               // 解析一个字符串并返回一个整数parseInt();                 
-
-JavaScript 条件操作符
-
-true || false;       // true10 &gt; 5 || 10 &gt; 20;   // truefalse || false;      // false10 &gt; 100 || 10 &gt; 20; // false
-
-逻辑运算符 &amp;&amp;true &amp;&amp; true;        // true1 &gt; 2 &amp;&amp; 2 &gt; 1;      // falsetrue &amp;&amp; false;       // false4 === 4 &amp;&amp; 3 &gt; 1;    // true
-
-比较运算符1 &gt; 3                 // false3 &gt; 1                 // true250 &gt;= 250            // true1 === 1               // true1 === 2               // false1 === &#x27;1&#x27;             // false
-
-逻辑运算符let lateToWork = true;let oppositeValue = !lateToWork;// =&gt; falseconsole.log(oppositeValue); 
-
-空值合并运算符 ??null ?? &#x27;I win&#x27;;         //  &#x27;I win&#x27;undefined ?? &#x27;Me too&#x27;;   //  &#x27;Me too&#x27;false ?? &#x27;I lose&#x27;        //  false0 ?? &#x27;I lose again&#x27;      //  0&#x27;&#x27; ?? &#x27;Damn it&#x27;          //  &#x27;&#x27;
-
-if Statement (if 语句)const isMailSent = true;if (isMailSent) &#123;  console.log(&#x27;Mail sent to recipient&#x27;);&#125;
-
-Ternary Operator (三元运算符)var age = 1;// =&gt; truevar status = (age &gt;= 18) ? true : false;
-
-else ifconst size = 10;if (size &gt; 20) &#123;  console.log(&#x27;Medium&#x27;);&#125; else if (size &gt; 4) &#123;  console.log(&#x27;Small&#x27;);&#125; else &#123;  console.log(&#x27;Tiny&#x27;);&#125;// Print: Small
-
-&#x3D;&#x3D; vs &#x3D;&#x3D;&#x3D;0 == false     // true0 === false    // false, 不同类型1 == &quot;1&quot;       // true,  自动类型转换1 === &quot;1&quot;      // false, 不同类型null == undefined  // truenull === undefined // false&#x27;0&#x27; == false       // true&#x27;0&#x27; === false      // false
-
-== 只检查值，=== 检查值和类型。
-switch 语句const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;: console.log(&#x27;海的味道&#x27;);    break;  case &#x27;pizza&#x27;: console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
-
-switch 多 case - 单一操作const food = &#x27;salad&#x27;;switch (food) &#123;  case &#x27;oyster&#x27;:  case &#x27;pizza&#x27;:    console.log(&#x27;美味的馅饼&#x27;);    break;  default:    console.log(&#x27;请您用餐&#x27;);&#125;
-
-JavaScript Functions 函数函数// 定义函数：function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数：sum(3, 6); // 9
-
-匿名函数// 命名函数function rocketToMars() &#123;  return &#x27;BOOM!&#x27;;&#125;// 匿名函数const rocketToMars = function() &#123;  return &#x27;BOOM!&#x27;;&#125;
-
-箭头函数 (ES6)
-
-有两个参数const sum = (param1, param2) =&gt; &#123;   return param1 + param2; &#125;; console.log(sum(2,5)); // =&gt; 7 
-
-没有参数const printHello = () =&gt; &#123;   console.log(&#x27;hello&#x27;); &#125;; printHello(); // =&gt; hello
-
-只有一个参数const checkWeight = weight =&gt; &#123;   console.log(`Weight : $&#123;weight&#125;`); &#125;; checkWeight(25); // =&gt; Weight : 25 
-
-简洁箭头函数const multiply = (a, b) =&gt; a * b; // =&gt; 60 console.log(multiply(2, 30)); 
-
-从 ES2015 开始提供箭头函数
-返回关键字// 有 returnfunction sum(num1, num2) &#123;  return num1 + num2;&#125;// 该函数不输出总和function sum(num1, num2) &#123;  num1 + num2;&#125;
-
-调用函数// 定义函数function sum(num1, num2) &#123;  return num1 + num2;&#125;// 调用函数sum(2, 4); // 6
-
-立即执行函数//命名函数并立即执行一次(function sum(num1, num2) &#123;  return num1 + num2;&#125;)(2,4)//6
-
-函数表达式const dog = function() &#123;  return &#x27;Woof!&#x27;;&#125;
-
-函数参数// 参数是 namefunction sayHello(name) &#123;  return `Hello, $&#123;name&#125;!`;&#125;
-
-函数声明function add(num1, num2) &#123;  return num1 + num2;&#125;
-
-JavaScript 范围范围
-
-function myFunction() &#123;  var pizzaName = &quot;Margarita&quot;;  // 这里的代码可以使用 PizzaName  &#125;// ❌ PizzaName 不能在这里使用
-
-&#123; &#125; 块内声明的变量
-&#123;  let x = 2;&#125;// ❌ x 不能在这里使用&#123;  var x = 2;&#125;// ✅ x 能在这里使用
-
-var x = 2;       // Global scopelet x = 2;       // Global scopeconst x = 2;       // Global scope
-
-ES6 引入了两个重要的新 JavaScript 关键字：let 和 const。这两个关键字在 JavaScript 中提供了块作用域。
-块作用域变量const isLoggedIn = true;if (isLoggedIn == true) &#123;  const statusMessage = &#x27;Logged in.&#x27;;&#125;// Uncaught ReferenceError...// 未捕获的引用错误...console.log(statusMessage);
-
-全局变量// 全局声明的变量const color = &#x27;blue&#x27;;function printColor() &#123;  console.log(color);&#125;printColor(); // =&gt; blue
-
-let vs varfor (let i = 0; i &lt; 3; i++) &#123;  // 这是“let”的最大范围  // i 可以访问 ✔️&#125;// i 不能访问 ❌
-
-
-for (var i = 0; i &lt; 3; i++) &#123;  // i 可以访问 ✔️&#125;// i 可以访问 ✔️
-
-var 的范围是最近的函数块，而 let 的范围是最近的封闭块。
-带闭包的循环// 打印三次，不是我们的意思。for (var i = 0; i &lt; 3; i++) &#123;  setTimeout(_ =&gt; console.log(i), 10);&#125;
-
-
-// 按预期打印 0、1 和 2。for (let j = 0; j &lt; 3; j++) &#123;   setTimeout(_ =&gt; console.log(j), 10);&#125;
-
-变量使用 let 有自己的副本，变量有使用 var 的共享副本。
-JavaScript Arrays方法
-
-
-
-
-:-
-:-
-
-
-
-Array.from()
-类似数组对象创建一个新的 #
-
-
-Array.isArray()
-值是否是一个 Array #
-
-
-Array.of()
-创建一个新数组示例 #
-
-
-.at()
-返回值索引对应的元素 #
-
-
-.concat()
-合并两个或多个数组 #
-
-
-.copyWithin()
-浅复制替换某个位置 #
-
-
-.entries()
-新的 Array Iterator 对象 #
-
-
-.every()
-是否能通过回调函数的测试 #
-
-
-.fill()
-固定值填充一个数组中 #
-
-
-.filter()
-返回过滤后的数组 #
-
-
-.find()
-第一个元素的值 #
-
-
-.findIndex()
-第一个元素的索引 #
-
-
-.findLast()
-最后一个元素的值 #
-
-
-.findLastIndex()
-最后一个元素的索引 #
-
-
-.flat()
-扁平化嵌套数组 #
-
-
-.flatMap()
-与 flat 相同 #
-
-
-.forEach()
-升序循环执行 #
-
-
-.includes()
-是否包含一个指定的值 #
-
-
-.indexOf()
-找到给定元素的第一个索引 #
-
-
-.join()
-数组链接成一个字符串 #
-
-
-.keys()
-每个索引键 #
-
-
-.lastIndexOf()
-给定元素的最后一个索引 #
-
-
-.map()
-循环返回一个新数组 #
-
-
-.pop()
-删除最后一个元素 #
-
-
-.push()
-元素添加到数组的末尾 #
-
-
-.reduce()
-循环函数传递当前和上一个值 #
-
-
-.reduceRight()
-类似 reduce 从右往左循环 #
-
-
-.reverse()
-数组元素的位置颠倒 #
-
-
-.shift()
-删除第一个元素 #
-
-
-.slice()
-提取元素 #
-
-
-.some()
-至少有一个通过测试函数 #
-
-
-.sort()
-元素进行排序 #
-
-
-.splice()
-删除或替换或添加元素 #
-
-
-.toLocaleString()
-字符串表示数组中的元素 #
-
-
-.toString()
-返回字符串 #
-
-
-.unshift()
-元素添加到数组的开头 #
-
-
-.values()
-返回新的 ArrayIterator 对象 #
-
-
-数组const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];// 不同的数据类型const data = [1, &#x27;chicken&#x27;, false];
-
-属性 .lengthconst numbers = [1, 2, 3, 4];numbers.length // 4
-
-索引// 访问数组元素const myArray = [100, 200, 300];console.log(myArray[0]); // 100console.log(myArray[1]); // 200
-
-可变图表
-
-
-
-添加
-删除
-开始
-结束
-
-
-
-push
-✅
-
-
-✅
-
-
-pop
-
-✅
-
-✅
-
-
-unshift
-✅
-
-✅
-
-
-
-shift
-
-✅
-✅
-
-
-
-
-
-方法 .push()// 添加单个元素：const cart = [&#x27;apple&#x27;, &#x27;orange&#x27;];cart.push(&#x27;pear&#x27;); // 添加多个元素：const numbers = [1, 2];numbers.push(3, 4, 5);
-
-将项目添加到末尾并返回新的数组长度。
-方法 .pop()const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;banana&quot;];const fruit = fruits.pop(); // &#x27;banana&#x27;console.log(fruits); // [&quot;apple&quot;, &quot;dew&quot;]
-
-从末尾删除一个项目并返回已删除的项目。
-方法 .shift()const array1 = [1, 2, 3];const firstElement = array1.shift();console.log(array1); // 输出: Array [2, 3]console.log(firstElement); // 输出: 1
-
-从头删除一个项目并返回已删除的项目。
-方法 .some()const array = [1, 2, 3, 4, 5];// 检查元素是否为偶数const even = (element) =&gt; element % 2 === 0;console.log(array.some(even));// 预期输出: true
-
-方法 .concat()const numbers = [3, 2, 1]const newFirstNumber = 4    // =&gt; [ 4, 3, 2, 1 ][newFirstNumber].concat(numbers)    // =&gt; [ 3, 2, 1, 4 ]numbers.concat(newFirstNumber)
-
-如果你想避免改变你的原始数组，你可以使用 concat。
-方法 .splice()const months = [&#x27;Jan&#x27;, &#x27;March&#x27;];months.splice(1, 0, &#x27;Feb&#x27;);// 在索引 1 处插入console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;March&quot;]months.splice(2, 1, &#x27;May&#x27;);// 替换索引 2 处的 1 个元素console.log(months);// 预期输出: Array [&quot;Jan&quot;, &quot;Feb&quot;, &quot;May&quot;]
-
-方法 .unshift()let cats = [&#x27;Bob&#x27;];// =&gt; [&#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Willy&#x27;);// =&gt; [&#x27;Puff&#x27;, &#x27;George&#x27;, &#x27;Willy&#x27;, &#x27;Bob&#x27;]cats.unshift(&#x27;Puff&#x27;, &#x27;George&#x27;);
-
-将项目添加到开头并返回新的数组长度。
-方法 .filter()const words = [&#x27;js&#x27;, &#x27;java&#x27;, &#x27;golang&#x27;];const result = words.filter(word =&gt; &#123;  return  word.length &gt; 3&#125;);console.log(result);// 预期输出: Array [&quot;java&quot;, &quot;golang&quot;]
-
-JavaScript 循环While 循环while (condition) &#123;  // 要执行的代码块&#125;let i = 0;while (i &lt; 5) &#123;          console.log(i);  i++;&#125;
-
-反向循环const fruits = [&quot;apple&quot;, &quot;dew&quot;, &quot;berry&quot;];for (let i = fruits.length - 1; i &gt;= 0; i--) &#123;  console.log(`$&#123;i&#125;. $&#123;fruits[i]&#125;`);&#125;// =&gt; 2. berry// =&gt; 1. dew// =&gt; 0. apple
-
-Do…While 语句x = 0i = 0do &#123;  x = x + i;  console.log(x)  i++;&#125; while (i &lt; 5);// =&gt; 0 1 3 6 10
-
-For 循环for (let i = 0; i &lt; 4; i += 1) &#123;  console.log(i);&#125;;// =&gt; 0, 1, 2, 3
-
-遍历数组for (let i = 0; i &lt; array.length; i++)&#123;  console.log(array[i]);&#125;// =&gt; 数组中的每一项
-
-Breakfor (let i = 0; i &lt; 99; i += 1) &#123;  if (i &gt; 5) break;  console.log(i)&#125;// =&gt; 0 1 2 3 4 5
-
-Continuefor (i = 0; i &lt; 10; i++) &#123;  if (i === 3) &#123;    continue;  &#125;  text += &quot;The number is &quot; + i + &quot;&lt;br&gt;&quot;;&#125;
-
-嵌套循环for (let i = 0; i &lt; 2; i += 1) &#123;  for (let j = 0; j &lt; 3; j += 1) &#123;    console.log(`$&#123;i&#125;-$&#123;j&#125;`);  &#125;&#125;
-
-for…in 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let index in fruits) &#123;  console.log(index);&#125;// =&gt; 0// =&gt; 1// =&gt; 2
-
-label 语句
-
-var num = 0;outPoint:for(var i = 0; i &lt; 10; i++) &#123;  for(var j = 0; j &lt; 10; j++) &#123;    if(i == 5 &amp;&amp; j == 5) &#123;      continue outPoint;    &#125;    num++;  &#125;&#125;alert(num);  // 95
-
-从 alert(num) 的值可以看出，continue outPoint; 语句的作用是跳出当前循环，并跳转到 outPoint（标签）下的 for 循环继续执行。
-for…of 循环const fruits = [&quot;apple&quot;, &quot;orange&quot;, &quot;banana&quot;];for (let fruit of fruits) &#123;  console.log(fruit);&#125;// =&gt; apple// =&gt; orange// =&gt; banana
-
-for await…of
-
-async function* asyncGenerator() &#123;  var i = 0;  while (i &lt; 3) &#123;    yield i++;  &#125;&#125;(async function() &#123;  for await (num of asyncGenerator()) &#123;    console.log(num);  &#125;&#125;)();// 0// 1// 2
-
-可选的 for 表达式var i = 0;for (;;) &#123;  if (i &gt; 3) break;  console.log(i);  i++;&#125;
-
-JavaScript 迭代器(Iterators)
-
-分配给变量的函数let plusFive = (number) =&gt; &#123;  return number + 5;  &#125;;// f 被赋值为 plusFivelet f = plusFive;plusFive(3); // 8// 由于 f 具有函数值，因此可以调用它。f(9); // 14
-
-回调函数const isEven = (n) =&gt; &#123;  return n % 2 == 0;&#125;let printMsg = (evenFunc, num) =&gt; &#123;  const isNumEven = evenFunc(num);  console.log(`$&#123;num&#125; is an even number: $&#123;isNumEven&#125;.`)&#125;// Pass in isEven as the callback functionprintMsg(isEven, 4); // =&gt; The number 4 is an even number: True.
-
-数组方法 .reduce()const numbers = [1, 2, 3, 4];const sum = numbers.reduce((accumulator, curVal) =&gt; &#123;    return accumulator + curVal;&#125;);console.log(sum); // 10
-
-数组方法 .map()const members = [&quot;Taylor&quot;, &quot;Donald&quot;, &quot;Don&quot;, &quot;Natasha&quot;, &quot;Bobby&quot;];const announcements = members.map((member) =&gt; &#123;  return member + &quot; joined the contest.&quot;;&#125;);console.log(announcements);
-
-数组方法 .forEach()const numbers = [28, 77, 45, 99, 27];numbers.forEach(number =&gt; &#123;    console.log(number);&#125;); 
-
-数组方法 .filter()const randomNumbers = [4, 11, 42, 14, 39];const filteredArray = randomNumbers.filter(n =&gt; &#123;    return n &gt; 5;&#125;);
-
-JavaScript 对象(Objects)
-
-访问属性const apple = &#123;   color: &#x27;Green&#x27;,  price: &#123; bulk: &#x27;$3/kg&#x27;, smallQty: &#x27;$4/kg&#x27; &#125;&#125;;console.log(apple.color);      // =&gt; Greenconsole.log(apple.price.bulk); // =&gt; $3/kg
-
-命名属性// 无效键名示例const trainSchedule = &#123;  // 由于单词之间的空格而无效。  platform num: 10,   // 表达式不能是键。  40 - 10 + 2: 30,  // 除非用引号括起来，否则 + 号无效。  +compartment: &#x27;C&#x27;&#125;
-
-不存在的属性const classElection = &#123;  date: &#x27;January 12&#x27;&#125;;console.log(classElection.place); // undefined
-
-可变的
-
-const student = &#123;  name: &#x27;Sheldon&#x27;,  score: 100,  grade: &#x27;A&#x27;,&#125;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, score: 100, grade: &#x27;A&#x27; &#125;delete student.scorestudent.grade = &#x27;F&#x27;console.log(student)// &#123; name: &#x27;Sheldon&#x27;, grade: &#x27;F&#x27; &#125;student = &#123;&#125;// TypeError: TypeError：分配给常量变量。
-
-赋值简写语法const person = &#123;  name: &#x27;Tom&#x27;,  age: &#x27;22&#x27;,&#125;;const &#123;name, age&#125; = person;console.log(name); // &#x27;Tom&#x27;console.log(age);  // &#x27;22&#x27;
-
-删除运算符const person = &#123;  firstName: &quot;Matilda&quot;,  hobby: &quot;knitting&quot;,  goal: &quot;learning JavaScript&quot;&#125;;delete person.hobby; // 或 delete person[&#x27;hobby&#x27;];console.log(person);/*&#123;  firstName: &quot;Matilda&quot;  goal: &quot;learning JavaScript&quot;&#125; */
-
-对象作为参数const origNum = 8;const origObj = &#123;color: &#x27;blue&#x27;&#125;;const changeItUp = (num, obj) =&gt; &#123;  num = 7;  obj.color = &#x27;red&#x27;;&#125;;changeItUp(origNum, origObj);// 将输出 8，因为整数是按值传递的。console.log(origNum);// 由于传递了对象，将输出“red”// 通过引用，因此是可变的。console.log(origObj.color);
-
-工厂函数
-
-// 一个接受 &#x27;name&#x27;，&#x27;age&#x27; 和 &#x27;breed&#x27; 的工厂函数，//  参数返回一个自定义的 dog 对象。const dogFactory = (name, age, breed) =&gt; &#123;  return &#123;    name: name,    age: age,    breed: breed,    bark() &#123;      console.log(&#x27;Woof!&#x27;);      &#125;  &#125;;&#125;;
-
-速记对象创建const activity = &#x27;Surfing&#x27;;const beach = &#123; activity &#125;;console.log(beach); // &#123; activity: &#x27;Surfing&#x27; &#125;
-
-this 关键字const cat = &#123;  name: &#x27;Pipey&#x27;,  age: 8,  whatName() &#123;    return this.name    &#125;&#125;;console.log(cat.whatName()); // =&gt; Pipey
-
-方法const engine = &#123;  // 方法简写，有一个参数  start(adverb) &#123;    console.log(`The engine starts up $&#123;adverb&#125;...`);  &#125;,    // 不带参数的匿名箭头函数表达式  sputter: () =&gt; &#123;    console.log(&#x27;The engine sputters...&#x27;);  &#125;,&#125;;engine.start(&#x27;noisily&#x27;);engine.sputter();
-
-Getters 和 settersconst myCat = &#123;  _name: &#x27;Dottie&#x27;,  get name() &#123;    return this._name;    &#125;,  set name(newName) &#123;    this._name = newName;    &#125;&#125;;// 引用调用 getterconsole.log(myCat.name);// 赋值调用 settermyCat.name = &#x27;Yankee&#x27;;
-
-ProxyProxy 对象用于创建一个对象的代理，从而实现基本操作的拦截和自定义（如属性查找、赋值、枚举、函数调用等）。
-// 用于拦截对象的读取属性操作。const handler = &#123;    get: function(obj, prop) &#123;        return prop in obj ? obj[prop] : 37;    &#125;&#125;;const p = new Proxy(&#123;&#125;, handler);p.a = 1;p.b = undefined;console.log(p.a, p.b);      // 1, undefinedconsole.log(&#x27;c&#x27; in p, p.c); // false, 37
-
-语法const p = new Proxy(target, handler)
-
-
-target 要使用 Proxy 包装的目标对象（可以是任何类型的对象，包括原生数组，函数，甚至另一个代理）。
-handler 一个通常以函数作为属性的对象，各属性中的函数分别定义了在执行各种操作时代理 p 的行为。
-
-方法
-
-
-:-
-:-
-
-
-
-Proxy.revocable()
-创建一个可撤销的Proxy对象 #
-
-
-handler 对象的方法
-
-
-:-
-:-
-
-
-
-handler.getPrototypeOf()
-Object.getPrototypeOf 方法的捕捉器 #
-
-
-handler.setPrototypeOf()
-Object.setPrototypeOf 方法的捕捉器 #
-
-
-handler.isExtensible()
-Object.isExtensible 方法的捕捉器 #
-
-
-handler.preventExtensions()
-Object.preventExtensions 方法的捕捉器 #
-
-
-handler.getOwnPropertyDescriptor()
-Object.getOwnPropertyDescriptor 方法的捕捉器 #
-
-
-handler.defineProperty()
-Object.defineProperty 方法的捕捉器 #
-
-
-handler.has()
-in 操作符的捕捉器 #
-
-
-handler.get()
-属性读取操作的捕捉器 #
-
-
-handler.set()
-属性设置操作的捕捉器 #
-
-
-handler.deleteProperty()
-delete 操作符的捕捉器 #
-
-
-handler.ownKeys()
-Object.getOwnPropertyNames 方法和 Object.getOwnPropertySymbols 方法的捕捉器 #
-
-
-handler.apply()
-函数调用操作的捕捉器 #
-
-
-handler.construct()
-new 操作符的捕捉器 #
-
-
-
-
-ReflectReflect 是一个内置的对象，它提供拦截 JavaScript 操作的方法。这些方法与proxy handlers (en-US)的方法相同。Reflect不是一个函数对象，因此它是不可构造的。
-// 检测一个对象是否存在特定属性const duck = &#123;  name: &#x27;Maurice&#x27;,  color: &#x27;white&#x27;,  greeting: function() &#123;    console.log(`Quaaaack! My name is $&#123;this.name&#125;`);  &#125;&#125;Reflect.has(duck, &#x27;color&#x27;);// trueReflect.has(duck, &#x27;haircut&#x27;);// false
-
-静态方法
-
-
-:-
-:-
-
-
-
-Reflect.apply(target, thisArgument, argumentsList)
-对一个函数进行调用操作，同时可以传入一个数组作为调用参数。和 Function.prototype.apply() 功能类似 #
-
-
-Reflect.construct(target, argumentsList[, newTarget])
-对构造函数进行 new 操作，相当于执行 new target(…args) #
-
-
-Reflect.defineProperty(target, propertyKey, attributes)
-和 Object.defineProperty() 类似。如果设置成功就会返回 true #
-
-
-Reflect.deleteProperty(target, propertyKey)
-作为函数的delete操作符，相当于执行 delete target[name] #
-
-
-Reflect.get(target, propertyKey[, receiver])
-获取对象身上某个属性的值，类似于 target[name] #
-
-
-Reflect.getOwnPropertyDescriptor(target, propertyKey)
-类似于 Object.getOwnPropertyDescriptor()。如果对象中存在该属性，则返回对应的属性描述符，否则返回 undefined #
-
-
-Reflect.getPrototypeOf(target)
-类似于 Object.getPrototypeOf() #
-
-
-Reflect.has(target, propertyKey)
-判断一个对象是否存在某个属性，和 in 运算符 的功能完全相同 #
-
-
-Reflect.isExtensible(target)
-类似于 Object.isExtensible() #
-
-
-Reflect.ownKeys(target)
-返回一个包含所有自身属性（不包含继承属性）的数组。(类似于 Object.keys(), 但不会受enumerable 影响) #
-
-
-Reflect.preventExtensions(target)
-类似于 Object.preventExtensions()。返回一个Boolean #
-
-
-Reflect.set(target, propertyKey, value[, receiver])
-将值分配给属性的函数。返回一个Boolean，如果更新成功，则返回true #
-
-
-Reflect.setPrototypeOf(target, prototype)
-设置对象原型的函数。返回一个 Boolean，如果更新成功，则返回 true #
-
-
-
-
-JavaScript this 绑定隐式绑定function foo() &#123;  console.log(this)&#125;let obj1 = &#123;  name: &quot;obj1&quot;,  foo: foo&#125;let obj2 = &#123;  name: &quot;obj2&quot;,  obj1: obj1&#125;obj2.obj1.foo() // [Object obj1]
-
-隐式丢失let a = obj2.obj1.foo()a() // Window
-
-
-指定隐式绑定：必须在调用的对象内部有一个对函数的引用（比如一个属性）
-将以上调用赋值给一个变量，结果最终会是 Window
-在 a 被调用的位置没有进行过任何显示绑定，最终全局对象 window 会调用它（Window.a）
-
-
-
-显示绑定function getName(a1, a2) &#123;  console.log(&quot;此人&quot; + this.name, &quot;岁数&quot; + (a1 + a2))&#125;let person = &#123;  name: &quot;zhangsan&quot;&#125;
-
-callcall 第一个参数接受 this 作用域，剩余参数传递给其调用的函数
-getName.call(person, 18, 12)
-
-applyapply 第一个参数与 call 相同，第二个参数是其调用函数的参数数组
-getName.apply(person, [18, 12])
-
-bindbind 函数会返回一个新函数
-getName.bind(person,18,12)()//或者可以这样getName.bind(person)(18, 12)//或者这样getName.bind(person).bind(null, 18)(12)
-
-内置函数中的 this数组中的一些方法，类似于 map、forEach 等，可以自己设置绑定 this
-const obj = &#123;  name: &quot;zhangsan&quot;&#125;const array = [1, 2, 3];array.map(function(value)&#123;  console.log(this.name)&#125;, obj)// zhangsan x3 
-
-其中一些全局对象，如 setTimeout 等，它们和未显示绑定 this 的部分数组方法一样，都会指向全局对象（Window）
-setTimeout(function()&#123;   console.log(this)&#125;, 1000) // Window
-
-JavaScript Classes静态方法&#x2F;字段
-
-class Dog &#123;  constructor(name) &#123;    this._name = name;    &#125;    introduce() &#123;     console.log(&#x27;This is &#x27; + this._name + &#x27; !&#x27;);    &#125;    // 静态方法  static bark() &#123;    console.log(&#x27;Woof!&#x27;);    &#125;  static &#123;    console.log(&#x27;类静态初始化块调用&#x27;);  &#125;&#125;const myDog = new Dog(&#x27;Buster&#x27;);myDog.introduce();// 调用静态方法Dog.bark();
-
-公有静态字段class ClassStaticField &#123;  static staticField = &#x27;static field&#x27;&#125;console.log(ClassStaticField.staticField)// 预期输出值：&quot;static field&quot;​ 
-
-Classclass Song &#123;  constructor() &#123;    this.title;    this.author;  &#125;    play() &#123;    console.log(&#x27;Song playing!&#x27;);  &#125;&#125;const mySong = new Song();mySong.play();
-
-extends// Parent classclass Media &#123;  constructor(info) &#123;    this.publishDate = info.publishDate;    this.name = info.name;  &#125;&#125;// Child classclass Song extends Media &#123;  constructor(songData) &#123;    super(songData);    this.artist = songData.artist;  &#125;&#125;const mySong = new Song(&#123;   artist: &#x27;Queen&#x27;,   name: &#x27;Bohemian Rhapsody&#x27;,   publishDate: 1975&#125;);
-
-Class Constructorclass Song &#123;  constructor(title, artist) &#123;    this.title = title;    this.artist = artist;  &#125;&#125;const mySong = new Song(&#x27;Bohemian Rhapsody&#x27;, &#x27;Queen&#x27;);console.log(mySong.title);
-
-Class Methodsclass Song &#123;  play() &#123;    console.log(&#x27;Playing!&#x27;);  &#125;    stop() &#123;    console.log(&#x27;Stopping!&#x27;);  &#125;&#125;
-
-JavaScript Modules
-
-Export &#x2F; Import// myMath.js// 默认导出 Default exportexport default function add(x,y)&#123;  return x + y&#125;// 正常导出 Normal exportexport function subtract(x,y)&#123;  return x - y&#125;// 多重导出 Multiple exportsfunction multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;export &#123;  multiply, duplicate&#125;
-
-import 加载模块// main.jsimport add, &#123; subtract, multiply, duplicate &#125; from &#x27;./myMath.js&#x27;;console.log(add(6, 2));      // 8 console.log(subtract(6, 2))  // 4console.log(multiply(6, 2)); // 12console.log(duplicate(5))    // 10// index.html&lt;script type=&quot;module&quot; src=&quot;main.js&quot;&gt;&lt;/script&gt;
-
-Export Module// myMath.jsfunction add(x,y)&#123;  return x + y&#125;function subtract(x,y)&#123;  return x - y&#125;function multiply(x,y)&#123;  return x * y&#125;function duplicate(x)&#123;  return x * 2&#125;// node.js 中的多个导出module.exports = &#123;  add,  subtract,  multiply,  duplicate&#125;
-
-require 加载模块// main.jsconst myMath = require(&#x27;./myMath.js&#x27;)console.log(myMath.add(6, 2));      // 8 console.log(myMath.subtract(6, 2))  // 4console.log(myMath.multiply(6, 2)); // 12console.log(myMath.duplicate(5))    // 10
-
-JavaScript PromisesPromise
-
-创建 promises
-new Promise((resolve, reject) =&gt; &#123;  if (ok) &#123;    resolve(result)  &#125; else &#123;    reject(error)  &#125;&#125;)
-
-使用 promisespromise  .then((result) =&gt; &#123; ··· &#125;)  .catch((error) =&gt; &#123; ··· &#125;)
-
-Promise 方法Promise.all(···)Promise.race(···)Promise.reject(···)Promise.resolve(···)
-
-执行器函数const executorFn = (resolve, reject) =&gt; &#123;  resolve(&#x27;Resolved!&#x27;);&#125;;const promise = new Promise(executorFn);
-
-setTimeout()const loginAlert = () =&gt; &#123;  console.log(&#x27;Login&#x27;);&#125;;setTimeout(loginAlert, 6000);
-
-Promise 状态const promise = new Promise((resolve, reject) =&gt; &#123;  const res = true;  // 一个异步操作。  if (res) &#123;    resolve(&#x27;Resolved!&#x27;);  &#125;  else &#123;    reject(Error(&#x27;Error&#x27;));  &#125;&#125;);promise.then(  (res) =&gt; console.log(res),  (err) =&gt; console.error(err));
-
-.then() 方法const promise = new Promise((resolve, reject) =&gt; &#123;      setTimeout(() =&gt; &#123;    resolve(&#x27;Result&#x27;);  &#125;, 200);&#125;);promise.then((res) =&gt; &#123;  console.log(res);&#125;, (err) =&gt; &#123;  console.error(err);&#125;);
-
-.catch() 方法const promise = new Promise(  (resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    reject(Error(&#x27;Promise 无条件拒绝。&#x27;));  &#125;, 1000);&#125;);promise.then((res) =&gt; &#123;  console.log(value);&#125;);promise.catch((err) =&gt; &#123;  console.error(err);&#125;);
-
-Promise.all()
-
-const promise1 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(3);  &#125;, 300);&#125;);const promise2 = new Promise((resolve, reject) =&gt; &#123;  setTimeout(() =&gt; &#123;    resolve(2);  &#125;, 200);&#125;);Promise.all([promise1, promise2]).then((res) =&gt; &#123;  console.log(res[0]);  console.log(res[1]);&#125;);
-
-链接多个 .then()const promise = new Promise(  resolve =&gt;     setTimeout(() =&gt; resolve(&#x27;dAlan&#x27;),100));promise.then(res =&gt; &#123;  return res === &#x27;Alan&#x27;     ? Promise.resolve(&#x27;Hey Alan!&#x27;)    : Promise.reject(&#x27;Who are you?&#x27;)&#125;).then((res) =&gt; &#123;  console.log(res)&#125;, (err) =&gt; &#123;  console.error(err)&#125;);
-
-避免嵌套的 Promise 和 .then()
-
-const promise = new Promise((resolve, reject) =&gt; &#123;    setTimeout(() =&gt; &#123;    resolve(&#x27;*&#x27;);  &#125;, 1000);&#125;);const twoStars = (star) =&gt; &#123;    return (star + star);&#125;;const oneDot = (star) =&gt; &#123;    return (star + &#x27;.&#x27;);&#125;;const print = (val) =&gt; &#123;  console.log(val);&#125;;// 将它们链接在一起promise.then(twoStars).then(oneDot).then(print);
-
-JavaScript Async-Await
-
-异步
-
-function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;// 异步函数表达式const msg = async function() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;// 异步箭头函数const msg1 = async () =&gt; &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后msg1(); // Message: Hello World! &lt;-- 2 秒后
-
-解决 Promiseslet pro1 = Promise.resolve(5);let pro2 = 44;let pro3 = new Promise(function(resolve, reject) &#123;  setTimeout(resolve, 100, &#x27;foo&#x27;);&#125;);Promise.all([pro1, pro2, pro3]).then(function(values) &#123;  console.log(values);&#125;);// expected =&gt; Array [5, 44, &quot;foo&quot;]
-
-异步等待 Promisesfunction helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
-
-错误处理// 数据不完整let json = &#x27;&#123; &quot;age&quot;: 30 &#125;&#x27;;try &#123;  let user = JSON.parse(json); // &lt;-- 没有错误  console.log( user.name );    // no name!&#125; catch (e) &#123;  console.error( &quot;Invalid JSON data!&quot; );&#125;
-
-异步等待运算符function helloWorld() &#123;  return new Promise(resolve =&gt; &#123;    setTimeout(() =&gt; &#123;      resolve(&#x27;Hello World!&#x27;);    &#125;, 2000);  &#125;);&#125;async function msg() &#123;  const msg = await helloWorld();  console.log(&#x27;Message:&#x27;, msg);&#125;msg(); // Message: Hello World! &lt;-- 2 秒后
-
-JavaScript 请求JSONconst jsonObj = &#123;  &quot;name&quot;: &quot;Rick&quot;,  &quot;id&quot;: &quot;11A&quot;,  &quot;level&quot;: 4  &#125;;
-
-另见：JSON 备忘单
-XMLHttpRequestconst xhr = new XMLHttpRequest();xhr.open(&#x27;GET&#x27;, &#x27;mysite.com/getjson&#x27;);
-
-XMLHttpRequest 是一个浏览器级别的 API，它使客户端能够通过 JavaScript 编写数据传输脚本，而不是 JavaScript 语言的一部分。
-GETconst req = new XMLHttpRequest();req.responseType = &#x27;json&#x27;;req.open(&#x27;GET&#x27;, &#x27;/getdata?id=65&#x27;);req.onload = () =&gt; &#123;  console.log(xhr.response);&#125;;req.send();
-
-POST
-
-const data = &#123; weight: &#x27;1.5 KG&#x27; &#125;;const xhr = new XMLHttpRequest();// 初始化一个请求。xhr.open(&#x27;POST&#x27;, &#x27;/inventory/add&#x27;);// 一个用于定义响应类型的枚举值xhr.responseType = &#x27;json&#x27;;// 发送请求以及数据。xhr.send(JSON.stringify(data));// 请求成功完成时触发。xhr.onload = () =&gt; &#123;  console.log(xhr.response);&#125;// 当 request 遭遇错误时触发。xhr.onerror = () =&gt; &#123;  console.log(xhr.response);&#125;
-
-fetch api
-
-fetch(url, &#123;    method: &#x27;POST&#x27;,    headers: &#123;      &#x27;Content-type&#x27;: &#x27;application/json&#x27;,      &#x27;apikey&#x27;: apiKey    &#125;,    body: data&#125;).then(response =&gt; &#123;  if (response.ok) &#123;    return response.json();  &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message)&#125;)
-
-JSON 格式fetch(&#x27;url-that-returns-JSON&#x27;)  .then(response =&gt; response.json())  .then(jsonResponse =&gt; &#123;    console.log(jsonResponse);  &#125;);
-
-promise url 参数获取 APIfetch(&#x27;url&#x27;)  .then(response  =&gt; &#123;    console.log(response);  &#125;, rejection =&gt; &#123;    console.error(rejection.message);  &#125;);
-
-Fetch API 函数fetch(&#x27;https://api-xxx.com/endpoint&#x27;, &#123;  method: &#x27;POST&#x27;,  body: JSON.stringify(&#123;id: &quot;200&quot;&#125;)&#125;).then(response =&gt; &#123;  if(response.ok)&#123;    return response.json();    &#125;  throw new Error(&#x27;Request failed!&#x27;);&#125;, networkError =&gt; &#123;  console.log(networkError.message);&#125;).then(jsonResponse =&gt; &#123;  console.log(jsonResponse);&#125;)
-
-async await 语法
-
-const getSuggestions = async () =&gt; &#123;  const wordQuery = inputField.value;  const endpoint = `$&#123;url&#125;$&#123;queryParams&#125;$&#123;wordQuery&#125;`;  try&#123;    const response = await fetch(endpoint, &#123;cache: &#x27;no-cache&#x27;&#125;);    if(response.ok)&#123;      const jsonResponse = await response.json()    &#125;  &#125;  catch(error)&#123;    console.log(error)  &#125;&#125;
-]]></content>
-      <categories>
-        <category>后端编程</category>
-      </categories>
-      <tags>
-        <tag>后端编程</tag>
-        <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Yaml 备忘录</title>
-    <url>/2025/01/08/yaml/</url>
-    <content><![CDATA[YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。
-入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写
-
-YAML 不允许使用制表符
-元素部分之间必须有空间
-YAML 区分大小写
-以 .yaml 或 .yml 扩展名结束您的 YAML 文件
-YAML 是 JSON 的超集
-Ansible playbook 是 YAML 文件
-
-
-
-标量类型
-
-n1: 1            # 整数n2: 1.234        # 浮点s1: &#x27;abc&#x27;        # 字符串s2: &quot;abc&quot;        # 字符串s3: abc          # 字符串b: false         # 布尔类型d: 2015-04-05    # 日期类型
-
-↓ 等效的 JSON&#123;  &quot;n1&quot;: 1,  &quot;n2&quot;: 1.234,  &quot;s1&quot;: &quot;abc&quot;,  &quot;s2&quot;: &quot;abc&quot;,  &quot;s3&quot;: &quot;abc&quot;,  &quot;b&quot;: false,  &quot;d&quot;: &quot;2015-04-05&quot;&#125;
-
-使用空格缩进。 元素部分之间必须有空间。
-变量some_thing: &amp;VAR_NAME foobarother_thing: *VAR_NAME
-
-↓ 等效的 JSON&#123;  &quot;some_thing&quot;: &quot;foobar&quot;,  &quot;other_thing&quot;: &quot;foobar&quot;&#125;
-
-注释# A single line comment example# block level comment example# comment line 1# comment line 2# comment line 3
-
-多行字符串description: |  hello  world
-
-↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello\nworld\n&quot;&#125;
-
-继承
-
-parent: &amp;defaults  a: 2  b: 3child:  &lt;&lt;: *defaults  b: 4
-
-↓ 等效的 JSON&#123;  &quot;parent&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 3  &#125;,  &quot;child&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 4  &#125;&#125;
-
-参考
-
-values: &amp;ref  - Will be  - reused below  other_values:  i_am_ref: *ref
-
-↓ 等效的 JSON&#123;  &quot;values&quot;: [    &quot;Will be&quot;,    &quot;reused below&quot;  ],  &quot;other_values&quot;: &#123;    &quot;i_am_ref&quot;: [      &quot;Will be&quot;,      &quot;reused below&quot;    ]  &#125;&#125;
-
-折叠的字符串description: &gt;  hello  world
-
-↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello world\n&quot;&#125;
-
-两份文件---document: this is doc 1---document: this is doc 2
-
-YAML使用---将指令与文档内容分开。
-YAML Collections序列- Mark McGwire- Sammy Sosa- Ken Griffey
-
-↓ 等效的 JSON[  &quot;Mark McGwire&quot;,  &quot;Sammy Sosa&quot;,  &quot;Ken Griffey&quot;]
-
-映射hr:  65       # Home runsavg: 0.278    # Batting averagerbi: 147      # Runs Batted In
-
-↓ 等效的 JSON&#123;  &quot;hr&quot;: 65,  &quot;avg&quot;: 0.278,  &quot;rbi&quot;: 147&#125;
-
-映射到序列attributes:  - a1  - a2methods: [getter, setter]
-
-↓ 等效的 JSON&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;]&#125;
-
-映射序列children:  - name: Jimmy Smith    age: 15  - name: Jimmy Smith    age: 15  -    name: Sammy Sosa    age: 12
-
-↓ 等效的 JSON&#123;  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12&#125;  ]&#125;
-
-序列的序列my_sequences:  - [1, 2, 3]  - [4, 5, 6]  -      - 7    - 8    - 9    - 0 
-
-↓ 等效的 JSON&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0]  ]&#125;
-
-映射的映射Mark McGwire: &#123;hr: 65, avg: 0.278&#125;Sammy Sosa: &#123;    hr: 63,    avg: 0.288  &#125;
-
-↓ 等效的 JSON&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
-
-嵌套集合Jack:  id: 1  name: Franc  salary: 25000  hobby:    - a    - b  location: &#123;country: &quot;A&quot;, city: &quot;A-A&quot;&#125;
-
-↓ 等效的 JSON&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
-
-无序集set1: !!set  ? one  ? twoset2: !!set &#123;&#x27;one&#x27;, &quot;two&quot;&#125;
-
-↓ 等效的 JSON&#123;  &quot;set1&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;,  &quot;set2&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;&#125;
-
-集合表示为一个映射，其中每个键都与一个空值相关联
-有序映射ordered: !!omap- Mark McGwire: 65- Sammy Sosa: 63- Ken Griffy: 58
-
-↓ 等效的 JSON&#123;  &quot;ordered&quot;: [     &#123;&quot;Mark McGwire&quot;: 65&#125;,     &#123;&quot;Sammy Sosa&quot;: 63&#125;,     &#123;&quot;Ken Griffy&quot;: 58&#125;  ]&#125;
-
-YAML 参考条款
-序列又名数组或列表
-标量又名字符串或数字
-映射又名哈希或字典
-
-
-
-基于 YAML.org refcard。
-文档指标
-
-
-:-
-:-
-
-
-
-%
-指令指标
-
-
----
-文档标题
-
-
-...
-文档终结者
-
-
-收集指标
-
-
-
-
-:-
-:-
-
-
-
-?
-关键指标
-
-
-:
-价值指标
-
-
--
-嵌套系列条目指示器
-
-
-,
-单独的内联分支条目
-
-
-[]
-环绕串联系列分支
-
-
-&#123;&#125;
-环绕在线键控分支
-
-
-别名指标
-
-
-:-
-:-
-
-
-
-&amp;
-锚属性
-
-
-*
-别名指示符
-
-
-特殊键
-
-
-:-
-:-
-
-
-
-=
-默认“值”映射键
-
-
-&lt;&lt;
-合并来自另一个映射的键
-
-
-标量指标
-
-
-:-
-:-
-
-
-
-&#39;&#39;
-环绕内联未转义标量
-
-
-&quot;
-环绕内嵌转义标量
-
-
-&#96;
-&#96;
-
-
-&gt;
-折叠标量指示器
-
-
--
-剥离 chomp 修饰符（|- 或 &gt;-）
-
-
-+
-保留 chomp 修饰符（|+ 或 &gt;+）
-
-
-1-9
-显式缩进修饰符（|1 或 &gt;2）。  修饰符可以组合（|2-, &gt;+1）
-
-
-标签属性（通常未指定）
-
-
-
-
-:-
-:-
-
-
-
-none
-未指定的标签（由应用程序自动解析）
-
-
-!
-非特定标签（默认情况下，!!map&#x2F;!!seq&#x2F;!!str）
-
-
-!foo
-主要（按照惯例，表示本地 !foo 标记）
-
-
-!!foo
-次要的（按照惯例，表示 tag:yaml.org,2002:foo）
-
-
-!h!foo
-需要 %TAG !h! &lt;prefix&gt;（然后表示 &lt;prefix&gt;foo）
-
-
-!&lt;foo&gt;
-逐字标记（始终表示“foo”）
-
-
-
-
-杂项指标
-
-
-
-
-
-
-
-#
-一次性评论指示器
-
-
-`@
-两者都保留供将来使用
-
-
-核心类型（默认自动标签）
-
-
-
-
-
-
-
-
-
-!!map
-&#123;Hash table, dictionary, mapping&#125;
-
-
-!!seq
-&#123;List, array, tuple, vector, sequence&#125;
-
-
-!!str
-Unicode 字符串
-
-
-转义码
-
-Numeric
-\x12 (8-bit)
-\u1234 (16-bit)
-\U00102030 (32-bit)
-
-
-
-Protective
-\\ (\)
-\&quot; (“)
-\ ( )
-\&lt;TAB&gt; (TAB)
-
-
-
-C
-\0 (NUL)
-\a (BEL)
-\b (BS)
-\f (FF)
-\n (LF)
-\r (CR)
-\t (TAB)
-\v (VTAB)
-
-
-
-额外的
-\e (ESC)
-\_ (NBSP)
-\N (NEL)
-\L (LS)
-\P (PS)
-
-
-更多类型
-
-
-
-
-
-
-
-!!set
-&#123;cherries, plums, apples&#125;
-
-
-!!omap
-[one: 1, two: 2]
-
-
-与语言无关的标量类型
-
-
-
-
-
-
-
-
-
-&#123;~, null&#125;
-空（无值）。
-
-
-[1234, 0x4D2, 02333]
-[十进制整数、十六进制整数、八进制整数]
-
-
-[1_230.15, 12.3015e+02]
-[固定浮点数，指数浮点数]
-
-
-[.inf, -.Inf, .NAN]
-[无穷大（浮点数），负数，不是数字]
-
-
-&#123;Y, true, Yes, ON&#125;
-布尔真
-
-
-&#123;n, FALSE, No, off&#125;
-布尔假
-
-
-
-
-另见
-YAML Reference Card (yaml.org)
-Learn X in Y minutes (learnxinyminutes.com)
-YAML lint online (yamllint.com)
-INI 格式配置文件备忘清单 (jaywcjlove.github.io)
-TOML 格式配置文件备忘清单 (jaywcjlove.github.io)
-
-]]></content>
-      <categories>
-        <category>配置框架</category>
-      </categories>
-      <tags>
-        <tag>Yaml</tag>
-        <tag>配置框架</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue2 备忘录</title>
-    <url>/2025/01/08/vue2%20(1)/</url>
-    <content><![CDATA[Vue 2 备忘清单渐进式 JavaScript 框架 Vue 2 备忘清单的快速参考列表，包含常用 API 和示例。
-入门介绍Vue 是一套用于构建用户界面的渐进式框架
-
-Vue 2.x 官方文档 (v2.cn.vuejs.org)
-Vue Router 3.x 官方文档 (v3.router.vuejs.org)
-Vue 3 备忘清单
-
-
-
-注意：Vue 2.x 版本对应 Vue Router 3.x 路由版本
-快速创建 Vue 项目npx @vue/cli create hello-world
-
-参考: Vue CLI 创建一个项目
-声明式渲染&lt;div id=&quot;app&quot;&gt;  &#123;&#123; message &#125;&#125;&lt;/div&gt;
-
-
-var app = new Vue(&#123;  el: &#x27;#app&#x27;,  data: &#123;    message: &#x27;Hello Vue!&#x27;  &#125;&#125;)
-
-基础例子
-
-&lt;div id=&quot;example&quot;&gt;  &lt;p&gt;原始信息: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;/p&gt;  &lt;p&gt;    计算的反向信息: &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;  &lt;/p&gt;&lt;/div&gt;
-
-
-var vm = new Vue(&#123;  el: &#x27;#example&#x27;,  data: &#123;    message: &#x27;Hello&#x27;  &#125;,  computed: &#123;    // 计算属性的 getter    reversedMessage: function () &#123;      // `this` 指向 vm 实例      return this.message.split(&#x27;&#x27;)          .reverse().join(&#x27;&#x27;)    &#125;  &#125;&#125;)
-
-结果
-原始信息:  &quot;Hello&quot;计算的反向信息:  &quot;olleH&quot;
-
-绑定元素属性&lt;div id=&quot;app-2&quot;&gt;  &lt;span v-bind:title=&quot;message&quot;&gt;    鼠标悬停几秒钟查看此处动态绑定的提示信息！  &lt;/span&gt;&lt;/div&gt;
-
-
-var app2 = new Vue(&#123;  el: &#x27;#app-2&#x27;,  data: &#123;    message: &#x27;页面加载于 &#x27; + new Date()        .toLocaleString()  &#125;&#125;)
-
-条件&lt;div id=&quot;app-3&quot;&gt;  &lt;p v-if=&quot;seen&quot;&gt;现在你看到我了&lt;/p&gt;&lt;/div&gt;
-
-
-var app3 = new Vue(&#123;  el: &#x27;#app-3&#x27;,  data: &#123;    seen: true  &#125;&#125;)
-
-控制切换一个元素是否显示
-循环&lt;div id=&quot;app-4&quot;&gt;  &lt;ol&gt;    &lt;li v-for=&quot;todo in todos&quot;&gt;      &#123;&#123; todo.text &#125;&#125;    &lt;/li&gt;  &lt;/ol&gt;&lt;/div&gt;
-
-
-var app4 = new Vue(&#123;  el: &#x27;#app-4&#x27;,  data: &#123;    todos: [      &#123; text: &#x27;学习 JavaScript&#x27; &#125;,      &#123; text: &#x27;学习 Vue&#x27; &#125;,      &#123; text: &#x27;整个牛项目&#x27; &#125;    ]  &#125;&#125;)
-
-点击事件处理&lt;div id=&quot;app-5&quot;&gt;  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;  &lt;button v-on:click=&quot;reverseMessage&quot;&gt;    反转消息  &lt;/button&gt;&lt;/div&gt;
-
-
-var app5 = new Vue(&#123;  el: &#x27;#app-5&#x27;,  data: &#123;    message: &#x27;Hello Vue.js!&#x27;  &#125;,  methods: &#123;    reverseMessage: function () &#123;      this.message = this.message.split(&#x27;&#x27;)            .reverse().join(&#x27;&#x27;)    &#125;  &#125;&#125;)
-
-输入事件处理&lt;div id=&quot;app-6&quot;&gt;  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;  &lt;input v-model=&quot;message&quot;&gt;&lt;/div&gt;
-
-v-model 指令，它能轻松实现表单输入和应用状态之间的双向绑定
-var app6 = new Vue(&#123;  el: &#x27;#app-6&#x27;,  data: &#123;    message: &#x27;Hello Vue!&#x27;  &#125;&#125;)
-
-模板语法文本&lt;span&gt;Message: &#123;&#123; msg &#125;&#125;&lt;/span&gt;&lt;span v-once&gt;  这个将不会改变: &#123;&#123; msg &#125;&#125;&lt;/span&gt;
-
-使用 v-once 指令，执行一次性地插值，当数据改变时，插值处的内容不会更新
-原始 HTML&lt;p&gt;解释为普通文本: &#123;&#123; rawHtml &#125;&#125;&lt;/p&gt;&lt;p&gt;  使用 v-html 指令:   &lt;span v-html=&quot;rawHtml&quot;&gt;&lt;/span&gt;&lt;/p&gt;
-
-使用 v-html 指令，输出真正的 HTML
-属性&lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt;&lt;button v-bind:disabled=&quot;isDisabled&quot;&gt;  Button&lt;/button&gt;
-
-如果 isDisabled 的值是 null&#x2F;undefined&#x2F;false 则 disabled 不会被渲染出来
-JavaScript 表达式&lt;div id=&quot;app&quot;&gt;  &lt;span&gt;消息: &#123;&#123; msg &#125;&#125;&lt;/span&gt;  &lt;span&gt;&#123;&#123; msg + &#x27;这是字符串&#x27; &#125;&#125;&lt;/span&gt;  &lt;span&gt;&#123;&#123; isWorking ? &#x27;是&#x27;:&#x27;否&#x27; &#125;&#125;&lt;/span&gt;  &lt;span&gt;&#123;&#123; msg.getDetials() &#125;&#125;&lt;/span&gt;  &lt;div v-bind:id=&quot;&#x27;list-&#x27; + id&quot;&gt;&lt;/div&gt;&lt;div&gt;
-
-指令&lt;p v-if=&quot;seen&quot;&gt;  现在你看到我了&lt;/p&gt;
-
-v-if 指令将根据表达式 seen 的值的真假来插入&#x2F;移除 &lt;p&gt; 元素
-指令参数&lt;a v-bind:href=&quot;url&quot;&gt;...&lt;/a&gt;
-
-v-bind 指令将该元素 href 属性与表达式 url 的值绑定
-&lt;a v-on:click=&quot;doSomething&quot;&gt;...&lt;/a&gt;
-
-v-on 指令，用于监听 DOM 事件，oSomething 是事件名
-指令动态参数 v2.6&lt;a v-on:[eventName]=&quot;doSomething&quot;&gt;...&lt;/a&gt;
-
-当 eventName 的值为 focus 时，v-on:[eventName] 将等价于 v-on:focus
-指令修饰符&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;  ...&lt;/form&gt;
-
-.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()
-指令缩写&lt;!-- 完整语法 --&gt;&lt;a v-bind:href=&quot;url&quot;&gt;...&lt;/a&gt;&lt;!-- 缩写 --&gt;&lt;a :href=&quot;url&quot;&gt;...&lt;/a&gt;&lt;!-- 动态参数的缩写 (2.6.0+) --&gt;&lt;a :[key]=&quot;url&quot;&gt; ... &lt;/a&gt;
-
-Class 与 Style 绑定对象语法&lt;div v-bind:class=&quot;&#123; active: isActive &#125;&quot;&gt;&lt;/div&gt;
-
-传给 v-bind:class 一个对象，以动态地切换 class
-与普通的 class 属性共存
-
-&#123;2&#125;&lt;div  class=&quot;static&quot;  v-bind:class=&quot;&#123;    active: isActive,    &#x27;text-danger&#x27;: hasError  &#125;&quot;&gt;&lt;/div&gt;
-
-如下 data
-data: &#123;  isActive: true,  hasError: false&#125;
-
-结果渲染为
-&lt;div class=&quot;static active&quot;&gt;&lt;/div&gt;
-
-绑定的数据对象不必内联定义在模板里
-
-&lt;div v-bind:class=&quot;classObject&quot;&gt;&lt;/div&gt;
-
-如下 data
-data: &#123;  classObject: &#123;    active: true,    &#x27;text-danger&#x27;: false  &#125;&#125;
-
-结果渲染为
-&lt;div class=&quot;static active&quot;&gt;&lt;/div&gt;
-
-三元表达式&lt;div v-bind:class=&quot;[  isActive ? activeClass : &#x27;&#x27;]&quot;&gt;&lt;/div&gt;
-
-数组&lt;div v-bind:class=&quot;[  &#123; active: isActive &#125;, errorClass]&quot;&gt;&lt;/div&gt;
-
-数组语法&lt;div v-bind:class=&quot;[  activeClass, errorClass]&quot;&gt;&lt;/div&gt;
-
-如下 data
-data: &#123;  activeClass: &#x27;active&#x27;,  errorClass: &#x27;text-danger&#x27;&#125;
-
-结果渲染为
-&lt;div class=&quot;active text-danger&quot;&gt;&lt;/div&gt;
-
-内联样式&lt;div v-bind:style=&quot;&#123;    color: activeColor,    fontSize: fontSize + &#x27;px&#x27;&#125;&quot;&gt;&lt;/div&gt;
-
-如下 data
-data: &#123;  activeColor: &#x27;red&#x27;,  fontSize: 30&#125;
-
-结果渲染为
-&lt;div style=&quot;color: red; font-size: 30px;&quot;&gt;&lt;/div&gt;
-
-内联样式对象通常更好&lt;div v-bind:style=&quot;styleObject&quot;&gt;&lt;/div&gt;
-
-如下 data
-data: &#123;  styleObject: &#123;    color: &#x27;red&#x27;,    fontSize: &#x27;13px&#x27;  &#125;&#125;
-
-同样的，对象语法常常结合返回对象的计算属性使用
-内联样式数组语法&lt;div v-bind:style=&quot;[  baseStyles, overridingStyles]&quot;&gt;&lt;/div&gt;
-
-内联样式多重值&lt;div :style=&quot;&#123;  display: [&#x27;-webkit-box&#x27;, &#x27;flex&#x27;]&#125;&quot;&gt;&lt;/div&gt;
-
-条件渲染v-if&lt;h1 v-if=&quot;awesome&quot;&gt;Vue is awesome!&lt;/h1&gt;&lt;h1 v-else&gt;Oh no 😢&lt;/h1&gt;
-
-v-else-if
-
-&lt;div v-if=&quot;type === &#x27;A&#x27;&quot;&gt;A&lt;/div&gt;&lt;div v-else-if=&quot;type === &#x27;B&#x27;&quot;&gt;B&lt;/div&gt;&lt;div v-else-if=&quot;type === &#x27;C&#x27;&quot;&gt;C&lt;/div&gt;&lt;div v-else&gt;  Not A/B/C&lt;/div&gt;
-
-@2.1.0 新增，必须紧跟在带 v-if 或者 v-else-if 的元素之后
-v-else
-
-&lt;div v-if=&quot;Math.random() &gt; 0.5&quot;&gt;  现在你看到我了&lt;/div&gt;&lt;div v-else&gt;  现在你看不见我了&lt;/div&gt;
-
-v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面
-&lt;template&gt; 上使用 v-if 条件渲染分组&lt;template v-if=&quot;ok&quot;&gt;  &lt;p&gt;Paragraph 1&lt;/p&gt;&lt;/template&gt;
-
-用 key 管理可复用的元素
-
-&lt;template v-if=&quot;loginType === &#x27;username&#x27;&quot;&gt;  &lt;label&gt;Username&lt;/label&gt;  &lt;input placeholder=&quot;输入用户名&quot; key=&quot;username-input&quot;&gt;&lt;/template&gt;&lt;template v-else&gt;  &lt;label&gt;Email&lt;/label&gt;  &lt;input placeholder=&quot;输入邮箱&quot; key=&quot;email-input&quot;&gt;&lt;/template&gt;
-
-v-show&lt;h1 v-show=&quot;ok&quot;&gt;  Hello!&lt;/h1&gt;
-
-带有 v-show 的元素始终会被渲染并保留在 DOM 中，只是简单地切换元素的 CSS 属性 display
-列表渲染v-for&#123;3&#125;&lt;ul id=&quot;example-1&quot;&gt;  &lt;li    v-for=&quot;item in items&quot;    :key=&quot;item.message&quot;&gt;    &#123;&#123; item.message &#125;&#125;  &lt;/li&gt;&lt;/ul&gt;
-
-var example1 = new Vue(&#123;  el: &#x27;#example-1&#x27;,  data: &#123;    items: [      &#123; message: &#x27;Foo&#x27; &#125;,      &#123; message: &#x27;Bar&#x27; &#125;    ]  &#125;&#125;)
-
-v-for 可选的第二个参数(索引)&#123;2&#125;&lt;li v-for=&quot;(item, index) in items&quot;&gt;  &#123;&#123; index &#125;&#125;  &#123;&#123; item.message &#125;&#125;&lt;/li&gt;
-
-如下 data
-data: &#123;  items: [    &#123; message: &#x27;Foo&#x27; &#125;,    &#123; message: &#x27;Bar&#x27; &#125;  ]&#125;
-
-也可以用 of 替代 in 作为分隔符
-&lt;div v-for=&quot;item of items&quot;&gt;&lt;/div&gt;
-
-v-for 使用对象
-
-&lt;li v-for=&quot;value in object&quot;&gt;  &#123;&#123; value &#125;&#125;&lt;/li&gt;
-
-如下 data
-data: &#123;  object: &#123;    title: &#x27;How to do lists in Vue&#x27;,    author: &#x27;Jane Doe&#x27;,    publishedAt: &#x27;2016-04-10&#x27;  &#125;&#125;
-
-渲染结果
-How to do lists in VueJane Doe2016-04-10
-
-提供第二个的参数为 property 名称 (也就是键名)
-&lt;div v-for=&quot;(value, name) in object&quot;&gt;  &#123;&#123; name &#125;&#125;: &#123;&#123; value &#125;&#125;&lt;/div&gt;
-
-还可以用第三个参数作为索引
-&lt;div v-for=&quot;(value,name,index) in object&quot;&gt;  &#123;&#123; index &#125;&#125;. &#123;&#123; name &#125;&#125;: &#123;&#123; value &#125;&#125;&lt;/div&gt;
-
-v-for&#x2F;v-if&#123;2,3&#125;&lt;li  v-for=&quot;todo in todos&quot;  v-if=&quot;!todo.isComplete&quot;&gt;  &#123;&#123; todo &#125;&#125;&lt;/li&gt;
-
-只渲染未完成的 todo，下面加上 v-else 示例
-&lt;ul v-if=&quot;todos.length&quot;&gt;  &lt;li v-for=&quot;todo in todos&quot;&gt;    &#123;&#123; todo &#125;&#125;  &lt;/li&gt;&lt;/ul&gt;&lt;p v-else&gt;No todos left!&lt;/p&gt;
-
-注意: v-for 和 v-if 不推荐一起使用参考官方文档
-组件上使用 v-for&lt;my-component  v-for=&quot;(item, index) in items&quot;  v-bind:item=&quot;item&quot;  v-bind:index=&quot;index&quot;  v-bind:key=&quot;item.id&quot;&gt;&lt;/my-component&gt;
-
-2.2.0+ 的版本里，当在组件上使用 v-for 时，key 现在是必须的
-事件处理监听事件&#123;2&#125;&lt;div id=&quot;example-1&quot;&gt;  &lt;button v-on:click=&quot;counter += 1&quot;&gt;    +1  &lt;/button&gt;  &lt;p&gt;按钮已被点击 &#123;&#123; counter &#125;&#125; 次。&lt;/p&gt;&lt;/div&gt;
-
-var example1 = new Vue(&#123;  el: &#x27;#example-1&#x27;,  data: &#123;    counter: 0  &#125;&#125;)
-
-事件处理方法
-
-&#123;3&#125;&lt;div id=&quot;example-2&quot;&gt;  &lt;!-- `greet` 是在下面定义的方法名 --&gt;  &lt;button v-on:click=&quot;greet&quot;&gt;    你好  &lt;/button&gt;&lt;/div&gt;
-
-var example2 = new Vue(&#123;  el: &#x27;#example-2&#x27;,  data: &#123;    name: &#x27;Vue.js&#x27;  &#125;,  // 在 `methods` 对象中定义方法  methods: &#123;    greet: function (event) &#123;      // `this` 在方法里指向当前 Vue 实例      alert(&#x27;Hello &#x27; + this.name + &#x27;!&#x27;)      // `event` 是原生 DOM 事件      if (event) &#123;        alert(event.target.tagName)      &#125;    &#125;  &#125;&#125;)
-
-也可以用 JavaScript 直接调用方法
-example2.greet() // =&gt; &#x27;Hello Vue.js!&#x27;
-
-内联处理器中的方法
-
-&#123;2,5&#125;&lt;div id=&quot;example-3&quot;&gt;  &lt;button v-on:click=&quot;say(&#x27;hi&#x27;)&quot;&gt;    弹出 hi  &lt;/button&gt;  &lt;button v-on:click=&quot;say(&#x27;what&#x27;)&quot;&gt;    弹出 what  &lt;/button&gt;&lt;/div&gt;
-
-&#123;4&#125;new Vue(&#123;  el: &#x27;#example-3&#x27;,  methods: &#123;    say: function (message) &#123;      alert(message)    &#125;  &#125;&#125;)
-
-访问原始的 DOM 事件，用特殊变量 $event
-&lt;button v-on:click=&quot;say(&#x27;what&#x27;, $event)&quot;&gt;  提交&lt;/button&gt;
-
-methods: &#123;  say: function (message, event) &#123;    // 现在我们可以访问原生事件对象    if (event) &#123;      event.preventDefault()    &#125;    alert(message)  &#125;&#125;
-
-事件修饰符&lt;!-- 阻止单击事件继续传播 --&gt;&lt;a v-on:click.stop=&quot;doThis&quot;&gt;&lt;/a&gt;&lt;!-- 提交事件不再重载页面 --&gt;&lt;form v-on:submit.prevent=&quot;submit&quot;&gt;&lt;/form&gt;&lt;!-- 修饰符可以串联 --&gt;&lt;a v-on:click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;&lt;!-- 只有修饰符 --&gt;&lt;form v-on:submit.prevent&gt;&lt;/form&gt;&lt;!-- 添加事件监听器时使用事件捕获模式 --&gt;&lt;!-- 即内部元素触发的事件先在此处理 --&gt;&lt;!-- 然后交由内部元素进行处理 --&gt;&lt;div v-on:click.capture=&quot;doThis&quot;&gt;...&lt;/div&gt;&lt;!-- 当 event.target 是当前元素自身时触发 --&gt;&lt;!-- 即事件不是从内部元素触发的 --&gt;&lt;div v-on:click.self=&quot;doThat&quot;&gt;...&lt;/div&gt;&lt;!-- 点击事件将只会触发一次 --&gt;&lt;a v-on:click.once=&quot;doThis&quot;&gt;&lt;/a&gt;
-
-事件修饰符 passive&lt;!-- 滚动事件的默认行为(即滚动行为)会立即触发 --&gt;&lt;!-- 而不会等待 `onScroll` 完成  --&gt;&lt;!-- 包含 event.preventDefault() 的情况 --&gt;&lt;p v-on:scroll.passive=&quot;onScroll&quot;&gt;  ...&lt;/p&gt;
-
-这个 .passive 修饰符尤其能够提升移动端的性能。
-按键修饰符&lt;!-- 在 key 是 Enter 时调用 vm.submit() --&gt;&lt;input v-on:keyup.enter=&quot;submit&quot;&gt;&lt;!-- 在 key 是 PageDown 时被调用 --&gt;&lt;input v-on:keyup.page-down=&quot;onPageDown&quot;&gt;&lt;!-- Alt + C --&gt;&lt;input v-on:keyup.alt.67=&quot;clear&quot;&gt;&lt;!-- Ctrl + Click --&gt;&lt;div v-on:click.ctrl=&quot;doSomething&quot;&gt;
-
-.exact 修饰符&lt;!-- 即使 Alt 或 Shift 被一同按下时也会触发 --&gt;&lt;button v-on:click.ctrl=&quot;onClick&quot;&gt;&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;&lt;button v-on:click.ctrl.exact=&quot;ctrlClick&quot;&gt;&lt;!-- 没有任何系统修饰符被按下的时候才触发 --&gt;&lt;button v-on:click.exact=&quot;onClick&quot;&gt;
-
-计算属性和侦听器基础例子&lt;div id=&quot;example&quot;&gt;  &lt;p&gt;Original message: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;/p&gt;  &lt;p&gt;    计算的反向消息： &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;  &lt;/p&gt;&lt;/div&gt;
-
-var vm = new Vue(&#123;  el: &#x27;#example&#x27;,  data: &#123;    message: &#x27;Hello&#x27;  &#125;,  computed: &#123;    // 计算属性的 getter    reversedMessage: function () &#123;      // `this` 指向 vm 实例      return this.message.split(&#x27;&#x27;)                  .reverse().join(&#x27;&#x27;)    &#125;  &#125;&#125;)
-
-计算属性缓存 vs 方法&lt;p&gt;  计算的反向消息：&quot;&#123;&#123; reversedMessage() &#125;&#125;&quot;&lt;/p&gt;
-
-在组件中，我们可以将同一函数定义为一个方法而不是一个计算属性
-methods: &#123;  reversedMessage: function () &#123;    return this.message.split(&#x27;&#x27;)                .reverse().join(&#x27;&#x27;)  &#125;&#125;
-
-两种方式的最终结果确实是完全相同的。然而，不同的是计算属性是基于它们的响应式依赖进行缓存的。
-计算属性 vs 侦听属性
-
-&lt;div id=&quot;demo&quot;&gt;&#123;&#123; fullName &#125;&#125;&lt;/div&gt;
-
-var vm = new Vue(&#123;  el: &#x27;#demo&#x27;,  data: &#123;    firstName: &#x27;Foo&#x27;,    lastName: &#x27;Bar&#x27;,    fullName: &#x27;Foo Bar&#x27;  &#125;,  watch: &#123;    firstName: function (val) &#123;      this.fullName =           val + &#x27; &#x27; + this.lastName    &#125;,    lastName: function (val) &#123;      this.fullName =          this.firstName + &#x27; &#x27; + val    &#125;  &#125;&#125;)
-
-上面代码是命令式且重复的。将它与计算属性的版本进行比较：
-var vm = new Vue(&#123;  el: &#x27;#demo&#x27;,  data: &#123;    firstName: &#x27;Foo&#x27;,    lastName: &#x27;Bar&#x27;  &#125;,  computed: &#123;    fullName: function () &#123;      return this.firstName         + &#x27; &#x27; + this.lastName    &#125;  &#125;&#125;)
-
-计算属性的 setter
-
-computed: &#123;  fullName: &#123;    get: function () &#123;         // getter      return this.firstName + &#x27; &#x27; + this.lastName    &#125;,    set: function (newValue) &#123; // setter      var names = newValue.split(&#x27; &#x27;)      this.firstName = names[0]      this.lastName = names[names.length - 1]    &#125;  &#125;&#125;
-
-表单输入绑定文本&lt;input v-model=&quot;msg&quot; placeholder=&quot;编辑我&quot;&gt;&lt;p&gt;msg is: &#123;&#123; msg &#125;&#125;&lt;/p&gt;
-
-多行文本&#123;3&#125;&lt;span&gt;Multiline message is:&lt;/span&gt;&lt;textarea  v-model=&quot;message&quot;  placeholder=&quot;添加多行&quot;&gt;&lt;/textarea&gt;&lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;
-
-复选框&#123;4&#125;&lt;input  type=&quot;checkbox&quot;  id=&quot;checkbox&quot;  v-model=&quot;checked&quot;&gt;&lt;label for=&quot;checkbox&quot;&gt;&#123;&#123; checked&#125;&#125;&lt;/label&gt;
-
-多个复选框
-
-&lt;input type=&quot;checkbox&quot; id=&quot;jack&quot; value=&quot;Jack&quot; v-model=&quot;checkedNames&quot;&gt;&lt;label for=&quot;jack&quot;&gt;Jack&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;john&quot; value=&quot;John&quot; v-model=&quot;checkedNames&quot;&gt;&lt;label for=&quot;john&quot;&gt;John&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mike&quot; value=&quot;Mike&quot; v-model=&quot;checkedNames&quot;&gt;&lt;label for=&quot;mike&quot;&gt;Mike&lt;/label&gt;&lt;br&gt;&lt;span&gt;Checked names: &#123;&#123; checkedNames &#125;&#125;&lt;/span&gt;
-
-如下 data
-new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    checkedNames: []  &#125;&#125;)
-
-单选按钮&lt;div id=&quot;example-4&quot;&gt;  &lt;input type=&quot;radio&quot; id=&quot;one&quot; value=&quot;One&quot;    v-model=&quot;picked&quot;&gt;  &lt;label for=&quot;one&quot;&gt;One&lt;/label&gt;  &lt;br&gt;  &lt;input type=&quot;radio&quot; id=&quot;two&quot; value=&quot;Two&quot;    v-model=&quot;picked&quot;&gt;  &lt;label for=&quot;two&quot;&gt;Two&lt;/label&gt;  &lt;div&gt;Picked: &#123;&#123; picked &#125;&#125;&lt;/div&gt;&lt;/div&gt;
-
-
-new Vue(&#123;  el: &#x27;#example-4&#x27;,  data: &#123;    picked: &#x27;&#x27;  &#125;&#125;)
-
-选择框&lt;select v-model=&quot;selected&quot;&gt;  &lt;option disabled value=&quot;&quot;&gt;请选择&lt;/option&gt;  &lt;option&gt;A&lt;/option&gt;  &lt;option&gt;B&lt;/option&gt;  &lt;option&gt;C&lt;/option&gt;&lt;/select&gt;&lt;span&gt;Selected: &#123;&#123; selected &#125;&#125;&lt;/span&gt;
-
-
-new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    selected: &#x27;&#x27;  &#125;&#125;)
-
-选择框(数组)&lt;select v-model=&quot;selected&quot; multiple&gt;  &lt;option&gt;A&lt;/option&gt;  &lt;option&gt;B&lt;/option&gt;  &lt;option&gt;C&lt;/option&gt;&lt;/select&gt;&lt;div&gt;Selected: &#123;&#123; selected &#125;&#125;&lt;/div&gt;
-
-
-new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    selected: []  &#125;&#125;)
-
-v-for 渲染的动态选项
-
-&#123;3-4&#125;&lt;select v-model=&quot;selected&quot;&gt;  &lt;option    v-for=&quot;option in options&quot;    v-bind:value=&quot;option.value&quot;  &gt;    &#123;&#123; option.text &#125;&#125;  &lt;/option&gt;&lt;/select&gt;&lt;span&gt;Selected: &#123;&#123; selected &#125;&#125;&lt;/span&gt;
-
-
-&#123;6-8&#125;new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    selected: &#x27;A&#x27;,    options: [      &#123; text: &#x27;One&#x27;, value: &#x27;A&#x27; &#125;,      &#123; text: &#x27;Two&#x27;, value: &#x27;B&#x27; &#125;,      &#123; text: &#x27;Three&#x27;, value: &#x27;C&#x27; &#125;    ]  &#125;&#125;)
-
-值绑定&lt;!-- 当选中时，pc 为字符串 &quot;a&quot; --&gt;&lt;input type=&quot;radio&quot; v-model=&quot;pc&quot; value=&quot;a&quot;&gt;&lt;!-- toggle 为 true 或 false --&gt;&lt;input type=&quot;checkbox&quot; v-model=&quot;toggle&quot;&gt;&lt;!-- 选中第一个选项时selected为字符串 abc --&gt;&lt;select v-model=&quot;selected&quot;&gt;  &lt;option value=&quot;abc&quot;&gt;ABC&lt;/option&gt;&lt;/select&gt;
-
-单选按钮&lt;input  type=&quot;radio&quot;  v-model=&quot;pick&quot;  v-bind:value=&quot;a&quot;&gt;
-
-当选中时
-vm.pick === vm.a
-
-复选框&#123;3&#125;&lt;input  type=&quot;checkbox&quot;  v-model=&quot;toggle&quot;  true-value=&quot;yes&quot;  false-value=&quot;no&quot;&gt;
-
-
-// 当选中时vm.toggle === &#x27;yes&#x27;// 当没有选中时vm.toggle === &#x27;no&#x27;
-
-选择框的选项&lt;select v-model=&quot;selected&quot;&gt;  &lt;!-- 内联对象字面量 --&gt;  &lt;option v-bind:value=&quot;&#123; number: 123 &#125;&quot;&gt;    123  &lt;/option&gt;&lt;/select&gt;
-
-当选中时
-typeof vm.selected // =&gt; &#x27;object&#x27;vm.selected.number // =&gt; 123
-
-修饰符&lt;!-- lazy:在“change”时而非“input”时更新 --&gt;&lt;input v-model.lazy=&quot;msg&quot;&gt;&lt;!-- number:自动将用户的输入值转为数值类型 --&gt;&lt;input v-model.number=&quot;age&quot; type=&quot;number&quot;&gt;&lt;!-- trim:自动过滤用户输入的首尾空白字符 --&gt;&lt;input v-model.trim=&quot;msg&quot;&gt;
-
-组件基础单文件组件
-
-
-将 HTML&#x2F;CSS&#x2F;JS 三部分存放到一个 Hello.vue 文件中
-&lt;template&gt;  &lt;p&gt;&#123;&#123; title &#125;&#125; World!&lt;/p&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    name: &#x27;Hello&#x27;,    props: &#123;      title: &#123;        type: String,        default: &#x27;Hello&#x27;      &#125;    &#125;,    data: function() &#123;      return &#123;        greeting: &quot;Hello&quot;      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  p &#123;    font-size: 2em;    text-align: center;  &#125;&lt;/style&gt;
-
-使用 Hello.vue 组件
-&lt;script&gt;  import Vue from &quot;vue&quot;;  import Hello from &quot;./Hello&quot;;  export default &#123;    components: &#123; Hello &#125;  &#125;&lt;/script&gt;&lt;template&gt;  &lt;div&gt;    &lt;Hello :title=&quot;&#x27;aaaa&#x27;&quot;&gt;&lt;/Hello&gt;  &lt;/div&gt;&lt;/template&gt;
-
-
-
-基本示例
-
-Vue.component(&#x27;button-counter&#x27;, &#123;  data: function () &#123;    return &#123;      count: 0    &#125;  &#125;,  template: `    &lt;button v-on:click=&quot;count++&quot;&gt;      你点击了我 &#123;&#123; count &#125;&#125; 次    &lt;/button&gt;  `&#125;)
-
-组件是可复用的 Vue 实例
-&lt;div id=&quot;components-demo&quot;&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;&lt;/div&gt;
-
-
-new Vue(&#123;  el: &#x27;#components-demo&#x27;&#125;)
-
-组件的复用
-&lt;div id=&quot;components-demo&quot;&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;&lt;/div&gt;
-
-单个根元素&#123;4&#125;Vue.component(&#x27;blog-post&#x27;, &#123;  props: [&#x27;post&#x27;],  template: `    &lt;div class=&quot;blog-post&quot;&gt;      &lt;h3&gt;&#123;&#123; post.title &#125;&#125;&lt;/h3&gt;      &lt;div v-html=&quot;post.content&quot;&gt;&lt;/div&gt;    &lt;/div&gt;  `&#125;)
-
-
-&lt;blog-post  v-for=&quot;post in posts&quot;  v-bind:key=&quot;post.id&quot;  v-bind:post=&quot;post&quot;&gt;&lt;/blog-post&gt;
-
-向子组件传递数据Vue.component(&#x27;blog-post&#x27;, &#123;  props: [&#x27;title&#x27;],  template: &#x27;&lt;h3&gt;&#123;&#123; title &#125;&#125;&lt;/h3&gt;&#x27;&#125;)
-
-当值传递给一个 prop attribute 的时候，变成了组件实例的一个 property
-&lt;blog-post title=&quot;写博客&quot;&gt;&lt;/blog-post&gt;&lt;blog-post title=&quot;如此有趣&quot;&gt;&lt;/blog-post&gt;
-
-data 必须是一个函数data: function () &#123;  return &#123;    count: 0  &#125;&#125;
-
-组件的 data 选项必须是一个函数
-监听子组件事件
-
-&#123;7&#125;Vue.component(&#x27;blog-post&#x27;, &#123;  props: [&#x27;post&#x27;],  template: `    &lt;div class=&quot;blog-post&quot;&gt;      &lt;h3&gt;&#123;&#123; post.title &#125;&#125;&lt;/h3&gt;      &lt;button        v-on:click=&quot;$emit(&#x27;enlarge-txt&#x27;)&quot;      &gt;放大文字      &lt;/button&gt;      &lt;div v-html=&quot;post.content&quot;&gt;&lt;/div&gt;    &lt;/div&gt;  `&#125;)
-
-
-&#123;3&#125;&lt;blog-post  ...  v-on:enlarge-text=&quot;postFontSize += 0.1&quot;&gt;&lt;/blog-post&gt;
-
-可以使用 $emit 的第二个参数来提供这个值
-&#123;2&#125;&lt;button  v-on:click=&quot;$emit(&#x27;enlarge-text&#x27;, 0.1)&quot;&gt;  Enlarge text&lt;/button&gt;
-
-通过 $event 访问到被抛出的这个值
-&#123;3&#125;&lt;blog-post  ...  v-on:enlarge-text=&quot;postFontSize += $event&quot;&gt;&lt;/blog-post&gt;
-
-如果这个事件处理函数是一个方法
-&#123;3&#125;&lt;blog-post  ...  v-on:enlarge-text=&quot;onEnlargeText&quot;&gt;&lt;/blog-post&gt;
-
-那么这个值将会作为第一个参数传入这个方法
-methods: &#123;  onEnlargeText: function(enlargeAmount) &#123;    this.postFontSize += enlargeAmount  &#125;&#125;
-
-在组件上使用 v-model
-
-自定义事件也可以用于创建支持 v-model 的自定义输入组件。
-&lt;input v-model=&quot;searchText&quot;&gt;
-
-等价于
-&lt;input  v-bind:value=&quot;searchText&quot;  v-on:input=&quot;searchText = $event.target.value&quot;&gt;
-
-当用在组件上时，v-model 则会这样：
-&lt;custom-input  v-bind:value=&quot;searchText&quot;  v-on:input=&quot;searchText = $event&quot;&gt;&lt;/custom-input&gt;
-
-为了让它正常工作，这个组件内的 &lt;input&gt; 必须：
-
-将其 value attribute 绑定到一个名叫 value 的 prop 上
-在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
-
-
-Vue.component(&#x27;custom-input&#x27;, &#123;  props: [&#x27;value&#x27;],  template: `    &lt;input      v-bind:value=&quot;value&quot;      v-on:input=&quot;$emit(&#x27;input&#x27;, $event.target.value)&quot;    &gt;  `&#125;)
-
-现在 v-model 就应该可以在这个组件上完美地工作起来了
-&#123;2&#125;&lt;custom-input  v-model=&quot;searchText&quot;&gt;&lt;/custom-input&gt;
-
-通过插槽分发内容&lt;alert-box&gt;  发生了不好的事情。&lt;/alert-box&gt;
-
-
-&#123;5&#125;Vue.component(&#x27;alert-box&#x27;, &#123;  template: `    &lt;div class=&quot;demo-alert-box&quot;&gt;      &lt;strong&gt;Error!&lt;/strong&gt;      &lt;slot&gt;&lt;/slot&gt;    &lt;/div&gt;  `&#125;)
-
-动态组件示例
-
-&lt;div id=&quot;dynamic-component-demo&quot; class=&quot;demo&quot;&gt;  &lt;button    v-for=&quot;tab in tabs&quot;    v-bind:key=&quot;tab&quot;    v-bind:class=&quot;[&#x27;tab-button&#x27;, &#123; active: currentTab === tab &#125;]&quot;    v-on:click=&quot;currentTab = tab&quot;  &gt;    &#123;&#123; tab &#125;&#125;  &lt;/button&gt;  &lt;component v-bind:is=&quot;currentTabComponent&quot; class=&quot;tab&quot;&gt;&lt;/component&gt;&lt;/div&gt;&lt;script&gt;  Vue.component(&quot;tab-home&quot;, &#123;    template: &quot;&lt;div&gt;Home component&lt;/div&gt;&quot;  &#125;);  Vue.component(&quot;tab-posts&quot;, &#123;    template: &quot;&lt;div&gt;Posts component&lt;/div&gt;&quot;  &#125;);  Vue.component(&quot;tab-archive&quot;, &#123;    template: &quot;&lt;div&gt;Archive component&lt;/div&gt;&quot;  &#125;);  new Vue(&#123;    el: &quot;#dynamic-component-demo&quot;,    data: &#123;      currentTab: &quot;Home&quot;,      tabs: [&quot;Home&quot;, &quot;Posts&quot;, &quot;Archive&quot;]    &#125;,    computed: &#123;      currentTabComponent: function() &#123;        return &quot;tab-&quot; + this.currentTab.toLowerCase();      &#125;    &#125;  &#125;);&lt;/script&gt;
-
-解析 DOM 模板时的注意事项有些 HTML 元素，诸如 &lt;ul&gt;、&lt;ol&gt;、&lt;table&gt; 和 &lt;select&gt;，对于哪些元素可以出现在其内部是有严格限制的。有些元素，诸如 &lt;li&gt;、&lt;tr&gt; 和 &lt;option&gt;，只能出现在其它某些特定的元素内部
-&lt;table&gt;  &lt;blog-post-row&gt;&lt;/blog-post-row&gt;&lt;/table&gt;
-
-&lt;blog-post-row&gt; 会被作为无效的内容提升到外部
-
-如果我们从以下来源使用模板的话，这条限制是不存在的
-
-字符串 (例如：template: &#39;...&#39;)
-单文件组件 (.vue)
-&lt;script type=&quot;text/x-template&quot;&gt;
-
-
-
-过渡 &amp; 动画单元素&#x2F;组件的过渡
-
-&lt;template&gt;  &lt;button v-on:click=&quot;show = !show&quot;&gt;    切换  &lt;/button&gt;  &lt;transition name=&quot;fade&quot;&gt;    &lt;p v-if=&quot;show&quot;&gt;切换内容&lt;/p&gt;  &lt;/transition&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        show: true      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  .fade-enter-active, .fade-leave-active &#123;    transition: opacity .5s;  &#125;  /* .fade-leave-active 低于 2.1.8 版本 */  .fade-enter, .fade-leave-to &#123;    opacity: 0;  &#125;&lt;/style&gt;
-
-CSS 过渡
-
-&lt;template&gt;  &lt;button @click=&quot;show = !show&quot;&gt;    切换渲染  &lt;/button&gt;  &lt;transition name=&quot;slide-fade&quot;&gt;    &lt;p v-if=&quot;show&quot;&gt;切换内容&lt;/p&gt;  &lt;/transition&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        show: true      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  /* 可以设置不同的进入和离开动画 */  /* 设置持续时间和动画函数 */  .slide-fade-enter-active &#123;    transition: all .3s ease;  &#125;  .slide-fade-leave-active &#123;    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);  &#125;  /* .slide-fade-leave-active 用于 2.1.8 以下版本 */   .slide-fade-enter, .slide-fade-leave-to &#123;    transform: translateX(10px);    opacity: 0;  &#125;&lt;/style&gt;
-
-CSS 动画
-
-&lt;template&gt;  &lt;button @click=&quot;show = !show&quot;&gt;切换展示&lt;/button&gt;  &lt;transition name=&quot;bounce&quot;&gt;    &lt;p v-if=&quot;show&quot;&gt;切换内容&lt;/p&gt;  &lt;/transition&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        show: true      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;.bounce-enter-active &#123;  animation: bounce-in .5s;&#125;.bounce-leave-active &#123;  animation: bounce-in .5s reverse;&#125;@keyframes bounce-in &#123;  0% &#123;    transform: scale(0);  &#125;  50% &#123;    transform: scale(1.5);  &#125;  100% &#123;    transform: scale(1);  &#125;&#125;&lt;/style&gt;
-
-过渡的类名
-
-
-
-
-:-
-:-
-
-
-
-v-enter
-定义进入过渡的开始状态 #
-
-
-v-enter-active
-定义进入过渡生效时的状态 #
-
-
-v-enter-to (2.1.8)
-定义进入过渡的结束状态 #
-
-
-v-leave
-定义离开过渡的开始状态 #
-
-
-v-leave-active
-定义离开过渡生效时的状态 #
-
-
-v-leave-to (2.1.8)
-定义离开过渡的结束状态 #
-
-
-如果你使用了 &lt;transition name=&quot;my-tran&quot;&gt;，那么 v-enter 会替换为 my-tran-enter。
-自定义过渡的类名
-
-
-:-
-:-
-
-
-
-enter-class
-#
-
-
-enter-active-class
-#
-
-
-enter-to-class (2.1.8+)
-#
-
-
-leave-class
-#
-
-
-leave-active-class
-#
-
-
-leave-to-class (2.1.8+)
-#
-
-
-
-&lt;transition  name=&quot;custom-classes-transition&quot;  enter-active-class=&quot;animated tada&quot;  leave-active-class=&quot;animated bounceOutRight&quot;&gt;  &lt;p v-if=&quot;show&quot;&gt;hello&lt;/p&gt;&lt;/transition&gt;
-
-显性的过渡持续时间&lt;transition&gt; 组件上的 duration prop 定制一个显性的过渡持续时间 (以毫秒计)：
-&lt;transition :duration=&quot;1000&quot;&gt;  ...&lt;/transition&gt;
-
-你也可以定制进入和移出的持续时间：
-&lt;transition :duration=&quot;&#123;  enter: 500,  leave: 800&#125;&quot;&gt;  ...&lt;/transition&gt;
-
-初始渲染的过渡
-
-可以通过 appear attribute 设置节点在初始渲染的过渡
-&lt;transition appear&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
-
-这里默认和进入&#x2F;离开过渡一样，同样也可以自定义 CSS 类名
-&lt;transition  appear  appear-class=&quot;custom-appear-class&quot;  appear-to-class=&quot;custom-appear-to-class&quot;  appear-active-class=&quot;custom-appear-active-class&quot;&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
-
-自定义 JavaScript 钩子：
-&lt;transition  appear  v-on:before-appear=&quot;customBeforeAppearHook&quot;  v-on:appear=&quot;customAppearHook&quot;  v-on:after-appear=&quot;customAfterAppearHook&quot;  v-on:appear-cancelled=&quot;customAppearCancelledHook&quot;&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
-
-无论是 appear attribute 还是 v-on:appear 钩子都会生成初始渲染过渡
-JavaScript 钩子&lt;transition  v-on:before-enter=&quot;beforeEnter&quot;  v-on:enter=&quot;enter&quot;  v-on:after-enter=&quot;afterEnter&quot;  v-on:enter-cancelled=&quot;enterCancelled&quot;  v-on:before-leave=&quot;beforeLeave&quot;  v-on:leave=&quot;leave&quot;  v-on:after-leave=&quot;afterLeave&quot;  v-on:leave-cancelled=&quot;leaveCancelled&quot;&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
-
-钩子函数可以结合 CSS transitions&#x2F;animations 使用，也可以单独使用
-列表的进入&#x2F;离开过渡
-
-&lt;template&gt;  &lt;button v-on:click=&quot;add&quot;&gt;添加&lt;/button&gt;  &lt;button v-on:click=&quot;remove&quot;&gt;删除&lt;/button&gt;  &lt;transition-group name=&quot;list&quot; tag=&quot;p&quot;&gt;    &lt;span v-for=&quot;item in items&quot; v-bind:key=&quot;item&quot; class=&quot;list-item&quot;&gt;      &#123;&#123; item &#125;&#125;    &lt;/span&gt;  &lt;/transition-group&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        items: [1,2,3,4,5,6,7,8,9],        nextNum: 10      &#125;;    &#125;,    methods: &#123;      randomIndex: function () &#123;        return Math.floor(Math.random() * this.items.length)      &#125;,      add: function () &#123;        this.items.splice(this.randomIndex(), 0, this.nextNum++)      &#125;,      remove: function () &#123;        this.items.splice(this.randomIndex(), 1)      &#125;,    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  .list-item &#123;    display: inline-block;    margin-right: 10px;  &#125;  .list-enter-active, .list-leave-active &#123;    transition: all 1s;  &#125;  /* .list-leave-active 适用于 2.1.8 以下版本 */  .list-enter, .list-leave-to &#123;    opacity: 0;    transform: translateY(30px);  &#125;&lt;/style&gt;
-
-Vue 2 API 参考全局配置
-
-
-
-
-:-
-:-
-
-
-
-silent
-取消所有的日志与警告 #
-
-
-optionMergeStrategies
-自定义合并策略的选项 #
-
-
-devtools
-是否允许 devtools 检查 #
-
-
-errorHandler
-未捕获错误的处理函数 (开发模式生效) #
-
-
-warnHandler (2.4.0)
-运行时警告处理函数 #
-
-
-ignoredElements
-忽略 Vue 之外的 (自定义元素) #
-
-
-keyCodes
-v-on 自定义键位别名 #
-
-
-performance (2.2.0)
-性能追踪 #
-
-
-productionTip (2.2.0)
-是否生成生产提示 #
-
-
-全局 API
-
-
-
-
-:-
-:-
-
-
-
-Vue.extend
-Vue 构造器，创建一个“子类” #
-
-
-Vue.nextTick
-执行延迟回调 #
-
-
-Vue.set
-向响应式对象中添加一个属性 #
-
-
-Vue.delete
-删除对象的 property #
-
-
-Vue.directive
-注册或获取全局指令 #
-
-
-Vue.filter
-注册或获取全局过滤器 #
-
-
-Vue.component
-注册或获取全局组件 #
-
-
-Vue.use
-安装 Vue.js 插件 #
-
-
-Vue.mixin
-全局注册一个混入 #
-
-
-Vue.compile
-将模板字符串编译成 render 函数 #
-
-
-Vue.observable (2.6.0)
-让一个对象可响应 #
-
-
-Vue.version
-Vue 安装版本号 #
-
-
-数据
-
-
-:-
-:-
-
-
-
-data
-实例的数据对象 #
-
-
-props
-接收来自父组件的数据 #
-
-
-propsData
-创建实例时传递 props #
-
-
-computed
-计算属性将被混入到 Vue 实例中 #
-
-
-methods
-将被混入到 Vue 实例中 #
-
-
-watch
-对象键是观察的表达式，值是回调函数 #
-
-
-DOM
-
-
-:-
-:-
-
-
-
-el
-实例的挂载目标 #
-
-
-template
-字符串模板作为 Vue 实例的标识使用 #
-
-
-render
-字符串模板的代替方案 #
-
-
-renderError (2.2.0)
-render错误时提供另一种渲染 #
-
-
-生命周期钩子
-
-
-
-
-:-
-:-
-
-
-
-beforeCreate
-实例初始化之后 #
-
-
-created
-实例创建完成后被立即同步调用 #
-
-
-beforeMount
-在挂载开始之前被调用 #
-
-
-mounted
-实例被挂载后调用 #
-
-
-beforeUpdate
-数据改变后 DOM 更新之前调用 #
-
-
-updated
-数据更改更新完毕之后被调用 #
-
-
-activated
-keep-alive 缓存组件激活时调用 #
-
-
-deactivated
-keep-alive 缓存的组件失活时调用 #
-
-
-beforeDestroy
-实例销毁之前调用 #
-
-
-destroyed
-实例销毁后调用 #
-
-
-errorCaptured (2.5.0)
-来自后代组件的错误时被调用 #
-
-
-资源
-
-
-:-
-:-
-
-
-
-directives
-包含 Vue 实例可用指令的哈希表 #
-
-
-filters
-包含 Vue 实例可用过滤器的哈希表 #
-
-
-components
-包含 Vue 实例可用组件的哈希表 #
-
-
-组合
-
-
-:-
-:-
-
-
-
-parent
-指定已创建的实例之父实例 #
-
-
-mixins
-接收一个混入对象的数组 #
-
-
-extends
-声明扩展另一个组件 #
-
-
-provide/inject (2.2.0)
-祖组件向所有子孙后代注入依赖 #
-
-
-其它
-
-
-:-
-:-
-
-
-
-name
-允许组件模板递归地调用自身 #
-
-
-delimiters
-改变纯文本插入分隔符 #
-
-
-functional
-使组件无状态和无实例 #
-
-
-model (2.2.0)
-使用 v-model 时定制 prop 和 event #
-
-
-inheritAttrs (2.4.0)
-#
-
-
-comments (2.4.0)
-是否保留模板中的HTML注释 #
-
-
-实例方法 &#x2F; 数据
-
-
-:-
-:-
-
-
-
-vm.$watch
-观察 Vue 实例上的一个表达式或者一个函数计算结果的变化 #
-
-
-vm.$set
-全局 Vue.set 的别名 #
-
-
-vm.$delete
-全局 Vue.delete 的别名 #
-
-
-实例 property
-
-
-
-
-:-
-:-
-
-
-
-vm.$data
-观察的数据对象 #
-
-
-vm.$props (2.2.0)
-组件接收的 props 对象 #
-
-
-vm.$el
-实例使用的根 DOM 元素 #
-
-
-vm.$options
-实例的初始化选项 #
-
-
-vm.$parent
-父实例 #
-
-
-vm.$root
-当前组件树的根实例 #
-
-
-vm.$children
-当前实例的直接子组件 #
-
-
-vm.$slots
-访问被插槽分发的内容 #
-
-
-vm.$scopedSlots (2.1.0)
-访问作用域插槽 #
-
-
-vm.$refs
-DOM 元素和组件实例 #
-
-
-vm.$isServer
-是否运行于服务器 #
-
-
-vm.$attrs (2.4.0)
-包含父作用域中不作为 prop 被识别的属性绑定 ( #
-
-
-vm.$listeners (2.4.0)
-包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器 #
-
-
-实例方法 &#x2F; 事件
-
-
-:-
-:-
-
-
-
-vm.$on
-监听当前实例上的自定义事件 #
-
-
-vm.$once
-监听一个自定义事件，只触发一次 #
-
-
-vm.$off
-移除自定义事件监听器 #
-
-
-vm.$emit
-触发当前实例上的事 #
-
-
-实例方法 &#x2F; 生命周期
-
-
-:-
-:-
-
-
-
-vm.$mount
-手动地挂载一个未挂载的实例 #
-
-
-vm.$forceUpdate
-迫使 Vue 实例重新渲染 #
-
-
-vm.$nextTick
-回调延迟执行 #
-
-
-vm.$destroy
-完全销毁一个实例 #
-
-
-指令
-
-
-
-
-:-
-:-
-
-
-
-v-text
-更新元素的 textContent #
-
-
-v-html
-更新元素的 innerHTML #
-
-
-v-show
-切换元素的 display css 属性 #
-
-
-v-if
-有条件地渲染元素 #
-
-
-v-else
-#
-
-
-v-else-if (2.1.0)
-#
-
-
-v-for
-多次渲染元素或模板块 #
-
-
-v-on
-绑定事件监听器 #
-
-
-v-bind
-动态地绑定一个或多个属性  #
-
-
-v-model
-创建双向绑定 #
-
-
-v-slot
-提供插槽或接收 prop 的插槽 #
-
-
-v-pre
-跳过元素和它的子元素编译过程 #
-
-
-v-cloak
-保持在元素上直到实例结束编译 #
-
-
-v-once
-只渲染元素和组件一次 #
-
-
-特殊 attribute
-
-
-:-
-:-
-
-
-
-key
-用在 Vue 的虚拟 DOM 算法 #
-
-
-ref
-元素或子组件注册引用信息 #
-
-
-is
-限制是否更新 #
-
-
-slot
-推荐 2.6.0 新增的 v-slot #
-
-
-slot-scope
-推荐 2.6.0 新增的 v-slot #
-
-
-scope
-2.5.0 新增的 slot-scope 取代 #
-
-
-内置的组件
-
-
-:-
-:-
-
-
-
-&lt;component&gt;
-渲染一个元组件为动态组件 #
-
-
-&lt;transition&gt;
-单个元素&#x2F;组件的过渡效果 #
-
-
-&lt;transition-group&gt;
-多个元素&#x2F;组件的过渡效果 #
-
-
-&lt;keep-alive&gt;
-不活动的实例缓存不销毁 #
-
-
-&lt;slot&gt;
-组件模板中的内容分发插槽 #
-
-
-v-on (事件)修饰符
-
-
-
-
-:-
-:-
-
-
-
-v-on:click.stop #
-调用 event.stopPropagation()。
-
-
-v-on:click.prevent #
-调用 event.preventDefault()。
-
-
-v-on:click.capture #
-添加事件侦听器时使用 capture 模式。
-
-
-v-on:click.self #
-只当事件是从侦听器绑定的元素本身触发时才触发回调。
-
-
-v-on:click.&#123;keyCode|keyAlias&#125; #
-只当事件是从特定键触发时才触发回调。
-
-
-v-on:click.native #
-监听组件根元素的原生事件。
-
-
-v-on:click.once #
-只触发一次回调。
-
-
-v-on:click.passive (2.3.0) #
-以 { passive: true } 模式添加侦听器
-
-
-
-
-v-on (鼠标)修饰符
-
-
-:-
-:-
-
-
-
-v-on:click.left #
-只当点击鼠标左键时触发
-
-
-v-on:click.right #
-只当点击鼠标右键时触发
-
-
-v-on:click.middle #
-只当点击鼠标中键时触发
-
-
-在 (2.2.0) 中新增
-系统修饰键
-
-
-:-
-:-
-
-
-
-v-on:keyup.ctrl (2.1.0)
-#
-
-
-v-on:keyup.alt (2.1.0)
-#
-
-
-v-on:keyup.shift (2.1.0)
-#
-
-
-v-on:keyup.meta (2.1.0)
-#
-
-
-Keyboard 按键修饰符
-
-
-:-
-:-
-
-
-
-v-on:keyup.enter
-#
-
-
-v-on:keyup.tab
-#
-
-
-v-on:keyup.delete
-捕获“删除”和“退格”键 #
-
-
-v-on:keyup.esc
-#
-
-
-v-on:keyup.space
-#
-
-
-v-on:keyup.up
-#
-
-
-v-on:keyup.down
-#
-
-
-v-on:keyup.left
-#
-
-
-v-on:keyup.right
-#
-
-
-v-bind 修饰符
-
-
-:-
-:-
-
-
-
-v-bind.prop #
-作为一个 DOM property 绑定而不是作为 attribute 绑定。(差别在哪里？)
-
-
-v-bind.camel (2.1.0+) #
-将 kebab-case attribute 名转换为 camelCase。
-
-
-v-bind.sync (2.3.0+) #
-语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器。
-
-
-
-
-另见
-Vue Essentials Cheat-Sheet.pdf (vuemastery.com)
-Vue 2 官方文档 (vuejs.org)
-Vue 2 实例方法事件 (marozed.com)
-
-]]></content>
-      <categories>
-        <category>前端技术</category>
-      </categories>
-      <tags>
-        <tag>前端技术</tag>
-        <tag>Vue2</tag>
       </tags>
   </entry>
   <entry>
@@ -10055,6 +8886,1631 @@ Vue Router 4.x 官方文档
       </tags>
   </entry>
   <entry>
+    <title>Vue2 备忘录</title>
+    <url>/2025/01/08/vue2%20(1)/</url>
+    <content><![CDATA[Vue 2 备忘清单渐进式 JavaScript 框架 Vue 2 备忘清单的快速参考列表，包含常用 API 和示例。
+入门介绍Vue 是一套用于构建用户界面的渐进式框架
+
+Vue 2.x 官方文档 (v2.cn.vuejs.org)
+Vue Router 3.x 官方文档 (v3.router.vuejs.org)
+Vue 3 备忘清单
+
+
+
+注意：Vue 2.x 版本对应 Vue Router 3.x 路由版本
+快速创建 Vue 项目npx @vue/cli create hello-world
+
+参考: Vue CLI 创建一个项目
+声明式渲染&lt;div id=&quot;app&quot;&gt;  &#123;&#123; message &#125;&#125;&lt;/div&gt;
+
+
+var app = new Vue(&#123;  el: &#x27;#app&#x27;,  data: &#123;    message: &#x27;Hello Vue!&#x27;  &#125;&#125;)
+
+基础例子
+
+&lt;div id=&quot;example&quot;&gt;  &lt;p&gt;原始信息: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;/p&gt;  &lt;p&gt;    计算的反向信息: &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;  &lt;/p&gt;&lt;/div&gt;
+
+
+var vm = new Vue(&#123;  el: &#x27;#example&#x27;,  data: &#123;    message: &#x27;Hello&#x27;  &#125;,  computed: &#123;    // 计算属性的 getter    reversedMessage: function () &#123;      // `this` 指向 vm 实例      return this.message.split(&#x27;&#x27;)          .reverse().join(&#x27;&#x27;)    &#125;  &#125;&#125;)
+
+结果
+原始信息:  &quot;Hello&quot;计算的反向信息:  &quot;olleH&quot;
+
+绑定元素属性&lt;div id=&quot;app-2&quot;&gt;  &lt;span v-bind:title=&quot;message&quot;&gt;    鼠标悬停几秒钟查看此处动态绑定的提示信息！  &lt;/span&gt;&lt;/div&gt;
+
+
+var app2 = new Vue(&#123;  el: &#x27;#app-2&#x27;,  data: &#123;    message: &#x27;页面加载于 &#x27; + new Date()        .toLocaleString()  &#125;&#125;)
+
+条件&lt;div id=&quot;app-3&quot;&gt;  &lt;p v-if=&quot;seen&quot;&gt;现在你看到我了&lt;/p&gt;&lt;/div&gt;
+
+
+var app3 = new Vue(&#123;  el: &#x27;#app-3&#x27;,  data: &#123;    seen: true  &#125;&#125;)
+
+控制切换一个元素是否显示
+循环&lt;div id=&quot;app-4&quot;&gt;  &lt;ol&gt;    &lt;li v-for=&quot;todo in todos&quot;&gt;      &#123;&#123; todo.text &#125;&#125;    &lt;/li&gt;  &lt;/ol&gt;&lt;/div&gt;
+
+
+var app4 = new Vue(&#123;  el: &#x27;#app-4&#x27;,  data: &#123;    todos: [      &#123; text: &#x27;学习 JavaScript&#x27; &#125;,      &#123; text: &#x27;学习 Vue&#x27; &#125;,      &#123; text: &#x27;整个牛项目&#x27; &#125;    ]  &#125;&#125;)
+
+点击事件处理&lt;div id=&quot;app-5&quot;&gt;  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;  &lt;button v-on:click=&quot;reverseMessage&quot;&gt;    反转消息  &lt;/button&gt;&lt;/div&gt;
+
+
+var app5 = new Vue(&#123;  el: &#x27;#app-5&#x27;,  data: &#123;    message: &#x27;Hello Vue.js!&#x27;  &#125;,  methods: &#123;    reverseMessage: function () &#123;      this.message = this.message.split(&#x27;&#x27;)            .reverse().join(&#x27;&#x27;)    &#125;  &#125;&#125;)
+
+输入事件处理&lt;div id=&quot;app-6&quot;&gt;  &lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;  &lt;input v-model=&quot;message&quot;&gt;&lt;/div&gt;
+
+v-model 指令，它能轻松实现表单输入和应用状态之间的双向绑定
+var app6 = new Vue(&#123;  el: &#x27;#app-6&#x27;,  data: &#123;    message: &#x27;Hello Vue!&#x27;  &#125;&#125;)
+
+模板语法文本&lt;span&gt;Message: &#123;&#123; msg &#125;&#125;&lt;/span&gt;&lt;span v-once&gt;  这个将不会改变: &#123;&#123; msg &#125;&#125;&lt;/span&gt;
+
+使用 v-once 指令，执行一次性地插值，当数据改变时，插值处的内容不会更新
+原始 HTML&lt;p&gt;解释为普通文本: &#123;&#123; rawHtml &#125;&#125;&lt;/p&gt;&lt;p&gt;  使用 v-html 指令:   &lt;span v-html=&quot;rawHtml&quot;&gt;&lt;/span&gt;&lt;/p&gt;
+
+使用 v-html 指令，输出真正的 HTML
+属性&lt;div v-bind:id=&quot;dynamicId&quot;&gt;&lt;/div&gt;&lt;button v-bind:disabled=&quot;isDisabled&quot;&gt;  Button&lt;/button&gt;
+
+如果 isDisabled 的值是 null&#x2F;undefined&#x2F;false 则 disabled 不会被渲染出来
+JavaScript 表达式&lt;div id=&quot;app&quot;&gt;  &lt;span&gt;消息: &#123;&#123; msg &#125;&#125;&lt;/span&gt;  &lt;span&gt;&#123;&#123; msg + &#x27;这是字符串&#x27; &#125;&#125;&lt;/span&gt;  &lt;span&gt;&#123;&#123; isWorking ? &#x27;是&#x27;:&#x27;否&#x27; &#125;&#125;&lt;/span&gt;  &lt;span&gt;&#123;&#123; msg.getDetials() &#125;&#125;&lt;/span&gt;  &lt;div v-bind:id=&quot;&#x27;list-&#x27; + id&quot;&gt;&lt;/div&gt;&lt;div&gt;
+
+指令&lt;p v-if=&quot;seen&quot;&gt;  现在你看到我了&lt;/p&gt;
+
+v-if 指令将根据表达式 seen 的值的真假来插入&#x2F;移除 &lt;p&gt; 元素
+指令参数&lt;a v-bind:href=&quot;url&quot;&gt;...&lt;/a&gt;
+
+v-bind 指令将该元素 href 属性与表达式 url 的值绑定
+&lt;a v-on:click=&quot;doSomething&quot;&gt;...&lt;/a&gt;
+
+v-on 指令，用于监听 DOM 事件，oSomething 是事件名
+指令动态参数 v2.6&lt;a v-on:[eventName]=&quot;doSomething&quot;&gt;...&lt;/a&gt;
+
+当 eventName 的值为 focus 时，v-on:[eventName] 将等价于 v-on:focus
+指令修饰符&lt;form v-on:submit.prevent=&quot;onSubmit&quot;&gt;  ...&lt;/form&gt;
+
+.prevent 修饰符告诉 v-on 指令对于触发的事件调用 event.preventDefault()
+指令缩写&lt;!-- 完整语法 --&gt;&lt;a v-bind:href=&quot;url&quot;&gt;...&lt;/a&gt;&lt;!-- 缩写 --&gt;&lt;a :href=&quot;url&quot;&gt;...&lt;/a&gt;&lt;!-- 动态参数的缩写 (2.6.0+) --&gt;&lt;a :[key]=&quot;url&quot;&gt; ... &lt;/a&gt;
+
+Class 与 Style 绑定对象语法&lt;div v-bind:class=&quot;&#123; active: isActive &#125;&quot;&gt;&lt;/div&gt;
+
+传给 v-bind:class 一个对象，以动态地切换 class
+与普通的 class 属性共存
+
+&#123;2&#125;&lt;div  class=&quot;static&quot;  v-bind:class=&quot;&#123;    active: isActive,    &#x27;text-danger&#x27;: hasError  &#125;&quot;&gt;&lt;/div&gt;
+
+如下 data
+data: &#123;  isActive: true,  hasError: false&#125;
+
+结果渲染为
+&lt;div class=&quot;static active&quot;&gt;&lt;/div&gt;
+
+绑定的数据对象不必内联定义在模板里
+
+&lt;div v-bind:class=&quot;classObject&quot;&gt;&lt;/div&gt;
+
+如下 data
+data: &#123;  classObject: &#123;    active: true,    &#x27;text-danger&#x27;: false  &#125;&#125;
+
+结果渲染为
+&lt;div class=&quot;static active&quot;&gt;&lt;/div&gt;
+
+三元表达式&lt;div v-bind:class=&quot;[  isActive ? activeClass : &#x27;&#x27;]&quot;&gt;&lt;/div&gt;
+
+数组&lt;div v-bind:class=&quot;[  &#123; active: isActive &#125;, errorClass]&quot;&gt;&lt;/div&gt;
+
+数组语法&lt;div v-bind:class=&quot;[  activeClass, errorClass]&quot;&gt;&lt;/div&gt;
+
+如下 data
+data: &#123;  activeClass: &#x27;active&#x27;,  errorClass: &#x27;text-danger&#x27;&#125;
+
+结果渲染为
+&lt;div class=&quot;active text-danger&quot;&gt;&lt;/div&gt;
+
+内联样式&lt;div v-bind:style=&quot;&#123;    color: activeColor,    fontSize: fontSize + &#x27;px&#x27;&#125;&quot;&gt;&lt;/div&gt;
+
+如下 data
+data: &#123;  activeColor: &#x27;red&#x27;,  fontSize: 30&#125;
+
+结果渲染为
+&lt;div style=&quot;color: red; font-size: 30px;&quot;&gt;&lt;/div&gt;
+
+内联样式对象通常更好&lt;div v-bind:style=&quot;styleObject&quot;&gt;&lt;/div&gt;
+
+如下 data
+data: &#123;  styleObject: &#123;    color: &#x27;red&#x27;,    fontSize: &#x27;13px&#x27;  &#125;&#125;
+
+同样的，对象语法常常结合返回对象的计算属性使用
+内联样式数组语法&lt;div v-bind:style=&quot;[  baseStyles, overridingStyles]&quot;&gt;&lt;/div&gt;
+
+内联样式多重值&lt;div :style=&quot;&#123;  display: [&#x27;-webkit-box&#x27;, &#x27;flex&#x27;]&#125;&quot;&gt;&lt;/div&gt;
+
+条件渲染v-if&lt;h1 v-if=&quot;awesome&quot;&gt;Vue is awesome!&lt;/h1&gt;&lt;h1 v-else&gt;Oh no 😢&lt;/h1&gt;
+
+v-else-if
+
+&lt;div v-if=&quot;type === &#x27;A&#x27;&quot;&gt;A&lt;/div&gt;&lt;div v-else-if=&quot;type === &#x27;B&#x27;&quot;&gt;B&lt;/div&gt;&lt;div v-else-if=&quot;type === &#x27;C&#x27;&quot;&gt;C&lt;/div&gt;&lt;div v-else&gt;  Not A/B/C&lt;/div&gt;
+
+@2.1.0 新增，必须紧跟在带 v-if 或者 v-else-if 的元素之后
+v-else
+
+&lt;div v-if=&quot;Math.random() &gt; 0.5&quot;&gt;  现在你看到我了&lt;/div&gt;&lt;div v-else&gt;  现在你看不见我了&lt;/div&gt;
+
+v-else 元素必须紧跟在带 v-if 或者 v-else-if 的元素的后面
+&lt;template&gt; 上使用 v-if 条件渲染分组&lt;template v-if=&quot;ok&quot;&gt;  &lt;p&gt;Paragraph 1&lt;/p&gt;&lt;/template&gt;
+
+用 key 管理可复用的元素
+
+&lt;template v-if=&quot;loginType === &#x27;username&#x27;&quot;&gt;  &lt;label&gt;Username&lt;/label&gt;  &lt;input placeholder=&quot;输入用户名&quot; key=&quot;username-input&quot;&gt;&lt;/template&gt;&lt;template v-else&gt;  &lt;label&gt;Email&lt;/label&gt;  &lt;input placeholder=&quot;输入邮箱&quot; key=&quot;email-input&quot;&gt;&lt;/template&gt;
+
+v-show&lt;h1 v-show=&quot;ok&quot;&gt;  Hello!&lt;/h1&gt;
+
+带有 v-show 的元素始终会被渲染并保留在 DOM 中，只是简单地切换元素的 CSS 属性 display
+列表渲染v-for&#123;3&#125;&lt;ul id=&quot;example-1&quot;&gt;  &lt;li    v-for=&quot;item in items&quot;    :key=&quot;item.message&quot;&gt;    &#123;&#123; item.message &#125;&#125;  &lt;/li&gt;&lt;/ul&gt;
+
+var example1 = new Vue(&#123;  el: &#x27;#example-1&#x27;,  data: &#123;    items: [      &#123; message: &#x27;Foo&#x27; &#125;,      &#123; message: &#x27;Bar&#x27; &#125;    ]  &#125;&#125;)
+
+v-for 可选的第二个参数(索引)&#123;2&#125;&lt;li v-for=&quot;(item, index) in items&quot;&gt;  &#123;&#123; index &#125;&#125;  &#123;&#123; item.message &#125;&#125;&lt;/li&gt;
+
+如下 data
+data: &#123;  items: [    &#123; message: &#x27;Foo&#x27; &#125;,    &#123; message: &#x27;Bar&#x27; &#125;  ]&#125;
+
+也可以用 of 替代 in 作为分隔符
+&lt;div v-for=&quot;item of items&quot;&gt;&lt;/div&gt;
+
+v-for 使用对象
+
+&lt;li v-for=&quot;value in object&quot;&gt;  &#123;&#123; value &#125;&#125;&lt;/li&gt;
+
+如下 data
+data: &#123;  object: &#123;    title: &#x27;How to do lists in Vue&#x27;,    author: &#x27;Jane Doe&#x27;,    publishedAt: &#x27;2016-04-10&#x27;  &#125;&#125;
+
+渲染结果
+How to do lists in VueJane Doe2016-04-10
+
+提供第二个的参数为 property 名称 (也就是键名)
+&lt;div v-for=&quot;(value, name) in object&quot;&gt;  &#123;&#123; name &#125;&#125;: &#123;&#123; value &#125;&#125;&lt;/div&gt;
+
+还可以用第三个参数作为索引
+&lt;div v-for=&quot;(value,name,index) in object&quot;&gt;  &#123;&#123; index &#125;&#125;. &#123;&#123; name &#125;&#125;: &#123;&#123; value &#125;&#125;&lt;/div&gt;
+
+v-for&#x2F;v-if&#123;2,3&#125;&lt;li  v-for=&quot;todo in todos&quot;  v-if=&quot;!todo.isComplete&quot;&gt;  &#123;&#123; todo &#125;&#125;&lt;/li&gt;
+
+只渲染未完成的 todo，下面加上 v-else 示例
+&lt;ul v-if=&quot;todos.length&quot;&gt;  &lt;li v-for=&quot;todo in todos&quot;&gt;    &#123;&#123; todo &#125;&#125;  &lt;/li&gt;&lt;/ul&gt;&lt;p v-else&gt;No todos left!&lt;/p&gt;
+
+注意: v-for 和 v-if 不推荐一起使用参考官方文档
+组件上使用 v-for&lt;my-component  v-for=&quot;(item, index) in items&quot;  v-bind:item=&quot;item&quot;  v-bind:index=&quot;index&quot;  v-bind:key=&quot;item.id&quot;&gt;&lt;/my-component&gt;
+
+2.2.0+ 的版本里，当在组件上使用 v-for 时，key 现在是必须的
+事件处理监听事件&#123;2&#125;&lt;div id=&quot;example-1&quot;&gt;  &lt;button v-on:click=&quot;counter += 1&quot;&gt;    +1  &lt;/button&gt;  &lt;p&gt;按钮已被点击 &#123;&#123; counter &#125;&#125; 次。&lt;/p&gt;&lt;/div&gt;
+
+var example1 = new Vue(&#123;  el: &#x27;#example-1&#x27;,  data: &#123;    counter: 0  &#125;&#125;)
+
+事件处理方法
+
+&#123;3&#125;&lt;div id=&quot;example-2&quot;&gt;  &lt;!-- `greet` 是在下面定义的方法名 --&gt;  &lt;button v-on:click=&quot;greet&quot;&gt;    你好  &lt;/button&gt;&lt;/div&gt;
+
+var example2 = new Vue(&#123;  el: &#x27;#example-2&#x27;,  data: &#123;    name: &#x27;Vue.js&#x27;  &#125;,  // 在 `methods` 对象中定义方法  methods: &#123;    greet: function (event) &#123;      // `this` 在方法里指向当前 Vue 实例      alert(&#x27;Hello &#x27; + this.name + &#x27;!&#x27;)      // `event` 是原生 DOM 事件      if (event) &#123;        alert(event.target.tagName)      &#125;    &#125;  &#125;&#125;)
+
+也可以用 JavaScript 直接调用方法
+example2.greet() // =&gt; &#x27;Hello Vue.js!&#x27;
+
+内联处理器中的方法
+
+&#123;2,5&#125;&lt;div id=&quot;example-3&quot;&gt;  &lt;button v-on:click=&quot;say(&#x27;hi&#x27;)&quot;&gt;    弹出 hi  &lt;/button&gt;  &lt;button v-on:click=&quot;say(&#x27;what&#x27;)&quot;&gt;    弹出 what  &lt;/button&gt;&lt;/div&gt;
+
+&#123;4&#125;new Vue(&#123;  el: &#x27;#example-3&#x27;,  methods: &#123;    say: function (message) &#123;      alert(message)    &#125;  &#125;&#125;)
+
+访问原始的 DOM 事件，用特殊变量 $event
+&lt;button v-on:click=&quot;say(&#x27;what&#x27;, $event)&quot;&gt;  提交&lt;/button&gt;
+
+methods: &#123;  say: function (message, event) &#123;    // 现在我们可以访问原生事件对象    if (event) &#123;      event.preventDefault()    &#125;    alert(message)  &#125;&#125;
+
+事件修饰符&lt;!-- 阻止单击事件继续传播 --&gt;&lt;a v-on:click.stop=&quot;doThis&quot;&gt;&lt;/a&gt;&lt;!-- 提交事件不再重载页面 --&gt;&lt;form v-on:submit.prevent=&quot;submit&quot;&gt;&lt;/form&gt;&lt;!-- 修饰符可以串联 --&gt;&lt;a v-on:click.stop.prevent=&quot;doThat&quot;&gt;&lt;/a&gt;&lt;!-- 只有修饰符 --&gt;&lt;form v-on:submit.prevent&gt;&lt;/form&gt;&lt;!-- 添加事件监听器时使用事件捕获模式 --&gt;&lt;!-- 即内部元素触发的事件先在此处理 --&gt;&lt;!-- 然后交由内部元素进行处理 --&gt;&lt;div v-on:click.capture=&quot;doThis&quot;&gt;...&lt;/div&gt;&lt;!-- 当 event.target 是当前元素自身时触发 --&gt;&lt;!-- 即事件不是从内部元素触发的 --&gt;&lt;div v-on:click.self=&quot;doThat&quot;&gt;...&lt;/div&gt;&lt;!-- 点击事件将只会触发一次 --&gt;&lt;a v-on:click.once=&quot;doThis&quot;&gt;&lt;/a&gt;
+
+事件修饰符 passive&lt;!-- 滚动事件的默认行为(即滚动行为)会立即触发 --&gt;&lt;!-- 而不会等待 `onScroll` 完成  --&gt;&lt;!-- 包含 event.preventDefault() 的情况 --&gt;&lt;p v-on:scroll.passive=&quot;onScroll&quot;&gt;  ...&lt;/p&gt;
+
+这个 .passive 修饰符尤其能够提升移动端的性能。
+按键修饰符&lt;!-- 在 key 是 Enter 时调用 vm.submit() --&gt;&lt;input v-on:keyup.enter=&quot;submit&quot;&gt;&lt;!-- 在 key 是 PageDown 时被调用 --&gt;&lt;input v-on:keyup.page-down=&quot;onPageDown&quot;&gt;&lt;!-- Alt + C --&gt;&lt;input v-on:keyup.alt.67=&quot;clear&quot;&gt;&lt;!-- Ctrl + Click --&gt;&lt;div v-on:click.ctrl=&quot;doSomething&quot;&gt;
+
+.exact 修饰符&lt;!-- 即使 Alt 或 Shift 被一同按下时也会触发 --&gt;&lt;button v-on:click.ctrl=&quot;onClick&quot;&gt;&lt;!-- 有且只有 Ctrl 被按下的时候才触发 --&gt;&lt;button v-on:click.ctrl.exact=&quot;ctrlClick&quot;&gt;&lt;!-- 没有任何系统修饰符被按下的时候才触发 --&gt;&lt;button v-on:click.exact=&quot;onClick&quot;&gt;
+
+计算属性和侦听器基础例子&lt;div id=&quot;example&quot;&gt;  &lt;p&gt;Original message: &quot;&#123;&#123; message &#125;&#125;&quot;&lt;/p&gt;  &lt;p&gt;    计算的反向消息： &quot;&#123;&#123; reversedMessage &#125;&#125;&quot;  &lt;/p&gt;&lt;/div&gt;
+
+var vm = new Vue(&#123;  el: &#x27;#example&#x27;,  data: &#123;    message: &#x27;Hello&#x27;  &#125;,  computed: &#123;    // 计算属性的 getter    reversedMessage: function () &#123;      // `this` 指向 vm 实例      return this.message.split(&#x27;&#x27;)                  .reverse().join(&#x27;&#x27;)    &#125;  &#125;&#125;)
+
+计算属性缓存 vs 方法&lt;p&gt;  计算的反向消息：&quot;&#123;&#123; reversedMessage() &#125;&#125;&quot;&lt;/p&gt;
+
+在组件中，我们可以将同一函数定义为一个方法而不是一个计算属性
+methods: &#123;  reversedMessage: function () &#123;    return this.message.split(&#x27;&#x27;)                .reverse().join(&#x27;&#x27;)  &#125;&#125;
+
+两种方式的最终结果确实是完全相同的。然而，不同的是计算属性是基于它们的响应式依赖进行缓存的。
+计算属性 vs 侦听属性
+
+&lt;div id=&quot;demo&quot;&gt;&#123;&#123; fullName &#125;&#125;&lt;/div&gt;
+
+var vm = new Vue(&#123;  el: &#x27;#demo&#x27;,  data: &#123;    firstName: &#x27;Foo&#x27;,    lastName: &#x27;Bar&#x27;,    fullName: &#x27;Foo Bar&#x27;  &#125;,  watch: &#123;    firstName: function (val) &#123;      this.fullName =           val + &#x27; &#x27; + this.lastName    &#125;,    lastName: function (val) &#123;      this.fullName =          this.firstName + &#x27; &#x27; + val    &#125;  &#125;&#125;)
+
+上面代码是命令式且重复的。将它与计算属性的版本进行比较：
+var vm = new Vue(&#123;  el: &#x27;#demo&#x27;,  data: &#123;    firstName: &#x27;Foo&#x27;,    lastName: &#x27;Bar&#x27;  &#125;,  computed: &#123;    fullName: function () &#123;      return this.firstName         + &#x27; &#x27; + this.lastName    &#125;  &#125;&#125;)
+
+计算属性的 setter
+
+computed: &#123;  fullName: &#123;    get: function () &#123;         // getter      return this.firstName + &#x27; &#x27; + this.lastName    &#125;,    set: function (newValue) &#123; // setter      var names = newValue.split(&#x27; &#x27;)      this.firstName = names[0]      this.lastName = names[names.length - 1]    &#125;  &#125;&#125;
+
+表单输入绑定文本&lt;input v-model=&quot;msg&quot; placeholder=&quot;编辑我&quot;&gt;&lt;p&gt;msg is: &#123;&#123; msg &#125;&#125;&lt;/p&gt;
+
+多行文本&#123;3&#125;&lt;span&gt;Multiline message is:&lt;/span&gt;&lt;textarea  v-model=&quot;message&quot;  placeholder=&quot;添加多行&quot;&gt;&lt;/textarea&gt;&lt;p&gt;&#123;&#123; message &#125;&#125;&lt;/p&gt;
+
+复选框&#123;4&#125;&lt;input  type=&quot;checkbox&quot;  id=&quot;checkbox&quot;  v-model=&quot;checked&quot;&gt;&lt;label for=&quot;checkbox&quot;&gt;&#123;&#123; checked&#125;&#125;&lt;/label&gt;
+
+多个复选框
+
+&lt;input type=&quot;checkbox&quot; id=&quot;jack&quot; value=&quot;Jack&quot; v-model=&quot;checkedNames&quot;&gt;&lt;label for=&quot;jack&quot;&gt;Jack&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;john&quot; value=&quot;John&quot; v-model=&quot;checkedNames&quot;&gt;&lt;label for=&quot;john&quot;&gt;John&lt;/label&gt;&lt;input type=&quot;checkbox&quot; id=&quot;mike&quot; value=&quot;Mike&quot; v-model=&quot;checkedNames&quot;&gt;&lt;label for=&quot;mike&quot;&gt;Mike&lt;/label&gt;&lt;br&gt;&lt;span&gt;Checked names: &#123;&#123; checkedNames &#125;&#125;&lt;/span&gt;
+
+如下 data
+new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    checkedNames: []  &#125;&#125;)
+
+单选按钮&lt;div id=&quot;example-4&quot;&gt;  &lt;input type=&quot;radio&quot; id=&quot;one&quot; value=&quot;One&quot;    v-model=&quot;picked&quot;&gt;  &lt;label for=&quot;one&quot;&gt;One&lt;/label&gt;  &lt;br&gt;  &lt;input type=&quot;radio&quot; id=&quot;two&quot; value=&quot;Two&quot;    v-model=&quot;picked&quot;&gt;  &lt;label for=&quot;two&quot;&gt;Two&lt;/label&gt;  &lt;div&gt;Picked: &#123;&#123; picked &#125;&#125;&lt;/div&gt;&lt;/div&gt;
+
+
+new Vue(&#123;  el: &#x27;#example-4&#x27;,  data: &#123;    picked: &#x27;&#x27;  &#125;&#125;)
+
+选择框&lt;select v-model=&quot;selected&quot;&gt;  &lt;option disabled value=&quot;&quot;&gt;请选择&lt;/option&gt;  &lt;option&gt;A&lt;/option&gt;  &lt;option&gt;B&lt;/option&gt;  &lt;option&gt;C&lt;/option&gt;&lt;/select&gt;&lt;span&gt;Selected: &#123;&#123; selected &#125;&#125;&lt;/span&gt;
+
+
+new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    selected: &#x27;&#x27;  &#125;&#125;)
+
+选择框(数组)&lt;select v-model=&quot;selected&quot; multiple&gt;  &lt;option&gt;A&lt;/option&gt;  &lt;option&gt;B&lt;/option&gt;  &lt;option&gt;C&lt;/option&gt;&lt;/select&gt;&lt;div&gt;Selected: &#123;&#123; selected &#125;&#125;&lt;/div&gt;
+
+
+new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    selected: []  &#125;&#125;)
+
+v-for 渲染的动态选项
+
+&#123;3-4&#125;&lt;select v-model=&quot;selected&quot;&gt;  &lt;option    v-for=&quot;option in options&quot;    v-bind:value=&quot;option.value&quot;  &gt;    &#123;&#123; option.text &#125;&#125;  &lt;/option&gt;&lt;/select&gt;&lt;span&gt;Selected: &#123;&#123; selected &#125;&#125;&lt;/span&gt;
+
+
+&#123;6-8&#125;new Vue(&#123;  el: &#x27;...&#x27;,  data: &#123;    selected: &#x27;A&#x27;,    options: [      &#123; text: &#x27;One&#x27;, value: &#x27;A&#x27; &#125;,      &#123; text: &#x27;Two&#x27;, value: &#x27;B&#x27; &#125;,      &#123; text: &#x27;Three&#x27;, value: &#x27;C&#x27; &#125;    ]  &#125;&#125;)
+
+值绑定&lt;!-- 当选中时，pc 为字符串 &quot;a&quot; --&gt;&lt;input type=&quot;radio&quot; v-model=&quot;pc&quot; value=&quot;a&quot;&gt;&lt;!-- toggle 为 true 或 false --&gt;&lt;input type=&quot;checkbox&quot; v-model=&quot;toggle&quot;&gt;&lt;!-- 选中第一个选项时selected为字符串 abc --&gt;&lt;select v-model=&quot;selected&quot;&gt;  &lt;option value=&quot;abc&quot;&gt;ABC&lt;/option&gt;&lt;/select&gt;
+
+单选按钮&lt;input  type=&quot;radio&quot;  v-model=&quot;pick&quot;  v-bind:value=&quot;a&quot;&gt;
+
+当选中时
+vm.pick === vm.a
+
+复选框&#123;3&#125;&lt;input  type=&quot;checkbox&quot;  v-model=&quot;toggle&quot;  true-value=&quot;yes&quot;  false-value=&quot;no&quot;&gt;
+
+
+// 当选中时vm.toggle === &#x27;yes&#x27;// 当没有选中时vm.toggle === &#x27;no&#x27;
+
+选择框的选项&lt;select v-model=&quot;selected&quot;&gt;  &lt;!-- 内联对象字面量 --&gt;  &lt;option v-bind:value=&quot;&#123; number: 123 &#125;&quot;&gt;    123  &lt;/option&gt;&lt;/select&gt;
+
+当选中时
+typeof vm.selected // =&gt; &#x27;object&#x27;vm.selected.number // =&gt; 123
+
+修饰符&lt;!-- lazy:在“change”时而非“input”时更新 --&gt;&lt;input v-model.lazy=&quot;msg&quot;&gt;&lt;!-- number:自动将用户的输入值转为数值类型 --&gt;&lt;input v-model.number=&quot;age&quot; type=&quot;number&quot;&gt;&lt;!-- trim:自动过滤用户输入的首尾空白字符 --&gt;&lt;input v-model.trim=&quot;msg&quot;&gt;
+
+组件基础单文件组件
+
+
+将 HTML&#x2F;CSS&#x2F;JS 三部分存放到一个 Hello.vue 文件中
+&lt;template&gt;  &lt;p&gt;&#123;&#123; title &#125;&#125; World!&lt;/p&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    name: &#x27;Hello&#x27;,    props: &#123;      title: &#123;        type: String,        default: &#x27;Hello&#x27;      &#125;    &#125;,    data: function() &#123;      return &#123;        greeting: &quot;Hello&quot;      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  p &#123;    font-size: 2em;    text-align: center;  &#125;&lt;/style&gt;
+
+使用 Hello.vue 组件
+&lt;script&gt;  import Vue from &quot;vue&quot;;  import Hello from &quot;./Hello&quot;;  export default &#123;    components: &#123; Hello &#125;  &#125;&lt;/script&gt;&lt;template&gt;  &lt;div&gt;    &lt;Hello :title=&quot;&#x27;aaaa&#x27;&quot;&gt;&lt;/Hello&gt;  &lt;/div&gt;&lt;/template&gt;
+
+
+
+基本示例
+
+Vue.component(&#x27;button-counter&#x27;, &#123;  data: function () &#123;    return &#123;      count: 0    &#125;  &#125;,  template: `    &lt;button v-on:click=&quot;count++&quot;&gt;      你点击了我 &#123;&#123; count &#125;&#125; 次    &lt;/button&gt;  `&#125;)
+
+组件是可复用的 Vue 实例
+&lt;div id=&quot;components-demo&quot;&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;&lt;/div&gt;
+
+
+new Vue(&#123;  el: &#x27;#components-demo&#x27;&#125;)
+
+组件的复用
+&lt;div id=&quot;components-demo&quot;&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;  &lt;button-counter&gt;&lt;/button-counter&gt;&lt;/div&gt;
+
+单个根元素&#123;4&#125;Vue.component(&#x27;blog-post&#x27;, &#123;  props: [&#x27;post&#x27;],  template: `    &lt;div class=&quot;blog-post&quot;&gt;      &lt;h3&gt;&#123;&#123; post.title &#125;&#125;&lt;/h3&gt;      &lt;div v-html=&quot;post.content&quot;&gt;&lt;/div&gt;    &lt;/div&gt;  `&#125;)
+
+
+&lt;blog-post  v-for=&quot;post in posts&quot;  v-bind:key=&quot;post.id&quot;  v-bind:post=&quot;post&quot;&gt;&lt;/blog-post&gt;
+
+向子组件传递数据Vue.component(&#x27;blog-post&#x27;, &#123;  props: [&#x27;title&#x27;],  template: &#x27;&lt;h3&gt;&#123;&#123; title &#125;&#125;&lt;/h3&gt;&#x27;&#125;)
+
+当值传递给一个 prop attribute 的时候，变成了组件实例的一个 property
+&lt;blog-post title=&quot;写博客&quot;&gt;&lt;/blog-post&gt;&lt;blog-post title=&quot;如此有趣&quot;&gt;&lt;/blog-post&gt;
+
+data 必须是一个函数data: function () &#123;  return &#123;    count: 0  &#125;&#125;
+
+组件的 data 选项必须是一个函数
+监听子组件事件
+
+&#123;7&#125;Vue.component(&#x27;blog-post&#x27;, &#123;  props: [&#x27;post&#x27;],  template: `    &lt;div class=&quot;blog-post&quot;&gt;      &lt;h3&gt;&#123;&#123; post.title &#125;&#125;&lt;/h3&gt;      &lt;button        v-on:click=&quot;$emit(&#x27;enlarge-txt&#x27;)&quot;      &gt;放大文字      &lt;/button&gt;      &lt;div v-html=&quot;post.content&quot;&gt;&lt;/div&gt;    &lt;/div&gt;  `&#125;)
+
+
+&#123;3&#125;&lt;blog-post  ...  v-on:enlarge-text=&quot;postFontSize += 0.1&quot;&gt;&lt;/blog-post&gt;
+
+可以使用 $emit 的第二个参数来提供这个值
+&#123;2&#125;&lt;button  v-on:click=&quot;$emit(&#x27;enlarge-text&#x27;, 0.1)&quot;&gt;  Enlarge text&lt;/button&gt;
+
+通过 $event 访问到被抛出的这个值
+&#123;3&#125;&lt;blog-post  ...  v-on:enlarge-text=&quot;postFontSize += $event&quot;&gt;&lt;/blog-post&gt;
+
+如果这个事件处理函数是一个方法
+&#123;3&#125;&lt;blog-post  ...  v-on:enlarge-text=&quot;onEnlargeText&quot;&gt;&lt;/blog-post&gt;
+
+那么这个值将会作为第一个参数传入这个方法
+methods: &#123;  onEnlargeText: function(enlargeAmount) &#123;    this.postFontSize += enlargeAmount  &#125;&#125;
+
+在组件上使用 v-model
+
+自定义事件也可以用于创建支持 v-model 的自定义输入组件。
+&lt;input v-model=&quot;searchText&quot;&gt;
+
+等价于
+&lt;input  v-bind:value=&quot;searchText&quot;  v-on:input=&quot;searchText = $event.target.value&quot;&gt;
+
+当用在组件上时，v-model 则会这样：
+&lt;custom-input  v-bind:value=&quot;searchText&quot;  v-on:input=&quot;searchText = $event&quot;&gt;&lt;/custom-input&gt;
+
+为了让它正常工作，这个组件内的 &lt;input&gt; 必须：
+
+将其 value attribute 绑定到一个名叫 value 的 prop 上
+在其 input 事件被触发时，将新的值通过自定义的 input 事件抛出
+
+
+Vue.component(&#x27;custom-input&#x27;, &#123;  props: [&#x27;value&#x27;],  template: `    &lt;input      v-bind:value=&quot;value&quot;      v-on:input=&quot;$emit(&#x27;input&#x27;, $event.target.value)&quot;    &gt;  `&#125;)
+
+现在 v-model 就应该可以在这个组件上完美地工作起来了
+&#123;2&#125;&lt;custom-input  v-model=&quot;searchText&quot;&gt;&lt;/custom-input&gt;
+
+通过插槽分发内容&lt;alert-box&gt;  发生了不好的事情。&lt;/alert-box&gt;
+
+
+&#123;5&#125;Vue.component(&#x27;alert-box&#x27;, &#123;  template: `    &lt;div class=&quot;demo-alert-box&quot;&gt;      &lt;strong&gt;Error!&lt;/strong&gt;      &lt;slot&gt;&lt;/slot&gt;    &lt;/div&gt;  `&#125;)
+
+动态组件示例
+
+&lt;div id=&quot;dynamic-component-demo&quot; class=&quot;demo&quot;&gt;  &lt;button    v-for=&quot;tab in tabs&quot;    v-bind:key=&quot;tab&quot;    v-bind:class=&quot;[&#x27;tab-button&#x27;, &#123; active: currentTab === tab &#125;]&quot;    v-on:click=&quot;currentTab = tab&quot;  &gt;    &#123;&#123; tab &#125;&#125;  &lt;/button&gt;  &lt;component v-bind:is=&quot;currentTabComponent&quot; class=&quot;tab&quot;&gt;&lt;/component&gt;&lt;/div&gt;&lt;script&gt;  Vue.component(&quot;tab-home&quot;, &#123;    template: &quot;&lt;div&gt;Home component&lt;/div&gt;&quot;  &#125;);  Vue.component(&quot;tab-posts&quot;, &#123;    template: &quot;&lt;div&gt;Posts component&lt;/div&gt;&quot;  &#125;);  Vue.component(&quot;tab-archive&quot;, &#123;    template: &quot;&lt;div&gt;Archive component&lt;/div&gt;&quot;  &#125;);  new Vue(&#123;    el: &quot;#dynamic-component-demo&quot;,    data: &#123;      currentTab: &quot;Home&quot;,      tabs: [&quot;Home&quot;, &quot;Posts&quot;, &quot;Archive&quot;]    &#125;,    computed: &#123;      currentTabComponent: function() &#123;        return &quot;tab-&quot; + this.currentTab.toLowerCase();      &#125;    &#125;  &#125;);&lt;/script&gt;
+
+解析 DOM 模板时的注意事项有些 HTML 元素，诸如 &lt;ul&gt;、&lt;ol&gt;、&lt;table&gt; 和 &lt;select&gt;，对于哪些元素可以出现在其内部是有严格限制的。有些元素，诸如 &lt;li&gt;、&lt;tr&gt; 和 &lt;option&gt;，只能出现在其它某些特定的元素内部
+&lt;table&gt;  &lt;blog-post-row&gt;&lt;/blog-post-row&gt;&lt;/table&gt;
+
+&lt;blog-post-row&gt; 会被作为无效的内容提升到外部
+
+如果我们从以下来源使用模板的话，这条限制是不存在的
+
+字符串 (例如：template: &#39;...&#39;)
+单文件组件 (.vue)
+&lt;script type=&quot;text/x-template&quot;&gt;
+
+
+
+过渡 &amp; 动画单元素&#x2F;组件的过渡
+
+&lt;template&gt;  &lt;button v-on:click=&quot;show = !show&quot;&gt;    切换  &lt;/button&gt;  &lt;transition name=&quot;fade&quot;&gt;    &lt;p v-if=&quot;show&quot;&gt;切换内容&lt;/p&gt;  &lt;/transition&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        show: true      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  .fade-enter-active, .fade-leave-active &#123;    transition: opacity .5s;  &#125;  /* .fade-leave-active 低于 2.1.8 版本 */  .fade-enter, .fade-leave-to &#123;    opacity: 0;  &#125;&lt;/style&gt;
+
+CSS 过渡
+
+&lt;template&gt;  &lt;button @click=&quot;show = !show&quot;&gt;    切换渲染  &lt;/button&gt;  &lt;transition name=&quot;slide-fade&quot;&gt;    &lt;p v-if=&quot;show&quot;&gt;切换内容&lt;/p&gt;  &lt;/transition&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        show: true      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  /* 可以设置不同的进入和离开动画 */  /* 设置持续时间和动画函数 */  .slide-fade-enter-active &#123;    transition: all .3s ease;  &#125;  .slide-fade-leave-active &#123;    transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);  &#125;  /* .slide-fade-leave-active 用于 2.1.8 以下版本 */   .slide-fade-enter, .slide-fade-leave-to &#123;    transform: translateX(10px);    opacity: 0;  &#125;&lt;/style&gt;
+
+CSS 动画
+
+&lt;template&gt;  &lt;button @click=&quot;show = !show&quot;&gt;切换展示&lt;/button&gt;  &lt;transition name=&quot;bounce&quot;&gt;    &lt;p v-if=&quot;show&quot;&gt;切换内容&lt;/p&gt;  &lt;/transition&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        show: true      &#125;;    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;.bounce-enter-active &#123;  animation: bounce-in .5s;&#125;.bounce-leave-active &#123;  animation: bounce-in .5s reverse;&#125;@keyframes bounce-in &#123;  0% &#123;    transform: scale(0);  &#125;  50% &#123;    transform: scale(1.5);  &#125;  100% &#123;    transform: scale(1);  &#125;&#125;&lt;/style&gt;
+
+过渡的类名
+
+
+
+
+:-
+:-
+
+
+
+v-enter
+定义进入过渡的开始状态 #
+
+
+v-enter-active
+定义进入过渡生效时的状态 #
+
+
+v-enter-to (2.1.8)
+定义进入过渡的结束状态 #
+
+
+v-leave
+定义离开过渡的开始状态 #
+
+
+v-leave-active
+定义离开过渡生效时的状态 #
+
+
+v-leave-to (2.1.8)
+定义离开过渡的结束状态 #
+
+
+如果你使用了 &lt;transition name=&quot;my-tran&quot;&gt;，那么 v-enter 会替换为 my-tran-enter。
+自定义过渡的类名
+
+
+:-
+:-
+
+
+
+enter-class
+#
+
+
+enter-active-class
+#
+
+
+enter-to-class (2.1.8+)
+#
+
+
+leave-class
+#
+
+
+leave-active-class
+#
+
+
+leave-to-class (2.1.8+)
+#
+
+
+
+&lt;transition  name=&quot;custom-classes-transition&quot;  enter-active-class=&quot;animated tada&quot;  leave-active-class=&quot;animated bounceOutRight&quot;&gt;  &lt;p v-if=&quot;show&quot;&gt;hello&lt;/p&gt;&lt;/transition&gt;
+
+显性的过渡持续时间&lt;transition&gt; 组件上的 duration prop 定制一个显性的过渡持续时间 (以毫秒计)：
+&lt;transition :duration=&quot;1000&quot;&gt;  ...&lt;/transition&gt;
+
+你也可以定制进入和移出的持续时间：
+&lt;transition :duration=&quot;&#123;  enter: 500,  leave: 800&#125;&quot;&gt;  ...&lt;/transition&gt;
+
+初始渲染的过渡
+
+可以通过 appear attribute 设置节点在初始渲染的过渡
+&lt;transition appear&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
+
+这里默认和进入&#x2F;离开过渡一样，同样也可以自定义 CSS 类名
+&lt;transition  appear  appear-class=&quot;custom-appear-class&quot;  appear-to-class=&quot;custom-appear-to-class&quot;  appear-active-class=&quot;custom-appear-active-class&quot;&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
+
+自定义 JavaScript 钩子：
+&lt;transition  appear  v-on:before-appear=&quot;customBeforeAppearHook&quot;  v-on:appear=&quot;customAppearHook&quot;  v-on:after-appear=&quot;customAfterAppearHook&quot;  v-on:appear-cancelled=&quot;customAppearCancelledHook&quot;&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
+
+无论是 appear attribute 还是 v-on:appear 钩子都会生成初始渲染过渡
+JavaScript 钩子&lt;transition  v-on:before-enter=&quot;beforeEnter&quot;  v-on:enter=&quot;enter&quot;  v-on:after-enter=&quot;afterEnter&quot;  v-on:enter-cancelled=&quot;enterCancelled&quot;  v-on:before-leave=&quot;beforeLeave&quot;  v-on:leave=&quot;leave&quot;  v-on:after-leave=&quot;afterLeave&quot;  v-on:leave-cancelled=&quot;leaveCancelled&quot;&gt;  &lt;!-- ... --&gt;&lt;/transition&gt;
+
+钩子函数可以结合 CSS transitions&#x2F;animations 使用，也可以单独使用
+列表的进入&#x2F;离开过渡
+
+&lt;template&gt;  &lt;button v-on:click=&quot;add&quot;&gt;添加&lt;/button&gt;  &lt;button v-on:click=&quot;remove&quot;&gt;删除&lt;/button&gt;  &lt;transition-group name=&quot;list&quot; tag=&quot;p&quot;&gt;    &lt;span v-for=&quot;item in items&quot; v-bind:key=&quot;item&quot; class=&quot;list-item&quot;&gt;      &#123;&#123; item &#125;&#125;    &lt;/span&gt;  &lt;/transition-group&gt;&lt;/template&gt;&lt;script&gt;  export default &#123;    data: function() &#123;      return &#123;        items: [1,2,3,4,5,6,7,8,9],        nextNum: 10      &#125;;    &#125;,    methods: &#123;      randomIndex: function () &#123;        return Math.floor(Math.random() * this.items.length)      &#125;,      add: function () &#123;        this.items.splice(this.randomIndex(), 0, this.nextNum++)      &#125;,      remove: function () &#123;        this.items.splice(this.randomIndex(), 1)      &#125;,    &#125;  &#125;;&lt;/script&gt;&lt;style scoped&gt;  .list-item &#123;    display: inline-block;    margin-right: 10px;  &#125;  .list-enter-active, .list-leave-active &#123;    transition: all 1s;  &#125;  /* .list-leave-active 适用于 2.1.8 以下版本 */  .list-enter, .list-leave-to &#123;    opacity: 0;    transform: translateY(30px);  &#125;&lt;/style&gt;
+
+Vue 2 API 参考全局配置
+
+
+
+
+:-
+:-
+
+
+
+silent
+取消所有的日志与警告 #
+
+
+optionMergeStrategies
+自定义合并策略的选项 #
+
+
+devtools
+是否允许 devtools 检查 #
+
+
+errorHandler
+未捕获错误的处理函数 (开发模式生效) #
+
+
+warnHandler (2.4.0)
+运行时警告处理函数 #
+
+
+ignoredElements
+忽略 Vue 之外的 (自定义元素) #
+
+
+keyCodes
+v-on 自定义键位别名 #
+
+
+performance (2.2.0)
+性能追踪 #
+
+
+productionTip (2.2.0)
+是否生成生产提示 #
+
+
+全局 API
+
+
+
+
+:-
+:-
+
+
+
+Vue.extend
+Vue 构造器，创建一个“子类” #
+
+
+Vue.nextTick
+执行延迟回调 #
+
+
+Vue.set
+向响应式对象中添加一个属性 #
+
+
+Vue.delete
+删除对象的 property #
+
+
+Vue.directive
+注册或获取全局指令 #
+
+
+Vue.filter
+注册或获取全局过滤器 #
+
+
+Vue.component
+注册或获取全局组件 #
+
+
+Vue.use
+安装 Vue.js 插件 #
+
+
+Vue.mixin
+全局注册一个混入 #
+
+
+Vue.compile
+将模板字符串编译成 render 函数 #
+
+
+Vue.observable (2.6.0)
+让一个对象可响应 #
+
+
+Vue.version
+Vue 安装版本号 #
+
+
+数据
+
+
+:-
+:-
+
+
+
+data
+实例的数据对象 #
+
+
+props
+接收来自父组件的数据 #
+
+
+propsData
+创建实例时传递 props #
+
+
+computed
+计算属性将被混入到 Vue 实例中 #
+
+
+methods
+将被混入到 Vue 实例中 #
+
+
+watch
+对象键是观察的表达式，值是回调函数 #
+
+
+DOM
+
+
+:-
+:-
+
+
+
+el
+实例的挂载目标 #
+
+
+template
+字符串模板作为 Vue 实例的标识使用 #
+
+
+render
+字符串模板的代替方案 #
+
+
+renderError (2.2.0)
+render错误时提供另一种渲染 #
+
+
+生命周期钩子
+
+
+
+
+:-
+:-
+
+
+
+beforeCreate
+实例初始化之后 #
+
+
+created
+实例创建完成后被立即同步调用 #
+
+
+beforeMount
+在挂载开始之前被调用 #
+
+
+mounted
+实例被挂载后调用 #
+
+
+beforeUpdate
+数据改变后 DOM 更新之前调用 #
+
+
+updated
+数据更改更新完毕之后被调用 #
+
+
+activated
+keep-alive 缓存组件激活时调用 #
+
+
+deactivated
+keep-alive 缓存的组件失活时调用 #
+
+
+beforeDestroy
+实例销毁之前调用 #
+
+
+destroyed
+实例销毁后调用 #
+
+
+errorCaptured (2.5.0)
+来自后代组件的错误时被调用 #
+
+
+资源
+
+
+:-
+:-
+
+
+
+directives
+包含 Vue 实例可用指令的哈希表 #
+
+
+filters
+包含 Vue 实例可用过滤器的哈希表 #
+
+
+components
+包含 Vue 实例可用组件的哈希表 #
+
+
+组合
+
+
+:-
+:-
+
+
+
+parent
+指定已创建的实例之父实例 #
+
+
+mixins
+接收一个混入对象的数组 #
+
+
+extends
+声明扩展另一个组件 #
+
+
+provide/inject (2.2.0)
+祖组件向所有子孙后代注入依赖 #
+
+
+其它
+
+
+:-
+:-
+
+
+
+name
+允许组件模板递归地调用自身 #
+
+
+delimiters
+改变纯文本插入分隔符 #
+
+
+functional
+使组件无状态和无实例 #
+
+
+model (2.2.0)
+使用 v-model 时定制 prop 和 event #
+
+
+inheritAttrs (2.4.0)
+#
+
+
+comments (2.4.0)
+是否保留模板中的HTML注释 #
+
+
+实例方法 &#x2F; 数据
+
+
+:-
+:-
+
+
+
+vm.$watch
+观察 Vue 实例上的一个表达式或者一个函数计算结果的变化 #
+
+
+vm.$set
+全局 Vue.set 的别名 #
+
+
+vm.$delete
+全局 Vue.delete 的别名 #
+
+
+实例 property
+
+
+
+
+:-
+:-
+
+
+
+vm.$data
+观察的数据对象 #
+
+
+vm.$props (2.2.0)
+组件接收的 props 对象 #
+
+
+vm.$el
+实例使用的根 DOM 元素 #
+
+
+vm.$options
+实例的初始化选项 #
+
+
+vm.$parent
+父实例 #
+
+
+vm.$root
+当前组件树的根实例 #
+
+
+vm.$children
+当前实例的直接子组件 #
+
+
+vm.$slots
+访问被插槽分发的内容 #
+
+
+vm.$scopedSlots (2.1.0)
+访问作用域插槽 #
+
+
+vm.$refs
+DOM 元素和组件实例 #
+
+
+vm.$isServer
+是否运行于服务器 #
+
+
+vm.$attrs (2.4.0)
+包含父作用域中不作为 prop 被识别的属性绑定 ( #
+
+
+vm.$listeners (2.4.0)
+包含了父作用域中的 (不含 .native 修饰器的) v-on 事件监听器 #
+
+
+实例方法 &#x2F; 事件
+
+
+:-
+:-
+
+
+
+vm.$on
+监听当前实例上的自定义事件 #
+
+
+vm.$once
+监听一个自定义事件，只触发一次 #
+
+
+vm.$off
+移除自定义事件监听器 #
+
+
+vm.$emit
+触发当前实例上的事 #
+
+
+实例方法 &#x2F; 生命周期
+
+
+:-
+:-
+
+
+
+vm.$mount
+手动地挂载一个未挂载的实例 #
+
+
+vm.$forceUpdate
+迫使 Vue 实例重新渲染 #
+
+
+vm.$nextTick
+回调延迟执行 #
+
+
+vm.$destroy
+完全销毁一个实例 #
+
+
+指令
+
+
+
+
+:-
+:-
+
+
+
+v-text
+更新元素的 textContent #
+
+
+v-html
+更新元素的 innerHTML #
+
+
+v-show
+切换元素的 display css 属性 #
+
+
+v-if
+有条件地渲染元素 #
+
+
+v-else
+#
+
+
+v-else-if (2.1.0)
+#
+
+
+v-for
+多次渲染元素或模板块 #
+
+
+v-on
+绑定事件监听器 #
+
+
+v-bind
+动态地绑定一个或多个属性  #
+
+
+v-model
+创建双向绑定 #
+
+
+v-slot
+提供插槽或接收 prop 的插槽 #
+
+
+v-pre
+跳过元素和它的子元素编译过程 #
+
+
+v-cloak
+保持在元素上直到实例结束编译 #
+
+
+v-once
+只渲染元素和组件一次 #
+
+
+特殊 attribute
+
+
+:-
+:-
+
+
+
+key
+用在 Vue 的虚拟 DOM 算法 #
+
+
+ref
+元素或子组件注册引用信息 #
+
+
+is
+限制是否更新 #
+
+
+slot
+推荐 2.6.0 新增的 v-slot #
+
+
+slot-scope
+推荐 2.6.0 新增的 v-slot #
+
+
+scope
+2.5.0 新增的 slot-scope 取代 #
+
+
+内置的组件
+
+
+:-
+:-
+
+
+
+&lt;component&gt;
+渲染一个元组件为动态组件 #
+
+
+&lt;transition&gt;
+单个元素&#x2F;组件的过渡效果 #
+
+
+&lt;transition-group&gt;
+多个元素&#x2F;组件的过渡效果 #
+
+
+&lt;keep-alive&gt;
+不活动的实例缓存不销毁 #
+
+
+&lt;slot&gt;
+组件模板中的内容分发插槽 #
+
+
+v-on (事件)修饰符
+
+
+
+
+:-
+:-
+
+
+
+v-on:click.stop #
+调用 event.stopPropagation()。
+
+
+v-on:click.prevent #
+调用 event.preventDefault()。
+
+
+v-on:click.capture #
+添加事件侦听器时使用 capture 模式。
+
+
+v-on:click.self #
+只当事件是从侦听器绑定的元素本身触发时才触发回调。
+
+
+v-on:click.&#123;keyCode|keyAlias&#125; #
+只当事件是从特定键触发时才触发回调。
+
+
+v-on:click.native #
+监听组件根元素的原生事件。
+
+
+v-on:click.once #
+只触发一次回调。
+
+
+v-on:click.passive (2.3.0) #
+以 { passive: true } 模式添加侦听器
+
+
+
+
+v-on (鼠标)修饰符
+
+
+:-
+:-
+
+
+
+v-on:click.left #
+只当点击鼠标左键时触发
+
+
+v-on:click.right #
+只当点击鼠标右键时触发
+
+
+v-on:click.middle #
+只当点击鼠标中键时触发
+
+
+在 (2.2.0) 中新增
+系统修饰键
+
+
+:-
+:-
+
+
+
+v-on:keyup.ctrl (2.1.0)
+#
+
+
+v-on:keyup.alt (2.1.0)
+#
+
+
+v-on:keyup.shift (2.1.0)
+#
+
+
+v-on:keyup.meta (2.1.0)
+#
+
+
+Keyboard 按键修饰符
+
+
+:-
+:-
+
+
+
+v-on:keyup.enter
+#
+
+
+v-on:keyup.tab
+#
+
+
+v-on:keyup.delete
+捕获“删除”和“退格”键 #
+
+
+v-on:keyup.esc
+#
+
+
+v-on:keyup.space
+#
+
+
+v-on:keyup.up
+#
+
+
+v-on:keyup.down
+#
+
+
+v-on:keyup.left
+#
+
+
+v-on:keyup.right
+#
+
+
+v-bind 修饰符
+
+
+:-
+:-
+
+
+
+v-bind.prop #
+作为一个 DOM property 绑定而不是作为 attribute 绑定。(差别在哪里？)
+
+
+v-bind.camel (2.1.0+) #
+将 kebab-case attribute 名转换为 camelCase。
+
+
+v-bind.sync (2.3.0+) #
+语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器。
+
+
+
+
+另见
+Vue Essentials Cheat-Sheet.pdf (vuemastery.com)
+Vue 2 官方文档 (vuejs.org)
+Vue 2 实例方法事件 (marozed.com)
+
+]]></content>
+      <categories>
+        <category>前端技术</category>
+      </categories>
+      <tags>
+        <tag>前端技术</tag>
+        <tag>Vue2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Yaml 备忘录</title>
+    <url>/2025/01/08/yaml/</url>
+    <content><![CDATA[YAML 备忘清单这是理解和编写 YAML 格式配置文件的快速参考备忘单。
+入门介绍YAML 是一种数据序列化语言，旨在供人类直接读写
+
+YAML 不允许使用制表符
+元素部分之间必须有空间
+YAML 区分大小写
+以 .yaml 或 .yml 扩展名结束您的 YAML 文件
+YAML 是 JSON 的超集
+Ansible playbook 是 YAML 文件
+
+
+
+标量类型
+
+n1: 1            # 整数n2: 1.234        # 浮点s1: &#x27;abc&#x27;        # 字符串s2: &quot;abc&quot;        # 字符串s3: abc          # 字符串b: false         # 布尔类型d: 2015-04-05    # 日期类型
+
+↓ 等效的 JSON&#123;  &quot;n1&quot;: 1,  &quot;n2&quot;: 1.234,  &quot;s1&quot;: &quot;abc&quot;,  &quot;s2&quot;: &quot;abc&quot;,  &quot;s3&quot;: &quot;abc&quot;,  &quot;b&quot;: false,  &quot;d&quot;: &quot;2015-04-05&quot;&#125;
+
+使用空格缩进。 元素部分之间必须有空间。
+变量some_thing: &amp;VAR_NAME foobarother_thing: *VAR_NAME
+
+↓ 等效的 JSON&#123;  &quot;some_thing&quot;: &quot;foobar&quot;,  &quot;other_thing&quot;: &quot;foobar&quot;&#125;
+
+注释# A single line comment example# block level comment example# comment line 1# comment line 2# comment line 3
+
+多行字符串description: |  hello  world
+
+↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello\nworld\n&quot;&#125;
+
+继承
+
+parent: &amp;defaults  a: 2  b: 3child:  &lt;&lt;: *defaults  b: 4
+
+↓ 等效的 JSON&#123;  &quot;parent&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 3  &#125;,  &quot;child&quot;: &#123;    &quot;a&quot;: 2,    &quot;b&quot;: 4  &#125;&#125;
+
+参考
+
+values: &amp;ref  - Will be  - reused below  other_values:  i_am_ref: *ref
+
+↓ 等效的 JSON&#123;  &quot;values&quot;: [    &quot;Will be&quot;,    &quot;reused below&quot;  ],  &quot;other_values&quot;: &#123;    &quot;i_am_ref&quot;: [      &quot;Will be&quot;,      &quot;reused below&quot;    ]  &#125;&#125;
+
+折叠的字符串description: &gt;  hello  world
+
+↓ 等效的 JSON&#123;&quot;description&quot;: &quot;hello world\n&quot;&#125;
+
+两份文件---document: this is doc 1---document: this is doc 2
+
+YAML使用---将指令与文档内容分开。
+YAML Collections序列- Mark McGwire- Sammy Sosa- Ken Griffey
+
+↓ 等效的 JSON[  &quot;Mark McGwire&quot;,  &quot;Sammy Sosa&quot;,  &quot;Ken Griffey&quot;]
+
+映射hr:  65       # Home runsavg: 0.278    # Batting averagerbi: 147      # Runs Batted In
+
+↓ 等效的 JSON&#123;  &quot;hr&quot;: 65,  &quot;avg&quot;: 0.278,  &quot;rbi&quot;: 147&#125;
+
+映射到序列attributes:  - a1  - a2methods: [getter, setter]
+
+↓ 等效的 JSON&#123;  &quot;attributes&quot;: [&quot;a1&quot;, &quot;a2&quot;],  &quot;methods&quot;: [&quot;getter&quot;, &quot;setter&quot;]&#125;
+
+映射序列children:  - name: Jimmy Smith    age: 15  - name: Jimmy Smith    age: 15  -    name: Sammy Sosa    age: 12
+
+↓ 等效的 JSON&#123;  &quot;children&quot;: [    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Jimmy Smith&quot;, &quot;age&quot;: 15&#125;,    &#123;&quot;name&quot;: &quot;Sammy Sosa&quot;, &quot;age&quot;: 12&#125;  ]&#125;
+
+序列的序列my_sequences:  - [1, 2, 3]  - [4, 5, 6]  -      - 7    - 8    - 9    - 0 
+
+↓ 等效的 JSON&#123;  &quot;my_sequences&quot;: [    [1, 2, 3],    [4, 5, 6],    [7, 8, 9, 0]  ]&#125;
+
+映射的映射Mark McGwire: &#123;hr: 65, avg: 0.278&#125;Sammy Sosa: &#123;    hr: 63,    avg: 0.288  &#125;
+
+↓ 等效的 JSON&#123;  &quot;Mark McGwire&quot;: &#123;    &quot;hr&quot;: 65,    &quot;avg&quot;: 0.278  &#125;,  &quot;Sammy Sosa&quot;: &#123;    &quot;hr&quot;: 63,    &quot;avg&quot;: 0.288  &#125;&#125;
+
+嵌套集合Jack:  id: 1  name: Franc  salary: 25000  hobby:    - a    - b  location: &#123;country: &quot;A&quot;, city: &quot;A-A&quot;&#125;
+
+↓ 等效的 JSON&#123;  &quot;Jack&quot;: &#123;    &quot;id&quot;: 1,    &quot;name&quot;: &quot;Franc&quot;,    &quot;salary&quot;: 25000,    &quot;hobby&quot;: [&quot;a&quot;, &quot;b&quot;],    &quot;location&quot;: &#123;        &quot;country&quot;: &quot;A&quot;, &quot;city&quot;: &quot;A-A&quot;    &#125;  &#125;&#125;
+
+无序集set1: !!set  ? one  ? twoset2: !!set &#123;&#x27;one&#x27;, &quot;two&quot;&#125;
+
+↓ 等效的 JSON&#123;  &quot;set1&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;,  &quot;set2&quot;: &#123;&quot;one&quot;: null, &quot;two&quot;: null&#125;&#125;
+
+集合表示为一个映射，其中每个键都与一个空值相关联
+有序映射ordered: !!omap- Mark McGwire: 65- Sammy Sosa: 63- Ken Griffy: 58
+
+↓ 等效的 JSON&#123;  &quot;ordered&quot;: [     &#123;&quot;Mark McGwire&quot;: 65&#125;,     &#123;&quot;Sammy Sosa&quot;: 63&#125;,     &#123;&quot;Ken Griffy&quot;: 58&#125;  ]&#125;
+
+YAML 参考条款
+序列又名数组或列表
+标量又名字符串或数字
+映射又名哈希或字典
+
+
+
+基于 YAML.org refcard。
+文档指标
+
+
+:-
+:-
+
+
+
+%
+指令指标
+
+
+---
+文档标题
+
+
+...
+文档终结者
+
+
+收集指标
+
+
+
+
+:-
+:-
+
+
+
+?
+关键指标
+
+
+:
+价值指标
+
+
+-
+嵌套系列条目指示器
+
+
+,
+单独的内联分支条目
+
+
+[]
+环绕串联系列分支
+
+
+&#123;&#125;
+环绕在线键控分支
+
+
+别名指标
+
+
+:-
+:-
+
+
+
+&amp;
+锚属性
+
+
+*
+别名指示符
+
+
+特殊键
+
+
+:-
+:-
+
+
+
+=
+默认“值”映射键
+
+
+&lt;&lt;
+合并来自另一个映射的键
+
+
+标量指标
+
+
+:-
+:-
+
+
+
+&#39;&#39;
+环绕内联未转义标量
+
+
+&quot;
+环绕内嵌转义标量
+
+
+&#96;
+&#96;
+
+
+&gt;
+折叠标量指示器
+
+
+-
+剥离 chomp 修饰符（|- 或 &gt;-）
+
+
++
+保留 chomp 修饰符（|+ 或 &gt;+）
+
+
+1-9
+显式缩进修饰符（|1 或 &gt;2）。  修饰符可以组合（|2-, &gt;+1）
+
+
+标签属性（通常未指定）
+
+
+
+
+:-
+:-
+
+
+
+none
+未指定的标签（由应用程序自动解析）
+
+
+!
+非特定标签（默认情况下，!!map&#x2F;!!seq&#x2F;!!str）
+
+
+!foo
+主要（按照惯例，表示本地 !foo 标记）
+
+
+!!foo
+次要的（按照惯例，表示 tag:yaml.org,2002:foo）
+
+
+!h!foo
+需要 %TAG !h! &lt;prefix&gt;（然后表示 &lt;prefix&gt;foo）
+
+
+!&lt;foo&gt;
+逐字标记（始终表示“foo”）
+
+
+
+
+杂项指标
+
+
+
+
+
+
+
+#
+一次性评论指示器
+
+
+`@
+两者都保留供将来使用
+
+
+核心类型（默认自动标签）
+
+
+
+
+
+
+
+
+
+!!map
+&#123;Hash table, dictionary, mapping&#125;
+
+
+!!seq
+&#123;List, array, tuple, vector, sequence&#125;
+
+
+!!str
+Unicode 字符串
+
+
+转义码
+
+Numeric
+\x12 (8-bit)
+\u1234 (16-bit)
+\U00102030 (32-bit)
+
+
+
+Protective
+\\ (\)
+\&quot; (“)
+\ ( )
+\&lt;TAB&gt; (TAB)
+
+
+
+C
+\0 (NUL)
+\a (BEL)
+\b (BS)
+\f (FF)
+\n (LF)
+\r (CR)
+\t (TAB)
+\v (VTAB)
+
+
+
+额外的
+\e (ESC)
+\_ (NBSP)
+\N (NEL)
+\L (LS)
+\P (PS)
+
+
+更多类型
+
+
+
+
+
+
+
+!!set
+&#123;cherries, plums, apples&#125;
+
+
+!!omap
+[one: 1, two: 2]
+
+
+与语言无关的标量类型
+
+
+
+
+
+
+
+
+
+&#123;~, null&#125;
+空（无值）。
+
+
+[1234, 0x4D2, 02333]
+[十进制整数、十六进制整数、八进制整数]
+
+
+[1_230.15, 12.3015e+02]
+[固定浮点数，指数浮点数]
+
+
+[.inf, -.Inf, .NAN]
+[无穷大（浮点数），负数，不是数字]
+
+
+&#123;Y, true, Yes, ON&#125;
+布尔真
+
+
+&#123;n, FALSE, No, off&#125;
+布尔假
+
+
+
+
+另见
+YAML Reference Card (yaml.org)
+Learn X in Y minutes (learnxinyminutes.com)
+YAML lint online (yamllint.com)
+INI 格式配置文件备忘清单 (jaywcjlove.github.io)
+TOML 格式配置文件备忘清单 (jaywcjlove.github.io)
+
+]]></content>
+      <categories>
+        <category>配置框架</category>
+      </categories>
+      <tags>
+        <tag>Yaml</tag>
+        <tag>配置框架</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Pyhton备忘录</title>
     <url>/2025/01/08/pyhton%E5%A4%87%E5%BF%98%E5%BD%95/</url>
     <content><![CDATA[Python 3 备忘清单Python 备忘单是 Python 3 编程语言的单页参考表
@@ -11112,8 +11568,8 @@ Python 中的正则表达式 (jaywcjlove.github.io)
         <category>后端编程</category>
       </categories>
       <tags>
-        <tag>后端编程</tag>
         <tag>Python</tag>
+        <tag>后端编程</tag>
       </tags>
   </entry>
   <entry>
