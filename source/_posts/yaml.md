@@ -7,10 +7,10 @@ tags:
     - Yaml
     - 配置框架
 keywords: Yaml, 速记, 语法, 速查, 备忘录，速查表，速记手册
-cover: https://free.picui.cn/free/2025/05/06/681959ea1f06a.jpg
+cover: https://hefollo.cn/apis.php?type=%E7%94%B5%E8%84%91%E7%AB%AF-4K%E5%9B%BE%E7%89%87/4K%E9%A3%8E%E6%99%AF%E7%B3%BB%E5%88%97&r=yaml
 banner:
       type: img
-      bgurl: https://free.picui.cn/free/2025/05/06/681959ea1f06a.jpg
+      bgurl: https://hefollo.cn/apis.php?type=%E7%94%B5%E8%84%91%E7%AB%AF-4K%E5%9B%BE%E7%89%87/4K%E9%A3%8E%E6%99%AF%E7%B3%BB%E5%88%97&r=yaml
       banner_text: Yaml 备忘录
       toc: true # 无需显示目录
       comments: true

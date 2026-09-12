@@ -40,3 +40,11 @@
     .var-primary(#a4ce60, #82df7a);
   }
 }
+
+/* Live2D 看板娘层级修正：双栏模式下左侧个人信息卡(.trm-main-card-frame)为
+   z-index:2，而 waifu.css 默认 #waifu z-index:1 会被其遮挡。
+   此处只提升堆叠层级，不改变宽高/定位等任何布局属性。 */
+body #waifu,
+body #waifu-toggle {
+  z-index: 10000 !important;
+}
