@@ -1,6 +1,20 @@
 <div class="trm-banner">
-    <% if(type === 'img'){ 
-        let style = `object-position:${position || 'top'};object-fit:${fit || 'cover'};` %>
+    <% if(type === 'img'){
+        let style = `object-position:${position || 'top'};object-fit:${fit || 'cover'};`;
+        // 文章页横幅改用原生裁切好的 /post-banners/ 版本, LCP 图体积约减半
+        var isPostPage = (typeof is_post === 'function') ? is_post() : (page && page.layout === 'post');
+        if (isPostPage) {
+            var swapPath = function (u) {
+                return (typeof u === 'string' && u.indexOf('/post-covers/') === 0)
+                    ? u.replace('/post-covers/', '/post-banners/') : u;
+            };
+            bgurl = Array.isArray(bgurl) ? bgurl.map(swapPath) : swapPath(bgurl);
+        }
+        // 横幅封面是首屏最大元素(LCP), 提前预加载以尽快出图
+        let firstImg = Array.isArray(bgurl) ? bgurl[0] : bgurl; %>
+    <% if(firstImg && typeof firstImg === 'string') { %>
+    <link rel="preload" as="image" href="<%= url_for(firstImg) %>" fetchpriority="high">
+    <% } %>
     <!-- banner cover -->
     <%- swich_imgs(bgurl,{
         style:style,

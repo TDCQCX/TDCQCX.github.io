@@ -6,6 +6,10 @@
                     theme.cover.type === 'img' ?
                     theme.cover.default : theme.cover.type ) 
             %>
+            <%# 列表卡片实际约 530px 宽, 改用 640px 缩略图池(/post-thumbs/) %>
+            <% if (coverURl && typeof coverURl === 'string' && coverURl.indexOf('/post-covers/') === 0) {
+                 coverURl = coverURl.replace('/post-covers/', '/post-thumbs/');
+               } %>
             <% if(coverURl === 'date' ) { %>
                 <div class="trm-cover-date">
                     <div class="trm-cover-day"><%= date(post[theme.datetime_foramt.post_card.type], theme.datetime_foramt.post_card.cover_date) %></div>
@@ -14,10 +18,11 @@
             <% } else if(coverURl === 'random' ) { %>
                 <div class="trm-cover-img" data-random-img></div>
             <% } else if(coverURl) { %>
-                <%- swich_imgs(coverURl, { alt: "cover", class:"no-fancybox" }) %>
+                <%- swich_imgs(coverURl, { alt: "cover", class:"no-fancybox", loading:"lazy", decoding:"async" }) %>
             <% } %>
         </a>
-        <% if(is_home() && post.sticky > 0) { %>
+        <%# 置顶徽标: 排序插件读的是 top, 主题原先只认 sticky, 两者都兼容 %>
+        <% if(is_home() && ((post.top !== undefined && post.top > 0) || (post.sticky !== undefined && post.sticky > 0))) { %>
             <div class="trm-top"><%- __('post.sticky') %></div>
         <% } %>
         <div class="trm-card-descr">

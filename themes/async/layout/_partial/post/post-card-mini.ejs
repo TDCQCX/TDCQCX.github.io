@@ -4,9 +4,13 @@
             <%  let coverURl = post.cover ? 
                 post.cover : ( post.photos && post.photos.length ? post.photos : theme.cover.default )
             %>
+            <%# 同 post-card.ejs: 本地化封面在列表里用 640px 缩略图 %>
+            <% if (coverURl && typeof coverURl === 'string' && coverURl.indexOf('/post-covers/') === 0) {
+                 coverURl = coverURl.replace('/post-covers/', '/post-thumbs/');
+               } %>
             <a class="trm-op-top trm-anima-link" href="<%- url_for(post.path) %>">
                 <span class="trm-op-cover">
-                    <%- swich_imgs(coverURl, { alt: "cover", class:"no-fancybox" }) %>
+                    <%- swich_imgs(coverURl, { alt: "cover", class:"no-fancybox", loading:"lazy", decoding:"async" }) %>
                 </span>
                 <h6 class="trm-op-title"><%= post.title %></h6>
             </a>

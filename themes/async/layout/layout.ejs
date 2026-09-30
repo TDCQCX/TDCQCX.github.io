@@ -20,7 +20,8 @@
 
       <!-- scroll container -->
       <div id="trm-dynamic-content" class="trm-swup-animation">
-        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
             <!-- top bar -->
             <%- partial(theme.layout.header) %>
             <!-- top bar end -->

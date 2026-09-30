@@ -2,13 +2,41 @@
 <meta name="x5-fullscreen" content="true">
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
-<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="<%= config.url.replace(/\/+$/, '') %><%= url_for(page.path || '/') %>">
 <%- theme.open_graph ? open_graph() : ''%>
 <% if(page.keywords){%>
     <meta name="keywords" content="<%= page.keywords %>">
 <%}else if(config.keywords){%>
     <meta name="keywords" content="<%= config.keywords %>">
 <%}%>
+<%# 首页补齐分享卡片所需字段 (主题 open_graph 不含 image/description) %>
+<% if(is_home()){ %>
+    <meta name="description" content="<%= config.description %>">
+    <meta property="og:image" content="<%= config.url.replace(/\/+$/, '') + url_for(theme.favicon.logo || '/img/favicon.svg') %>">
+    <meta property="og:description" content="<%= config.description %>">
+    <meta name="twitter:title" content="<%= config.title %>">
+    <meta name="twitter:description" content="<%= config.description %>">
+    <meta name="twitter:image" content="<%= config.url.replace(/\/+$/, '') + url_for(theme.favicon.logo || '/img/favicon.svg') %>">
+<% } %>
+<%# SEO: 文章页输出 JSON-LD 结构化数据, 便于搜索引擎生成富摘要 %>
+<% if(is_post()){ %>
+<script type="application/ld+json">
+<%- JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": page.title,
+    "datePublished": page.date ? page.date.toISOString() : undefined,
+    "dateModified": (page.updated || page.date) ? (page.updated || page.date).toISOString() : undefined,
+    "author": { "@type": "Person", "name": config.author },
+    "publisher": { "@type": "Organization", "name": config.title },
+    "mainEntityOfPage": config.url.replace(/\/+$/, '') + url_for(page.path || '/'),
+    "image": config.url.replace(/\/+$/, '') + url_for(page.cover || theme.favicon.logo || '/img/favicon.svg')
+}) %>
+</script>
+<% } %>
 
 <%- tag("title", !!page.title ? page.title : config.title) %>
 

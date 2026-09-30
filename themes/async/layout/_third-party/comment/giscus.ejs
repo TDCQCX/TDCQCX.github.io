@@ -39,5 +39,20 @@
         });
     }
 
-    loadGiscus();
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = '<%- theme.comment.giscus["repo-id"] || "" %>';
+    var GISCUS_CATEGORY_ID = '<%- theme.comment.giscus["category-id"] || "" %>';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
 </script>
