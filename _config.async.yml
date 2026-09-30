@@ -2,7 +2,9 @@
 # 主题模式配置
 theme:
   switch: true  # 如果为 false，则不会出现主题切换按钮，只加载设置的默认主题模式
-  default: style-light  # 设置默认主题模式为暗色模式
+  # default 支持 style-light / style-dark / auto
+  # auto = 跟随系统 prefers-color-scheme; 用户手动切换后以 localStorage 为准
+  default: auto # 跟随系统深浅色
 
 # Open Graph protocol | OG 协议
 open_graph: true # 启用
@@ -11,7 +13,7 @@ user:
   first_name: 个人博客
   last_name: 浮生记
   email: tdcqcx@gmail.com
-  domain: blog.tdcqcx.top
+  domain: blog.tdcqcx.cn
   avatar: /images/index/avatar.jpg
   describe: 这是我的个人博客，记录我的生活和编程之路。
   rule_text: 申请友链需满足：原创内容≥70%、文章≥30篇、HTTPS部署、内容合法合规
@@ -44,6 +46,18 @@ top_bars:
     noswup: true
   - title: 友链
     url: /links/
+    noswup: true
+  - title: 项目
+    url: /project/
+    noswup: true
+  - title: 系列
+    url: /pyviz/
+    noswup: true
+  - title: 留言板
+    url: /comment/
+    noswup: true
+  - title: 资源
+    url: /custom/
     noswup: true
 
 sidebar:
@@ -207,16 +221,19 @@ notice_outdate:
   limit_day: 365
   position: top
 
-  categorie_card:
-    enable: true
-    len: 5
-    list: [ "后端开发", "前端技术", "DevOps", "架构设计", "技术杂谈" ]
-    colors:  # 分类卡片配色
-      - "#2196F3"
-      - "#4CAF50"
-      - "#FF9800"
-      - "#9C27B0"
-      - "#E91E63"
+# 首页分类卡片
+# 注意: 这个键必须处于顶层! 之前它被缩进在 notice_outdate: 之下, 不是主题认识的键,
+# 于是 list/len/colors 全部失效, 退化成主题默认的 len: 2。
+# list 里必须是真实存在的分类名(见各文章 front-matter 的 categories)。
+categorie_card:
+  enable: true # enable | 启用
+  len: 4 # 未在 list 中命中时的兜底数量
+  list: [ "后端编程", "前端技术", "技术教程", "游戏开发" ] # 固定显示的分类
+  colors: # 分类卡片配色
+    - "#2196F3"
+    - "#4CAF50"
+    - "#FF9800"
+    - "#9C27B0"
 
 rightside:
   readmode: true
@@ -282,6 +299,63 @@ wordcount:
   enable: true # enable | 开启
   count: true # count | 显示字数
   time: true # read time | 显示阅读时间
+
+# 第三方插件资源 (覆盖主题 _config.yml 的 CDN 前缀)
+# fancybox / 本地搜索 / KaTeX / swup / fjGallery 改为站点自托管
+# (source/plugins/ 会复制到站点根 /plugins/), 内网/墙内也能加载。
+assets:
+  plugin:
+    fancybox:
+      css: /plugins/fancybox/fancybox.css
+      js: /plugins/fancybox/fancybox.umd.js
+    search: /plugins/searchdb/search.js
+    swup: /plugins/swup/swup.min.js
+    katex:
+      js: /plugins/katex/katex.min.js
+      css: /plugins/katex/katex.min.css
+      auto_render: /plugins/katex/auto-render.min.js
+      copy_tex: /plugins/katex/copy-tex.min.js
+    flickr_justified_gallery: /plugins/fjgallery/fjGallery.min.js
+    flickr_justified_gallery_css: /plugins/fjgallery/fjGallery.css
+
+# Math formula | 数学公式 (KaTeX)
+# global: true = 全站注入 KaTeX 并渲染 $...$ / $$...$$ / \(...\) / \[...\]
+# 资源已自托管到 source/plugins/katex/ (仅保留 woff2 字体, 不依赖外网)
+katex:
+  copy_tex: true # 复制公式时一并复制 TeX 源码
+  global: true
+  options: {}
+
+# Swup | 页面切换动画 (无刷新跳转)
+# 站内菜单已标记 data-no-swup(见 top_bars.noswup), swup 只接管站内内容链接
+swup: true
+
+# 百度主动推送 (百度搜索资源平台的自动推送脚本, script.ejs 中已有调用点)
+# 需先在百度搜索资源平台完成站点验证才会生效
+baidu_push: true
+# Comment | 评论系统
+# 启用 giscus (基于 GitHub Discussions, 无需额外服务器/云环境, 免费且无广告)。
+# 还差最后一步(只能由仓库所有者完成):
+#   1. 打开 https://github.com/TDCQCX/TDCQCX.github.io/settings
+#      勾选 Features 里的 "Discussions";
+#   2. 打开 https://giscus.app/zh-CN, 填入本仓库, 页面会生成 data-category-id;
+#   3. 把生成的值填到下面的 category-id。
+# 填好之前, 留言板页面会显示一段引导文案而不是空白框(见 giscus.ejs)。
+comment:
+  giscus:
+    enable: true
+    repo: TDCQCX/TDCQCX.github.io
+    repo-id: R_kgDONmfKPQ
+    category: Announcements
+    category-id: # 待填: 在 giscus.app 生成的 data-category-id
+    mapping: pathname
+    reactions-enabled: 1
+    emit-metadata: 0
+    lang: zh-CN
+    theme:
+      light: light
+      dark: transparent_dark
+
 # Blog search | 搜索
 search:
   enable: true
@@ -348,4 +422,4 @@ links:
     url: https://blog.TDCQCX.cn
     image: /images/index/avatar.jpg
     desc: 浮生若梦，为欢几何
-sw: true
+sw: false

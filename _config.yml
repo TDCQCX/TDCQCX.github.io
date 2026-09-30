@@ -5,8 +5,8 @@
 # Site
 title: 浮生记
 subtitle: '个人博客'
-description: ''
-keywords:
+description: '浮生记个人博客，记录编程学习笔记与生活随笔。涵盖 C/C++/Java/Python/JavaScript/PHP/Vue/Docker/YAML 等技术速查手册与实战教程。'
+keywords: 浮生记,个人博客,编程笔记,技术教程,速查手册,C++,Java,Python,JavaScript,Vue,Docker
 author: 浮生记
 language: zh-CN
 timezone: 'Asia/Shanghai'
@@ -15,7 +15,7 @@ timezone: 'Asia/Shanghai'
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://blog.tdcqcx.top
+url: https://blog.tdcqcx.cn
 root: /
 
 
@@ -85,7 +85,32 @@ meta_generator: true
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+updated_option: 'date'
+
+# Search | 搜索
+# 同时安装的 hexo-generator-search 与 hexo-generator-searchdb 都注册了名为 xml 的生成器,
+# 实际生效的是 searchdb(输出含 categories/tags, 供主题 local_search.js 使用)。
+# hexo-generator-search 已在 package.json 中移除, 这里保留 searchdb 需要的字段。
+search:
+  path: search.xml
+  field: post
+  content: true
+
+# Search | 搜索
+# 同时安装的 hexo-generator-search 与 hexo-generator-searchdb 都注册了名为 xml 的
+# 生成器, 实际生效的是 searchdb(输出含 categories/tags, 供主题 local_search.js 使用)。
+# hexo-generator-search 已在 package.json 中移除, 这里保留 searchdb 需要的字段。
+# Series | 系列教程
+# 标记在文章 front-matter 里的 series 字段, 若命中这里登记的 key, 则:
+#   1) 该文章不再出现在首页"最近发布"和归档列表里(由 scripts/series.js 接管生成器)
+#   2) 自动生成一个入口页 /<key>/ , 把整个系列收成一份目录
+# 这样多章节系列只占一个位置, 不会把首页刷满。
+series_config:
+  pyviz:
+    title: Python 数据分析与可视化教程
+    subtitle: 从零基础到项目实战 · 10 章 + 4 篇附录
+    intro: 这是一套面向零基础读者的 Python 数据分析与可视化完整教程：从数据分析的基本概念讲起，依次覆盖数据获取与存储、NumPy、Pandas、数据预处理、Matplotlib、Seaborn 与 Plotly，最后到机器学习与完整项目实战。所有示例代码均已实际运行验证，按章节顺序阅读即可。
+    cover: /post-covers/pyviz.jpg
 
 # Pagination
 ## Set per_page to 0 to disable pagination
@@ -110,18 +135,21 @@ theme: async
 deploy:
   type: git
   repo: https://github.com/TDCQCX/TDCQCX.github.io.git
-  branch: main
+  branch: gh-pages
 
-  feed:
-    type: atom
-    path: atom.xml
-    limit: 20
-    hub:
-    content:
-    content_limit: 140
-    content_limit_delim: ' '
-    order_by: -date
-    icon: icon.png
-    autodiscovery: true
-    template:
-domain: https://blog.TDCQCX.top
+# RSS / Atom 订阅
+# 注意: 这段必须在顶层! 之前它被缩进到 deploy: 下面, 导致 limit / content_limit 全部失效,
+#       生成了 1.99 MB 的全文 feed。content: false = 只输出摘要, 不再内嵌全文。
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content: false
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: img/favicon.svg
+  autodiscovery: true
+  template:
+domain: https://blog.tdcqcx.cn
