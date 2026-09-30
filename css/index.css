@@ -3927,3 +3927,95 @@ body #waifu,
 body #waifu-toggle {
   z-index: 10000 !important;
 }
+/* Live2D 看板娘尺寸约束
+   问题: waifu-tips.js 注入的工具按钮是内联 SVG, 只带 viewBox 没有 width/height,
+   在未被约束时会被拉伸到整屏 (实测 1420x2272px), 表现为页面上出现一个"巨大的 X"。
+   这里显式给出尺寸, 同时约束看板娘本体与画布, 避免影响页面滚动高度。 */
+body #waifu {
+  width: 300px;
+  height: 300px;
+  overflow: visible;
+}
+body #waifu-tool span {
+  display: block;
+  height: 30px;
+  line-height: 30px;
+}
+body #waifu-tool svg {
+  width: 24px !important;
+  height: 24px !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+body #live2d {
+  width: 300px;
+  height: 300px;
+}
+/* 搜索弹层横向溢出修正
+   弹层默认 transform: scale(1.1) 会把 100% 宽的遮罩放大到 1584px, 超出视口
+   造成横向滚动条。这里改为不放大, 只保留淡入淡出。 */
+body .trm-search-popup {
+  transform: none;
+}
+body .trm-search-popup.show {
+  transform: none;
+}
+/* ===== 归档页: 归档/分类/标签/系列 融合切换栏 ===== */
+.trm-archive-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.trm-archive-tabs .trm-tab > button {
+  appearance: none;
+  border: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  padding: 8px 18px;
+  border-radius: 18px;
+  background: transparent;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.trm-archive-tabs .trm-tab > button:hover {
+  background: var(--primary-30);
+}
+.trm-archive-tabs .trm-tab.active > button {
+  background: var(--primary);
+  color: #fff;
+  font-weight: 600;
+}
+/* 面板内的索引标签, 保证长中文与计数不折行错位 */
+.trm-archive-pane .trm-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+.trm-archive-pane .trm-label:hover {
+  opacity: 0.8;
+}
+/* ===== 系列卡片 (总览页 / 详情页) ===== */
+.trm-series-cover {
+  position: relative;
+  overflow: hidden;
+  border-radius: 6px;
+  aspect-ratio: 16 / 10;
+}
+.trm-series-cover > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 项目卡片在网格中保持等高 */
+.trm-project-grid .trm-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
