@@ -8,3 +8,7 @@ public/
 *.zip
 package-lock.json
 *.backup
+.idea/
+_originals/
+dl/
+session.jsonl
