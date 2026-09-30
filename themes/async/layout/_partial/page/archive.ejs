@@ -1,37 +1,136 @@
-<div class="row">
-    <div class="col-lg-12">
-        <div class="trm-card">
-            <div style="padding: 0 20px;">
-                <% if(is_archive()){%>
-                    <%- list_archives({
-                        type: "yearly",
-                        ulclass: "trm-tag",
-                        liclass: "trm-tag"
-                    }) %>
-                <% } else if (is_category()){ %>
-                    <%- list_categories({
-                        ulclass: "trm-tag",
-                        liclass: "trm-tag"
-                    }) %>
-                <% } else if (is_tag()) { %>
-                    <%- list_tags({ class: {
-                        ul: "trm-tag-list",
-                        li:"trm-tag-list-item"
-                    } }) %>
-                <% } %>
-            </div>
-        </div>
+<%#
+  归档页（归档 / 分类 / 标签 / 系列 融合为一条切换栏）
+  原先顶部只有一个年份列表，分类与标签藏在导航下拉里，用户要跳好几层。
+  这里把四类索引收进一条切换栏 + 面板，都留在同一页面内, 点一下就能切换。
+%>
+<%
+  // 分类与标签数据
+  var cats = site.categories.toArray().sort(function(a,b){ return b.length - a.length; });
+  var tags = site.tags.toArray().sort(function(a,b){ return b.length - a.length; });
+  var years = {};
+  site.posts.forEach(function(p){
+    var y = p.date.year();
+    if(!years[y]) years[y] = 0;
+    years[y]++;
+  });
+  var yearList = Object.keys(years).sort().reverse();
+  // 系列（从主题配置读取，与 scripts/series.js 保持一致）
+  var seriesCfg = config.series_config || {};
+  var seriesList = Object.keys(seriesCfg);
+%>
+
+<div class="row trm-mb-20">
+  <div class="col-lg-12">
+    <div class="trm-card trm-p-20">
+      <ul class="trm-nav-tabs trm-archive-tabs" style="margin:0;">
+        <li class="trm-tab active"><button type="button" data-arc="pane-archive">按时间</button></li>
+        <li class="trm-tab"><button type="button" data-arc="pane-category">按分类</button></li>
+        <li class="trm-tab"><button type="button" data-arc="pane-tag">按标签</button></li>
+        <% if(seriesList.length){ %>
+        <li class="trm-tab"><button type="button" data-arc="pane-series">按系列</button></li>
+        <% } %>
+      </ul>
     </div>
+  </div>
 </div>
+
+<div class="row trm-archive-panes">
+  <!-- 按时间 -->
+  <div class="col-lg-12 trm-archive-pane active" id="pane-archive">
+    <div class="trm-card trm-p-20">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <% yearList.forEach(function(y){ %>
+          <a class="trm-label" href="<%- url_for('/archives/' + y + '/') %>"
+             style="padding:6px 14px;border-radius:14px;background:var(--primary-30);">
+            <%= y %> <span style="opacity:.7;">（<%= years[y] %>）</span>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 按分类 -->
+  <div class="col-lg-12 trm-archive-pane" id="pane-category" style="display:none;">
+    <div class="trm-card trm-p-20">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <% cats.forEach(function(c){ %>
+          <a class="trm-label" href="<%- url_for(c.path) %>"
+             style="padding:6px 14px;border-radius:14px;background:var(--primary-30);">
+            <%= c.name %> <span style="opacity:.7;">（<%= c.length %>）</span>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 按标签 -->
+  <div class="col-lg-12 trm-archive-pane" id="pane-tag" style="display:none;">
+    <div class="trm-card trm-p-20">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        <% tags.forEach(function(t){ %>
+          <a class="trm-label" href="<%- url_for(t.path) %>"
+             style="padding:6px 14px;border-radius:14px;background:var(--primary-30);">
+            <%= t.name %> <span style="opacity:.7;">（<%= t.length %>）</span>
+          </a>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+
+  <!-- 按系列 -->
+  <% if(seriesList.length){ %>
+  <div class="col-lg-12 trm-archive-pane" id="pane-series" style="display:none;">
+    <div class="trm-card trm-p-20">
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <% seriesList.forEach(function(k){
+             var meta = seriesCfg[k] || {};
+             var arr = site.posts.filter(function(p){ return String(p.series) === k; }).toArray();
+        %>
+          <a href="<%- url_for(k + '/') %>" class="trm-anima-link"
+             style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+            <span>
+              <strong><%= meta.title || k %></strong>
+              <% if(meta.subtitle){ %>
+                <span class="trm-label trm-label-light"> · <%= meta.subtitle %></span>
+              <% } %>
+            </span>
+            <span class="trm-label trm-label-color"><%= arr.length %> 篇 <i class="iconfont <%= theme.icons.next %>"></i></span>
+          </a>
+        <% }) %>
+        <a href="<%- url_for('/series/') %>" class="trm-label trm-label-color trm-mt-10">
+          <i class="iconfont <%= theme.icons.next %>"></i> 查看系列总览
+        </a>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
+
+<script>
+(function(){
+  var tabs = document.querySelectorAll('.trm-archive-tabs .trm-tab');
+  var panes = document.querySelectorAll('.trm-archive-pane');
+  if(!tabs.length) return;
+  tabs.forEach(function(t){
+    t.addEventListener('click', function(){
+      var id = t.querySelector('button').getAttribute('data-arc');
+      tabs.forEach(function(x){ x.classList.remove('active'); });
+      t.classList.add('active');
+      panes.forEach(function(p){
+        p.style.display = (p.id === id) ? '' : 'none';
+      });
+    });
+  });
+})();
+</script>
 
 <!-- history -->
 <% if(page.posts) { %>
 <div class="row">
     <div class="col-lg-12">
-        <!-- title -->
         <h5 class="trm-title-with-divider">
             <% if(page.archive){ %>
-                <%- page.year ? __('title.year_archives',page.year) : __('title.all_archives') %>
+                <%- page.year ? (page.year + ' 年归档') : '所有归档' %>
             <% } else if (is_category()){ %>
                 <%- page.category %>
             <% } else if (is_tag()) { %>
@@ -41,7 +140,6 @@
         </h5>
     </div>
     <div class="col-lg-12">
-        <!-- timeline -->
         <div class="trm-timeline">
             <% page.posts.forEach(function(element) { %>
             <div class="trm-timeline-item trm-scroll-animation">
@@ -85,12 +183,8 @@
             </div>
             <% }) %>
         </div>
-        <!-- timeline end -->
     </div>
 </div>
 <% } %>
-<!-- history end -->
 
 <%- partial(theme.layout.paginator) %>
-
-

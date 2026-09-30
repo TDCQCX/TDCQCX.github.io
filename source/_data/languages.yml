@@ -34,6 +34,17 @@ zh-hans:
     year_archives: '%s 年 %s 月的归档'
     other_articles: 其他文章
     unclassified: 未分类
+    series_list: 系列教程
+    series_chapters: 章节目录
+    series_appendix: 附录
+    series_back: 返回系列总览
+    series_count: 共 %s 个系列
+    chapter_count: '%s 章'
+    resource_docs: 文档与速查
+    resource_tools: 在线工具
+    resource_learning: 学习资源
+    project_source: 查看源码
+    project_visit: 访问站点
 
   menu:
     home: 首页

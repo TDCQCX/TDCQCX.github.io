@@ -148,11 +148,15 @@ function archiveGenerator(locals) {
   return result;
 }
 
-// ---------- 系列入口页 /<series>/ ----------
+// ---------- 系列页 ----------
+// 两个产物:
+//   /series/        系列总览 —— 列出所有已登记系列, 方便将来增加多个系列
+//   /<key>/         单个系列详情 —— 章节目录 + 附录
 function seriesPageGenerator(locals) {
   const hexo = this;
   const cfg = getSeriesConfig(hexo);
   const pages = [];
+  const allSeries = [];
 
   Object.keys(cfg).forEach(function (key) {
     const meta = cfg[key] || {};
@@ -191,25 +195,52 @@ function seriesPageGenerator(locals) {
       .sort(function (a, b) { return a.chapter - b.chapter; })
       .map(function (p, i) { return toItem(p, i + 1); });
 
+    // 供总览页使用
+    allSeries.push({
+      key: key,
+      title: meta.title || key,
+      subtitle: meta.subtitle || '',
+      intro: meta.intro || '',
+      cover: meta.cover || '',
+      chapterCount: chapters.length,
+      appendixCount: appendix.length,
+      updated: posts.reduce(function (m, p) { return p.date > m ? p.date : m; }, posts[0].date)
+    });
+
+    // 单个系列详情页
     pages.push({
       path: key + '/index.html',
       layout: ['series'],
       data: {
         __series: true,
-        // title 供 <title> 与 og:title 使用（主题 head.ejs 读 page.title）
         title: meta.title || key,
-        // 系列页横幅用专属封面，而不是主题默认图
         banner: { type: 'img', bgurl: meta.cover || '' },
         series_key: key,
         series_title: meta.title || key,
         series_subtitle: meta.subtitle || '',
         series_intro: meta.intro || '',
-        // 附录优先取 front-matter 里 chapter>=100 的文章，其次取配置里的手工清单
         series_extra: appendix.length ? appendix : (meta.extra || []),
         chapters: chapters,
-        total: chapters.length
+        total: chapters.length,
+        // 页脚提供"返回系列总览"入口
+        series_index_url: '/series/'
       }
     });
+  });
+
+  if (!allSeries.length) return pages;
+
+  // 系列总览页
+  allSeries.sort(function (a, b) { return b.updated - a.updated; });
+  pages.push({
+    path: 'series/index.html',
+    layout: ['series_index'],
+    data: {
+      title: '系列教程',
+      banner: { type: 'img', bgurl: allSeries[0].cover || '' },
+      series_list: allSeries,
+      total: allSeries.length
+    }
   });
 
   return pages;

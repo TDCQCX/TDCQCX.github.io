@@ -1,31 +1,65 @@
-<div class="row trm-mb-40 trm-scroll-animation">
-    <div class="col-lg-12">
-        <blockquote>
-            <%- page.title %>
-        </blockquote>
-    </div>
-</div>
+﻿<%#
+  项目页 /project/
+  数据: source/_data/projects.yml -> theme.projects
+  每项: { title, desc?, children: [{name, desc, url, tags?, status?}] }
+  布局改为卡片网格: 分组标题 + 每项卡片(名称 / 描述 / 标签 / 链接)
+%>
+<% let banner = page.banner || {}; %>
+<%- partial(theme.layout.main,  {
+    banner: partial(theme.layout.banner,  {
+        ...theme.banner.default,
+        banner_title: page.title,
+        ...banner
+    }),
+    content: (function(){
+        let html = ''
 
-<% if(Array.isArray(theme.projects)){ %>
-    <% theme.projects.forEach((item,index)=>{ %>
-        <div class="row">
-            <div class="col-lg-12">
-              <h5 class="trm-title-with-divider"><%- item.title %><span  data-number="<%- index+1 %>"></span></h5>
-            </div>
-            <% item.children.forEach((project,index)=>{ %>
-                <div class="<%- !page.single_column ? 'col-lg-6':'col-lg-4' %>">
-                    <div class="trm-project-card trm-scroll-animation trm-active-el">
-                        <div class="trm-project-content">
-                            <h6 class="trm-mb-20"><%- project.name %></h6>
-                            <div class="trm-mb-20 trm-project-desc"><%- project.desc %></div>
-                            <a target="_parent" href="<%- project.url %>" class="trm-label trm-label-color">
-                                Github
-                                <%- icon(theme.icons.next) %>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            <%})%>
-          </div>
-    <%})%>
-<% } %>
+        if (!Array.isArray(theme.projects) || !theme.projects.length) {
+            return '<div class="row"><div class="col-lg-12"><blockquote>'
+                 + '还没有项目数据。编辑 <code>source/_data/projects.yml</code> 即可添加。'
+                 + '</blockquote></div></div>'
+        }
+
+        theme.projects.forEach(function(group, gi){
+            const gnum = (gi + 1 < 10 ? '0' : '') + (gi + 1)
+
+            html += '<div class="row trm-mt-20">'
+                 +  '<div class="col-lg-12"><h5 class="trm-title-with-divider">'
+                 +  (group.title || '') + '<span data-number="' + gnum + '"></span></h5></div>'
+
+            if (group.desc) {
+                html += '<div class="col-lg-12"><div class="trm-label trm-label-light trm-mb-20">'
+                     +  group.desc + '</div></div>'
+            }
+
+            ;(group.children || []).forEach(function(p){
+                const isRepo = /github\.com|gitlab\.com|gitee\.com/.test(p.url || '')
+                const linkText = isRepo ? __('title.project_source') : __('title.project_visit')
+
+                html += '<div class="' + (!page.single_column ? 'col-lg-6' : 'col-lg-4') + '">'
+                     +  '<a href="' + p.url + '" target="_blank" rel="noopener" class="trm-anima-link">'
+                     +  '<div class="trm-card trm-scroll-animation trm-p-20" style="margin-bottom:20px;height:100%;">'
+                     +  '<h6 class="trm-mb-15">' + p.name + '</h6>'
+                     +  (p.desc ? '<div class="trm-label trm-mb-15" style="opacity:.85;line-height:1.7;">' + p.desc + '</div>' : '')
+                     // 标签
+                     +  (Array.isArray(p.tags) && p.tags.length
+                          ? '<div class="trm-mb-15" style="display:flex;flex-wrap:wrap;gap:6px;">'
+                            + p.tags.map(function(t){
+                                return '<span class="trm-label" style="padding:2px 8px;border-radius:10px;'
+                                     + 'background:var(--primary-30);font-size:.78rem;">' + t + '</span>'
+                              }).join('')
+                            + '</div>'
+                          : '')
+                     +  '<div style="display:flex;justify-content:space-between;align-items:center;">'
+                     +  '<span class="trm-label trm-label-color">' + linkText
+                     +  ' <i class="iconfont ' + theme.icons.next + '"></i></span>'
+                     +  (p.status ? '<span class="trm-label trm-label-light">' + p.status + '</span>' : '')
+                     +  '</div></div></a></div>'
+            })
+
+            html += '</div>'
+        })
+
+        return html
+    })()
+}) %>

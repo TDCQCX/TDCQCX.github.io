@@ -1,0 +1,48 @@
+﻿<%#
+  系列总览页 /series/
+  由 scripts/series.js 的 seriesPageGenerator 提供:
+    page.series_list = [{key,title,subtitle,intro,cover,chapterCount,appendixCount,updated}]
+  将来新增系列只需在 _config.yml 的 series_config 里登记, 这里自动出现卡片。
+%>
+<% let banner = page.banner || {}; %>
+<%- partial(theme.layout.main,  {
+    banner: partial(theme.layout.banner,  {
+        ...theme.banner.default,
+        banner_title: page.title,
+        banner_text: __('title.series_count').replace('%s', page.total),
+        ...banner
+    }),
+    content: (function(){
+        let html = '<div class="row">'
+
+        page.series_list.forEach(function(s, i){
+            const num = (i + 1 < 10 ? '0' : '') + (i + 1)
+            const cover = s.cover || theme.cover.default
+            html += '<div class="col-lg-12">'
+                 +  '<a href="' + url_for(s.key + '/') + '" class="trm-anima-link">'
+                 +  '<div class="trm-card trm-scroll-animation" style="margin-bottom:20px;">'
+                 +  '<div style="display:flex;gap:20px;align-items:stretch;flex-wrap:wrap;">'
+                 // 封面缩略
+                 +  '<div style="flex:0 0 240px;max-width:240px;">'
+                 +  '<div class="trm-cover-frame" style="padding-bottom:62%;position:relative;overflow:hidden;border-radius:6px;">'
+                 +  '<img src="' + url_for(cover) + '" alt="' + s.title + '" loading="lazy" decoding="async"'
+                 +  ' style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">'
+                 +  '</div></div>'
+                 // 文字区
+                 +  '<div style="flex:1 1 260px;min-width:240px;padding:6px 0;">'
+                 +  '<div class="trm-label trm-accent-color trm-mb-10">' + num
+                 +  ' &nbsp;·&nbsp; ' + __('title.chapter_count').replace('%s', s.chapterCount)
+                 +  (s.appendixCount ? ' + ' + s.appendixCount + ' ' + __('title.series_appendix') : '')
+                 +  '</div>'
+                 +  '<h5 class="trm-mb-10">' + s.title + '</h5>'
+                 +  (s.subtitle ? '<div class="trm-label trm-label-light trm-mb-10">' + s.subtitle + '</div>' : '')
+                 +  (s.intro ? '<div class="trm-label trm-mb-15" style="opacity:.8;">' + s.intro.slice(0, 96) + (s.intro.length > 96 ? '…' : '') + '</div>' : '')
+                 +  '<span class="trm-label trm-label-color">' + __('title.series_chapters')
+                 +  ' <i class="iconfont ' + theme.icons.next + '"></i></span>'
+                 +  '</div></div></div></a></div>'
+        })
+
+        html += '</div>'
+        return html
+    })()
+}) %>

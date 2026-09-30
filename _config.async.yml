@@ -33,14 +33,11 @@ top_bars:
   - title: 首页
     url: /
     noswup: true
+  # 归档页顶部已把 时间/分类/标签/系列 融合成一条切换栏,
+  # 所以这里不再需要分类/标签子菜单, 避免同一批入口出现两遍。
   - title: 归档
     url: /archives/
     noswup: true
-    children:
-      - title: 分类
-        url: /categories/
-      - title: 标签
-        url: /tags/
   - title: 关于
     url: /about/
     noswup: true
@@ -51,7 +48,7 @@ top_bars:
     url: /project/
     noswup: true
   - title: 系列
-    url: /pyviz/
+    url: /series/
     noswup: true
   - title: 留言板
     url: /comment/
