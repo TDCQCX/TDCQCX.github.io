@@ -40,9 +40,6 @@ zh-hans:
     series_back: 返回系列总览
     series_count: 共 %s 个系列
     chapter_count: '%s 章'
-    resource_docs: 文档与速查
-    resource_tools: 在线工具
-    resource_learning: 学习资源
     project_source: 查看源码
     project_visit: 访问站点
 

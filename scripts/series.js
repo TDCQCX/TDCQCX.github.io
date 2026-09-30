@@ -87,9 +87,17 @@ function archiveGenerator(locals) {
 
   if (!docs.length) return;
 
-  const sorted = Query.sort
-    ? new Query(docs).sort(config.archive_generator.order_by || '-date').toArray()
-    : docs;
+  // 注意: Query 的 sort 是原型方法, Query.sort 恒为 undefined,
+  // 用它做特性检测会导致排序永远不执行。这里直接对数组排序。
+  // 归档按 order_by 排序(默认 -date); 置顶只用于首页, 归档不做置顶。
+  const orderBy = config.archive_generator.order_by || '-date';
+  const desc = orderBy.charAt(0) === '-';
+  const field = orderBy.replace(/^-/, '');
+  const sorted = docs.slice().sort(function (a, b) {
+    const va = a[field], vb = b[field];
+    if (va === vb) return 0;
+    return (va > vb ? 1 : -1) * (desc ? -1 : 1);
+  });
 
   const archiveDir = config.archive_dir;
   const baseDir = archiveDir[archiveDir.length - 1] === '/' ? archiveDir : archiveDir + '/';
