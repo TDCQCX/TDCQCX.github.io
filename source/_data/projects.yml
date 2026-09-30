@@ -1,0 +1,16 @@
+# 项目页数据 (source/_data/projects.yml)
+# 结构: 每个分组含 title 与 children[]; children 每项为 name / desc / url
+# 说明: 本站项目页使用主题的 project 布局, 读取 theme.projects (由 _data/projects.yml 合并而来)
+- title: 自研项目
+  children:
+    - name: OCR 助手
+      desc: 截图 OCR + AI 答题的桌面工具, 支持端侧模型与离线翻译
+      url: https://github.com/TDCQCX/OCR-Assistant
+- title: 本博客
+  children:
+    - name: TDCQCX.github.io
+      desc: Hexo + hexo-theme-async 构建的静态博客, GitHub Actions 自动部署
+      url: https://github.com/TDCQCX/TDCQCX.github.io
+    - name: 博客站点
+      desc: 浮生记个人博客, 记录编程学习笔记与生活随笔
+      url: https://blog.tdcqcx.cn
