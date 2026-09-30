@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/pyviz/a2-viz-cheatsheet/">
+<meta name="description" content="适用环境：matplotlib 3.11.2 &#x2F; seaborn 0.13.2 &#x2F; plotly 7.1.0 &#x2F; pandas 3.0.6本机实测可用的中文字体：Microsoft YaHei（首选）、SimHei、SimSun、DengXian、KaiTi、FangSong所有例子都用 ..&#x2F;data&#x2F; 里的真实数据，复制就能跑。   A2.0 开工先做这三件事1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="附录 A2 · 可视化速查表">
+<meta property="og:url" content="https://blog.tdcqcx.cn/pyviz/a2-viz-cheatsheet/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="适用环境：matplotlib 3.11.2 &#x2F; seaborn 0.13.2 &#x2F; plotly 7.1.0 &#x2F; pandas 3.0.6本机实测可用的中文字体：Microsoft YaHei（首选）、SimHei、SimSun、DengXian、KaiTi、FangSong所有例子都用 ..&#x2F;data&#x2F; 里的真实数据，复制就能跑。   A2.0 开工先做这三件事1">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="数据分析与可视化">
+<meta property="article:tag" content="速查表">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Python 数据分析, 数据可视化, 附录 A2 · 可视化速查表, Pandas, NumPy, Matplotlib, 教程">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"附录 A2 · 可视化速查表","datePublished":"2026-09-26T02:00:00.000Z","dateModified":"2026-09-26T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/pyviz/a2-viz-cheatsheet/","image":"https://blog.tdcqcx.cn/post-covers/pyviz.jpg"}
+</script>
+
+
+<title >附录 A2 · 可视化速查表</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-26 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/pyviz.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/pyviz.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            附录 A2 · 可视化速查表
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            附录 A2 · 可视化速查表
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        pyviz
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/26
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <blockquote>
+<p>适用环境：matplotlib <strong>3.11.2</strong> &#x2F; seaborn <strong>0.13.2</strong> &#x2F; plotly <strong>7.1.0</strong> &#x2F; pandas 3.0.6<br>本机实测可用的中文字体：<code>Microsoft YaHei</code>（首选）、<code>SimHei</code>、<code>SimSun</code>、<code>DengXian</code>、<code>KaiTi</code>、<code>FangSong</code><br>所有例子都用 <code>../data/</code> 里的真实数据，<strong>复制就能跑</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="A2-0-开工先做这三件事"><a href="#A2-0-开工先做这三件事" class="headerlink" title="A2.0 开工先做这三件事"></a>A2.0 开工先做这三件事</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 ① 件：中文字体两行（缺第二行，负号会变成方块）</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;Microsoft YaHei&quot;</span>]</span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 ② 件：让 pandas 打印对齐</span></span><br><span class="line">pd.set_option(<span class="string">&quot;display.unicode.east_asian_width&quot;</span>, <span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第 ③ 件：加载教程统一绘图风格（在 code 目录里启动才有这个文件）</span></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.insert(<span class="number">0</span>, <span class="string">&quot;.&quot;</span>)</span><br><span class="line"><span class="keyword">from</span> viz_style <span class="keyword">import</span> setup, save, COLORS, PALETTE</span><br><span class="line"></span><br><span class="line">font = setup()          <span class="comment"># 一次性配好中文字体、配色、网格、字号</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;选中的中文字体:&quot;</span>, font)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">选中的中文字体: Microsoft YaHei</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 后面所有例子都用这几个数据</span></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, parse_dates=[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line">ts = pd.read_csv(<span class="string">&quot;../data/timeseries.csv&quot;</span>, parse_dates=[<span class="string">&quot;日期&quot;</span>]).set_index(<span class="string">&quot;日期&quot;</span>)</span><br><span class="line">gap = pd.read_csv(<span class="string">&quot;../data/gapminder.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(df.shape, ts.shape, gap.shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(1064, 14) (1096, 3) (1704, 6)</span><br></pre></td></tr></table></figure>
+
+<h3 id="A2-0-1-中文字体配置（四种场景，照着抄）"><a href="#A2-0-1-中文字体配置（四种场景，照着抄）" class="headerlink" title="A2.0.1 中文字体配置（四种场景，照着抄）"></a>A2.0.1 中文字体配置（四种场景，照着抄）</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>纯 matplotlib（最常用）</td>
+<td><code>plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;Microsoft YaHei&quot;]</code> + <code>plt.rcParams[&quot;axes.unicode_minus&quot;] = False</code></td>
+</tr>
+<tr>
+<td>想用黑体</td>
+<td><code>plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;SimHei&quot;]</code>（第二行一样要写）</td>
+</tr>
+<tr>
+<td>seaborn</td>
+<td><code>sns.set_theme(style=&quot;whitegrid&quot;, font=&quot;Microsoft YaHei&quot;)</code>，<strong>必须同时</strong> <code>plt.rcParams[&quot;axes.unicode_minus&quot;] = False</code></td>
+</tr>
+<tr>
+<td>单个元素临时指定字体</td>
+<td><code>ax.set_title(&quot;中文&quot;, fontproperties=my_font)</code>，其中 <code>my_font = FontProperties(fname=r&quot;C:\Windows\Fonts\msyh.ttc&quot;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不知道本机有哪些中文字体可用？这样查</span></span><br><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> font_manager <span class="keyword">as</span> fm</span><br><span class="line">available = <span class="built_in">sorted</span>(&#123;f.name <span class="keyword">for</span> f <span class="keyword">in</span> fm.fontManager.ttflist&#125;)</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> [<span class="string">&quot;Microsoft YaHei&quot;</span>, <span class="string">&quot;SimHei&quot;</span>, <span class="string">&quot;SimSun&quot;</span>, <span class="string">&quot;DengXian&quot;</span>, <span class="string">&quot;KaiTi&quot;</span>, <span class="string">&quot;FangSong&quot;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(name, <span class="string">&quot;-&gt;&quot;</span>, <span class="string">&quot;可用&quot;</span> <span class="keyword">if</span> name <span class="keyword">in</span> available <span class="keyword">else</span> <span class="string">&quot;不可用&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Microsoft YaHei -&gt; 可用</span><br><span class="line">SimHei -&gt; 可用</span><br><span class="line">SimSun -&gt; 可用</span><br><span class="line">DengXian -&gt; 可用</span><br><span class="line">KaiTi -&gt; 可用</span><br><span class="line">FangSong -&gt; 可用</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时用某个字体文件（不想改全局配置时）</span></span><br><span class="line"><span class="keyword">from</span> matplotlib.font_manager <span class="keyword">import</span> FontProperties</span><br><span class="line">my_font = FontProperties(fname=<span class="string">r&quot;C:\Windows\Fonts\msyh.ttc&quot;</span>)</span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">4</span>, <span class="number">3</span>))</span><br><span class="line">ax.set_title(<span class="string">&quot;换个字体画中文&quot;</span>, fontproperties=my_font)</span><br><span class="line">ax.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;my_font 名称:&quot;</span>, my_font.get_name())</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">my_font 名称: Microsoft YaHei</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="A2-1-图表选型决策表"><a href="#A2-1-图表选型决策表" class="headerlink" title="A2.1 图表选型决策表"></a>A2.1 图表选型决策表</h2><p><strong>先看你的数据是什么，再决定画什么图。</strong></p>
+<table>
+<thead>
+<tr>
+<th>你想表达</th>
+<th>变量个数</th>
+<th>数据形态</th>
+<th>选它</th>
+<th>不要用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>谁大谁小（比较）</td>
+<td>1 分类 + 1 数值</td>
+<td>类别 ≤ 8 个</td>
+<td><strong>水平柱状图</strong>（<code>barh</code>，排序后）</td>
+<td>饼图、3D 柱状图</td>
+</tr>
+<tr>
+<td>排名</td>
+<td>1 分类 + 1 数值</td>
+<td>类别多、名字长</td>
+<td><strong>水平柱状图</strong>（<code>barh</code> + 排序）</td>
+<td>垂直柱状图（标签会重叠）</td>
+</tr>
+<tr>
+<td>构成占比</td>
+<td>1 分类 + 1 数值</td>
+<td>类别 ≤ 5 个</td>
+<td><strong>堆积柱状图 &#x2F; 环形图</strong></td>
+<td><strong>饼图超过 5 类</strong></td>
+</tr>
+<tr>
+<td>随时间变化</td>
+<td>时间 + 1 数值</td>
+<td>连续时间</td>
+<td><strong>折线图</strong>（<code>plot</code>）</td>
+<td>柱状图（点太多像噪声）</td>
+</tr>
+<tr>
+<td>多组随时间变化</td>
+<td>时间 + 多数值</td>
+<td></td>
+<td><strong>折线图</strong>（每条一个颜色 + 图例）</td>
+<td>堆积面积图（难比较）</td>
+</tr>
+<tr>
+<td>分布形态</td>
+<td>1 数值</td>
+<td>单变量</td>
+<td><strong>直方图</strong>（<code>hist</code>）&#x2F; 密度图（<code>kdeplot</code>）</td>
+<td>柱状图</td>
+</tr>
+<tr>
+<td>分组分布对比</td>
+<td>1 分类 + 1 数值</td>
+<td></td>
+<td><strong>箱线图</strong> &#x2F; 小提琴图 &#x2F; 蜂群图</td>
+<td>只画均值柱状图（会掩盖异常值）</td>
+</tr>
+<tr>
+<td>两个变量关系</td>
+<td>2 数值</td>
+<td></td>
+<td><strong>散点图</strong>（<code>scatter</code>）</td>
+<td>折线图（数据没有顺序）</td>
+</tr>
+<tr>
+<td>相关强度</td>
+<td>多变量两两</td>
+<td></td>
+<td><strong>热力图</strong>（<code>heatmap</code> + 相关系数）</td>
+<td>一张张散点图矩阵（太多）</td>
+</tr>
+<tr>
+<td>三维以上关系</td>
+<td>3~4 变量</td>
+<td></td>
+<td>散点（颜色&#x2F;大小编码）、分面、平行坐标</td>
+<td>3D 散点（会互相遮挡）</td>
+</tr>
+<tr>
+<td>部分与整体的时序</td>
+<td>时间 + 多分组</td>
+<td></td>
+<td><strong>堆积面积图</strong>（<code>stackplot</code>）</td>
+<td>饼图</td>
+</tr>
+<tr>
+<td>不确定范围</td>
+<td>时间 + 均值 + 上下界</td>
+<td></td>
+<td><strong>折线 + 误差棒 &#x2F; <code>fill_between</code></strong></td>
+<td>只有一条线</td>
+</tr>
+<tr>
+<td>地理分布</td>
+<td>经纬度</td>
+<td></td>
+<td>散点图（<code>scatter</code>，坐标 &#x3D; 经纬度）</td>
+<td>饼图</td>
+</tr>
+</tbody></table>
+<h3 id="选型的三条硬规则"><a href="#选型的三条硬规则" class="headerlink" title="选型的三条硬规则"></a>选型的三条硬规则</h3><ol>
+<li><strong>饼图不要超过 5 类</strong>。超过 5 类人眼无法比较扇区角度，直接换排序后的水平柱状图。</li>
+<li><strong>柱状图的纵轴尽量从 0 开始</strong>。截断纵轴会放大差距，是常见的误导性图表。</li>
+<li><strong>分类超过 8 个就排序 + 水平摆放</strong>，否则 x 轴标签会挤成一团。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 反例演示：8 个城市用饼图 —— 谁大谁小根本看不出来</span></span><br><span class="line"><span class="comment"># （这不算错误，但属于&quot;能画出来但读不出来&quot;的典型）</span></span><br><span class="line">vc = df.groupby(<span class="string">&quot;城市&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">sum</span>().sort_values(ascending=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;城市数:&quot;</span>, <span class="built_in">len</span>(vc), <span class="string">&quot;| 最大与最小之比:&quot;</span>,</span><br><span class="line">      <span class="built_in">round</span>(<span class="built_in">float</span>(vc.iloc[<span class="number">0</span>] / vc.iloc[-<span class="number">1</span>]), <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">城市数: 8 | 最大与最小之比: 5.1</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="A2-2-Matplotlib-核心用法"><a href="#A2-2-Matplotlib-核心用法" class="headerlink" title="A2.2 Matplotlib 核心用法"></a>A2.2 Matplotlib 核心用法</h2><h3 id="A2-2-1-plt-subplots-参数表"><a href="#A2-2-1-plt-subplots-参数表" class="headerlink" title="A2.2.1 plt.subplots 参数表"></a>A2.2.1 <code>plt.subplots</code> 参数表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">2</span>, <span class="number">2</span>, figsize=(<span class="number">10</span>, <span class="number">7</span>),</span><br><span class="line">                         sharex=<span class="literal">False</span>, sharey=<span class="literal">False</span>,</span><br><span class="line">                         gridspec_kw=&#123;<span class="string">&quot;height_ratios&quot;</span>: [<span class="number">2</span>, <span class="number">1</span>]&#125;)</span><br><span class="line">axes[<span class="number">0</span>][<span class="number">0</span>].set_title(<span class="string">&quot;左上&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>][<span class="number">1</span>].set_title(<span class="string">&quot;右下&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_sub.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(fig).__name__, <span class="built_in">type</span>(axes).__name__, axes.shape)</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Figure ndarray (2, 2)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>常用取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>nrows</code> &#x2F; <code>ncols</code></td>
+<td>几行几列子图</td>
+<td><code>2, 2</code></td>
+</tr>
+<tr>
+<td><code>figsize=(宽, 高)</code></td>
+<td>整张图尺寸，<strong>单位英寸</strong>（1 英寸 ≈ 2.54 cm）</td>
+<td><code>(12, 6)</code>、<code>(6, 4)</code></td>
+</tr>
+<tr>
+<td><code>sharex</code> &#x2F; <code>sharey</code></td>
+<td>是否共享 x &#x2F; y 轴（省空间、便于比较）</td>
+<td><code>True</code>、<code>&quot;col&quot;</code>、<code>&quot;row&quot;</code></td>
+</tr>
+<tr>
+<td><code>squeeze</code></td>
+<td>只有一个子图时是否返回单对象而不是数组</td>
+<td>默认 <code>True</code>，子图多时无所谓</td>
+</tr>
+<tr>
+<td><code>width_ratios</code> &#x2F; <code>height_ratios</code></td>
+<td>各列 &#x2F; 各行宽度比例（放 <code>gridspec_kw</code> 里）</td>
+<td><code>&#123;&quot;width_ratios&quot;: [2, 1]&#125;</code></td>
+</tr>
+<tr>
+<td><code>subplot_kw</code></td>
+<td>传给每个子图的参数</td>
+<td><code>&#123;&quot;projection&quot;: &quot;3d&quot;&#125;</code></td>
+</tr>
+<tr>
+<td><code>gridspec_kw</code></td>
+<td>传给 GridSpec 的参数</td>
+<td><code>&#123;&quot;wspace&quot;: .3, &quot;hspace&quot;: .4&#125;</code></td>
+</tr>
+<tr>
+<td><code>dpi</code></td>
+<td>图片分辨率</td>
+<td><code>100</code>、<code>110</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 <code>subplots(2, 2)</code> 返回的 <code>axes</code> 是<strong>二维数组</strong>，用 <code>axes[0][1]</code> 取；<br><code>subplots(1, 3)</code> 返回一维数组，用 <code>axes[1]</code> 取；<br><code>subplots()</code> 只画一张图时返回单个 <code>Axes</code>，直接写 <code>ax.</code>。<br>分不清就 <code>print(type(axes), getattr(axes, &quot;shape&quot;, &quot;&quot;))</code> 看一眼。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只有一个子图时，squeeze 的影响</span></span><br><span class="line">fig1, ax1 = plt.subplots()                     <span class="comment"># 返回单个 Axes，可以直接 ax1.plot</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;单子图:&quot;</span>, <span class="built_in">type</span>(ax1).__name__)</span><br><span class="line">fig2, axes2 = plt.subplots(<span class="number">1</span>, <span class="number">2</span>)               <span class="comment"># 一维数组</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;一行两列:&quot;</span>, <span class="built_in">type</span>(axes2).__name__, axes2.shape)</span><br><span class="line">fig3, axes3 = plt.subplots(<span class="number">2</span>, <span class="number">2</span>)               <span class="comment"># 二维数组</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;两行两列:&quot;</span>, <span class="built_in">type</span>(axes3).__name__, axes3.shape)</span><br><span class="line">plt.close(<span class="string">&quot;all&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">单子图: Axes</span><br><span class="line">一行两列: ndarray (2,)</span><br><span class="line">两行两列: ndarray (2, 2)</span><br></pre></td></tr></table></figure>
+
+<p>用 <code>gridspec</code> 做不规则排版：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.gridspec <span class="keyword">as</span> gridspec</span><br><span class="line"></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">8</span>, <span class="number">5</span>))</span><br><span class="line">gs = gridspec.GridSpec(<span class="number">2</span>, <span class="number">3</span>, figure=fig)</span><br><span class="line">ax_a = fig.add_subplot(gs[<span class="number">0</span>, :])       <span class="comment"># 第一行占满 3 列</span></span><br><span class="line">ax_b = fig.add_subplot(gs[<span class="number">1</span>, <span class="number">0</span>])       <span class="comment"># 第二行第 1 列</span></span><br><span class="line">ax_c = fig.add_subplot(gs[<span class="number">1</span>, <span class="number">1</span>:])      <span class="comment"># 第二行后 2 列</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;三个子图:&quot;</span>, [<span class="built_in">type</span>(a).__name__ <span class="keyword">for</span> a <span class="keyword">in</span> (ax_a, ax_b, ax_c)])</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">三个子图: [&#x27;Axes&#x27;, &#x27;Axes&#x27;, &#x27;Axes&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="A2-2-2-常用-ax-绘图方法全表"><a href="#A2-2-2-常用-ax-绘图方法全表" class="headerlink" title="A2.2.2 常用 ax.* 绘图方法全表"></a>A2.2.2 常用 <code>ax.*</code> 绘图方法全表</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>画什么</th>
+<th>最该记的参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>ax.plot(x, y)</code></td>
+<td>折线图</td>
+<td><code>marker=&quot;o&quot;</code>、<code>lw=2</code>、<code>ls=&quot;--&quot;</code>、<code>color=</code>、<code>label=</code></td>
+</tr>
+<tr>
+<td><code>ax.scatter(x, y)</code></td>
+<td>散点图</td>
+<td><code>s=大小</code>、<code>c=颜色/颜色数组</code>、<code>alpha=透明度</code>、<code>cmap=</code></td>
+</tr>
+<tr>
+<td><code>ax.bar(x, height)</code></td>
+<td>垂直柱状图</td>
+<td><code>width=</code>、<code>color=</code>、<code>edgecolor=</code></td>
+</tr>
+<tr>
+<td><code>ax.barh(y, width)</code></td>
+<td>水平柱状图</td>
+<td>配 <code>ax.invert_yaxis()</code> 让最大值在上面</td>
+</tr>
+<tr>
+<td><code>ax.hist(x, bins=)</code></td>
+<td>直方图</td>
+<td><code>bins=20</code>、<code>density=True</code>（转成密度）、<code>cumulative=True</code></td>
+</tr>
+<tr>
+<td><code>ax.boxplot(x)</code></td>
+<td>箱线图</td>
+<td><code>vert=False</code>（3.11 起建议用 <code>orientation=&quot;horizontal&quot;</code>）、<code>patch_artist=True</code></td>
+</tr>
+<tr>
+<td><code>ax.violinplot(x)</code></td>
+<td>小提琴图</td>
+<td><code>showmeans=True</code>、<code>showmedians=True</code></td>
+</tr>
+<tr>
+<td><code>ax.pie(x)</code></td>
+<td>饼图</td>
+<td><code>labels=</code>、<code>autopct=&quot;%1.1f%%&quot;</code>、<code>startangle=90</code>、<code>colors=</code></td>
+</tr>
+<tr>
+<td><code>ax.stackplot(x, y1, y2)</code></td>
+<td>堆积面积图</td>
+<td><code>colors=</code>、<code>labels=</code></td>
+</tr>
+<tr>
+<td><code>ax.imshow(Z)</code></td>
+<td>矩阵热力图</td>
+<td><code>cmap=</code>、<code>aspect=&quot;auto&quot;</code>，配 <code>fig.colorbar(im, ax=ax)</code></td>
+</tr>
+<tr>
+<td><code>ax.errorbar(x, y, yerr=)</code></td>
+<td>带误差棒的折线&#x2F;散点</td>
+<td><code>capsize=4</code>、<code>fmt=&quot;o&quot;</code></td>
+</tr>
+<tr>
+<td><code>ax.fill_between(x, y1, y2)</code></td>
+<td>两条线之间填色</td>
+<td><code>alpha=.2</code>、<code>where=条件</code></td>
+</tr>
+<tr>
+<td><code>ax.axhline(y)</code></td>
+<td>水平参考线</td>
+<td><code>ls=&quot;--&quot;</code>、<code>color=</code>、<code>label=</code></td>
+</tr>
+<tr>
+<td><code>ax.axvline(x)</code></td>
+<td>垂直参考线</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>ax.axhspan(y1, y2)</code></td>
+<td>水平色带</td>
+<td><code>alpha=.1</code></td>
+</tr>
+<tr>
+<td><code>ax.annotate(文字, xy=, xytext=)</code></td>
+<td>带箭头的注释</td>
+<td><code>arrowprops=dict(arrowstyle=&quot;-&gt;&quot;)</code>、<code>textcoords=&quot;offset points&quot;</code></td>
+</tr>
+<tr>
+<td><code>ax.text(x, y, 文字)</code></td>
+<td>普通文字标注</td>
+<td><code>fontsize=</code>、<code>ha=</code>、<code>va=</code></td>
+</tr>
+<tr>
+<td><code>ax.legend()</code></td>
+<td>图例</td>
+<td><code>loc=&quot;upper right&quot;</code>、<code>ncol=2</code>、<code>frameon=False</code></td>
+</tr>
+<tr>
+<td><code>ax.pcolormesh()</code> &#x2F; <code>ax.contourf()</code></td>
+<td>网格&#x2F;等高线图</td>
+<td>空间数据用</td>
+</tr>
+<tr>
+<td><code>ax.stem()</code> &#x2F; <code>ax.step()</code></td>
+<td>火柴杆图 &#x2F; 阶梯图</td>
+<td>离散事件用</td>
+</tr>
+</tbody></table>
+<p>常用 <code>set_*</code> 方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>set_title()</code></td>
+<td>子图标题</td>
+<td><code>ax.set_title(&quot;销售额趋势&quot;, fontsize=14)</code></td>
+</tr>
+<tr>
+<td><code>set_xlabel()</code> &#x2F; <code>set_ylabel()</code></td>
+<td>轴标题（<strong>永远不要省</strong>）</td>
+<td><code>ax.set_ylabel(&quot;销售额（元）&quot;)</code></td>
+</tr>
+<tr>
+<td><code>set_xlim()</code> &#x2F; <code>set_ylim()</code></td>
+<td>轴范围</td>
+<td><code>ax.set_ylim(0, 60000)</code></td>
+</tr>
+<tr>
+<td><code>set_xticks()</code> &#x2F; <code>set_yticks()</code></td>
+<td>刻度位置</td>
+<td><code>ax.set_xticks([0, 3, 6, 9])</code></td>
+</tr>
+<tr>
+<td><code>set_xticklabels()</code></td>
+<td>刻度文字</td>
+<td><code>ax.set_xticklabels([&quot;一&quot;,&quot;二&quot;,&quot;三&quot;], rotation=30)</code></td>
+</tr>
+<tr>
+<td><code>set_xscale()</code> &#x2F; <code>set_yscale()</code></td>
+<td>轴刻度类型</td>
+<td><code>ax.set_yscale(&quot;log&quot;)</code></td>
+</tr>
+<tr>
+<td><code>set_axisbelow()</code></td>
+<td>网格画在数据下面</td>
+<td><code>ax.set_axisbelow(True)</code></td>
+</tr>
+<tr>
+<td><code>set_facecolor()</code></td>
+<td>背景色</td>
+<td><code>ax.set_facecolor(&quot;#f7f7f7&quot;)</code></td>
+</tr>
+<tr>
+<td><code>set_prop_cycle()</code></td>
+<td>颜色循环</td>
+<td><code>ax.set_prop_cycle(color=PALETTE)</code></td>
+</tr>
+<tr>
+<td><code>grid()</code></td>
+<td>网格</td>
+<td><code>ax.grid(True, alpha=.3, ls=&quot;--&quot;)</code></td>
+</tr>
+<tr>
+<td><code>tick_params()</code></td>
+<td>刻度样式</td>
+<td><code>ax.tick_params(axis=&quot;x&quot;, rotation=45, labelsize=9)</code></td>
+</tr>
+<tr>
+<td><code>spines[...].set_visible(False)</code></td>
+<td>去掉边框</td>
+<td><code>ax.spines[&quot;top&quot;].set_visible(False)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把常用方法一次演示完，并存成图</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">2</span>, <span class="number">3</span>, figsize=(<span class="number">14</span>, <span class="number">7.5</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># ① 折线图 + 标记</span></span><br><span class="line">axes[<span class="number">0</span>][<span class="number">0</span>].plot(ts.index, ts[<span class="string">&quot;每日活跃用户&quot;</span>], color=COLORS[<span class="string">&quot;blue&quot;</span>], lw=<span class="number">1</span>)</span><br><span class="line">axes[<span class="number">0</span>][<span class="number">0</span>].set_title(<span class="string">&quot;折线图 plot&quot;</span>)</span><br><span class="line">axes[<span class="number">0</span>][<span class="number">0</span>].set_xlabel(<span class="string">&quot;日期&quot;</span>); axes[<span class="number">0</span>][<span class="number">0</span>].set_ylabel(<span class="string">&quot;人数&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ② 散点图（s 控制点大小，alpha 控制透明度，解决点重叠）</span></span><br><span class="line">axes[<span class="number">0</span>][<span class="number">1</span>].scatter(df[<span class="string">&quot;单价&quot;</span>], df[<span class="string">&quot;销售额&quot;</span>], s=<span class="number">8</span>, alpha=<span class="number">.4</span>, color=COLORS[<span class="string">&quot;orange&quot;</span>])</span><br><span class="line">axes[<span class="number">0</span>][<span class="number">1</span>].set_title(<span class="string">&quot;散点图 scatter&quot;</span>)</span><br><span class="line">axes[<span class="number">0</span>][<span class="number">1</span>].set_xlabel(<span class="string">&quot;单价&quot;</span>); axes[<span class="number">0</span>][<span class="number">1</span>].set_ylabel(<span class="string">&quot;销售额&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ③ 直方图（bins 决定柱子数量，numpy 会动手调）</span></span><br><span class="line">axes[<span class="number">0</span>][<span class="number">2</span>].hist(df[<span class="string">&quot;客户年龄&quot;</span>].dropna(), bins=<span class="number">20</span>, color=COLORS[<span class="string">&quot;green&quot;</span>],</span><br><span class="line">                edgecolor=<span class="string">&quot;white&quot;</span>)</span><br><span class="line">axes[<span class="number">0</span>][<span class="number">2</span>].set_title(<span class="string">&quot;直方图 hist&quot;</span>)</span><br><span class="line">axes[<span class="number">0</span>][<span class="number">2</span>].set_xlabel(<span class="string">&quot;客户年龄&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ④ 柱状图 + 排序（比按字母顺序好看得多）</span></span><br><span class="line">vc = df[<span class="string">&quot;城市&quot;</span>].value_counts()</span><br><span class="line">axes[<span class="number">1</span>][<span class="number">0</span>].bar(vc.index, vc.values, color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">axes[<span class="number">1</span>][<span class="number">0</span>].set_title(<span class="string">&quot;柱状图 bar&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>][<span class="number">0</span>].tick_params(axis=<span class="string">&quot;x&quot;</span>, rotation=<span class="number">30</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ⑤ 水平柱状图（类别名长时首选）</span></span><br><span class="line">top = df.groupby(<span class="string">&quot;城市&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">sum</span>().sort_values().tail(<span class="number">5</span>)</span><br><span class="line">axes[<span class="number">1</span>][<span class="number">1</span>].barh(top.index, top.values, color=COLORS[<span class="string">&quot;purple&quot;</span>])</span><br><span class="line">axes[<span class="number">1</span>][<span class="number">1</span>].set_title(<span class="string">&quot;水平柱状图 barh&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>][<span class="number">1</span>].set_xlabel(<span class="string">&quot;销售额（元）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ⑥ 箱线图（一图看分布：中位数、四分位、异常值）</span></span><br><span class="line">axes[<span class="number">1</span>][<span class="number">2</span>].boxplot([df[<span class="string">&quot;销售额&quot;</span>].clip(upper=<span class="number">5000</span>), df[<span class="string">&quot;单价&quot;</span>] * <span class="number">10</span>],</span><br><span class="line">                   tick_labels=[<span class="string">&quot;销售额&quot;</span>, <span class="string">&quot;单价×10&quot;</span>])     <span class="comment"># 3.9+ 用 tick_labels</span></span><br><span class="line">axes[<span class="number">1</span>][<span class="number">2</span>].set_title(<span class="string">&quot;箱线图 boxplot&quot;</span>)</span><br><span class="line"></span><br><span class="line">fig.suptitle(<span class="string">&quot;六种基础图表&quot;</span>, fontsize=<span class="number">15</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_six.png&quot;</span>, dpi=<span class="number">100</span>, bbox_inches=<span class="string">&quot;tight&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;已保存 _a2_six.png，块数:&quot;</span>, <span class="built_in">len</span>(axes.ravel()))</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">已保存 _a2_six.png，块数: 6</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 参考线、标注、填充：把一张图讲清楚的三件套</span></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">7</span>, <span class="number">4</span>))</span><br><span class="line">monthly = ts[<span class="string">&quot;每日活跃用户&quot;</span>].resample(<span class="string">&quot;ME&quot;</span>).mean()</span><br><span class="line">ax.plot(monthly.index, monthly.values, marker=<span class="string">&quot;o&quot;</span>, color=COLORS[<span class="string">&quot;blue&quot;</span>], label=<span class="string">&quot;月均活跃&quot;</span>)</span><br><span class="line">ax.axhline(monthly.mean(), ls=<span class="string">&quot;--&quot;</span>, color=COLORS[<span class="string">&quot;gray&quot;</span>], label=<span class="string">&quot;全年均值&quot;</span>)</span><br><span class="line">peak = monthly.idxmax()</span><br><span class="line">ax.axvline(peak, ls=<span class="string">&quot;:&quot;</span>, color=COLORS[<span class="string">&quot;red&quot;</span>])</span><br><span class="line">ax.annotate(<span class="string">&quot;峰值&quot;</span>, xy=(peak, monthly.<span class="built_in">max</span>()), xytext=(<span class="number">25</span>, <span class="number">25</span>),</span><br><span class="line">            textcoords=<span class="string">&quot;offset points&quot;</span>, fontsize=<span class="number">11</span>,</span><br><span class="line">            arrowprops=<span class="built_in">dict</span>(arrowstyle=<span class="string">&quot;-&gt;&quot;</span>, color=COLORS[<span class="string">&quot;red&quot;</span>]))</span><br><span class="line">ax.text(monthly.index[<span class="number">0</span>], monthly.<span class="built_in">min</span>(), <span class="string">&quot;起点&quot;</span>, fontsize=<span class="number">10</span>)</span><br><span class="line">ax.fill_between(monthly.index, monthly.mean(), monthly.values, alpha=<span class="number">.15</span>,</span><br><span class="line">                color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">ax.set_title(<span class="string">&quot;折线 + 参考线 + 标注 + 填充&quot;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&quot;日均活跃用户&quot;</span>)</span><br><span class="line">ax.legend(loc=<span class="string">&quot;upper left&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_annot.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;峰值月份:&quot;</span>, peak.strftime(<span class="string">&quot;%Y-%m&quot;</span>), <span class="string">&quot;| 均值:&quot;</span>, <span class="built_in">round</span>(<span class="built_in">float</span>(monthly.mean()), <span class="number">1</span>))</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">峰值月份: 2024-04 | 均值: 1473.8</span><br></pre></td></tr></table></figure>
+
+<h3 id="A2-2-3-常用-fig-方法"><a href="#A2-2-3-常用-fig-方法" class="headerlink" title="A2.2.3 常用 fig.* 方法"></a>A2.2.3 常用 <code>fig.*</code> 方法</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>fig.suptitle()</code></td>
+<td>整张图的<strong>大标题</strong>（子图标题用 <code>ax.set_title</code>）</td>
+<td><code>fig.suptitle(&quot;2023-2024 运营看板&quot;, fontsize=16)</code></td>
+</tr>
+<tr>
+<td><code>fig.tight_layout()</code></td>
+<td>自动调整间距，防止标签重叠</td>
+<td><code>fig.tight_layout()</code></td>
+</tr>
+<tr>
+<td><code>fig.subplots_adjust()</code></td>
+<td>手动调边距（<code>tight_layout</code> 挤不开时用）</td>
+<td><code>fig.subplots_adjust(top=.85, hspace=.4, wspace=.3)</code></td>
+</tr>
+<tr>
+<td><code>fig.savefig()</code></td>
+<td>保存</td>
+<td><code>fig.savefig(&quot;a.png&quot;, dpi=150, bbox_inches=&quot;tight&quot;)</code></td>
+</tr>
+<tr>
+<td><code>fig.colorbar(mappable, ax=ax)</code></td>
+<td>加颜色条（热力图必需）</td>
+<td><code>fig.colorbar(im, ax=ax)</code></td>
+</tr>
+<tr>
+<td><code>fig.legend()</code></td>
+<td>整张图统一的图例</td>
+<td><code>fig.legend(handles, labels, loc=&quot;lower center&quot;, ncol=3)</code></td>
+</tr>
+<tr>
+<td><code>fig.set_size_inches()</code></td>
+<td>事后改尺寸（seaborn 的 <code>displot</code> 等返回图时有用）</td>
+<td><code>fig.set_size_inches(10, 5)</code></td>
+</tr>
+<tr>
+<td><code>fig.add_subplot()</code> &#x2F; <code>fig.add_axes()</code></td>
+<td>手动加子图</td>
+<td>配 <code>gridspec</code> 用</td>
+</tr>
+<tr>
+<td><code>fig.text()</code></td>
+<td>在图上任意位置写字</td>
+<td><code>fig.text(.5, .02, &quot;数据来源：销售系统&quot;, ha=&quot;center&quot;)</code></td>
+</tr>
+<tr>
+<td><code>fig.canvas.draw()</code></td>
+<td>强制重绘</td>
+<td>导出前调一次</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">9</span>, <span class="number">3.5</span>))</span><br><span class="line">axes[<span class="number">0</span>].plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>], color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">axes[<span class="number">0</span>].bar([<span class="string">&quot;甲&quot;</span>, <span class="string">&quot;乙&quot;</span>], [<span class="number">3</span>, <span class="number">5</span>], color=COLORS[<span class="string">&quot;orange&quot;</span>])</span><br><span class="line">axes[<span class="number">1</span>].plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [-<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>], color=COLORS[<span class="string">&quot;green&quot;</span>])</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&quot;负号测试&quot;</span>)</span><br><span class="line">fig.suptitle(<span class="string">&quot;总标题用 suptitle&quot;</span>, fontsize=<span class="number">14</span>)</span><br><span class="line"><span class="comment"># 手动控制边距：top 给总标题留空间</span></span><br><span class="line">fig.subplots_adjust(left=<span class="number">.08</span>, right=<span class="number">.97</span>, top=<span class="number">.82</span>, bottom=<span class="number">.15</span>, wspace=<span class="number">.35</span>)</span><br><span class="line">fig.text(<span class="number">.5</span>, <span class="number">.02</span>, <span class="string">&quot;数据来源：本教程 data/ 目录&quot;</span>, ha=<span class="string">&quot;center&quot;</span>, fontsize=<span class="number">9</span>,</span><br><span class="line">         color=COLORS[<span class="string">&quot;gray&quot;</span>])</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_fig.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;suptitle:&quot;</span>, fig._suptitle.get_text())</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">suptitle: 总标题用 suptitle</span><br></pre></td></tr></table></figure>
+
+<h3 id="A2-2-4-常用-rcParams-全表"><a href="#A2-2-4-常用-rcParams-全表" class="headerlink" title="A2.2.4 常用 rcParams 全表"></a>A2.2.4 常用 rcParams 全表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;Microsoft YaHei&quot;</span>]   <span class="comment"># 中文字体 ★必设</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span>              <span class="comment"># 负号正常显示 ★必设</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;figure.figsize&quot;</span>] = (<span class="number">8</span>, <span class="number">4.5</span>)               <span class="comment"># 默认图尺寸（英寸）</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;figure.dpi&quot;</span>] = <span class="number">110</span>                        <span class="comment"># 屏幕显示分辨率</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;savefig.dpi&quot;</span>] = <span class="number">110</span>                       <span class="comment"># 保存分辨率（可单独调高）</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.grid&quot;</span>] = <span class="literal">True</span>                        <span class="comment"># 默认显示网格</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;grid.alpha&quot;</span>] = <span class="number">.3</span>                         <span class="comment"># 网格透明度</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;grid.linestyle&quot;</span>] = <span class="string">&quot;--&quot;</span>                   <span class="comment"># 网格线型</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.axisbelow&quot;</span>] = <span class="literal">True</span>                   <span class="comment"># 网格画在数据下面</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;legend.frameon&quot;</span>] = <span class="literal">False</span>                  <span class="comment"># 图例不要边框</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.prop_cycle&quot;</span>] = plt.cycler(color=PALETTE)   <span class="comment"># 默认配色循环</span></span><br><span class="line"><span class="built_in">print</span>(plt.rcParams[<span class="string">&quot;figure.figsize&quot;</span>], plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[8.0, 4.5] False</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>rcParam</th>
+<th>作用</th>
+<th>常用值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>font.sans-serif</code></td>
+<td>无衬线字体列表</td>
+<td><code>[&quot;Microsoft YaHei&quot;, &quot;SimHei&quot;]</code></td>
+</tr>
+<tr>
+<td><code>font.family</code></td>
+<td>字体族</td>
+<td><code>&quot;sans-serif&quot;</code></td>
+</tr>
+<tr>
+<td><code>axes.unicode_minus</code></td>
+<td>是否用 Unicode 减号</td>
+<td><strong><code>False</code></strong>（True 时 SimHei 缺字形变方块）</td>
+</tr>
+<tr>
+<td><code>font.size</code></td>
+<td>全局字号</td>
+<td><code>12</code></td>
+</tr>
+<tr>
+<td><code>axes.titlesize</code> &#x2F; <code>axes.labelsize</code></td>
+<td>标题 &#x2F; 轴标签字号</td>
+<td><code>14</code> &#x2F; <code>11</code></td>
+</tr>
+<tr>
+<td><code>xtick.labelsize</code> &#x2F; <code>ytick.labelsize</code></td>
+<td>刻度字号</td>
+<td><code>10</code></td>
+</tr>
+<tr>
+<td><code>legend.fontsize</code> &#x2F; <code>legend.frameon</code></td>
+<td>图例字号 &#x2F; 边框</td>
+<td><code>10</code> &#x2F; <code>False</code></td>
+</tr>
+<tr>
+<td><code>figure.figsize</code></td>
+<td>默认画布尺寸</td>
+<td><code>(10, 6)</code></td>
+</tr>
+<tr>
+<td><code>figure.dpi</code> &#x2F; <code>savefig.dpi</code></td>
+<td>显示 &#x2F; 保存分辨率</td>
+<td><code>110</code> &#x2F; <code>200</code></td>
+</tr>
+<tr>
+<td><code>figure.facecolor</code> &#x2F; <code>axes.facecolor</code></td>
+<td>画布 &#x2F; 绘图区背景色</td>
+<td><code>&quot;white&quot;</code></td>
+</tr>
+<tr>
+<td><code>savefig.bbox</code></td>
+<td>保存时是否紧裁</td>
+<td><code>&quot;tight&quot;</code></td>
+</tr>
+<tr>
+<td><code>savefig.format</code></td>
+<td>默认保存格式</td>
+<td><code>&quot;png&quot;</code></td>
+</tr>
+<tr>
+<td><code>axes.grid</code> &#x2F; <code>grid.alpha</code> &#x2F; <code>grid.linestyle</code></td>
+<td>网格</td>
+<td><code>True</code> &#x2F; <code>.3</code> &#x2F; <code>&quot;--&quot;</code></td>
+</tr>
+<tr>
+<td><code>axes.axisbelow</code></td>
+<td>网格层级</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>axes.spines.top</code> &#x2F; <code>axes.spines.right</code></td>
+<td>上&#x2F;右边框是否显示</td>
+<td><code>False</code>（简洁风）</td>
+</tr>
+<tr>
+<td><code>axes.prop_cycle</code></td>
+<td>颜色循环</td>
+<td><code>plt.cycler(color=PALETTE)</code></td>
+</tr>
+<tr>
+<td><code>lines.linewidth</code> &#x2F; <code>lines.markersize</code></td>
+<td>线宽 &#x2F; 点大小</td>
+<td><code>2</code> &#x2F; <code>6</code></td>
+</tr>
+<tr>
+<td><code>lines.marker</code></td>
+<td>默认标记</td>
+<td><code>None</code>、<code>&quot;o&quot;</code></td>
+</tr>
+</tbody></table>
+<p>查看当前值：<code>plt.rcParams[&quot;savefig.dpi&quot;]</code>；恢复默认：<code>plt.rcdefaults()</code>。</p>
+<blockquote>
+<p>⚠️ <strong>顺序陷阱</strong>：<code>plt.style.use(...)</code> 和 <code>sns.set_theme(...)</code> 会<strong>覆盖</strong> rcParams。<br>所以字体设置要么写在它们<strong>之后</strong>，要么用 <code>sns.set_theme(font=&quot;Microsoft YaHei&quot;)</code> 一次性传进去。<br>详见 A3 手册 D 节。</p>
+</blockquote>
+<h3 id="A2-2-5-保存图片参数表"><a href="#A2-2-5-保存图片参数表" class="headerlink" title="A2.2.5 保存图片参数表"></a>A2.2.5 保存图片参数表</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>该取多少</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dpi</code></td>
+<td>每英寸点数</td>
+<td>屏幕预览 <code>100~110</code>；报告&#x2F;PPT <code>150~200</code>；印刷 <code>300</code></td>
+</tr>
+<tr>
+<td><code>bbox_inches=&quot;tight&quot;</code></td>
+<td>裁掉四周空白</td>
+<td><strong>强烈建议总开着</strong>，否则标题&#x2F;标签容易被切掉</td>
+</tr>
+<tr>
+<td><code>pad_inches</code></td>
+<td>紧裁后额外留白</td>
+<td><code>0.1</code>（默认）；要贴边写 <code>0.02</code></td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>输出格式</td>
+<td>一般靠扩展名自动判断</td>
+</tr>
+<tr>
+<td><code>transparent=True</code></td>
+<td>背景透明</td>
+<td>做 PPT 叠加时用</td>
+</tr>
+<tr>
+<td><code>facecolor</code></td>
+<td>背景色</td>
+<td><code>&quot;white&quot;</code>（默认 <code>&quot;auto&quot;</code>，深色主题下会存成深色）</td>
+</tr>
+<tr>
+<td><code>metadata</code></td>
+<td>写入作者等信息</td>
+<td><code>&#123;&quot;Author&quot;: &quot;你的名字&quot;&#125;</code>（PDF 用）</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>格式</th>
+<th>适合</th>
+<th>不适合</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>PNG</code></td>
+<td>报告、PPT、网页</td>
+<td>印刷放大</td>
+<td>无损、体积适中、支持透明</td>
+</tr>
+<tr>
+<td><code>SVG</code></td>
+<td>论文、网页矢量图</td>
+<td>太大太慢</td>
+<td>无限放大不失真，可用代码改</td>
+</tr>
+<tr>
+<td><code>PDF</code></td>
+<td>LaTeX 论文、印刷</td>
+<td>预览不便</td>
+<td>矢量、可嵌字体</td>
+</tr>
+<tr>
+<td><code>JPG</code></td>
+<td>照片</td>
+<td>图表（线条会有毛刺）</td>
+<td>有损压缩</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">5</span>, <span class="number">3</span>))</span><br><span class="line">ax.bar([<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>], [<span class="number">3</span>, <span class="number">5</span>, <span class="number">4</span>], color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">ax.set_title(<span class="string">&quot;DPI 与格式对比&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> (<span class="number">60</span>, <span class="number">110</span>, <span class="number">200</span>, <span class="number">300</span>):</span><br><span class="line">    fig.savefig(<span class="string">f&quot;_test/appendix/_a2_dpi<span class="subst">&#123;d&#125;</span>.png&quot;</span>, dpi=d, bbox_inches=<span class="string">&quot;tight&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> ext <span class="keyword">in</span> (<span class="string">&quot;png&quot;</span>, <span class="string">&quot;svg&quot;</span>, <span class="string">&quot;pdf&quot;</span>, <span class="string">&quot;jpg&quot;</span>):</span><br><span class="line">    fig.savefig(<span class="string">f&quot;_test/appendix/_a2_fmt.<span class="subst">&#123;ext&#125;</span>&quot;</span>, dpi=<span class="number">110</span>, bbox_inches=<span class="string">&quot;tight&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(&#123;d: os.path.getsize(<span class="string">f&quot;_test/appendix/_a2_dpi<span class="subst">&#123;d&#125;</span>.png&quot;</span>) <span class="keyword">for</span> d <span class="keyword">in</span> (<span class="number">60</span>, <span class="number">110</span>, <span class="number">200</span>, <span class="number">300</span>)&#125;)</span><br><span class="line"><span class="built_in">print</span>(&#123;e: os.path.getsize(<span class="string">f&quot;_test/appendix/_a2_fmt.<span class="subst">&#123;e&#125;</span>&quot;</span>) <span class="keyword">for</span> e <span class="keyword">in</span> (<span class="string">&quot;png&quot;</span>, <span class="string">&quot;svg&quot;</span>, <span class="string">&quot;pdf&quot;</span>, <span class="string">&quot;jpg&quot;</span>)&#125;)</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;60: 4064, 110: 8963, 200: 16668, 300: 25218&#125;</span><br><span class="line">&#123;&#x27;png&#x27;: 8963, &#x27;svg&#x27;: 17052, &#x27;pdf&#x27;: 10175, &#x27;jpg&#x27;: 11342&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>顺序陷阱（最常见的”图是空白”）</strong><br><code>plt.show()</code> 之后再 <code>fig.savefig(...)</code>，保存出来的会是空白图。<br>正确顺序永远是：<strong>先 <code>savefig</code>（或 <code>save(fig, ...)</code>），再 <code>plt.show()</code>，最后 <code>plt.close(fig)</code></strong>。<br>详见 A3 手册 D 节。</p>
+</blockquote>
+<h3 id="A2-2-6-其它实用技巧"><a href="#A2-2-6-其它实用技巧" class="headerlink" title="A2.2.6 其它实用技巧"></a>A2.2.6 其它实用技巧</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ① 对数坐标：数据跨好几个数量级时</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">9</span>, <span class="number">3.5</span>))</span><br><span class="line">axes[<span class="number">0</span>].hist(gap[<span class="string">&quot;gdpPercap&quot;</span>], bins=<span class="number">30</span>, color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&quot;原始（右偏严重）&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].hist(gap[<span class="string">&quot;gdpPercap&quot;</span>], bins=<span class="number">30</span>, color=COLORS[<span class="string">&quot;green&quot;</span>])</span><br><span class="line">axes[<span class="number">1</span>].set_xscale(<span class="string">&quot;log&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&quot;对数坐标（看得清了）&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_log.png&quot;</span>, dpi=<span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;偏度:&quot;</span>, <span class="built_in">round</span>(<span class="built_in">float</span>(gap[<span class="string">&quot;gdpPercap&quot;</span>].skew()), <span class="number">2</span>))</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">偏度: 3.85</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ② 双 y 轴：两个量纲差距很大的指标画一起（谨慎用，容易误导）</span></span><br><span class="line">fig, ax1 = plt.subplots(figsize=(<span class="number">7</span>, <span class="number">4</span>))</span><br><span class="line">m = ts.resample(<span class="string">&quot;ME&quot;</span>).agg(活跃=(<span class="string">&quot;每日活跃用户&quot;</span>, <span class="string">&quot;mean&quot;</span>), 时长=(<span class="string">&quot;平均使用时长&quot;</span>, <span class="string">&quot;mean&quot;</span>))</span><br><span class="line">ax1.plot(m.index, m[<span class="string">&quot;活跃&quot;</span>], color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">ax1.set_ylabel(<span class="string">&quot;日均活跃用户&quot;</span>, color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">ax2 = ax1.twinx()                      <span class="comment"># 共享 x 轴，右侧独立 y 轴</span></span><br><span class="line">ax2.plot(m.index, m[<span class="string">&quot;时长&quot;</span>], color=COLORS[<span class="string">&quot;red&quot;</span>])</span><br><span class="line">ax2.set_ylabel(<span class="string">&quot;平均使用时长（分钟）&quot;</span>, color=COLORS[<span class="string">&quot;red&quot;</span>])</span><br><span class="line">ax1.set_title(<span class="string">&quot;双 y 轴示例&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_twin.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;两列相关系数:&quot;</span>, <span class="built_in">round</span>(<span class="built_in">float</span>(m[<span class="string">&quot;活跃&quot;</span>].corr(m[<span class="string">&quot;时长&quot;</span>])), <span class="number">3</span>))</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">两列相关系数: -0.04</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ③ 3D 图（能画，但多数场景 2D 更好读）</span></span><br><span class="line">fig = plt.figure(figsize=(<span class="number">5</span>, <span class="number">4</span>))</span><br><span class="line">ax3d = fig.add_subplot(<span class="number">111</span>, projection=<span class="string">&quot;3d&quot;</span>)</span><br><span class="line">sub = df.sample(<span class="number">300</span>, random_state=<span class="number">0</span>)</span><br><span class="line">ax3d.scatter(sub[<span class="string">&quot;单价&quot;</span>], sub[<span class="string">&quot;数量&quot;</span>], sub[<span class="string">&quot;销售额&quot;</span>], s=<span class="number">8</span>,</span><br><span class="line">             c=sub[<span class="string">&quot;销售额&quot;</span>], cmap=<span class="string">&quot;viridis&quot;</span>)</span><br><span class="line">ax3d.set_xlabel(<span class="string">&quot;单价&quot;</span>); ax3d.set_ylabel(<span class="string">&quot;数量&quot;</span>); ax3d.set_zlabel(<span class="string">&quot;销售额&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_3d.png&quot;</span>, dpi=<span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;3D 图已保存&quot;</span>)</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3D 图已保存</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ④ 画完记得关掉：不关会累积警告并吃内存</span></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    f, a = plt.subplots()</span><br><span class="line">plt.close(<span class="string">&quot;all&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;剩余打开的图:&quot;</span>, plt.get_fignums())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">剩余打开的图: []</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="A2-3-Seaborn：一行一张统计图"><a href="#A2-3-Seaborn：一行一张统计图" class="headerlink" title="A2.3 Seaborn：一行一张统计图"></a>A2.3 Seaborn：一行一张统计图</h2><h3 id="A2-3-1-sns-set-theme-参数表"><a href="#A2-3-1-sns-set-theme-参数表" class="headerlink" title="A2.3.1 sns.set_theme 参数表"></a>A2.3.1 <code>sns.set_theme</code> 参数表</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"></span><br><span class="line">sns.set_theme(style=<span class="string">&quot;whitegrid&quot;</span>,            <span class="comment"># 背景风格</span></span><br><span class="line">              context=<span class="string">&quot;notebook&quot;</span>,           <span class="comment"># 元素尺寸</span></span><br><span class="line">              palette=<span class="string">&quot;colorblind&quot;</span>,         <span class="comment"># 配色</span></span><br><span class="line">              font=<span class="string">&quot;Microsoft YaHei&quot;</span>,       <span class="comment"># 中文字体 ★关键</span></span><br><span class="line">              font_scale=<span class="number">1.0</span>,               <span class="comment"># 字号缩放</span></span><br><span class="line">              rc=&#123;<span class="string">&quot;axes.unicode_minus&quot;</span>: <span class="literal">False</span>&#125;)   <span class="comment"># 负号 ★关键</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;字体族:&quot;</span>, plt.rcParams[<span class="string">&quot;font.family&quot;</span>])</span><br><span class="line">sns.set_theme(style=<span class="string">&quot;whitegrid&quot;</span>, font=<span class="string">&quot;Microsoft YaHei&quot;</span>,</span><br><span class="line">              rc=&#123;<span class="string">&quot;axes.unicode_minus&quot;</span>: <span class="literal">False</span>&#125;)   <span class="comment"># 恢复教程统一风格</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字体族: [&#x27;Microsoft YaHei&#x27;]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>可选值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>style</code></td>
+<td><code>&quot;white&quot;</code> &#x2F; <code>&quot;whitegrid&quot;</code>（推荐）&#x2F; <code>&quot;dark&quot;</code> &#x2F; <code>&quot;darkgrid&quot;</code> &#x2F; <code>&quot;ticks&quot;</code></td>
+<td>背景和网格</td>
+</tr>
+<tr>
+<td><code>context</code></td>
+<td><code>&quot;paper&quot;</code> &#x2F; <code>&quot;notebook&quot;</code>（默认）&#x2F; <code>&quot;talk&quot;</code> &#x2F; <code>&quot;poster&quot;</code></td>
+<td>整体元素尺寸，做汇报用 <code>&quot;talk&quot;</code></td>
+</tr>
+<tr>
+<td><code>palette</code></td>
+<td><code>&quot;deep&quot;</code> &#x2F; <code>&quot;muted&quot;</code> &#x2F; <code>&quot;pastel&quot;</code> &#x2F; <code>&quot;bright&quot;</code> &#x2F; <code>&quot;dark&quot;</code> &#x2F; <code>&quot;colorblind&quot;</code> &#x2F; 色带名</td>
+<td>配色</td>
+</tr>
+<tr>
+<td><code>font</code></td>
+<td><code>&quot;Microsoft YaHei&quot;</code> &#x2F; <code>&quot;SimHei&quot;</code> &#x2F; <code>&quot;sans-serif&quot;</code></td>
+<td>字体 ★中文必填</td>
+</tr>
+<tr>
+<td><code>font_scale</code></td>
+<td><code>1.0</code> &#x2F; <code>1.3</code> &#x2F; <code>1.5</code></td>
+<td>字号缩放</td>
+</tr>
+<tr>
+<td><code>color_codes</code></td>
+<td><code>True</code>（默认）</td>
+<td>允许 <code>&quot;b&quot;</code>、<code>&quot;r&quot;</code> 这种短颜色名</td>
+</tr>
+<tr>
+<td><code>rc</code></td>
+<td>字典</td>
+<td>覆盖任意 rcParams，中文负号就靠它</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 <code>set_theme</code> 是<strong>全局</strong>的：调用一次后面所有图都生效。<br>但它也会把 <code>font.sans-serif</code> 重置成 <code>Arial</code> —— 这正是很多人”设了字体还是方块”的原因，<br>因为 <code>sns.set_theme(font=&quot;Microsoft YaHei&quot;)</code> 改的是 <code>font.family</code>，不是 <code>font.sans-serif</code>。<br><strong>最保险的写法：<code>set_theme(font=...)</code> 和 <code>plt.rcParams[&quot;font.sans-serif&quot;]</code> 两个都设。</strong></p>
+</blockquote>
+<h3 id="A2-3-2-Seaborn-函数总表"><a href="#A2-3-2-Seaborn-函数总表" class="headerlink" title="A2.3.2 Seaborn 函数总表"></a>A2.3.2 Seaborn 函数总表</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>画什么</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sns.scatterplot(data, x, y)</code></td>
+<td>散点图</td>
+<td><code>hue=</code>（颜色分组）、<code>size=</code>、<code>style=</code>、<code>alpha=</code>、<code>s=</code></td>
+</tr>
+<tr>
+<td><code>sns.lineplot(data, x, y)</code></td>
+<td>折线图（<strong>自动带置信区间</strong>）</td>
+<td><code>hue=</code>、<code>errorbar=None</code>（关掉阴影）、<code>estimator=&quot;mean&quot;</code></td>
+</tr>
+<tr>
+<td><code>sns.relplot(data, x, y)</code></td>
+<td>关系图（figure 级，可分面）</td>
+<td><code>kind=&quot;scatter&quot;/&quot;line&quot;</code>、<code>col=</code>、<code>row=</code>、<code>col_wrap=</code>、<code>height=</code>、<code>aspect=</code></td>
+</tr>
+<tr>
+<td><code>sns.histplot(data, x)</code></td>
+<td>直方图</td>
+<td><code>bins=</code>、<code>kde=True</code>、<code>hue=</code>、<code>multiple=&quot;stack&quot;/&quot;dodge&quot;</code>、<code>stat=&quot;density&quot;</code></td>
+</tr>
+<tr>
+<td><code>sns.kdeplot(data, x)</code></td>
+<td>核密度曲线</td>
+<td><code>fill=True</code>、<code>bw_adjust=</code>（平滑程度）、<code>hue=</code></td>
+</tr>
+<tr>
+<td><code>sns.ecdfplot(data, x)</code></td>
+<td>累积分布曲线</td>
+<td>看”低于某值占多少比例”</td>
+</tr>
+<tr>
+<td><code>sns.rugplot(data, x)</code></td>
+<td>轴上的小刻度（数据点分布）</td>
+<td>常配合其它图</td>
+</tr>
+<tr>
+<td><code>sns.displot(data, x)</code></td>
+<td>figure 级分布图（可分面）</td>
+<td><code>kind=&quot;hist&quot;/&quot;kde&quot;/&quot;ecdf&quot;</code>、<code>col=</code>、<code>kde=True</code></td>
+</tr>
+<tr>
+<td><code>sns.boxplot(data, x, y)</code></td>
+<td>箱线图</td>
+<td><code>hue=</code>、<code>orient=</code>、<code>showfliers=False</code>（隐藏异常点）</td>
+</tr>
+<tr>
+<td><code>sns.violinplot(data, x, y)</code></td>
+<td>小提琴图</td>
+<td><code>inner=&quot;quart&quot;/&quot;box&quot;/&quot;point&quot;/&quot;stick&quot;/None</code>、<code>split=True</code>（左右对比）、<code>bw_adjust=</code></td>
+</tr>
+<tr>
+<td><code>sns.boxenplot(data, x, y)</code></td>
+<td>增强箱线图（大数据更合适）</td>
+<td>展示更多分位数</td>
+</tr>
+<tr>
+<td><code>sns.stripplot(data, x, y)</code></td>
+<td>散点条带图（每点都画）</td>
+<td><code>jitter=True</code>、<code>size=3</code>、<code>dodge=True</code></td>
+</tr>
+<tr>
+<td><code>sns.swarmplot(data, x, y)</code></td>
+<td>蜂群图（点不重叠）</td>
+<td>数据量大时会很慢</td>
+</tr>
+<tr>
+<td><code>sns.barplot(data, x, y)</code></td>
+<td>柱状图（<strong>默认画均值 + 误差棒</strong>）</td>
+<td><code>estimator=&quot;mean&quot;/&quot;sum&quot;</code>、<code>errorbar=None</code>、<code>ci=</code>（旧版）</td>
+</tr>
+<tr>
+<td><code>sns.pointplot(data, x, y)</code></td>
+<td>点线图（看趋势）</td>
+<td><code>hue=</code>、<code>dodge=</code></td>
+</tr>
+<tr>
+<td><code>sns.countplot(data, x)</code></td>
+<td>频次柱状图（数个数）</td>
+<td><code>hue=</code>、<code>order=</code></td>
+</tr>
+<tr>
+<td><code>sns.catplot(data, x, y)</code></td>
+<td>figure 级分类图</td>
+<td><code>kind=&quot;box&quot;/&quot;violin&quot;/&quot;bar&quot;/&quot;strip&quot;/&quot;swarm&quot;/&quot;point&quot;/&quot;count&quot;</code>、<code>col=</code></td>
+</tr>
+<tr>
+<td><code>sns.regplot(data, x, y)</code></td>
+<td>散点 + 回归线</td>
+<td><code>ci=None</code>、<code>order=2</code>（多项式）、<code>logistic=True</code></td>
+</tr>
+<tr>
+<td><code>sns.lmplot(data, x, y)</code></td>
+<td>figure 级回归图（可分组分面）</td>
+<td><code>hue=</code>、<code>col=</code>、<code>height=</code></td>
+</tr>
+<tr>
+<td><code>sns.residplot(data, x, y)</code></td>
+<td>残差图（检查回归假设）</td>
+<td>残差应随机分布</td>
+</tr>
+<tr>
+<td><code>sns.heatmap(data)</code></td>
+<td>热力图（<strong>矩阵数据</strong>）</td>
+<td><code>annot=True</code>、<code>fmt=&quot;.2f&quot;</code>、<code>cmap=</code>、<code>center=0</code>、<code>square=True</code>、<code>linewidths=.5</code></td>
+</tr>
+<tr>
+<td><code>sns.clustermap(data)</code></td>
+<td>带聚类的热力图</td>
+<td>自动重排行列，让相似项挨着</td>
+</tr>
+<tr>
+<td><code>sns.pairplot(data)</code></td>
+<td>散点图矩阵（两两关系）</td>
+<td><code>hue=</code>、<code>height=</code>、<code>diag_kind=&quot;kde&quot;</code>、<code>plot_kws=</code></td>
+</tr>
+<tr>
+<td><code>sns.jointplot(data, x, y)</code></td>
+<td>联合分布图（散点 + 边缘分布）</td>
+<td><code>kind=&quot;scatter&quot;/&quot;hex&quot;/&quot;kde&quot;/&quot;reg&quot;/&quot;hist&quot;</code></td>
+</tr>
+<tr>
+<td><code>sns.FacetGrid(data, col=)</code></td>
+<td>分面网格（底层 API）</td>
+<td><code>g.map(sns.histplot, &quot;列名&quot;, bins=20)</code>、<code>g.set_titles()</code></td>
+</tr>
+<tr>
+<td><code>sns.PairGrid</code> &#x2F; <code>sns.JointGrid</code></td>
+<td>pairplot &#x2F; jointplot 的底层版</td>
+<td>需要自定义时才用</td>
+</tr>
+<tr>
+<td><code>sns.despine()</code></td>
+<td>去掉上右边框</td>
+<td><code>sns.despine(ax=ax)</code></td>
+</tr>
+<tr>
+<td><code>sns.color_palette(name, n)</code></td>
+<td>取一组颜色</td>
+<td><code>sns.color_palette(&quot;Set2&quot;, 5)</code></td>
+</tr>
+<tr>
+<td><code>sns.set_palette(name)</code></td>
+<td>设置全局配色</td>
+<td><code>sns.set_palette(&quot;colorblind&quot;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分布三件套：直方图 / 密度图 / 累积分布</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">3</span>, figsize=(<span class="number">13</span>, <span class="number">3.6</span>))</span><br><span class="line">sns.histplot(data=df, x=<span class="string">&quot;销售额&quot;</span>, bins=<span class="number">30</span>, kde=<span class="literal">True</span>, ax=axes[<span class="number">0</span>], color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">sns.kdeplot(data=df, x=<span class="string">&quot;销售额&quot;</span>, hue=<span class="string">&quot;客户性别&quot;</span>, fill=<span class="literal">True</span>, ax=axes[<span class="number">1</span>])</span><br><span class="line">sns.ecdfplot(data=df, x=<span class="string">&quot;销售额&quot;</span>, ax=axes[<span class="number">2</span>], color=COLORS[<span class="string">&quot;green&quot;</span>])</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&quot;直方图 + 密度&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&quot;分组密度（fill=True）&quot;</span>)</span><br><span class="line">axes[<span class="number">2</span>].set_title(<span class="string">&quot;累积分布 ECDF&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_sns_dist.png&quot;</span>, dpi=<span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;三张图完成&quot;</span>)</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">三张图完成</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分类对比三件套：箱线图 / 小提琴图 / 柱状图（带误差棒）</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">3</span>, figsize=(<span class="number">13</span>, <span class="number">3.6</span>))</span><br><span class="line">sns.boxplot(data=df, x=<span class="string">&quot;商品类别&quot;</span>, y=<span class="string">&quot;销售额&quot;</span>, ax=axes[<span class="number">0</span>], color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">sns.violinplot(data=df, x=<span class="string">&quot;商品类别&quot;</span>, y=<span class="string">&quot;销售额&quot;</span>, ax=axes[<span class="number">1</span>],</span><br><span class="line">               color=COLORS[<span class="string">&quot;orange&quot;</span>], inner=<span class="string">&quot;quart&quot;</span>)   <span class="comment"># inner 控制内部画什么</span></span><br><span class="line">sns.barplot(data=df, x=<span class="string">&quot;省份区域&quot;</span>, y=<span class="string">&quot;销售额&quot;</span>, estimator=<span class="string">&quot;mean&quot;</span>,</span><br><span class="line">            errorbar=<span class="literal">None</span>, ax=axes[<span class="number">2</span>], color=COLORS[<span class="string">&quot;green&quot;</span>])</span><br><span class="line"><span class="keyword">for</span> a <span class="keyword">in</span> axes[:<span class="number">2</span>]:</span><br><span class="line">    a.tick_params(axis=<span class="string">&quot;x&quot;</span>, rotation=<span class="number">20</span>)</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&quot;箱线图：看分布和异常值&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&quot;小提琴图：看分布形状&quot;</span>)</span><br><span class="line">axes[<span class="number">2</span>].set_title(<span class="string">&quot;柱状图：看均值（errorbar=None 关误差棒）&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_sns_cat.png&quot;</span>, dpi=<span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;中位数对比:&quot;</span>, df.groupby(<span class="string">&quot;商品类别&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].median().<span class="built_in">round</span>(<span class="number">0</span>).to_dict())</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">中位数对比: &#123;&#x27;图书文娱&#x27;: 53.0, &#x27;家用电器&#x27;: 1073.0, &#x27;手机数码&#x27;: 1062.0, &#x27;服饰鞋包&#x27;: 358.0, &#x27;食品饮料&#x27;: 119.0&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 回归与分面：一次看清&quot;两组数据的趋势是不是一样&quot;</span></span><br><span class="line">g = sns.lmplot(data=df, x=<span class="string">&quot;单价&quot;</span>, y=<span class="string">&quot;销售额&quot;</span>, hue=<span class="string">&quot;客户性别&quot;</span>,</span><br><span class="line">               height=<span class="number">4</span>, aspect=<span class="number">1.4</span>, scatter_kws=&#123;<span class="string">&quot;s&quot;</span>: <span class="number">10</span>, <span class="string">&quot;alpha&quot;</span>: <span class="number">.4</span>&#125;)</span><br><span class="line">g.figure.suptitle(<span class="string">&quot;分组回归散点图 lmplot&quot;</span>)</span><br><span class="line">g.figure.savefig(<span class="string">&quot;_test/appendix/_a2_sns_lm.png&quot;</span>, dpi=<span class="number">100</span>, bbox_inches=<span class="string">&quot;tight&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;lmplot 完成&quot;</span>)</span><br><span class="line">plt.close(<span class="string">&quot;all&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lmplot 完成</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 两种价格的相关系数：分面图最擅长回答&quot;分组后关系还成立吗&quot;</span></span><br><span class="line">r = df.groupby(<span class="string">&quot;客户性别&quot;</span>).apply(</span><br><span class="line">    <span class="keyword">lambda</span> d: d[<span class="string">&quot;单价&quot;</span>].corr(d[<span class="string">&quot;销售额&quot;</span>]), include_groups=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(r.<span class="built_in">round</span>(<span class="number">3</span>).to_dict())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;女&#x27;: 0.778, &#x27;男&#x27;: 0.725&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 热力图：相关系数矩阵的标准画法</span></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">6</span>, <span class="number">5</span>))</span><br><span class="line">corr = df.corr(numeric_only=<span class="literal">True</span>)</span><br><span class="line">sns.heatmap(corr, annot=<span class="literal">True</span>, fmt=<span class="string">&quot;.2f&quot;</span>, cmap=<span class="string">&quot;RdBu_r&quot;</span>, center=<span class="number">0</span>,</span><br><span class="line">            square=<span class="literal">True</span>, linewidths=<span class="number">.5</span>, ax=ax, cbar_kws=&#123;<span class="string">&quot;shrink&quot;</span>: <span class="number">.8</span>&#125;)</span><br><span class="line">ax.set_title(<span class="string">&quot;相关系数热力图&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_sns_heat.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;单价~销售额:&quot;</span>, <span class="built_in">round</span>(<span class="built_in">float</span>(corr.loc[<span class="string">&quot;单价&quot;</span>, <span class="string">&quot;销售额&quot;</span>]), <span class="number">3</span>),</span><br><span class="line">      <span class="string">&quot;| 客户年龄~销售额:&quot;</span>, <span class="built_in">round</span>(<span class="built_in">float</span>(corr.loc[<span class="string">&quot;客户年龄&quot;</span>, <span class="string">&quot;销售额&quot;</span>]), <span class="number">3</span>))</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">单价~销售额: 0.746 | 客户年龄~销售额: 0.001</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分面网格 FacetGrid：底层 API，自由度最高</span></span><br><span class="line">g = sns.FacetGrid(df, col=<span class="string">&quot;下单渠道&quot;</span>, col_wrap=<span class="number">2</span>, height=<span class="number">2.6</span>, sharey=<span class="literal">True</span>)</span><br><span class="line">g.<span class="built_in">map</span>(sns.histplot, <span class="string">&quot;销售额&quot;</span>, bins=<span class="number">20</span>, color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line">g.set_titles(<span class="string">&quot;&#123;col_name&#125; 渠道&quot;</span>)</span><br><span class="line">g.figure.tight_layout()</span><br><span class="line">g.figure.savefig(<span class="string">&quot;_test/appendix/_a2_sns_facet.png&quot;</span>, dpi=<span class="number">100</span>, bbox_inches=<span class="string">&quot;tight&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;FacetGrid 完成&quot;</span>)</span><br><span class="line">plt.close(<span class="string">&quot;all&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FacetGrid 完成</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong><code>sns.barplot</code> 的高度是”均值”不是”总和”</strong>！<br>想画总和要写 <code>estimator=&quot;sum&quot;</code>。默认还带误差棒，讲单一数字时用 <code>errorbar=None</code> 关掉。<br>这是 seaborn 最容易被误读的一处默认行为。</p>
+</blockquote>
+<hr>
+<h2 id="A2-4-Plotly：可交互图表"><a href="#A2-4-Plotly：可交互图表" class="headerlink" title="A2.4 Plotly：可交互图表"></a>A2.4 Plotly：可交互图表</h2><h3 id="A2-4-1-plotly-express-常用函数"><a href="#A2-4-1-plotly-express-常用函数" class="headerlink" title="A2.4.1 plotly.express 常用函数"></a>A2.4.1 <code>plotly.express</code> 常用函数</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>画什么</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>px.scatter</code></td>
+<td>散点 &#x2F; 气泡图</td>
+<td><code>size=</code>（气泡大小）、<code>color=</code>、<code>hover_name=</code>、<code>log_x=</code>、<code>trendline=&quot;ols&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.line</code></td>
+<td>折线图</td>
+<td><code>line_group=</code>、<code>markers=True</code></td>
+</tr>
+<tr>
+<td><code>px.area</code></td>
+<td>面积图</td>
+<td><code>groupnorm=&quot;percent&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.bar</code></td>
+<td>柱状图</td>
+<td><code>orientation=&quot;h&quot;</code>、<code>barmode=&quot;group&quot;/&quot;stack&quot;</code>、<code>text_auto=&quot;.3s&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.histogram</code></td>
+<td>直方图</td>
+<td><code>nbins=</code>、<code>histnorm=&quot;percent&quot;</code>、<code>marginal=&quot;box&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.box</code></td>
+<td>箱线图</td>
+<td><code>points=&quot;all&quot;/&quot;outliers&quot;</code>、<code>notched=True</code></td>
+</tr>
+<tr>
+<td><code>px.violin</code></td>
+<td>小提琴图</td>
+<td><code>box=True</code>、<code>points=&quot;all&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.strip</code></td>
+<td>条带散点</td>
+<td><code>color=</code></td>
+</tr>
+<tr>
+<td><code>px.pie</code></td>
+<td>饼图 &#x2F; 环形图</td>
+<td><code>hole=.4</code>（环形）、<code>names=</code>、<code>values=</code></td>
+</tr>
+<tr>
+<td><code>px.density_heatmap</code></td>
+<td>密度热力图</td>
+<td><code>nbinsx=</code>、<code>histfunc=&quot;avg&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.density_contour</code></td>
+<td>等高线密度图</td>
+<td><code>contours_coloring=&quot;fill&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.imshow</code></td>
+<td>矩阵图 &#x2F; 图片</td>
+<td><code>text_auto=&quot;.2f&quot;</code>、<code>color_continuous_scale=</code>、<code>zmin=</code>、<code>zmax=</code></td>
+</tr>
+<tr>
+<td><code>px.ecdf</code></td>
+<td>累积分布</td>
+<td><code>marginal=&quot;rug&quot;</code></td>
+</tr>
+<tr>
+<td><code>px.scatter_matrix</code></td>
+<td>散点图矩阵</td>
+<td><code>dimensions=</code></td>
+</tr>
+<tr>
+<td><code>px.parallel_coordinates</code></td>
+<td>平行坐标（多维对比）</td>
+<td><code>color=</code>、<code>dimensions=</code></td>
+</tr>
+<tr>
+<td><code>px.treemap</code></td>
+<td>矩形树图（层级占比）</td>
+<td><code>path=[&quot;省&quot;,&quot;市&quot;]</code>、<code>values=</code></td>
+</tr>
+<tr>
+<td><code>px.sunburst</code></td>
+<td>旭日图（层级占比，环形）</td>
+<td><code>path=</code></td>
+</tr>
+<tr>
+<td><code>px.icicle</code></td>
+<td>冰柱图（层级占比，柱状）</td>
+<td><code>path=</code></td>
+</tr>
+<tr>
+<td><code>px.funnel</code></td>
+<td>漏斗图（转化率）</td>
+<td><code>x=</code>、<code>y=</code></td>
+</tr>
+<tr>
+<td><code>px.timeline</code></td>
+<td>甘特图</td>
+<td><code>x_start=</code>、<code>x_end=</code>、<code>y=</code></td>
+</tr>
+<tr>
+<td><code>px.choropleth</code></td>
+<td>世界&#x2F;美国地图</td>
+<td><code>locations=</code>、<code>locationmode=</code></td>
+</tr>
+<tr>
+<td><code>px.scatter_3d</code></td>
+<td>三维散点</td>
+<td><code>z=</code>、<code>size=</code></td>
+</tr>
+<tr>
+<td><code>px.line_3d</code> &#x2F; <code>px.scatter_polar</code></td>
+<td>3D 折线 &#x2F; 极坐标</td>
+<td>特殊场景</td>
+</tr>
+<tr>
+<td><code>px.get_trendline_results(fig)</code></td>
+<td>取趋势线拟合结果</td>
+<td>配合 <code>trendline=&quot;ols&quot;</code> 看回归系数</td>
+</tr>
+</tbody></table>
+<p><strong><code>px</code> 的通用关键参数（几乎所有函数都支持）</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>color</code></td>
+<td>按某列着色（分类或连续）</td>
+<td><code>color=&quot;商品类别&quot;</code></td>
+</tr>
+<tr>
+<td><code>size</code></td>
+<td>按某列决定点&#x2F;柱大小</td>
+<td><code>size=&quot;pop&quot;</code></td>
+</tr>
+<tr>
+<td><code>hover_name</code> &#x2F; <code>hover_data</code></td>
+<td>悬停提示显示什么</td>
+<td><code>hover_name=&quot;country&quot;, hover_data=[&quot;year&quot;]</code></td>
+</tr>
+<tr>
+<td><code>facet_col</code> &#x2F; <code>facet_row</code></td>
+<td>分面</td>
+<td><code>facet_col=&quot;商品类别&quot;, facet_col_wrap=3</code></td>
+</tr>
+<tr>
+<td><code>animation_frame</code> &#x2F; <code>animation_group</code></td>
+<td>动画（按某列逐帧）</td>
+<td><code>animation_frame=&quot;year&quot;, animation_group=&quot;country&quot;</code></td>
+</tr>
+<tr>
+<td><code>log_x</code> &#x2F; <code>log_y</code></td>
+<td>对数轴</td>
+<td><code>log_x=True</code>（数据跨数量级时必用）</td>
+</tr>
+<tr>
+<td><code>range_x</code> &#x2F; <code>range_y</code></td>
+<td>固定轴范围（做动画时防止抖动）</td>
+<td><code>range_x=[100, 100000]</code></td>
+</tr>
+<tr>
+<td><code>template</code></td>
+<td>主题</td>
+<td><code>&quot;plotly_white&quot;</code>（报告）&#x2F; <code>&quot;plotly_dark&quot;</code>（大屏）&#x2F; <code>&quot;simple_white&quot;</code></td>
+</tr>
+<tr>
+<td><code>title</code> &#x2F; <code>labels</code></td>
+<td>标题 &#x2F; 轴名映射</td>
+<td><code>labels=&#123;&quot;gdpPercap&quot;: &quot;人均GDP&quot;&#125;</code></td>
+</tr>
+<tr>
+<td><code>text</code> &#x2F; <code>text_auto</code></td>
+<td>柱子上直接标数值</td>
+<td><code>text_auto=&quot;.3s&quot;</code></td>
+</tr>
+<tr>
+<td><code>color_discrete_sequence</code></td>
+<td>自定义分类配色</td>
+<td><code>color_discrete_sequence=PALETTE</code></td>
+</tr>
+<tr>
+<td><code>color_continuous_scale</code></td>
+<td>自定义连续色带</td>
+<td><code>color_continuous_scale=&quot;Viridis&quot;</code></td>
+</tr>
+<tr>
+<td><code>opacity</code></td>
+<td>透明度</td>
+<td><code>opacity=.7</code></td>
+</tr>
+<tr>
+<td><code>width</code> &#x2F; <code>height</code></td>
+<td>尺寸（像素）</td>
+<td><code>height=500</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> plotly.express <span class="keyword">as</span> px</span><br><span class="line"></span><br><span class="line"><span class="comment"># 气泡散点：颜色=大洲，大小=人口，对数 x 轴，悬停显示国名</span></span><br><span class="line">d2007 = gap[gap[<span class="string">&quot;year&quot;</span>] == <span class="number">2007</span>]</span><br><span class="line">fig = px.scatter(d2007, x=<span class="string">&quot;gdpPercap&quot;</span>, y=<span class="string">&quot;lifeExp&quot;</span>, size=<span class="string">&quot;pop&quot;</span>, color=<span class="string">&quot;continent&quot;</span>,</span><br><span class="line">                 hover_name=<span class="string">&quot;country&quot;</span>, log_x=<span class="literal">True</span>, template=<span class="string">&quot;plotly_white&quot;</span>,</span><br><span class="line">                 labels=&#123;<span class="string">&quot;gdpPercap&quot;</span>: <span class="string">&quot;人均GDP&quot;</span>, <span class="string">&quot;lifeExp&quot;</span>: <span class="string">&quot;预期寿命&quot;</span>&#125;,</span><br><span class="line">                 title=<span class="string">&quot;2007 年各国人均 GDP 与预期寿命&quot;</span>)</span><br><span class="line">fig.write_html(<span class="string">&quot;_test/appendix/_a2_px_scatter.html&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;气泡散点:&quot;</span>, <span class="built_in">len</span>(d2007), <span class="string">&quot;个国家&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">气泡散点: 142 个国家</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 动画散点：按年份逐帧播放（gapminder 是经典演示数据）</span></span><br><span class="line">fig2 = px.scatter(gap, x=<span class="string">&quot;gdpPercap&quot;</span>, y=<span class="string">&quot;lifeExp&quot;</span>, size=<span class="string">&quot;pop&quot;</span>, color=<span class="string">&quot;continent&quot;</span>,</span><br><span class="line">                  animation_frame=<span class="string">&quot;year&quot;</span>, animation_group=<span class="string">&quot;country&quot;</span>, log_x=<span class="literal">True</span>,</span><br><span class="line">                  range_x=[<span class="number">100</span>, <span class="number">100000</span>], range_y=[<span class="number">25</span>, <span class="number">90</span>],</span><br><span class="line">                  title=<span class="string">&quot;1952-2007 各国发展动画&quot;</span>)</span><br><span class="line">fig2.write_html(<span class="string">&quot;_test/appendix/_a2_px_anim.html&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;动画帧数:&quot;</span>, <span class="built_in">len</span>(gap[<span class="string">&quot;year&quot;</span>].unique()))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">动画帧数: 12</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分面直方图 + 水平条形图（报告里最常用的两种）</span></span><br><span class="line">g = df.groupby(<span class="string">&quot;省份区域&quot;</span>, as_index=<span class="literal">False</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">sum</span>().sort_values(<span class="string">&quot;销售额&quot;</span>)</span><br><span class="line">fig3 = px.bar(g, x=<span class="string">&quot;销售额&quot;</span>, y=<span class="string">&quot;省份区域&quot;</span>, orientation=<span class="string">&quot;h&quot;</span>,</span><br><span class="line">              text_auto=<span class="string">&quot;.3s&quot;</span>, template=<span class="string">&quot;plotly_white&quot;</span>,</span><br><span class="line">              title=<span class="string">&quot;各区域销售额&quot;</span>)</span><br><span class="line">fig3.write_html(<span class="string">&quot;_test/appendix/_a2_px_bar.html&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(g.set_index(<span class="string">&quot;省份区域&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">round</span>(<span class="number">0</span>).to_dict())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;西北&#x27;: 83828.0, &#x27;华中&#x27;: 106734.0, &#x27;西南&#x27;: 130823.0, &#x27;华北&#x27;: 324090.0, &#x27;华东&#x27;: 437016.0, &#x27;华南&#x27;: 509605.0&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># imshow 画相关系数矩阵：plotly 版热力图</span></span><br><span class="line">corr = df.corr(numeric_only=<span class="literal">True</span>)</span><br><span class="line">fig4 = px.imshow(corr, text_auto=<span class="string">&quot;.2f&quot;</span>, color_continuous_scale=<span class="string">&quot;RdBu_r&quot;</span>,</span><br><span class="line">                 zmin=-<span class="number">1</span>, zmax=<span class="number">1</span>, title=<span class="string">&quot;相关系数矩阵&quot;</span>)</span><br><span class="line">fig4.write_html(<span class="string">&quot;_test/appendix/_a2_px_heat.html&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;矩阵大小:&quot;</span>, corr.shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">矩阵大小: (5, 5)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>Plotly 导出静态图片需要额外装 <code>kaleido</code>（本机没装）</strong><br>所以本教程一律用 <code>fig.write_html(&quot;xxx.html&quot;)</code> —— 双击就能在浏览器里打开，<br>还能缩放、悬停、点图例隐藏系列。装图片导出：<br><code>pip install kaleido</code> 之后 <code>fig.write_image(&quot;x.png&quot;, scale=2)</code>。</p>
+</blockquote>
+<hr>
+<h2 id="A2-5-配色方案速查"><a href="#A2-5-配色方案速查" class="headerlink" title="A2.5 配色方案速查"></a>A2.5 配色方案速查</h2><h3 id="A2-5-1-教程统一配色：viz-style-py-的-COLORS-PALETTE"><a href="#A2-5-1-教程统一配色：viz-style-py-的-COLORS-PALETTE" class="headerlink" title="A2.5.1 教程统一配色：viz_style.py 的 COLORS &#x2F; PALETTE"></a>A2.5.1 教程统一配色：<code>viz_style.py</code> 的 <code>COLORS</code> &#x2F; <code>PALETTE</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> viz_style <span class="keyword">import</span> COLORS, PALETTE</span><br><span class="line"><span class="built_in">print</span>(COLORS)</span><br><span class="line"><span class="built_in">print</span>(PALETTE)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;blue&#x27;: &#x27;#4C72B0&#x27;, &#x27;orange&#x27;: &#x27;#DD8452&#x27;, &#x27;green&#x27;: &#x27;#55A868&#x27;, &#x27;red&#x27;: &#x27;#C44E52&#x27;, &#x27;purple&#x27;: &#x27;#8172B3&#x27;, &#x27;brown&#x27;:</span><br><span class="line">   &#x27;#937860&#x27;, &#x27;pink&#x27;: &#x27;#DA8BC3&#x27;, &#x27;gray&#x27;: &#x27;#8C8C8C&#x27;, &#x27;yellow&#x27;: &#x27;#CCB974&#x27;, &#x27;cyan&#x27;: &#x27;#64B5CD&#x27;&#125;</span><br><span class="line">[&#x27;#4C72B0&#x27;, &#x27;#DD8452&#x27;, &#x27;#55A868&#x27;, &#x27;#C44E52&#x27;, &#x27;#8172B3&#x27;, &#x27;#937860&#x27;, &#x27;#DA8BC3&#x27;, &#x27;#8C8C8C&#x27;]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>名字</th>
+<th>色值</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>COLORS[&quot;blue&quot;]</code></td>
+<td><code>#4C72B0</code></td>
+<td>主色，最常用（单系列图默认用它）</td>
+</tr>
+<tr>
+<td><code>COLORS[&quot;orange&quot;]</code></td>
+<td><code>#DD8452</code></td>
+<td>第二系列 &#x2F; 对比色</td>
+</tr>
+<tr>
+<td><code>COLORS[&quot;green&quot;]</code></td>
+<td><code>#55A868</code></td>
+<td>正向指标（增长、达标）</td>
+</tr>
+<tr>
+<td><code>COLORS[&quot;red&quot;]</code></td>
+<td><code>#C44E52</code></td>
+<td>负向指标 &#x2F; 重点标注</td>
+</tr>
+<tr>
+<td><code>COLORS[&quot;purple&quot;]</code></td>
+<td><code>#8172B3</code></td>
+<td>第三、第四系列</td>
+</tr>
+<tr>
+<td><code>COLORS[&quot;gray&quot;]</code></td>
+<td><code>#8C8C8C</code></td>
+<td>参考线、辅助信息、次要系列</td>
+</tr>
+<tr>
+<td><code>PALETTE</code></td>
+<td>一组 8 色</td>
+<td>需要多系列时按顺序取，<code>PALETTE[:3]</code></td>
+</tr>
+</tbody></table>
+<h3 id="A2-5-2-三种色带（cmap）该怎么选"><a href="#A2-5-2-三种色带（cmap）该怎么选" class="headerlink" title="A2.5.2 三种色带（cmap）该怎么选"></a>A2.5.2 三种色带（cmap）该怎么选</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 教程约定的三条色带</span></span><br><span class="line">CMAP_SEQ = <span class="string">&quot;viridis&quot;</span>     <span class="comment"># 连续型：单调递增亮度，色盲友好、打印黑白也能分</span></span><br><span class="line">CMAP_DIV = <span class="string">&quot;RdBu_r&quot;</span>      <span class="comment"># 发散型：有&quot;中心值&quot;（通常是 0）时用</span></span><br><span class="line">CMAP_CAT = <span class="string">&quot;Set2&quot;</span>        <span class="comment"># 分类型：类别不多、要互相区分时用</span></span><br><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">3</span>, figsize=(<span class="number">12</span>, <span class="number">3</span>))</span><br><span class="line">data = np.random.default_rng(<span class="number">0</span>).random((<span class="number">8</span>, <span class="number">8</span>))</span><br><span class="line"><span class="keyword">for</span> ax, cmap <span class="keyword">in</span> <span class="built_in">zip</span>(axes, [CMAP_SEQ, CMAP_DIV, CMAP_CAT]):</span><br><span class="line">    im = ax.imshow(data, cmap=cmap)</span><br><span class="line">    ax.set_title(cmap)</span><br><span class="line">    fig.colorbar(im, ax=ax)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_cmap.png&quot;</span>, dpi=<span class="number">100</span>)</span><br><span class="line"><span class="built_in">print</span>(CMAP_SEQ, CMAP_DIV, CMAP_CAT)</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">viridis RdBu_r Set2</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+<th>为什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>连续数值（金额、温度、密度）</td>
+<td><code>&quot;viridis&quot;</code> &#x2F; <code>&quot;Blues&quot;</code> &#x2F; <code>&quot;rocket&quot;</code> &#x2F; <code>&quot;mako&quot;</code> &#x2F; <code>&quot;crest&quot;</code></td>
+<td>亮度单调变化，人眼能排序</td>
+</tr>
+<tr>
+<td>有正负、以 0 为中心（相关系数、涨跌）</td>
+<td><code>&quot;RdBu_r&quot;</code> &#x2F; <code>&quot;coolwarm&quot;</code> &#x2F; <code>&quot;vlag&quot;</code> &#x2F; <code>&quot;icefire&quot;</code></td>
+<td>两头异色、中间白，<code>center=0</code></td>
+</tr>
+<tr>
+<td>分类数据（5~8 类）</td>
+<td><code>&quot;Set2&quot;</code> &#x2F; <code>&quot;tab10&quot;</code> &#x2F; <code>&quot;colorblind&quot;</code> &#x2F; <code>&quot;deep&quot;</code></td>
+<td>颜色差异大、不混淆</td>
+</tr>
+<tr>
+<td>色盲友好</td>
+<td><code>&quot;colorblind&quot;</code> &#x2F; <code>&quot;viridis&quot;</code> &#x2F; <code>&quot;cividis&quot;</code></td>
+<td>红绿色盲也能区分</td>
+</tr>
+<tr>
+<td>打印成黑白报告</td>
+<td><code>&quot;viridis&quot;</code> &#x2F; <code>&quot;Greys&quot;</code></td>
+<td>亮度差异在灰度下依然可见</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 看一眼几套配色的实际色值</span></span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line">pals = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> [<span class="string">&quot;colorblind&quot;</span>, <span class="string">&quot;Set2&quot;</span>, <span class="string">&quot;deep&quot;</span>, <span class="string">&quot;tab10&quot;</span>]:</span><br><span class="line">    pals[name] = [plt.matplotlib.colors.to_hex(c) <span class="keyword">for</span> c <span class="keyword">in</span> sns.color_palette(name, <span class="number">4</span>)]</span><br><span class="line"><span class="built_in">print</span>(pals[<span class="string">&quot;colorblind&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(pals[<span class="string">&quot;Set2&quot;</span>])</span><br><span class="line">plt.close(<span class="string">&quot;all&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;#0173b2&#x27;, &#x27;#de8f05&#x27;, &#x27;#029e73&#x27;, &#x27;#d55e00&#x27;]</span><br><span class="line">[&#x27;#66c2a5&#x27;, &#x27;#fc8d62&#x27;, &#x27;#8da0cb&#x27;, &#x27;#e78ac3&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="A2-5-3-具名颜色与十六进制"><a href="#A2-5-3-具名颜色与十六进制" class="headerlink" title="A2.5.3 具名颜色与十六进制"></a>A2.5.3 具名颜色与十六进制</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> colors <span class="keyword">as</span> mcolors</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;基本色:&quot;</span>, <span class="built_in">sorted</span>(mcolors.BASE_COLORS))          <span class="comment"># 极简短名</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Tableau:&quot;</span>, <span class="built_in">sorted</span>(mcolors.TABLEAU_COLORS)[:<span class="number">4</span>])   <span class="comment"># matplotlib 默认循环色</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;CSS4 色总数:&quot;</span>, <span class="built_in">len</span>(mcolors.CSS4_COLORS))          <span class="comment"># 148 个具名色</span></span><br><span class="line"><span class="built_in">print</span>([c <span class="keyword">for</span> c <span class="keyword">in</span> [<span class="string">&quot;steelblue&quot;</span>, <span class="string">&quot;tomato&quot;</span>, <span class="string">&quot;gold&quot;</span>, <span class="string">&quot;teal&quot;</span>, <span class="string">&quot;crimson&quot;</span>,</span><br><span class="line">                   <span class="string">&quot;salmon&quot;</span>, <span class="string">&quot;skyblue&quot;</span>] <span class="keyword">if</span> c <span class="keyword">in</span> mcolors.CSS4_COLORS])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">基本色: [&#x27;b&#x27;, &#x27;c&#x27;, &#x27;g&#x27;, &#x27;k&#x27;, &#x27;m&#x27;, &#x27;r&#x27;, &#x27;w&#x27;, &#x27;y&#x27;]</span><br><span class="line">Tableau: [&#x27;tab:blue&#x27;, &#x27;tab:brown&#x27;, &#x27;tab:cyan&#x27;, &#x27;tab:gray&#x27;]</span><br><span class="line">CSS4 色总数: 148</span><br><span class="line">[&#x27;steelblue&#x27;, &#x27;tomato&#x27;, &#x27;gold&#x27;, &#x27;teal&#x27;, &#x27;crimson&#x27;, &#x27;salmon&#x27;, &#x27;skyblue&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>三种写颜色（<code>color=</code>）的方式：具名 <code>&quot;steelblue&quot;</code>、十六进制 <code>&quot;#4C72B0&quot;</code>、灰度字符串 <code>&quot;0.7&quot;</code>（0 黑 ~ 1 白）。</p>
+<hr>
+<h2 id="A2-6-常见图表”改进前后”对照"><a href="#A2-6-常见图表”改进前后”对照" class="headerlink" title="A2.6 常见图表”改进前后”对照"></a>A2.6 常见图表”改进前后”对照</h2><h3 id="对照-1：默认饼图-→-排序后的水平柱状图"><a href="#对照-1：默认饼图-→-排序后的水平柱状图" class="headerlink" title="对照 1：默认饼图 → 排序后的水平柱状图"></a>对照 1：默认饼图 → 排序后的水平柱状图</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">11</span>, <span class="number">3.8</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改进前：饼图，扇区顺序按字母/出现顺序，读者要来回看图例</span></span><br><span class="line">vc = df[<span class="string">&quot;支付方式&quot;</span>].value_counts()</span><br><span class="line">axes[<span class="number">0</span>].pie(vc.values, labels=vc.index, autopct=<span class="string">&quot;%1.1f%%&quot;</span>, colors=PALETTE[:<span class="built_in">len</span>(vc)])</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&quot;改进前：默认饼图&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改进后：排序 + 水平 + 直接标数值，眼睛不用动</span></span><br><span class="line">vc2 = vc.sort_values()</span><br><span class="line">axes[<span class="number">1</span>].barh(vc2.index, vc2.values, color=COLORS[<span class="string">&quot;blue&quot;</span>])</span><br><span class="line"><span class="keyword">for</span> y, v <span class="keyword">in</span> <span class="built_in">enumerate</span>(vc2.values):</span><br><span class="line">    axes[<span class="number">1</span>].text(v, y, <span class="string">f&quot; <span class="subst">&#123;v&#125;</span>&quot;</span>, va=<span class="string">&quot;center&quot;</span>, fontsize=<span class="number">9</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&quot;改进后：排序水平柱状图&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_xlabel(<span class="string">&quot;订单数&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_ba1.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;改进点：① 排序 ② 水平摆放（分类名不旋转）③ 直接标注数值 ④ 去掉无意义的颜色&quot;</span>)</span><br><span class="line">plt.close(fig)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">改进点：① 排序 ② 水平摆放（分类名不旋转）③ 直接标注数值 ④ 去掉无意义的颜色</span><br></pre></td></tr></table></figure>
+
+<h3 id="对照-2：右偏直方图-→-log-变换"><a href="#对照-2：右偏直方图-→-log-变换" class="headerlink" title="对照 2：右偏直方图 → log 变换"></a>对照 2：右偏直方图 → log 变换</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">11</span>, <span class="number">3.8</span>))</span><br><span class="line">axes[<span class="number">0</span>].hist(df[<span class="string">&quot;销售额&quot;</span>], bins=<span class="number">20</span>, color=COLORS[<span class="string">&quot;gray&quot;</span>])</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">f&quot;改进前：原始分布（偏度 <span class="subst">&#123;df[<span class="string">&#x27;销售额&#x27;</span>].skew():<span class="number">.1</span>f&#125;</span>）&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].hist(np.log1p(df[<span class="string">&quot;销售额&quot;</span>]), bins=<span class="number">20</span>, color=COLORS[<span class="string">&quot;green&quot;</span>])</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">f&quot;改进后：log1p 变换（偏度 <span class="subst">&#123;np.log1p(df[<span class="string">&#x27;销售额&#x27;</span>]).skew():<span class="number">.2</span>f&#125;</span>）&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_xlabel(<span class="string">&quot;log1p(销售额)&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_ba2.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line">plt.close(fig)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;偏度对比:&quot;</span>, <span class="built_in">round</span>(<span class="built_in">float</span>(df[<span class="string">&quot;销售额&quot;</span>].skew()), <span class="number">3</span>), <span class="string">&quot;-&gt;&quot;</span>,</span><br><span class="line">      <span class="built_in">round</span>(<span class="built_in">float</span>(np.log1p(df[<span class="string">&quot;销售额&quot;</span>]).skew()), <span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">偏度对比: 6.383 -&gt; -0.335</span><br></pre></td></tr></table></figure>
+
+<h3 id="对照-3：均值柱状图-→-箱线图（暴露被掩盖的分布）"><a href="#对照-3：均值柱状图-→-箱线图（暴露被掩盖的分布）" class="headerlink" title="对照 3：均值柱状图 → 箱线图（暴露被掩盖的分布）"></a>对照 3：均值柱状图 → 箱线图（暴露被掩盖的分布）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">fig, axes = plt.subplots(<span class="number">1</span>, <span class="number">2</span>, figsize=(<span class="number">11</span>, <span class="number">3.8</span>))</span><br><span class="line">order = [<span class="string">&quot;食品饮料&quot;</span>, <span class="string">&quot;图书文娱&quot;</span>, <span class="string">&quot;家用电器&quot;</span>, <span class="string">&quot;手机数码&quot;</span>, <span class="string">&quot;服饰鞋包&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改进前：只画均值，看不到&quot;差距有多大、有没有极端值&quot;</span></span><br><span class="line">means = [df.loc[df[<span class="string">&quot;商品类别&quot;</span>] == c, <span class="string">&quot;销售额&quot;</span>].mean() <span class="keyword">for</span> c <span class="keyword">in</span> order]</span><br><span class="line">axes[<span class="number">0</span>].bar(order, means, color=COLORS[<span class="string">&quot;gray&quot;</span>])</span><br><span class="line">axes[<span class="number">0</span>].set_title(<span class="string">&quot;改进前：只画均值（信息量极低）&quot;</span>)</span><br><span class="line">axes[<span class="number">0</span>].tick_params(axis=<span class="string">&quot;x&quot;</span>, rotation=<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改进后：箱线图，中位数、四分位、异常值一次全出来</span></span><br><span class="line">axes[<span class="number">1</span>].boxplot([df.loc[df[<span class="string">&quot;商品类别&quot;</span>] == c, <span class="string">&quot;销售额&quot;</span>] <span class="keyword">for</span> c <span class="keyword">in</span> order],</span><br><span class="line">                tick_labels=order, showfliers=<span class="literal">False</span>)</span><br><span class="line">axes[<span class="number">1</span>].set_title(<span class="string">&quot;改进后：箱线图（分布 + 异常值）&quot;</span>)</span><br><span class="line">axes[<span class="number">1</span>].tick_params(axis=<span class="string">&quot;x&quot;</span>, rotation=<span class="number">20</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_ba3.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line">plt.close(fig)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;均值:&quot;</span>, [<span class="built_in">round</span>(m) <span class="keyword">for</span> m <span class="keyword">in</span> means])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;中位数:&quot;</span>, [<span class="built_in">round</span>(<span class="built_in">float</span>(df.loc[df[<span class="string">&#x27;商品类别&#x27;</span>] == c, <span class="string">&#x27;销售额&#x27;</span>].median())) <span class="keyword">for</span> c <span class="keyword">in</span> order])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">均值: [1865, 1156, 1073, 972, 944]</span><br><span class="line">中位数: [437, 252, 345, 380, 456]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>看到差别了吗？<strong>均值排序和中位数排序完全不一样</strong> —— 均值被少数大单拉高了。<br>这正是”只画均值”最容易误导人的地方。</p>
+</blockquote>
+<h3 id="对照-4：折线图-→-加参考线与标注"><a href="#对照-4：折线图-→-加参考线与标注" class="headerlink" title="对照 4：折线图 → 加参考线与标注"></a>对照 4：折线图 → 加参考线与标注</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">9</span>, <span class="number">3.8</span>))</span><br><span class="line">m = ts[<span class="string">&quot;每日活跃用户&quot;</span>].resample(<span class="string">&quot;ME&quot;</span>).mean()</span><br><span class="line">ax.plot(m.index, m.values, color=COLORS[<span class="string">&quot;blue&quot;</span>], lw=<span class="number">1.8</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改进：① 参考线给出比较基准 ② 标注点出关键事件 ③ 峰值上直接写数</span></span><br><span class="line">avg = m.mean()</span><br><span class="line">ax.axhline(avg, ls=<span class="string">&quot;--&quot;</span>, color=COLORS[<span class="string">&quot;gray&quot;</span>], lw=<span class="number">1</span>)</span><br><span class="line">ax.text(m.index[<span class="number">0</span>], avg, <span class="string">f&quot; 月均 <span class="subst">&#123;avg:<span class="number">.0</span>f&#125;</span>&quot;</span>, va=<span class="string">&quot;bottom&quot;</span>, fontsize=<span class="number">9</span>,</span><br><span class="line">        color=COLORS[<span class="string">&quot;gray&quot;</span>])</span><br><span class="line">peak = m.idxmax()</span><br><span class="line">ax.scatter([peak], [m.<span class="built_in">max</span>()], s=<span class="number">60</span>, color=COLORS[<span class="string">&quot;red&quot;</span>], zorder=<span class="number">5</span>)</span><br><span class="line">ax.annotate(<span class="string">f&quot;峰值 <span class="subst">&#123;m.<span class="built_in">max</span>():<span class="number">.0</span>f&#125;</span>\n<span class="subst">&#123;peak.strftime(<span class="string">&#x27;%Y-%m&#x27;</span>)&#125;</span>&quot;</span>,</span><br><span class="line">            xy=(peak, m.<span class="built_in">max</span>()), xytext=(-<span class="number">70</span>, <span class="number">25</span>), textcoords=<span class="string">&quot;offset points&quot;</span>,</span><br><span class="line">            fontsize=<span class="number">9</span>, color=COLORS[<span class="string">&quot;red&quot;</span>],</span><br><span class="line">            arrowprops=<span class="built_in">dict</span>(arrowstyle=<span class="string">&quot;-&gt;&quot;</span>, color=COLORS[<span class="string">&quot;red&quot;</span>]))</span><br><span class="line">ax.set_title(<span class="string">&quot;改进后：有基准、有事件、有具体数字&quot;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&quot;日均活跃用户&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_ba4.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line">plt.close(fig)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;峰值:&quot;</span>, peak.strftime(<span class="string">&quot;%Y-%m&quot;</span>), <span class="built_in">round</span>(<span class="built_in">float</span>(m.<span class="built_in">max</span>()), <span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">峰值: 2024-11 1682.1</span><br></pre></td></tr></table></figure>
+
+<h3 id="对照-5：三件”图表规范”小事"><a href="#对照-5：三件”图表规范”小事" class="headerlink" title="对照 5：三件”图表规范”小事"></a>对照 5：三件”图表规范”小事</h3><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>改进前</th>
+<th>改进后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>没有单位</td>
+<td><code>ax.set_ylabel(&quot;销售额&quot;)</code></td>
+<td><code>ax.set_ylabel(&quot;销售额（元）&quot;)</code></td>
+</tr>
+<tr>
+<td>标题太空</td>
+<td><code>ax.set_title(&quot;图1&quot;)</code></td>
+<td><code>ax.set_title(&quot;华南区销售额连续 3 个季度领先&quot;)</code></td>
+</tr>
+<tr>
+<td>图例挡数据</td>
+<td>默认位置压住曲线</td>
+<td><code>ax.legend(loc=&quot;upper left&quot;, frameon=False)</code> 或挪到图外</td>
+</tr>
+<tr>
+<td>x 标签挤成一团</td>
+<td>竖排重叠</td>
+<td><code>ax.tick_params(axis=&quot;x&quot;, rotation=30)</code> 或改 <code>barh</code></td>
+</tr>
+<tr>
+<td>颜色太多</td>
+<td>8 个类别 8 种颜色</td>
+<td>只给”重点类别”上色，其余用灰色</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">9</span>, <span class="number">3.8</span>))</span><br><span class="line">m = ts[<span class="string">&quot;每日活跃用户&quot;</span>].resample(<span class="string">&quot;ME&quot;</span>).mean()</span><br><span class="line"><span class="comment"># 只高亮最高的 3 个月，其余用灰色 —— &quot;注意力管理&quot;是配色最重要的作用</span></span><br><span class="line">thr = m.nlargest(<span class="number">3</span>).<span class="built_in">min</span>()</span><br><span class="line">colors = [COLORS[<span class="string">&quot;red&quot;</span>] <span class="keyword">if</span> v &gt;= thr <span class="keyword">else</span> COLORS[<span class="string">&quot;gray&quot;</span>] <span class="keyword">for</span> v <span class="keyword">in</span> m.values]</span><br><span class="line">ax.bar(m.index, m.values, width=<span class="number">20</span>, color=colors)</span><br><span class="line">ax.set_title(<span class="string">&quot;只给 Top3 上色，其余留灰&quot;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&quot;日均活跃用户&quot;</span>)</span><br><span class="line">fig.tight_layout()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/appendix/_a2_ba5.png&quot;</span>, dpi=<span class="number">110</span>)</span><br><span class="line">plt.close(fig)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Top3 月份:&quot;</span>, [d.strftime(<span class="string">&quot;%Y-%m&quot;</span>) <span class="keyword">for</span> d <span class="keyword">in</span> m.nlargest(<span class="number">3</span>).index])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Top3 月份: [&#x27;2024-11&#x27;, &#x27;2024-06&#x27;, &#x27;2024-12&#x27;]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="A2-7-三套库怎么选"><a href="#A2-7-三套库怎么选" class="headerlink" title="A2.7 三套库怎么选"></a>A2.7 三套库怎么选</h2><table>
+<thead>
+<tr>
+<th>维度</th>
+<th>Matplotlib</th>
+<th>Seaborn</th>
+<th>Plotly</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定位</td>
+<td>底层绘图引擎</td>
+<td>统计图封装（基于 matplotlib）</td>
+<td>交互式图表</td>
+</tr>
+<tr>
+<td>上手难度</td>
+<td>中（要自己控制每个元素）</td>
+<td>低（一行一张图）</td>
+<td>低</td>
+</tr>
+<tr>
+<td>灵活性</td>
+<td><strong>最高</strong>（什么都能改）</td>
+<td>中（复杂自定义要回到 matplotlib）</td>
+<td>中高</td>
+</tr>
+<tr>
+<td>统计功能</td>
+<td>无（要自己算）</td>
+<td><strong>强</strong>（自动分组、置信区间、分面）</td>
+<td>中（有 trendline）</td>
+</tr>
+<tr>
+<td>交互</td>
+<td>无</td>
+<td>无</td>
+<td><strong>强</strong>（缩放&#x2F;悬停&#x2F;图例开关）</td>
+</tr>
+<tr>
+<td>保存为图片</td>
+<td>好（PNG&#x2F;SVG&#x2F;PDF）</td>
+<td>好（就是 matplotlib 的图）</td>
+<td>需要 <code>kaleido</code></td>
+</tr>
+<tr>
+<td>适合</td>
+<td>论文、要精确控制、做模板</td>
+<td>探索性分析、快速出图</td>
+<td>网页、大屏、汇报演示</td>
+</tr>
+</tbody></table>
+<p><strong>实践建议</strong>：</p>
+<ol>
+<li>数据分析阶段（自己看）→ <strong>seaborn</strong>，一行一张，快。</li>
+<li>出报告&#x2F;论文（给别人看）→ <strong>matplotlib</strong>，因为能精确控制字号、边距、配色。</li>
+<li>做演示&#x2F;网页（要动起来）→ <strong>plotly</strong>，<code>write_html</code> 一个文件就能发给别人。</li>
+</ol>
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>两行字体配置（<code>font.sans-serif</code> + <code>axes.unicode_minus</code>）是所有中文图表的前提。</li>
+<li>选图先问”我要表达什么”：比较用柱状、分布用直方&#x2F;箱线、关系用散点、趋势用折线。</li>
+<li>饼图不超过 5 类；柱状图纵轴从 0 开始；分类多于 8 个就排序 + 水平摆放。</li>
+<li><code>plt.subplots</code> 返回的可能是单个 <code>Axes</code>、一维数组或二维数组，先看清楚再索引。</li>
+<li>顺序永远是 <strong>savefig → show → close</strong>，反过来会存出空白图。</li>
+<li><code>dpi</code> 屏幕用 110、报告用 200、印刷用 300，<code>bbox_inches=&quot;tight&quot;</code> 永远开着。</li>
+<li><code>sns.set_theme(font=...)</code> 和 <code>plt.rcParams[&quot;font.sans-serif&quot;]</code> 两个都要设才保险。</li>
+<li>plotly 用 <code>write_html</code> 分享，导出 PNG 需要另装 <code>kaleido</code>。</li>
+<li>配色的作用是<strong>引导注意力</strong>：重点用主色，其余用灰色，而不是”越多颜色越好看”。</li>
+</ul>
+<blockquote>
+<p>相关的两个附录：<strong>A1 pandas 速查表</strong>（怎么把数据算出来）、<strong>A3 版本差异与常见报错手册</strong>（图不显示&#x2F;中文变方块查这里）。</p>
+</blockquote>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/08-machine-learning/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">08 机器学习与数据挖掘</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/a3-errors/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">附录 A3 · 版本差异与常见报错手册</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-2" title="A2.0 开工先做这三件事"><a rel="nofollow" class="trm-toc-link" href="#A2-0-开工先做这三件事"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">A2.0 开工先做这三件事</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A2.0.1 中文字体配置（四种场景，照着抄）"><a rel="nofollow" class="trm-toc-link" href="#A2-0-1-中文字体配置（四种场景，照着抄）"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">A2.0.1 中文字体配置（四种场景，照着抄）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A2.1 图表选型决策表"><a rel="nofollow" class="trm-toc-link" href="#A2-1-图表选型决策表"><span class="trm-toc-number">2.</span> <span class="trm-toc-text">A2.1 图表选型决策表</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="选型的三条硬规则"><a rel="nofollow" class="trm-toc-link" href="#选型的三条硬规则"><span class="trm-toc-number">2.1.</span> <span class="trm-toc-text">选型的三条硬规则</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A2.2 Matplotlib 核心用法"><a rel="nofollow" class="trm-toc-link" href="#A2-2-Matplotlib-核心用法"><span class="trm-toc-number">3.</span> <span class="trm-toc-text">A2.2 Matplotlib 核心用法</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A2.2.1 plt.subplots 参数表"><a rel="nofollow" class="trm-toc-link" href="#A2-2-1-plt-subplots-参数表"><span class="trm-toc-number">3.1.</span> <span class="trm-toc-text">A2.2.1 plt.subplots 参数表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.2.2 常用 ax.* 绘图方法全表"><a rel="nofollow" class="trm-toc-link" href="#A2-2-2-常用-ax-绘图方法全表"><span class="trm-toc-number">3.2.</span> <span class="trm-toc-text">A2.2.2 常用 ax.* 绘图方法全表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.2.3 常用 fig.* 方法"><a rel="nofollow" class="trm-toc-link" href="#A2-2-3-常用-fig-方法"><span class="trm-toc-number">3.3.</span> <span class="trm-toc-text">A2.2.3 常用 fig.* 方法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.2.4 常用 rcParams 全表"><a rel="nofollow" class="trm-toc-link" href="#A2-2-4-常用-rcParams-全表"><span class="trm-toc-number">3.4.</span> <span class="trm-toc-text">A2.2.4 常用 rcParams 全表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.2.5 保存图片参数表"><a rel="nofollow" class="trm-toc-link" href="#A2-2-5-保存图片参数表"><span class="trm-toc-number">3.5.</span> <span class="trm-toc-text">A2.2.5 保存图片参数表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.2.6 其它实用技巧"><a rel="nofollow" class="trm-toc-link" href="#A2-2-6-其它实用技巧"><span class="trm-toc-number">3.6.</span> <span class="trm-toc-text">A2.2.6 其它实用技巧</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A2.3 Seaborn：一行一张统计图"><a rel="nofollow" class="trm-toc-link" href="#A2-3-Seaborn：一行一张统计图"><span class="trm-toc-number">4.</span> <span class="trm-toc-text">A2.3 Seaborn：一行一张统计图</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A2.3.1 sns.set_theme 参数表"><a rel="nofollow" class="trm-toc-link" href="#A2-3-1-sns-set-theme-参数表"><span class="trm-toc-number">4.1.</span> <span class="trm-toc-text">A2.3.1 sns.set_theme 参数表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.3.2 Seaborn 函数总表"><a rel="nofollow" class="trm-toc-link" href="#A2-3-2-Seaborn-函数总表"><span class="trm-toc-number">4.2.</span> <span class="trm-toc-text">A2.3.2 Seaborn 函数总表</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A2.4 Plotly：可交互图表"><a rel="nofollow" class="trm-toc-link" href="#A2-4-Plotly：可交互图表"><span class="trm-toc-number">5.</span> <span class="trm-toc-text">A2.4 Plotly：可交互图表</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A2.4.1 plotly.express 常用函数"><a rel="nofollow" class="trm-toc-link" href="#A2-4-1-plotly-express-常用函数"><span class="trm-toc-number">5.1.</span> <span class="trm-toc-text">A2.4.1 plotly.express 常用函数</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A2.5 配色方案速查"><a rel="nofollow" class="trm-toc-link" href="#A2-5-配色方案速查"><span class="trm-toc-number">6.</span> <span class="trm-toc-text">A2.5 配色方案速查</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A2.5.1 教程统一配色：viz_style.py 的 COLORS &#x2F; PALETTE"><a rel="nofollow" class="trm-toc-link" href="#A2-5-1-教程统一配色：viz-style-py-的-COLORS-PALETTE"><span class="trm-toc-number">6.1.</span> <span class="trm-toc-text">A2.5.1 教程统一配色：viz_style.py 的 COLORS &#x2F; PALETTE</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.5.2 三种色带（cmap）该怎么选"><a rel="nofollow" class="trm-toc-link" href="#A2-5-2-三种色带（cmap）该怎么选"><span class="trm-toc-number">6.2.</span> <span class="trm-toc-text">A2.5.2 三种色带（cmap）该怎么选</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A2.5.3 具名颜色与十六进制"><a rel="nofollow" class="trm-toc-link" href="#A2-5-3-具名颜色与十六进制"><span class="trm-toc-number">6.3.</span> <span class="trm-toc-text">A2.5.3 具名颜色与十六进制</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A2.6 常见图表”改进前后”对照"><a rel="nofollow" class="trm-toc-link" href="#A2-6-常见图表”改进前后”对照"><span class="trm-toc-number">7.</span> <span class="trm-toc-text">A2.6 常见图表”改进前后”对照</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="对照 1：默认饼图 → 排序后的水平柱状图"><a rel="nofollow" class="trm-toc-link" href="#对照-1：默认饼图-→-排序后的水平柱状图"><span class="trm-toc-number">7.1.</span> <span class="trm-toc-text">对照 1：默认饼图 → 排序后的水平柱状图</span></a></li><li class="trm-toc-item trm-toc-level-3" title="对照 2：右偏直方图 → log 变换"><a rel="nofollow" class="trm-toc-link" href="#对照-2：右偏直方图-→-log-变换"><span class="trm-toc-number">7.2.</span> <span class="trm-toc-text">对照 2：右偏直方图 → log 变换</span></a></li><li class="trm-toc-item trm-toc-level-3" title="对照 3：均值柱状图 → 箱线图（暴露被掩盖的分布）"><a rel="nofollow" class="trm-toc-link" href="#对照-3：均值柱状图-→-箱线图（暴露被掩盖的分布）"><span class="trm-toc-number">7.3.</span> <span class="trm-toc-text">对照 3：均值柱状图 → 箱线图（暴露被掩盖的分布）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="对照 4：折线图 → 加参考线与标注"><a rel="nofollow" class="trm-toc-link" href="#对照-4：折线图-→-加参考线与标注"><span class="trm-toc-number">7.4.</span> <span class="trm-toc-text">对照 4：折线图 → 加参考线与标注</span></a></li><li class="trm-toc-item trm-toc-level-3" title="对照 5：三件”图表规范”小事"><a rel="nofollow" class="trm-toc-link" href="#对照-5：三件”图表规范”小事"><span class="trm-toc-number">7.5.</span> <span class="trm-toc-text">对照 5：三件”图表规范”小事</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A2.7 三套库怎么选"><a rel="nofollow" class="trm-toc-link" href="#A2-7-三套库怎么选"><span class="trm-toc-number">8.</span> <span class="trm-toc-text">A2.7 三套库怎么选</span></a></li><li class="trm-toc-item trm-toc-level-2" title="小结"><a rel="nofollow" class="trm-toc-link" href="#小结"><span class="trm-toc-number">9.</span> <span class="trm-toc-text">小结</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

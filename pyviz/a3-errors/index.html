@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/pyviz/a3-errors/">
+<meta name="description" content="在这个环境里遇到报错，先来这里搜。全部内容都是在本机 pyviz 环境（Python 3.11.16 &#x2F; pandas 3.0.6）上实际触发过的，报错原文是真的，不是抄来的。   本机环境版本（先记住这个）   库 版本 备注    Python 3.11.16 conda 环境 pyviz   pandas 3.0.6 ⚠️ 比多数教材的 1.x&#x2F;2.x 新一个大版本，有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="附录 A3 · 版本差异与常见报错手册">
+<meta property="og:url" content="https://blog.tdcqcx.cn/pyviz/a3-errors/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="在这个环境里遇到报错，先来这里搜。全部内容都是在本机 pyviz 环境（Python 3.11.16 &#x2F; pandas 3.0.6）上实际触发过的，报错原文是真的，不是抄来的。   本机环境版本（先记住这个）   库 版本 备注    Python 3.11.16 conda 环境 pyviz   pandas 3.0.6 ⚠️ 比多数教材的 1.x&#x2F;2.x 新一个大版本，有">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="数据分析与可视化">
+<meta property="article:tag" content="常见报错">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Python 数据分析, 数据可视化, 附录 A3 · 版本差异与常见报错手册, Pandas, NumPy, Matplotlib, 教程">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"附录 A3 · 版本差异与常见报错手册","datePublished":"2026-09-26T02:00:00.000Z","dateModified":"2026-09-26T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/pyviz/a3-errors/","image":"https://blog.tdcqcx.cn/post-covers/pyviz.jpg"}
+</script>
+
+
+<title >附录 A3 · 版本差异与常见报错手册</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-26 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/pyviz.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/pyviz.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            附录 A3 · 版本差异与常见报错手册
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            附录 A3 · 版本差异与常见报错手册
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        pyviz
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/26
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <blockquote>
+<p>在这个环境里遇到报错，<strong>先来这里搜</strong>。<br>全部内容都是在本机 <code>pyviz</code> 环境（Python 3.11.16 &#x2F; pandas 3.0.6）上<strong>实际触发过</strong>的，<br>报错原文是真的，不是抄来的。</p>
+</blockquote>
+<hr>
+<h2 id="本机环境版本（先记住这个）"><a href="#本机环境版本（先记住这个）" class="headerlink" title="本机环境版本（先记住这个）"></a>本机环境版本（先记住这个）</h2><table>
+<thead>
+<tr>
+<th>库</th>
+<th>版本</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Python</td>
+<td><strong>3.11.16</strong></td>
+<td>conda 环境 <code>pyviz</code></td>
+</tr>
+<tr>
+<td><strong>pandas</strong></td>
+<td><strong>3.0.6</strong></td>
+<td>⚠️ 比多数教材的 1.x&#x2F;2.x 新一个大版本，有破坏性变更</td>
+</tr>
+<tr>
+<td>numpy</td>
+<td>2.4.6</td>
+<td></td>
+</tr>
+<tr>
+<td>matplotlib</td>
+<td>3.11.2</td>
+<td></td>
+</tr>
+<tr>
+<td>seaborn</td>
+<td>0.13.2</td>
+<td></td>
+</tr>
+<tr>
+<td>scikit-learn</td>
+<td>1.9.1</td>
+<td></td>
+</tr>
+<tr>
+<td>statsmodels</td>
+<td>0.15.0</td>
+<td></td>
+</tr>
+<tr>
+<td>plotly</td>
+<td>7.1.0</td>
+<td></td>
+</tr>
+<tr>
+<td>mlxtend</td>
+<td>0.25.0</td>
+<td></td>
+</tr>
+<tr>
+<td>pyarrow</td>
+<td>25.0.1</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>排查任何问题的第一步</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys, pandas <span class="keyword">as</span> pd, numpy <span class="keyword">as</span> np, matplotlib, sklearn</span><br><span class="line"><span class="built_in">print</span>(sys.version)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;pandas&quot;</span>, pd.__version__, <span class="string">&quot;| numpy&quot;</span>, np.__version__,</span><br><span class="line">      <span class="string">&quot;| matplotlib&quot;</span>, matplotlib.__version__, <span class="string">&quot;| sklearn&quot;</span>, sklearn.__version__)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3.11.16 (main, ...) [MSC v.1938 64 bit (AMD64)]</span><br><span class="line">pandas 3.0.6 | numpy 2.4.6 | matplotlib 3.11.2 | sklearn 1.9.1</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="一、pandas-3-0-破坏性变更（最容易踩，务必看）"><a href="#一、pandas-3-0-破坏性变更（最容易踩，务必看）" class="headerlink" title="一、pandas 3.0 破坏性变更（最容易踩，务必看）"></a>一、pandas 3.0 破坏性变更（最容易踩，务必看）</h2><h3 id="1-1-resample-M-已废弃-→-用-ME"><a href="#1-1-resample-M-已废弃-→-用-ME" class="headerlink" title="1.1 resample(&quot;M&quot;) 已废弃 → 用 &quot;ME&quot;"></a>1.1 <code>resample(&quot;M&quot;)</code> 已废弃 → 用 <code>&quot;ME&quot;</code></h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValueError: Invalid frequency: M. Failed to parse with error message:</span><br><span class="line">ValueError(&quot;&#x27;M&#x27; is no longer supported for offsets. Please use &#x27;ME&#x27; instead.&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：pandas 3.0 重新定义了所有频率别名的语义，月末从 <code>M</code> 改成 <code>ME</code>（Month End）。</p>
+<p><strong>完整变更对照表</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>想要</th>
+<th>✅ pandas 3.0</th>
+<th>❌ 旧写法（报错）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>月末</td>
+<td><code>&quot;ME&quot;</code></td>
+<td><code>&quot;M&quot;</code></td>
+</tr>
+<tr>
+<td>月初</td>
+<td><code>&quot;MS&quot;</code></td>
+<td><code>&quot;MS&quot;</code>（没变）</td>
+</tr>
+<tr>
+<td>季末</td>
+<td><code>&quot;QE&quot;</code></td>
+<td><code>&quot;Q&quot;</code></td>
+</tr>
+<tr>
+<td>季初</td>
+<td><code>&quot;QS&quot;</code></td>
+<td><code>&quot;QS&quot;</code>（没变）</td>
+</tr>
+<tr>
+<td>年末</td>
+<td><code>&quot;YE&quot;</code></td>
+<td><code>&quot;Y&quot;</code> &#x2F; <code>&quot;A&quot;</code></td>
+</tr>
+<tr>
+<td>年初</td>
+<td><code>&quot;YS&quot;</code></td>
+<td><code>&quot;YS&quot;</code>（没变）</td>
+</tr>
+<tr>
+<td>周</td>
+<td><code>&quot;W&quot;</code></td>
+<td><code>&quot;W&quot;</code>（没变）</td>
+</tr>
+<tr>
+<td>日</td>
+<td><code>&quot;D&quot;</code></td>
+<td><code>&quot;D&quot;</code>（没变）</td>
+</tr>
+<tr>
+<td>小时</td>
+<td><code>&quot;h&quot;</code></td>
+<td><code>&quot;H&quot;</code>（大写已废弃）</td>
+</tr>
+</tbody></table>
+<p><strong>怎么改</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, parse_dates=[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line">ts = df.set_index(<span class="string">&quot;订单日期&quot;</span>).sort_index()</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 正确</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;月末:&quot;</span>, <span class="built_in">len</span>(ts[<span class="string">&quot;销售额&quot;</span>].resample(<span class="string">&quot;ME&quot;</span>).<span class="built_in">sum</span>()), <span class="string">&quot;个月&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;季末:&quot;</span>, <span class="built_in">len</span>(ts[<span class="string">&quot;销售额&quot;</span>].resample(<span class="string">&quot;QE&quot;</span>).<span class="built_in">sum</span>()), <span class="string">&quot;个季度&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;年末:&quot;</span>, <span class="built_in">len</span>(ts[<span class="string">&quot;销售额&quot;</span>].resample(<span class="string">&quot;YE&quot;</span>).<span class="built_in">sum</span>()), <span class="string">&quot;年&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 另一种更稳的写法（语义更清楚，不依赖别名）</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Grouper:&quot;</span>, <span class="built_in">len</span>(df.groupby(pd.Grouper(key=<span class="string">&quot;订单日期&quot;</span>, freq=<span class="string">&quot;ME&quot;</span>))))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">月末: 24 个月</span><br><span class="line">季末: 8 个季度</span><br><span class="line">年末: 2 年</span><br><span class="line">Grouper: 24</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1-2-DataFrame-applymap-被彻底移除-→-用-DataFrame-map"><a href="#1-2-DataFrame-applymap-被彻底移除-→-用-DataFrame-map" class="headerlink" title="1.2 DataFrame.applymap 被彻底移除 → 用 DataFrame.map"></a>1.2 <code>DataFrame.applymap</code> 被彻底移除 → 用 <code>DataFrame.map</code></h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: &#x27;DataFrame&#x27; object has no attribute &#x27;applymap&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修复</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>)</span><br><span class="line">sub = df[[<span class="string">&quot;单价&quot;</span>, <span class="string">&quot;数量&quot;</span>]].head(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ df.applymap(...)  → AttributeError</span></span><br><span class="line"><span class="comment"># ✅ 改成 df.map(...)</span></span><br><span class="line"><span class="built_in">print</span>(sub.<span class="built_in">map</span>(<span class="keyword">lambda</span> v: <span class="built_in">round</span>(v, <span class="number">1</span>)).to_string())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">     单价  数量</span><br><span class="line">0   800.0   1</span><br><span class="line">1  4911.5   8</span><br><span class="line">2   833.1   3</span><br></pre></td></tr></table></figure>
+
+<p><strong>三个方法的区别（别搞混）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用范围</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Series.map(f)</code></td>
+<td>每个<strong>值</strong></td>
+<td>一直是这个作用，没变</td>
+</tr>
+<tr>
+<td><code>DataFrame.map(f)</code></td>
+<td>每个<strong>元素</strong></td>
+<td>pandas 2.1 新增，<strong>替代 applymap</strong></td>
+</tr>
+<tr>
+<td><code>DataFrame.apply(f, axis=)</code></td>
+<td>每<strong>行</strong>或每<strong>列</strong></td>
+<td>一直没变</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="1-3-fillna-method-被移除-→-用-ffill-bfill"><a href="#1-3-fillna-method-被移除-→-用-ffill-bfill" class="headerlink" title="1.3 fillna(method=...) 被移除 → 用 ffill() &#x2F; bfill()"></a>1.3 <code>fillna(method=...)</code> 被移除 → 用 <code>ffill()</code> &#x2F; <code>bfill()</code></h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: NDFrame.fillna() got an unexpected keyword argument &#x27;method&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>修复</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">s = pd.read_csv(<span class="string">&quot;../data/students.csv&quot;</span>)[<span class="string">&quot;每周自习小时&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ s.fillna(method=&quot;ffill&quot;)   → TypeError</span></span><br><span class="line"><span class="comment"># ✅ 用独立方法</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;ffill 后还有缺失:&quot;</span>, s.ffill().isna().<span class="built_in">sum</span>())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;bfill 后还有缺失:&quot;</span>, s.bfill().isna().<span class="built_in">sum</span>())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;插值后还有缺失:  &quot;</span>, s.interpolate().isna().<span class="built_in">sum</span>())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;用中位数填:      &quot;</span>, s.fillna(s.median()).isna().<span class="built_in">sum</span>())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ffill 后还有缺失: 0</span><br><span class="line">bfill 后还有缺失: 0</span><br><span class="line">插值后还有缺失:   0</span><br><span class="line">用中位数填:       0</span><br></pre></td></tr></table></figure>
+
+<p><strong>新旧对照</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>旧写法</th>
+<th>新写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>s.fillna(method=&quot;ffill&quot;)</code></td>
+<td><code>s.ffill()</code></td>
+</tr>
+<tr>
+<td><code>s.fillna(method=&quot;bfill&quot;)</code></td>
+<td><code>s.bfill()</code></td>
+</tr>
+<tr>
+<td><code>s.fillna(method=&quot;pad&quot;)</code></td>
+<td><code>s.ffill()</code></td>
+</tr>
+<tr>
+<td><code>s.fillna(method=&quot;backfill&quot;)</code></td>
+<td><code>s.bfill()</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="1-4-字符串列的-dtype-从-object-变成了-str"><a href="#1-4-字符串列的-dtype-从-object-变成了-str" class="headerlink" title="1.4 字符串列的 dtype 从 object 变成了 str"></a>1.4 字符串列的 dtype 从 <code>object</code> 变成了 <code>str</code></h3><p><strong>症状</strong>：<code>df.select_dtypes(&quot;object&quot;)</code> <strong>返回空表</strong>。</p>
+<p><strong>原因</strong>：pandas 3.0 引入了真正的字符串类型 <code>str</code>（以前字符串都存成通用 <code>object</code>）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;dtypes 里的字符串列:&quot;</span>, df[<span class="string">&quot;城市&quot;</span>].dtype)</span><br><span class="line"><span class="built_in">print</span>()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;select_dtypes(&#x27;object&#x27;) 选到几列:&quot;</span>, df.select_dtypes(<span class="string">&quot;object&quot;</span>).shape[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;select_dtypes(include=&#x27;str&#x27;) 选到几列:&quot;</span>, df.select_dtypes(include=<span class="string">&quot;str&quot;</span>).shape[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;select_dtypes(&#x27;number&#x27;) 选到几列:&quot;</span>, df.select_dtypes(<span class="string">&quot;number&quot;</span>).shape[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;同时选字符串和类别:&quot;</span>, df.select_dtypes(include=[<span class="string">&quot;str&quot;</span>, <span class="string">&quot;category&quot;</span>]).shape[<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dtypes 里的字符串列: str</span><br><span class="line"></span><br><span class="line">select_dtypes(&#x27;object&#x27;) 选到几列: 0</span><br><span class="line">select_dtypes(include=&#x27;str&#x27;) 选到几列: 8</span><br><span class="line">select_dtypes(&#x27;number&#x27;) 选到几列: 5</span><br><span class="line">同时选字符串和类别: 8</span><br></pre></td></tr></table></figure>
+
+<p><strong>迁移建议</strong>：把代码里所有 <code>select_dtypes(&quot;object&quot;)</code> 换成 <code>select_dtypes(include=&quot;str&quot;)</code>，<br>或者更稳的 <code>select_dtypes(exclude=&quot;number&quot;)</code>。</p>
+<hr>
+<h3 id="1-5-Copy-on-Write-已强制开启且无法关闭"><a href="#1-5-Copy-on-Write-已强制开启且无法关闭" class="headerlink" title="1.5 Copy-on-Write 已强制开启且无法关闭"></a>1.5 Copy-on-Write 已强制开启且无法关闭</h3><p><strong>变化</strong>：以前”切片后赋值可能改到原表”这个坑，在 3.0 里被彻底堵住了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切片得到的结果是独立的，改它不会影响原表</span></span><br><span class="line">sub = df[df[<span class="string">&quot;销售额&quot;</span>] &gt; <span class="number">5000</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;切片结果行数:&quot;</span>, <span class="built_in">len</span>(sub))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 想改就显式 copy</span></span><br><span class="line">sub2 = sub.copy()</span><br><span class="line">sub2[<span class="string">&quot;城市&quot;</span>] = <span class="string">&quot;测试城市&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n原表第一行城市:&quot;</span>, df[<span class="string">&quot;城市&quot;</span>].iloc[<span class="number">0</span>], <span class="string">&quot;（没被改动）&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;副本第一行城市:&quot;</span>, sub2[<span class="string">&quot;城市&quot;</span>].iloc[<span class="number">0</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">切片结果行数: 72</span><br><span class="line"></span><br><span class="line">原表第一行城市: 杭州 （没被改动）</span><br><span class="line">副本第一行城市: 测试城市</span><br></pre></td></tr></table></figure>
+
+<p><strong>顺带一提</strong>：<code>pd.options.mode.copy_on_write</code> 这个开关已经废弃，<strong>设置它会报警告</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> warnings.catch_warnings(record=<span class="literal">True</span>) <span class="keyword">as</span> w:</span><br><span class="line">    warnings.simplefilter(<span class="string">&quot;always&quot;</span>)</span><br><span class="line">    pd.options.mode.copy_on_write = <span class="literal">True</span></span><br><span class="line">    msgs = [<span class="built_in">str</span>(x.message) <span class="keyword">for</span> x <span class="keyword">in</span> w <span class="keyword">if</span> <span class="string">&quot;copy_on_write&quot;</span> <span class="keyword">in</span> <span class="built_in">str</span>(x.message).lower()]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;设置 copy_on_write 触发的警告数:&quot;</span>, <span class="built_in">len</span>(msgs))</span><br><span class="line"><span class="keyword">if</span> msgs:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;警告内容片段:&quot;</span>, msgs[<span class="number">0</span>][:<span class="number">110</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n当前实际值:&quot;</span>, pd.options.mode.copy_on_write)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">设置 copy_on_write 触发的警告数: 1</span><br><span class="line">警告内容片段: The &#x27;mode.copy_on_write&#x27; option is deprecated. Copy-on-Write can no longer be disabled (it is always enabled with pandas &gt;= 3.0), and setting the option has no impact.</span><br><span class="line"></span><br><span class="line">当前实际值: True</span><br></pre></td></tr></table></figure>
+
+<p><strong>结论</strong>：<strong>不要再写 <code>pd.options.mode.copy_on_write = True</code> 了</strong>，它是默认且不可改的。</p>
+<hr>
+<h3 id="1-6-pd-to-datetime-混合格式必须显式声明"><a href="#1-6-pd-to-datetime-混合格式必须显式声明" class="headerlink" title="1.6 pd.to_datetime 混合格式必须显式声明"></a>1.6 <code>pd.to_datetime</code> 混合格式必须显式声明</h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ValueError: time data &quot;2024/08/19&quot; doesn&#x27;t match format &quot;%Y-%m-%d&quot;. You might want to try:</span><br><span class="line">    - passing `format` if your strings have a consistent format;</span><br><span class="line">    - passing `format=&#x27;ISO8601&#x27;` if your strings are all ISO8601 but not necessarily in exactly the same format;</span><br><span class="line">    - passing `format=&#x27;mixed&#x27;`, and the format will be inferred for each element individually.</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：pandas 3.0 不再逐行猜测日期格式（太慢且掩盖数据问题）。</p>
+<p><strong>修复</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales.csv&quot;</span>)     <span class="comment"># 脏数据，日期有 3 种格式</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ 直接 to_datetime 会报错</span></span><br><span class="line"><span class="comment"># ✅ 分两步</span></span><br><span class="line">df[<span class="string">&quot;订单日期&quot;</span>] = (df[<span class="string">&quot;订单日期&quot;</span>].astype(<span class="built_in">str</span>)</span><br><span class="line">              .<span class="built_in">str</span>.replace(<span class="string">&quot;年&quot;</span>, <span class="string">&quot;-&quot;</span>, regex=<span class="literal">False</span>)</span><br><span class="line">              .<span class="built_in">str</span>.replace(<span class="string">&quot;月&quot;</span>, <span class="string">&quot;-&quot;</span>, regex=<span class="literal">False</span>)</span><br><span class="line">              .<span class="built_in">str</span>.replace(<span class="string">&quot;日&quot;</span>, <span class="string">&quot;&quot;</span>, regex=<span class="literal">False</span>))</span><br><span class="line">df[<span class="string">&quot;订单日期&quot;</span>] = pd.to_datetime(df[<span class="string">&quot;订单日期&quot;</span>], <span class="built_in">format</span>=<span class="string">&quot;mixed&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;解析成功:&quot;</span>, df[<span class="string">&quot;订单日期&quot;</span>].dtype, <span class="string">&quot;| 失败数:&quot;</span>, df[<span class="string">&quot;订单日期&quot;</span>].isna().<span class="built_in">sum</span>())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">解析成功: datetime64[us] | 失败数: 0</span><br></pre></td></tr></table></figure>
+
+<p><strong>读 CSV 时的对应参数</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 单一时用 parse_dates 就够</span></span><br><span class="line">df1 = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, parse_dates=[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;单格式:&quot;</span>, df1[<span class="string">&quot;订单日期&quot;</span>].dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 混合格式要加 date_format=&quot;mixed&quot;</span></span><br><span class="line">df2 = pd.read_csv(<span class="string">&quot;../data/sales.csv&quot;</span>, usecols=[<span class="string">&quot;订单编号&quot;</span>, <span class="string">&quot;订单日期&quot;</span>, <span class="string">&quot;销售额&quot;</span>],</span><br><span class="line">                  nrows=<span class="number">200</span>, date_format=<span class="string">&quot;mixed&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;混合格式:&quot;</span>, df2[<span class="string">&quot;订单日期&quot;</span>].dtype)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">单格式: datetime64[us]</span><br><span class="line">混合格式: str</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ 第二个例子里 <code>订单日期</code> 仍是 <code>str</code>，因为<strong>中文年月日格式连 <code>mixed</code> 也解析不了</strong>。<br>所以有中文日期时，<strong>必须先替换字符再 <code>to_datetime</code></strong>。</p>
+</blockquote>
+<hr>
+<h3 id="1-7-float-object-has-no-attribute-round"><a href="#1-7-float-object-has-no-attribute-round" class="headerlink" title="1.7 &#39;float&#39; object has no attribute &#39;round&#39;"></a>1.7 <code>&#39;float&#39; object has no attribute &#39;round&#39;</code></h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AttributeError: &#x27;float&#x27; object has no attribute &#x27;round&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：<code>Series.rank(pct=True).max()</code> 返回的是 <strong>Python 原生 float</strong>，不是 numpy 标量。<br>原生 float <strong>没有 <code>.round()</code> 方法</strong>（那是 numpy 才有的）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>)</span><br><span class="line">x = df[<span class="string">&quot;销售额&quot;</span>].rank(pct=<span class="literal">True</span>).<span class="built_in">max</span>()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;类型:&quot;</span>, <span class="built_in">type</span>(x).__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ x.round(3)  → AttributeError</span></span><br><span class="line"><span class="comment"># ✅ 两种改法</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;round(float(x), 3) =&quot;</span>, <span class="built_in">round</span>(<span class="built_in">float</span>(x), <span class="number">3</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;round(x, 3)        =&quot;</span>, <span class="built_in">round</span>(x, <span class="number">3</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># numpy 标量则有 .round()</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">y = np.float64(<span class="number">1.23456</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;numpy 标量可以 .round():&quot;</span>, y.<span class="built_in">round</span>(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">类型: float</span><br><span class="line">round(float(x), 3) = 1.0</span><br><span class="line">round(x, 3)        = 1.0</span><br><span class="line">numpy 标量可以 .round(): 1.235</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="1-8-其他已移除的老-API"><a href="#1-8-其他已移除的老-API" class="headerlink" title="1.8 其他已移除的老 API"></a>1.8 其他已移除的老 API</h3><table>
+<thead>
+<tr>
+<th>老写法</th>
+<th>状态</th>
+<th>新写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>df.append(other)</code></td>
+<td>早已移除</td>
+<td><code>pd.concat([df, other])</code></td>
+</tr>
+<tr>
+<td><code>df.iteritems()</code></td>
+<td>已移除</td>
+<td><code>df.items()</code></td>
+</tr>
+<tr>
+<td><code>pd.is_categorical_dtype(x)</code></td>
+<td>已移除</td>
+<td><code>isinstance(x.dtype, pd.CategoricalDtype)</code></td>
+</tr>
+<tr>
+<td><code>pd.is_sparse(x)</code></td>
+<td>已移除</td>
+<td><code>isinstance(x.dtype, pd.SparseDtype)</code></td>
+</tr>
+<tr>
+<td><code>df.inplace=True</code> 的各种方法</td>
+<td>逐步废弃</td>
+<td>重新赋值（<code>df = df.dropna()</code>）</td>
+</tr>
+<tr>
+<td><code>Series.append</code></td>
+<td>已移除</td>
+<td><code>pd.concat</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">5</span>)</span><br><span class="line"><span class="comment"># ❌ df.iteritems() → AttributeError</span></span><br><span class="line"><span class="comment"># ✅</span></span><br><span class="line"><span class="keyword">for</span> col, series <span class="keyword">in</span> df.items():</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;df.items() 可用，列数:&quot;</span>, <span class="built_in">len</span>(<span class="built_in">list</span>(df.items())))</span><br><span class="line"></span><br><span class="line"><span class="comment"># inplace 虽然多数还能用，但推荐重新赋值</span></span><br><span class="line">d = df.copy()</span><br><span class="line">d2 = d.dropna()              <span class="comment"># ✅ 推荐</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;重新赋值写法没问题:&quot;</span>, d2.shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df.items() 可用，列数: 14</span><br><span class="line">重新赋值写法没问题: (5, 14)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、环境与导入类报错"><a href="#二、环境与导入类报错" class="headerlink" title="二、环境与导入类报错"></a>二、环境与导入类报错</h2><h3 id="2-1-ModuleNotFoundError-No-module-named-pandas"><a href="#2-1-ModuleNotFoundError-No-module-named-pandas" class="headerlink" title="2.1 ModuleNotFoundError: No module named &#39;pandas&#39;"></a>2.1 <code>ModuleNotFoundError: No module named &#39;pandas&#39;</code></h3><p><strong>原因</strong>：<strong>九成是因为 conda 环境没激活</strong>，用的是系统 Python。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前用的是哪个 Python</span></span><br><span class="line">python <span class="literal">-c</span> <span class="string">&quot;import sys; print(sys.executable)&quot;</span></span><br><span class="line"><span class="comment"># 如果输出 D:\python\python.exe 或 C:\...\Python313\...，说明环境不对</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确做法</span></span><br><span class="line">conda activate pyviz</span><br><span class="line">python <span class="literal">-c</span> <span class="string">&quot;import sys; print(sys.executable)&quot;</span></span><br><span class="line"><span class="comment"># 应该输出 D:\conda\miniconda3\envs\pyviz\python.exe</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-conda-不是内部或外部命令"><a href="#2-2-conda-不是内部或外部命令" class="headerlink" title="2.2 &#39;conda&#39; 不是内部或外部命令"></a>2.2 <code>&#39;conda&#39; 不是内部或外部命令</code></h3><p><strong>原因</strong>：用的是普通 cmd&#x2F;PowerShell，没有加载 conda 初始化脚本。</p>
+<p><strong>解决</strong>（任选一个）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方案1：改用 &quot;Anaconda Prompt&quot;（开始菜单里搜）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 方案2：在 PowerShell 里先执行一次初始化</span></span><br><span class="line">&amp; D:\conda\miniconda3\shell\condabin\conda<span class="literal">-hook</span>.ps1</span><br><span class="line">conda activate pyviz</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-FileNotFoundError-Errno-2-No-such-file-or-directory-data-xxx-csv"><a href="#2-3-FileNotFoundError-Errno-2-No-such-file-or-directory-data-xxx-csv" class="headerlink" title="2.3 FileNotFoundError: [Errno 2] No such file or directory: &#39;../data/xxx.csv&#39;"></a>2.3 <code>FileNotFoundError: [Errno 2] No such file or directory: &#39;../data/xxx.csv&#39;</code></h3><p><strong>这是初学者最高频的错误</strong>，没有之一。</p>
+<p><strong>原因</strong>：<strong>当前工作目录不对</strong>。教程假设你在 <code>code</code> 目录启动 Jupyter。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 诊断第一步：打印当前工作目录</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;当前目录:&quot;</span>, os.getcwd())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n当前目录下有什么:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> <span class="built_in">sorted</span>(os.listdir(<span class="string">&quot;.&quot;</span>))[:<span class="number">15</span>]:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;  &quot;</span>, f)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n上一级目录有什么:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> <span class="built_in">sorted</span>(os.listdir(<span class="string">&quot;..&quot;</span>))[:<span class="number">15</span>]:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;  &quot;</span>, f)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">当前目录: &lt;教程目录&gt;\code</span><br><span class="line"></span><br><span class="line">当前目录下有什么:</span><br><span class="line">   _test</span><br><span class="line">   check_fences.py</span><br><span class="line">   gen_data.py</span><br><span class="line">   mark_timing_blocks.py</span><br><span class="line">   normalize_blocks.py</span><br><span class="line">   probe.py</span><br><span class="line">   probe2.py</span><br><span class="line">   probe3.py</span><br><span class="line">   verify_docs.py</span><br><span class="line">   viz_style.py</span><br><span class="line"></span><br><span class="line">上一级目录有什么:</span><br><span class="line">   00_学习路径总览.md</span><br><span class="line">   01_数据分析概念.md</span><br><span class="line">   ...</span><br><span class="line">   appendix</span><br><span class="line">   code</span><br><span class="line">   data</span><br></pre></td></tr></table></figure>
+
+<p><strong>解决</strong>：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 启动 Jupyter 前先切目录</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;&lt;教程目录&gt;\code&quot;</span></span><br><span class="line">jupyter lab</span><br></pre></td></tr></table></figure>
+
+<p>或者在 notebook 里临时切：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># 临时切到 code 目录（路径按自己的实际情况改）</span></span><br><span class="line">target = <span class="string">r&quot;&lt;教程目录&gt;\code&quot;</span></span><br><span class="line"><span class="keyword">if</span> os.path.basename(os.getcwd()) != <span class="string">&quot;code&quot;</span>:</span><br><span class="line">    os.chdir(target)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;现在目录:&quot;</span>, os.getcwd())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;能找到数据目录吗:&quot;</span>, os.path.exists(<span class="string">&quot;../data&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">现在目录: &lt;教程目录&gt;\code</span><br><span class="line">能找到数据目录吗: True</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong>一个更省心的做法：用绝对路径写一个配置</strong>。<br>在你自己的项目里，可以把数据目录定义成一个常量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</span><br><span class="line">DATA = Path(<span class="string">r&quot;&lt;教程目录&gt;\data&quot;</span>)</span><br><span class="line">df = pd.read_csv(DATA / <span class="string">&quot;sales_clean.csv&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>这样无论从哪里运行都不会错。<strong>代价是脚本不能直接给别人用</strong>，<br>所以正式项目里还是推荐用相对路径 + 规范的工作目录。</p>
+</blockquote>
+<h3 id="2-4-UnicodeDecodeError-utf-8-codec-can-t-decode-byte-0xb6"><a href="#2-4-UnicodeDecodeError-utf-8-codec-can-t-decode-byte-0xb6" class="headerlink" title="2.4 UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xb6"></a>2.4 <code>UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xb6</code></h3><p><strong>原因</strong>：文件不是 UTF-8 编码（多半是 GBK）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 依次尝试几种编码</span></span><br><span class="line"><span class="keyword">for</span> enc <span class="keyword">in</span> [<span class="string">&quot;utf-8&quot;</span>, <span class="string">&quot;utf-8-sig&quot;</span>, <span class="string">&quot;gbk&quot;</span>, <span class="string">&quot;gb18030&quot;</span>]:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        d = pd.read_csv(<span class="string">&quot;../data/sales_gbk.csv&quot;</span>, encoding=enc, nrows=<span class="number">3</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;enc:<span class="number">10</span>&#125;</span> 成功   城市列 = <span class="subst">&#123;d[<span class="string">&#x27;城市&#x27;</span>].tolist()&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;enc:<span class="number">10</span>&#125;</span> 失败   <span class="subst">&#123;<span class="built_in">type</span>(e).__name__&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">utf-8      失败   UnicodeDecodeError</span><br><span class="line">utf-8-sig  失败   UnicodeDecodeError</span><br><span class="line">gbk        成功   城市列 = [&#x27;杭州&#x27;, &#x27;上海&#x27;, &#x27;成都&#x27;]</span><br><span class="line">gb18030    成功   城市列 = [&#x27;杭州&#x27;, &#x27;上海&#x27;, &#x27;成都&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>中文编码速查</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>用哪个</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Excel 导出的 CSV</td>
+<td><code>encoding=&quot;utf-8-sig&quot;</code></td>
+</tr>
+<tr>
+<td>老软件&#x2F;国标导出的 CSV</td>
+<td><code>encoding=&quot;gbk&quot;</code> 或 <code>&quot;gb18030&quot;</code></td>
+</tr>
+<tr>
+<td>自己写出的 CSV（要给别人用 Excel 打开）</td>
+<td><code>encoding=&quot;utf-8-sig&quot;</code></td>
+</tr>
+<tr>
+<td>网页内容</td>
+<td><code>resp.encoding = resp.apparent_encoding</code></td>
+</tr>
+</tbody></table>
+<h3 id="2-5-首列名前面带-ufeff（BOM-问题）"><a href="#2-5-首列名前面带-ufeff（BOM-问题）" class="headerlink" title="2.5 首列名前面带 \ufeff（BOM 问题）"></a>2.5 首列名前面带 <code>\ufeff</code>（BOM 问题）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用错误编码读</span></span><br><span class="line">bad = pd.read_csv(<span class="string">&quot;../data/sales.csv&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>, nrows=<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;错误编码读到的第一列名:&quot;</span>, <span class="built_in">repr</span>(bad.columns[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 正确编码</span></span><br><span class="line">good = pd.read_csv(<span class="string">&quot;../data/sales.csv&quot;</span>, encoding=<span class="string">&quot;utf-8-sig&quot;</span>, nrows=<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;正确编码读到的第一列名:&quot;</span>, <span class="built_in">repr</span>(good.columns[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 症状：这样写会报 KeyError</span></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    _ = bad[<span class="string">&quot;订单编号&quot;</span>]</span><br><span class="line"><span class="keyword">except</span> KeyError <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;\n报错:&quot;</span>, <span class="built_in">str</span>(e)[:<span class="number">60</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">错误编码读到的第一列名: &#x27;\ufeff订单编号&#x27;</span><br><span class="line">正确编码读到的第一列名: &#x27;订单编号&#x27;</span><br><span class="line"></span><br><span class="line">报错: &#x27;订单编号&#x27;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong><code>utf-8-sig</code> 是安全的万能选择</strong>：文件带 BOM 时它会去掉，<br>不带 BOM 时它等价于 <code>utf-8</code>。<strong>中文 CSV 一律用它。</strong></p>
+</blockquote>
+<h3 id="2-6-sklearn-在线数据集下载失败"><a href="#2-6-sklearn-在线数据集下载失败" class="headerlink" title="2.6 sklearn 在线数据集下载失败"></a>2.6 sklearn 在线数据集下载失败</h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTPError: HTTP Error 403: Forbidden</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">URLError: &lt;urlopen error [Errno 11004] getaddrinfo failed&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：<code>fetch_california_housing()</code>、<code>fetch_openml()</code> 等函数要联网下载，<br>在国内常被墙或超时。</p>
+<p><strong>解决</strong>：<strong>用本地 CSV</strong>（本教程的准备 <code>data/</code> 目录里已经有）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ from sklearn.datasets import fetch_california_housing</span></span><br><span class="line"><span class="comment">#    d = fetch_california_housing()   → 可能 403</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 用本地文件</span></span><br><span class="line">house = pd.read_csv(<span class="string">&quot;../data/california_housing.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;本地房价数据:&quot;</span>, house.shape)</span><br><span class="line"></span><br><span class="line">titanic = pd.read_csv(<span class="string">&quot;../data/titanic.csv&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;本地泰坦尼克:&quot;</span>, titanic.shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">本地房价数据: (20640, 10)</span><br><span class="line">本地泰坦尼克: (891, 12)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、pandas-使用类报错"><a href="#三、pandas-使用类报错" class="headerlink" title="三、pandas 使用类报错"></a>三、pandas 使用类报错</h2><h3 id="3-1-KeyError-城市-销售额-——-多列忘了双层方括号"><a href="#3-1-KeyError-城市-销售额-——-多列忘了双层方括号" class="headerlink" title="3.1 KeyError: (&#39;城市&#39;, &#39;销售额&#39;) —— 多列忘了双层方括号"></a>3.1 <code>KeyError: (&#39;城市&#39;, &#39;销售额&#39;)</code> —— 多列忘了双层方括号</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ df[&quot;城市&quot;, &quot;销售额&quot;]   → KeyError（被当成一个元组列名）</span></span><br><span class="line"><span class="comment"># ✅ 传一个列表</span></span><br><span class="line"><span class="built_in">print</span>(df[[<span class="string">&quot;城市&quot;</span>, <span class="string">&quot;销售额&quot;</span>]].shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(5, 2)</span><br></pre></td></tr></table></figure>
+
+<p><strong>记忆法</strong>：<strong>取多列 &#x3D; 列表 &#x3D; 双层方括号 <code>df[[...]]</code>。</strong></p>
+<h3 id="3-2-ValueError-The-truth-value-of-a-Series-is-ambiguous"><a href="#3-2-ValueError-The-truth-value-of-a-Series-is-ambiguous" class="headerlink" title="3.2 ValueError: The truth value of a Series is ambiguous"></a>3.2 <code>ValueError: The truth value of a Series is ambiguous</code></h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValueError: The truth value of a Series is ambiguous. Use a.empty, a.bool(),</span><br><span class="line">a.item(), a.any() or a.all().</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：用 <code>and</code> &#x2F; <code>or</code> &#x2F; <code>not</code> 连接了 pandas 条件。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ df[(df[&quot;销售额&quot;] &gt; 500) and (df[&quot;城市&quot;] == &quot;北京&quot;)]  → ValueError</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 用 &amp; | ~，且每个条件加括号</span></span><br><span class="line">r = df[(df[<span class="string">&quot;销售额&quot;</span>] &gt; <span class="number">500</span>) &amp; (df[<span class="string">&quot;城市&quot;</span>] == <span class="string">&quot;北京&quot;</span>)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;销售额&gt;500 且 北京:&quot;</span>, <span class="built_in">len</span>(r), <span class="string">&quot;行&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;销售额&gt;500 或 北京:&quot;</span>, <span class="built_in">len</span>(df[(df[<span class="string">&quot;销售额&quot;</span>] &gt; <span class="number">500</span>) | (df[<span class="string">&quot;城市&quot;</span>] == <span class="string">&quot;北京&quot;</span>)]), <span class="string">&quot;行&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;非北京:&quot;</span>, <span class="built_in">len</span>(df[~(df[<span class="string">&quot;城市&quot;</span>] == <span class="string">&quot;北京&quot;</span>)]), <span class="string">&quot;行&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">销售额&gt;500 且 北京: 11 行</span><br><span class="line">销售额&gt;500 或 北京: 23 行</span><br><span class="line">非北京: 91 行</span><br></pre></td></tr></table></figure>
+
+<p><strong>为什么必须用 <code>&amp;</code> 而不是 <code>and</code>？</strong> <code>and</code> 是 Python 的短路求值，<br>它需要把整个 Series 判成一个布尔值；而 Series 有 100 个 True&#x2F;False，<br>pandas 不知道听谁的，就报错了。<code>&amp;</code> 是<strong>逐元素</strong>运算，正好符合需求。</p>
+<h3 id="3-3-ValueError-Missing-column-provided-to-parse-dates"><a href="#3-3-ValueError-Missing-column-provided-to-parse-dates" class="headerlink" title="3.3 ValueError: Missing column provided to &#39;parse_dates&#39;"></a>3.3 <code>ValueError: Missing column provided to &#39;parse_dates&#39;</code></h3><p><strong>原因</strong>：<code>parse_dates</code> 里指定的列<strong>没出现在 <code>usecols</code> 里</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ 这样会报错（订单日期被 usecols 排除了）</span></span><br><span class="line"><span class="comment"># pd.read_csv(&quot;../data/sales.csv&quot;,</span></span><br><span class="line"><span class="comment">#             usecols=[&quot;订单编号&quot;, &quot;城市&quot;, &quot;销售额&quot;],</span></span><br><span class="line"><span class="comment">#             parse_dates=[&quot;订单日期&quot;])</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 把要解析的列也放进 usecols</span></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales.csv&quot;</span>,</span><br><span class="line">                 usecols=[<span class="string">&quot;订单编号&quot;</span>, <span class="string">&quot;订单日期&quot;</span>, <span class="string">&quot;城市&quot;</span>, <span class="string">&quot;销售额&quot;</span>],</span><br><span class="line">                 nrows=<span class="number">100</span>, date_format=<span class="string">&quot;mixed&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;成功:&quot;</span>, df.shape, <span class="string">&quot;| 列:&quot;</span>, df.columns.tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">成功: (100, 4) | 列: [&#x27;订单编号&#x27;, &#x27;订单日期&#x27;, &#x27;城市&#x27;, &#x27;销售额&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-AttributeError-Can-only-use-dt-accessor-with-datetimelike-values"><a href="#3-4-AttributeError-Can-only-use-dt-accessor-with-datetimelike-values" class="headerlink" title="3.4 AttributeError: Can only use .dt accessor with datetimelike values"></a>3.4 <code>AttributeError: Can only use .dt accessor with datetimelike values</code></h3><p><strong>原因</strong>：这一列<strong>不是日期类型</strong>（是字符串），却用了 <code>.dt</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>)     <span class="comment"># 不加 parse_dates</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;不解析时类型:&quot;</span>, df[<span class="string">&quot;订单日期&quot;</span>].dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ df[&quot;订单日期&quot;].dt.year  → AttributeError</span></span><br><span class="line"><span class="comment"># ✅ 先转类型</span></span><br><span class="line">df[<span class="string">&quot;订单日期&quot;</span>] = pd.to_datetime(df[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;转换后类型:&quot;</span>, df[<span class="string">&quot;订单日期&quot;</span>].dtype)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;年份范围:&quot;</span>, df[<span class="string">&quot;订单日期&quot;</span>].dt.year.<span class="built_in">min</span>(), <span class="string">&quot;~&quot;</span>, df[<span class="string">&quot;订单日期&quot;</span>].dt.year.<span class="built_in">max</span>())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">不解析时类型: str</span><br><span class="line">转换后类型: datetime64[us]</span><br><span class="line">年份范围: 2023 ~ 2024</span><br></pre></td></tr></table></figure>
+
+<p><strong>排查套路</strong>：看到 <code>.dt</code> 报错，<strong>第一件事就是 <code>print(df[&quot;列名&quot;].dtype)</code></strong>。</p>
+<h3 id="3-5-KeyError-SO20230100001-——-硬编码了数据里的值"><a href="#3-5-KeyError-SO20230100001-——-硬编码了数据里的值" class="headerlink" title="3.5 KeyError: &#39;SO20230100001&#39; —— 硬编码了数据里的值"></a>3.5 <code>KeyError: &#39;SO20230100001&#39;</code> —— 硬编码了数据里的值</h3><p><strong>症状</strong>：代码里写死了某个 ID，换一批数据就报 KeyError。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ d.loc[&quot;SO20230100001&quot;]  → KeyError（这个订单号不存在）</span></span><br><span class="line"><span class="comment"># ✅ 从数据里动态取</span></span><br><span class="line">first_id = df[<span class="string">&quot;订单编号&quot;</span>].iloc[<span class="number">0</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;第一条订单号:&quot;</span>, first_id)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;按它取值:&quot;</span>, df.set_index(<span class="string">&quot;订单编号&quot;</span>).loc[first_id, <span class="string">&quot;销售额&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">第一条订单号: SO20230300508</span><br><span class="line">按它取值: 3313.8</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong>原则</strong>：<strong>能从数据里取的值，就不要写死在代码里。</strong></p>
+</blockquote>
+<h3 id="3-6-KeyError-0-——-loc-iloc-混用"><a href="#3-6-KeyError-0-——-loc-iloc-混用" class="headerlink" title="3.6 KeyError: 0 —— loc &#x2F; iloc 混用"></a>3.6 <code>KeyError: 0</code> —— loc &#x2F; iloc 混用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;loc[0, &#x27;城市&#x27;] =&quot;</span>, df.loc[<span class="number">0</span>, <span class="string">&quot;城市&quot;</span>])       <span class="comment"># ✅ 行标签 + 列名</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;iloc[0, 3]    =&quot;</span>, df.iloc[<span class="number">0</span>, <span class="number">3</span>])            <span class="comment"># ✅ 行号 + 列号</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ df.loc[0, 3]  → KeyError: 3（3 不是列名）</span></span><br><span class="line"><span class="comment"># ❌ df.iloc[0, &quot;城市&quot;]  → 报错（iloc 只接受整数）</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n记住：loc 用名字，iloc 用编号&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;loc 切片含结尾: df.loc[0:2] →&quot;</span>, <span class="built_in">len</span>(df.loc[<span class="number">0</span>:<span class="number">2</span>]), <span class="string">&quot;行&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;iloc 切片不含结尾: df.iloc[0:2] →&quot;</span>, <span class="built_in">len</span>(df.iloc[<span class="number">0</span>:<span class="number">2</span>]), <span class="string">&quot;行&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">loc[0, &#x27;城市&#x27;] = 杭州</span><br><span class="line">iloc[0, 3]    = 杭州</span><br><span class="line"></span><br><span class="line">记住：loc 用名字，iloc 用编号</span><br><span class="line">loc 切片含结尾: df.loc[0:2] → 3 行</span><br><span class="line">iloc 切片不含结尾: df.iloc[0:2] → 2 行</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-7-merge-之后行数变多变少"><a href="#3-7-merge-之后行数变多变少" class="headerlink" title="3.7 merge 之后行数变多变少"></a>3.7 merge 之后行数变多变少</h3><p><strong>症状</strong>：<code>merge</code> 完发现行数不是预期的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">left = pd.DataFrame(&#123;<span class="string">&quot;k&quot;</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="string">&quot;v&quot;</span>: [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]&#125;)</span><br><span class="line">right = pd.DataFrame(&#123;<span class="string">&quot;k&quot;</span>: [<span class="number">2</span>, <span class="number">2</span>, <span class="number">4</span>], <span class="string">&quot;w&quot;</span>: [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>]&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;左表 4 行，右表 3 行&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># inner：只有匹配上的</span></span><br><span class="line">m_inner = left.merge(right, on=<span class="string">&quot;k&quot;</span>, how=<span class="string">&quot;inner&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;inner →&quot;</span>, <span class="built_in">len</span>(m_inner), <span class="string">&quot;行（2×2 笛卡尔积：左表两个 k=2 × 右表两个 k=2）&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># left：左表全保留</span></span><br><span class="line">m_left = left.merge(right, on=<span class="string">&quot;k&quot;</span>, how=<span class="string">&quot;left&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;left  →&quot;</span>, <span class="built_in">len</span>(m_left), <span class="string">&quot;行&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 indicator 排查</span></span><br><span class="line">m_ind = left.merge(right, on=<span class="string">&quot;k&quot;</span>, how=<span class="string">&quot;outer&quot;</span>, indicator=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nouter + indicator 的 _merge 分布:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(m_ind[<span class="string">&quot;_merge&quot;</span>].value_counts().to_string())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">左表 4 行，右表 3 行</span><br><span class="line">inner → 4 行（2×2 笛卡尔积：左表两个 k=2 × 右表两个 k=2）</span><br><span class="line">left  → 5 行</span><br><span class="line"></span><br><span class="line">outer + indicator 的 _merge 分布:</span><br><span class="line">_merge</span><br><span class="line">left_only     3</span><br><span class="line">both          4</span><br><span class="line">right_only    1</span><br></pre></td></tr></table></figure>
+
+<p><strong>行数变化的三个原因</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>对策</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>行数变多</td>
+<td><strong>一对多</strong>或<strong>多对多</strong>（键有重复）</td>
+<td>先 <code>drop_duplicates</code> 或用 <code>validate=&quot;one_to_many&quot;</code></td>
+</tr>
+<tr>
+<td>行数变少</td>
+<td>用了 <code>inner</code> 且有匹配不上的记录</td>
+<td>改用 <code>how=&quot;left&quot;</code></td>
+</tr>
+<tr>
+<td>出现 NaN</td>
+<td>左连接但右边没匹配上</td>
+<td>用 <code>indicator=True</code> 确认</td>
+</tr>
+</tbody></table>
+<h3 id="3-8-FutureWarning-The-default-of-observed-False-is-deprecated"><a href="#3-8-FutureWarning-The-default-of-observed-False-is-deprecated" class="headerlink" title="3.8 FutureWarning: The default of observed=False is deprecated"></a>3.8 <code>FutureWarning: The default of observed=False is deprecated</code></h3><p><strong>原因</strong>：对 <code>category</code> 类型的列做 <code>groupby</code> 时，pandas 默认会统计所有类别<br>（包括数据里没出现的空类别）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>)</span><br><span class="line">df[<span class="string">&quot;年龄段&quot;</span>] = pd.cut(df[<span class="string">&quot;客户年龄&quot;</span>], bins=[<span class="number">0</span>, <span class="number">25</span>, <span class="number">35</span>, <span class="number">50</span>, <span class="number">100</span>],</span><br><span class="line">                    labels=[<span class="string">&quot;25以下&quot;</span>, <span class="string">&quot;25-35&quot;</span>, <span class="string">&quot;35-50&quot;</span>, <span class="string">&quot;50以上&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;分箱类型:&quot;</span>, df[<span class="string">&quot;年龄段&quot;</span>].dtype)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 明确写 observed=True</span></span><br><span class="line">r = df.groupby(<span class="string">&quot;年龄段&quot;</span>, observed=<span class="literal">True</span>)[<span class="string">&quot;销售额&quot;</span>].agg([<span class="string">&quot;count&quot;</span>, <span class="string">&quot;mean&quot;</span>]).<span class="built_in">round</span>(<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(r.to_string())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">分箱类型: category</span><br><span class="line">        count    mean</span><br><span class="line">年龄段</span><br><span class="line">25以下      267  1306.7</span><br><span class="line">25-35     266  1412.0</span><br><span class="line">35-50     265  1543.6</span><br><span class="line">50以上       15  1789.3</span><br></pre></td></tr></table></figure>
+
+<p><strong>规则</strong>：<strong>只要 <code>groupby</code> 的键是 <code>category</code> 类型，就加 <code>observed=True</code>。</strong></p>
+<h3 id="3-9-中文列名对齐难看"><a href="#3-9-中文列名对齐难看" class="headerlink" title="3.9 中文列名对齐难看"></a>3.9 中文列名对齐难看</h3><p><strong>症状</strong>：<code>print(df)</code> 出来的表是歪的（因为中文字符宽度算 1 但显示占 2）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;默认设置下:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(df[[<span class="string">&quot;城市&quot;</span>, <span class="string">&quot;商品类别&quot;</span>, <span class="string">&quot;销售额&quot;</span>]].to_string())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">默认设置下:</span><br><span class="line">   城市  商品类别     销售额</span><br><span class="line">0  杭州  家用电器  3313.80</span><br><span class="line">1  成都  服饰鞋包 15717.66</span><br><span class="line">2  北京  家用电器   853.09</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开启东亚字符宽度感知</span></span><br><span class="line">pd.set_option(<span class="string">&quot;display.unicode.east_asian_width&quot;</span>, <span class="literal">True</span>)</span><br><span class="line">pd.set_option(<span class="string">&quot;display.max_columns&quot;</span>, <span class="number">50</span>)</span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;开启后:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(df[[<span class="string">&quot;城市&quot;</span>, <span class="string">&quot;商品类别&quot;</span>, <span class="string">&quot;销售额&quot;</span>]].to_string())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">开启后:</span><br><span class="line">   城市   商品类别      销售额</span><br><span class="line">0  杭州  家用电器   3313.80</span><br><span class="line">1  成都  服饰鞋包  15717.66</span><br><span class="line">2  北京  家用电器    853.09</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-10-SettingWithCopyWarning-去哪了？"><a href="#3-10-SettingWithCopyWarning-去哪了？" class="headerlink" title="3.10 SettingWithCopyWarning 去哪了？"></a>3.10 <code>SettingWithCopyWarning</code> 去哪了？</h3><p><strong>答</strong>：pandas 3.0 开启了 Copy-on-Write，<strong>这个警告已经消失了</strong>——<br>因为”改切片会不会影响原表”这件事不再有歧义：<strong>永远不影响</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> warnings.catch_warnings(record=<span class="literal">True</span>) <span class="keyword">as</span> w:</span><br><span class="line">    warnings.simplefilter(<span class="string">&quot;always&quot;</span>)</span><br><span class="line">    sub = df[df[<span class="string">&quot;销售额&quot;</span>] &gt; <span class="number">5000</span>]</span><br><span class="line">    sub[<span class="string">&quot;标记&quot;</span>] = <span class="string">&quot;大额&quot;</span></span><br><span class="line">    sw = [x <span class="keyword">for</span> x <span class="keyword">in</span> w <span class="keyword">if</span> <span class="string">&quot;SettingWithCopy&quot;</span> <span class="keyword">in</span> <span class="built_in">type</span>(x.message).__name__]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;切片赋值触发的 SettingWithCopyWarning 数量:&quot;</span>, <span class="built_in">len</span>(sw))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;切片结果行数:&quot;</span>, <span class="built_in">len</span>(sub))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;原表有&#x27;标记&#x27;列吗:&quot;</span>, <span class="string">&quot;标记&quot;</span> <span class="keyword">in</span> df.columns)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">切片赋值触发的 SettingWithCopyWarning 数量: 0</span><br><span class="line">切片结果行数: 72</span><br><span class="line">原表有&#x27;标记&#x27;列吗: False</span><br></pre></td></tr></table></figure>
+
+<p><strong>老代码升级指南</strong>：原来为了消除这个警告而写的 <code>.copy()</code> 现在<strong>不再是必需的</strong>，<br>但<strong>留着也没错</strong>（语义更明确）。</p>
+<hr>
+<h2 id="四、matplotlib-seaborn-显示问题"><a href="#四、matplotlib-seaborn-显示问题" class="headerlink" title="四、matplotlib &#x2F; seaborn 显示问题"></a>四、matplotlib &#x2F; seaborn 显示问题</h2><h3 id="4-1-中文变方块（最常见）"><a href="#4-1-中文变方块（最常见）" class="headerlink" title="4.1 中文变方块（最常见）"></a>4.1 中文变方块（最常见）</h3><p><strong>症状</strong>：图里的中文全是 <code>□□□□</code>，终端可能提示：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">UserWarning: Glyph 26477 (\N&#123;CJK UNIFIED IDEOGRAPH-676D&#125;) missing from font(s) DejaVu Sans.</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：matplotlib 默认字体 DejaVu Sans 不含中文字形。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)          <span class="comment"># 无界面后端，用于脚本运行</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">from</span> viz_style <span class="keyword">import</span> setup</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 一行搞定（本教程的统一做法）</span></span><br><span class="line">font = setup()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;实际选中的字体:&quot;</span>, font)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">实际选中的字体: Microsoft YaHei</span><br></pre></td></tr></table></figure>
+
+<p><strong>手动配置的等价写法</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;Microsoft YaHei&quot;</span>, <span class="string">&quot;SimHei&quot;</span>]   <span class="comment"># 按优先级排</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span>                        <span class="comment"># 负号正常显示</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;已配置&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>本机可用字体</strong>（<code>Microsoft YaHei</code>、<code>SimHei</code>、<code>SimSun</code>、<code>DengXian</code>、<code>KaiTi</code> 都验证过）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> matplotlib <span class="keyword">import</span> font_manager <span class="keyword">as</span> fm</span><br><span class="line"></span><br><span class="line">available = &#123;f.name <span class="keyword">for</span> f <span class="keyword">in</span> fm.fontManager.ttflist&#125;</span><br><span class="line"><span class="keyword">for</span> name <span class="keyword">in</span> [<span class="string">&quot;Microsoft YaHei&quot;</span>, <span class="string">&quot;SimHei&quot;</span>, <span class="string">&quot;SimSun&quot;</span>, <span class="string">&quot;DengXian&quot;</span>, <span class="string">&quot;KaiTi&quot;</span>, <span class="string">&quot;FangSong&quot;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;  <span class="subst">&#123;name:<span class="number">20</span>&#125;</span> <span class="subst">&#123;<span class="string">&#x27;可用&#x27;</span> <span class="keyword">if</span> name <span class="keyword">in</span> available <span class="keyword">else</span> <span class="string">&#x27;不可用&#x27;</span>&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Microsoft YaHei      可用</span><br><span class="line">SimHei               可用</span><br><span class="line">SimSun               可用</span><br><span class="line">DengXian             可用</span><br><span class="line">KaiTi                可用</span><br><span class="line">FangSong             可用</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-负号变方块"><a href="#4-2-负号变方块" class="headerlink" title="4.2 负号变方块"></a>4.2 负号变方块</h3><p><strong>原因</strong>：<code>axes.unicode_minus</code> 默认为 <code>True</code>，用 Unicode 的 U+2212 减号，<br>而字体里没有这个字形。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;Microsoft YaHei&quot;</span>]</span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span>     <span class="comment"># ← 就是这一行</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;已关闭 unicode_minus&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;当前值:&quot;</span>, plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">已关闭 unicode_minus</span><br><span class="line">当前值: False</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>即使你用 SimHei，也建议设这一行</strong>——否则负号可能显示成方块。</p>
+</blockquote>
+<h3 id="4-3-plt-show-之后-savefig-保存出空白图"><a href="#4-3-plt-show-之后-savefig-保存出空白图" class="headerlink" title="4.3 plt.show() 之后 savefig 保存出空白图"></a>4.3 <code>plt.show()</code> 之后 <code>savefig</code> 保存出空白图</h3><p><strong>这是最坑的一个。</strong> 顺序错了文件就是白的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">os.makedirs(<span class="string">&quot;_test/chA3&quot;</span>, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">4</span>, <span class="number">3</span>))</span><br><span class="line">ax.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>])</span><br><span class="line">ax.set_title(<span class="string">&quot;顺序测试&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ 先 show 再 save：在某些后端 figure 已被清空</span></span><br><span class="line">plt.show()</span><br><span class="line">fig.savefig(<span class="string">&quot;_test/chA3/after_show.png&quot;</span>)</span><br><span class="line">plt.close(fig)</span><br><span class="line"></span><br><span class="line">fig2, ax2 = plt.subplots(figsize=(<span class="number">4</span>, <span class="number">3</span>))</span><br><span class="line">ax2.plot([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>])</span><br><span class="line">ax2.set_title(<span class="string">&quot;顺序测试&quot;</span>)</span><br><span class="line">fig2.savefig(<span class="string">&quot;_test/chA3/before_show.png&quot;</span>)     <span class="comment"># ✅ 先 save</span></span><br><span class="line">plt.show()                                      <span class="comment"># 再 show</span></span><br><span class="line">plt.close(fig2)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;after_show.png :&quot;</span>, os.path.getsize(<span class="string">&quot;_test/chA3/after_show.png&quot;</span>), <span class="string">&quot;字节&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;before_show.png:&quot;</span>, os.path.getsize(<span class="string">&quot;_test/chA3/before_show.png&quot;</span>), <span class="string">&quot;字节&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">after_show.png : 3318 字节</span><br><span class="line">before_show.png: 3318 字节</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong>在 <code>Agg</code> 后端下两者都正常</strong>（因为 <code>Agg</code> 根本没有”显示”这个动作）。<br>但<strong>在 Jupyter 的 inline 后端下，<code>plt.show()</code> 之后图会被清空，<code>savefig</code> 会保存空白图</strong>。<br><strong>所以铁律：永远先 <code>savefig</code> 再 <code>show</code>。</strong><br>本教程统一用 <code>viz_style.save(fig, path)</code>，它内部就是先保存，避免这个坑。</p>
+</blockquote>
+<h3 id="4-4-RuntimeWarning-More-than-20-figures-have-been-opened"><a href="#4-4-RuntimeWarning-More-than-20-figures-have-been-opened" class="headerlink" title="4.4 RuntimeWarning: More than 20 figures have been opened"></a>4.4 <code>RuntimeWarning: More than 20 figures have been opened</code></h3><p><strong>原因</strong>：循环里创建 figure 但忘了关闭。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> os, warnings</span><br><span class="line"></span><br><span class="line">os.makedirs(<span class="string">&quot;_test/chA3&quot;</span>, exist_ok=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 每次都关闭</span></span><br><span class="line"><span class="keyword">with</span> warnings.catch_warnings(record=<span class="literal">True</span>) <span class="keyword">as</span> w:</span><br><span class="line">    warnings.simplefilter(<span class="string">&quot;always&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">25</span>):</span><br><span class="line">        fig, ax = plt.subplots(figsize=(<span class="number">2</span>, <span class="number">1.5</span>))</span><br><span class="line">        ax.plot([<span class="number">1</span>, i + <span class="number">1</span>])</span><br><span class="line">        fig.savefig(<span class="string">f&quot;_test/chA3/loop_<span class="subst">&#123;i&#125;</span>.png&quot;</span>)</span><br><span class="line">        plt.close(fig)                 <span class="comment"># ← 关键</span></span><br><span class="line">    msgs = [x <span class="keyword">for</span> x <span class="keyword">in</span> w <span class="keyword">if</span> <span class="string">&quot;figures have been opened&quot;</span> <span class="keyword">in</span> <span class="built_in">str</span>(x.message)]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;图过多警告数量:&quot;</span>, <span class="built_in">len</span>(msgs))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;已生成 25 张测试图&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">图过多警告数量: 0</span><br><span class="line">已生成 25 张测试图</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5-seaborn-的-set-theme-会覆盖字体设置"><a href="#4-5-seaborn-的-set-theme-会覆盖字体设置" class="headerlink" title="4.5 seaborn 的 set_theme 会覆盖字体设置"></a>4.5 seaborn 的 <code>set_theme</code> 会覆盖字体设置</h3><p><strong>症状</strong>：明明设了中文字体，一调 <code>sns.set_theme()</code> 中文又变方块了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> seaborn <span class="keyword">as</span> sns</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ 顺序错了会失效</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;Microsoft YaHei&quot;</span>]</span><br><span class="line">sns.set_theme()                                    <span class="comment"># 它重置了 rcParams！</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;错误顺序下字体:&quot;</span>, plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>][:<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 方案1：把字体传给 set_theme</span></span><br><span class="line">sns.set_theme(font=<span class="string">&quot;Microsoft YaHei&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;方案1 字体:&quot;</span>, plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>][:<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 方案2：或者先 set_theme 再改 rcParams</span></span><br><span class="line">sns.set_theme()</span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;Microsoft YaHei&quot;</span>]</span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;方案2 字体:&quot;</span>, plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>][:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">错误顺序下字体: [&#x27;sans-serif&#x27;]</span><br><span class="line">方案1 字体: [&#x27;Microsoft YaHei&#x27;]</span><br><span class="line">方案2 字体: [&#x27;Microsoft YaHei&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p><strong>本教程的做法</strong>：用 <code>viz_style.seaborn_theme()</code>，它内部已经处理好了顺序。</p>
+<h3 id="4-6-图片模糊"><a href="#4-6-图片模糊" class="headerlink" title="4.6 图片模糊"></a>4.6 图片模糊</h3><p><strong>原因</strong>：<code>dpi</code> 太低（默认 100，但有些场景下按屏幕像素算会更低）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">os.makedirs(<span class="string">&quot;_test/chA3&quot;</span>, exist_ok=<span class="literal">True</span>)</span><br><span class="line">sizes = &#123;&#125;</span><br><span class="line"><span class="keyword">for</span> dpi <span class="keyword">in</span> [<span class="number">60</span>, <span class="number">110</span>, <span class="number">200</span>, <span class="number">300</span>]:</span><br><span class="line">    fig, ax = plt.subplots(figsize=(<span class="number">4</span>, <span class="number">3</span>))</span><br><span class="line">    ax.bar([<span class="string">&quot;北京&quot;</span>, <span class="string">&quot;上海&quot;</span>, <span class="string">&quot;广州&quot;</span>], [<span class="number">10</span>, <span class="number">20</span>, <span class="number">15</span>])</span><br><span class="line">    ax.set_title(<span class="string">&quot;分辨率测试&quot;</span>)</span><br><span class="line">    p = <span class="string">f&quot;_test/chA3/dpi_<span class="subst">&#123;dpi&#125;</span>.png&quot;</span></span><br><span class="line">    fig.savefig(p, dpi=dpi, bbox_inches=<span class="string">&quot;tight&quot;</span>)</span><br><span class="line">    plt.close(fig)</span><br><span class="line">    sizes[dpi] = os.path.getsize(p)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> dpi, size <span class="keyword">in</span> sizes.items():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;dpi=<span class="subst">&#123;dpi:&gt;<span class="number">3</span>&#125;</span>  文件 <span class="subst">&#123;size / <span class="number">1024</span>:&gt;<span class="number">6.1</span>f&#125;</span> KB&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dpi= 60  文件    3.9 KB</span><br><span class="line">dpi=110  文件    8.4 KB</span><br><span class="line">dpi=200  文件   15.0 KB</span><br><span class="line">dpi=300  文件   23.2 KB</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>dpi</code> 该怎么选</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>用途</th>
+<th>推荐 dpi</th>
+<th>格式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>屏幕查看（PPT、网页）</td>
+<td>100~150</td>
+<td>PNG</td>
+</tr>
+<tr>
+<td>打印文档</td>
+<td>300</td>
+<td>PNG</td>
+</tr>
+<tr>
+<td>期刊投稿</td>
+<td>600</td>
+<td>PNG&#x2F;TIFF&#x2F;<strong>PDF&#x2F;SVG</strong></td>
+</tr>
+<tr>
+<td>论文插图（可无限放大）</td>
+<td>任意</td>
+<td><strong>SVG 或 PDF</strong>（矢量）</td>
+</tr>
+</tbody></table>
+<h3 id="4-7-后端相关：matplotlib-use-Agg-什么时候用"><a href="#4-7-后端相关：matplotlib-use-Agg-什么时候用" class="headerlink" title="4.7 后端相关：matplotlib.use(&quot;Agg&quot;) 什么时候用"></a>4.7 后端相关：<code>matplotlib.use(&quot;Agg&quot;)</code> 什么时候用</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>后端</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Jupyter notebook</td>
+<td>inline（自动）</td>
+<td>图直接显示在输出里</td>
+</tr>
+<tr>
+<td>脚本里只保存图片</td>
+<td><strong><code>Agg</code></strong></td>
+<td>无界面，不会弹窗，<strong>推荐</strong></td>
+</tr>
+<tr>
+<td>需要弹窗看交互图</td>
+<td><code>TkAgg</code></td>
+<td>需要 tkinter</td>
+</tr>
+<tr>
+<td>服务器上跑</td>
+<td><strong><code>Agg</code></strong></td>
+<td>没有显示器，必须用 Agg</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib</span><br><span class="line"><span class="comment"># 必须在 import pyplot 之前设置</span></span><br><span class="line">matplotlib.use(<span class="string">&quot;Agg&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;当前后端:&quot;</span>, matplotlib.get_backend())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当前后端: Agg</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong><code>matplotlib.use()</code> 必须写在 <code>import matplotlib.pyplot</code> 之前</strong>，<br>之后设置可能不生效。</p>
+</blockquote>
+<hr>
+<h2 id="五、机器学习类报错"><a href="#五、机器学习类报错" class="headerlink" title="五、机器学习类报错"></a>五、机器学习类报错</h2><h3 id="5-1-ValueError-Input-X-contains-NaN"><a href="#5-1-ValueError-Input-X-contains-NaN" class="headerlink" title="5.1 ValueError: Input X contains NaN"></a>5.1 <code>ValueError: Input X contains NaN</code></h3><p><strong>报错原文</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ValueError: Input X contains NaN.</span><br><span class="line">LogisticRegression does not accept missing values encoded as NaN natively.</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：<strong>sklearn 的所有模型都不接受缺失值</strong>（和 pandas 不同，<br>pandas 会尽量容忍，sklearn 直接拒绝）。</p>
+<p><strong>解决</strong>：用 <code>SimpleImputer</code> 或手工填补。<strong>必须在 Pipeline 里做，且只在训练集上 fit。</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/titanic.csv&quot;</span>)</span><br><span class="line">X = df[[<span class="string">&quot;Age&quot;</span>, <span class="string">&quot;Fare&quot;</span>, <span class="string">&quot;SibSp&quot;</span>, <span class="string">&quot;Parch&quot;</span>]]</span><br><span class="line">y = df[<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;原始缺失情况:&quot;</span>, X.isna().<span class="built_in">sum</span>().to_dict())</span><br><span class="line"></span><br><span class="line">X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=<span class="number">0.3</span>,</span><br><span class="line">                                          random_state=<span class="number">42</span>, stratify=y)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 把填补和模型串成 Pipeline</span></span><br><span class="line">pipe = Pipeline([</span><br><span class="line">    (<span class="string">&quot;imp&quot;</span>, SimpleImputer(strategy=<span class="string">&quot;median&quot;</span>)),</span><br><span class="line">    (<span class="string">&quot;sc&quot;</span>, StandardScaler()),</span><br><span class="line">    (<span class="string">&quot;m&quot;</span>, LogisticRegression(max_iter=<span class="number">1000</span>)),</span><br><span class="line">])</span><br><span class="line">pipe.fit(X_tr, y_tr)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;训练成功，测试集准确率: &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(pipe.score(X_te, y_te)))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">原始缺失情况: &#123;&#x27;Age&#x27;: 177, &#x27;Fare&#x27;: 0, &#x27;SibSp&#x27;: 0, &#x27;Parch&#x27;: 0&#125;</span><br><span class="line">训练成功，测试集准确率: 0.6866</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-ValueError-could-not-convert-string-to-float"><a href="#5-2-ValueError-could-not-convert-string-to-float" class="headerlink" title="5.2 ValueError: could not convert string to float"></a>5.2 <code>ValueError: could not convert string to float</code></h3><p><strong>原因</strong>：特征里有字符串（类别列没编码）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.compose <span class="keyword">import</span> ColumnTransformer</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> OneHotEncoder, StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.impute <span class="keyword">import</span> SimpleImputer</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/titanic.csv&quot;</span>)</span><br><span class="line">X = df[[<span class="string">&quot;Age&quot;</span>, <span class="string">&quot;Fare&quot;</span>, <span class="string">&quot;Pclass&quot;</span>, <span class="string">&quot;Sex&quot;</span>, <span class="string">&quot;Embarked&quot;</span>]]     <span class="comment"># Sex/Embarked 是字符串</span></span><br><span class="line">y = df[<span class="string">&quot;Survived&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># ❌ 直接 fit 会报 could not convert string to float</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ✅ 数值列和分类列分开处理</span></span><br><span class="line">pre = ColumnTransformer([</span><br><span class="line">    (<span class="string">&quot;num&quot;</span>, Pipeline([(<span class="string">&quot;imp&quot;</span>, SimpleImputer(strategy=<span class="string">&quot;median&quot;</span>)),</span><br><span class="line">                      (<span class="string">&quot;sc&quot;</span>, StandardScaler())]), [<span class="string">&quot;Age&quot;</span>, <span class="string">&quot;Fare&quot;</span>]),</span><br><span class="line">    (<span class="string">&quot;cat&quot;</span>, Pipeline([(<span class="string">&quot;imp&quot;</span>, SimpleImputer(strategy=<span class="string">&quot;most_frequent&quot;</span>)),</span><br><span class="line">                      (<span class="string">&quot;oh&quot;</span>, OneHotEncoder(handle_unknown=<span class="string">&quot;ignore&quot;</span>))]),</span><br><span class="line">     [<span class="string">&quot;Pclass&quot;</span>, <span class="string">&quot;Sex&quot;</span>, <span class="string">&quot;Embarked&quot;</span>]),</span><br><span class="line">])</span><br><span class="line">pipe = Pipeline([(<span class="string">&quot;pre&quot;</span>, pre), (<span class="string">&quot;m&quot;</span>, LogisticRegression(max_iter=<span class="number">1000</span>))])</span><br><span class="line">X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=<span class="number">0.3</span>,</span><br><span class="line">                                          random_state=<span class="number">42</span>, stratify=y)</span><br><span class="line">pipe.fit(X_tr, y_tr)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;训练成功，准确率: &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(pipe.score(X_te, y_te)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看看编码后有多少列</span></span><br><span class="line">names = pipe.named_steps[<span class="string">&quot;pre&quot;</span>].get_feature_names_out()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;编码后特征数:&quot;</span>, <span class="built_in">len</span>(names))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;前 6 个:&quot;</span>, names[:<span class="number">6</span>].tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">训练成功，准确率: 0.7761</span><br><span class="line">编码后特征数: 11</span><br><span class="line">前 6 个: [&#x27;num__Age&#x27;, &#x27;num__Fare&#x27;, &#x27;cat__Pclass_1&#x27;, &#x27;cat__Pclass_2&#x27;, &#x27;cat__Pclass_3&#x27;, &#x27;cat__Sex_female&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-中文列名导致的问题"><a href="#5-3-中文列名导致的问题" class="headerlink" title="5.3 中文列名导致的问题"></a>5.3 中文列名导致的问题</h3><p><strong>好消息</strong>：sklearn 1.x <strong>支持中文列名</strong>（因为它只把列名当字符串标签）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用中文列名</span></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/shopping_intent.csv&quot;</span>)</span><br><span class="line">X = df.drop(columns=[<span class="string">&quot;是否购买&quot;</span>])</span><br><span class="line">y = df[<span class="string">&quot;是否购买&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;中文列名:&quot;</span>, X.columns.tolist())</span><br><span class="line"></span><br><span class="line">X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=<span class="number">0.3</span>,</span><br><span class="line">                                          random_state=<span class="number">42</span>, stratify=y)</span><br><span class="line">pipe = Pipeline([(<span class="string">&quot;sc&quot;</span>, StandardScaler()), (<span class="string">&quot;m&quot;</span>, LogisticRegression(max_iter=<span class="number">1000</span>))])</span><br><span class="line">pipe.fit(X_tr, y_tr)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;用中文列名训练成功，AUC 约 0.67&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;特征名:&quot;</span>, pipe.named_steps[<span class="string">&quot;sc&quot;</span>].feature_names_in_.tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">中文列名: [&#x27;浏览量PV&#x27;, &#x27;停留总时长秒&#x27;, &#x27;是否跳出&#x27;, &#x27;是否周末&#x27;, &#x27;是否新用户&#x27;]</span><br><span class="line">用中文列名训练成功，AUC 约 0.67</span><br><span class="line">特征名: [&#x27;浏览量PV&#x27;, &#x27;停留总时长秒&#x27;, &#x27;是否跳出&#x27;, &#x27;是否周末&#x27;, &#x27;是否新用户&#x27;]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>但有例外</strong>：某些第三方库或画图函数（尤其是 <code>plot_tree</code>、<code>export_graphviz</code>）<br>对中文支持不好，可能显示成方块。<strong>遇到这种情况把列名改成英文再画。</strong></p>
+</blockquote>
+<h3 id="5-4-特征尺度差异导致-KNN-SVM-效果差"><a href="#5-4-特征尺度差异导致-KNN-SVM-效果差" class="headerlink" title="5.4 特征尺度差异导致 KNN&#x2F;SVM 效果差"></a>5.4 特征尺度差异导致 KNN&#x2F;SVM 效果差</h3><p><strong>症状</strong>：模型效果远低于预期，但代码没报错。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.neighbors <span class="keyword">import</span> KNeighborsClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> RandomForestClassifier</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> roc_auc_score</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/shopping_intent.csv&quot;</span>)</span><br><span class="line">X = df.drop(columns=[<span class="string">&quot;是否购买&quot;</span>]).copy()</span><br><span class="line">y = df[<span class="string">&quot;是否购买&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 故意制造量纲悬殊</span></span><br><span class="line">X[<span class="string">&quot;浏览量PV&quot;</span>] = X[<span class="string">&quot;浏览量PV&quot;</span>] * <span class="number">10000</span></span><br><span class="line">X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=<span class="number">0.3</span>,</span><br><span class="line">                                          random_state=<span class="number">42</span>, stratify=y)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> name, m <span class="keyword">in</span> [(<span class="string">&quot;KNN&quot;</span>, KNeighborsClassifier(n_neighbors=<span class="number">5</span>)),</span><br><span class="line">                (<span class="string">&quot;随机森林&quot;</span>, RandomForestClassifier(n_estimators=<span class="number">100</span>, random_state=<span class="number">42</span>))]:</span><br><span class="line">    <span class="keyword">for</span> tag, steps <span class="keyword">in</span> [(<span class="string">&quot;不缩放&quot;</span>, [(<span class="string">&quot;m&quot;</span>, m)]),</span><br><span class="line">                       (<span class="string">&quot;标准化&quot;</span>, [(<span class="string">&quot;sc&quot;</span>, StandardScaler()), (<span class="string">&quot;m&quot;</span>, m)])]:</span><br><span class="line">        p = Pipeline(steps).fit(X_tr, y_tr)</span><br><span class="line">        auc = roc_auc_score(y_te, p.predict_proba(X_te)[:, <span class="number">1</span>])</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name:<span class="number">6</span>&#125;</span><span class="subst">&#123;tag:<span class="number">8</span>&#125;</span>AUC = <span class="subst">&#123;auc:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">KNN   不缩放     AUC = 0.5302</span><br><span class="line">KNN   标准化     AUC = 0.6431</span><br><span class="line">随机森林  不缩放     AUC = 0.6237</span><br><span class="line">随机森林  标准化     AUC = 0.6236</span><br></pre></td></tr></table></figure>
+
+<p><strong>结论</strong>：<strong>KNN 从 0.53 升到 0.64（不缩放时几乎等于瞎猜）；随机森林几乎不变。</strong><br>详见第 8 章 8.5 节的完整对照表。</p>
+<h3 id="5-5-类别不平衡导致的指标误导"><a href="#5-5-类别不平衡导致的指标误导" class="headerlink" title="5.5 类别不平衡导致的指标误导"></a>5.5 类别不平衡导致的指标误导</h3><p><strong>症状</strong>：准确率看着挺高（比如 76%），但模型其实没用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span> train_test_split</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> Pipeline</span><br><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> StandardScaler</span><br><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> (accuracy_score, recall_score, precision_score,</span><br><span class="line">                             roc_auc_score)</span><br><span class="line"></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/shopping_intent.csv&quot;</span>)</span><br><span class="line">X, y = df.drop(columns=[<span class="string">&quot;是否购买&quot;</span>]), df[<span class="string">&quot;是否购买&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;正例率: &#123;:.2%&#125;&quot;</span>.<span class="built_in">format</span>(y.mean()))</span><br><span class="line"></span><br><span class="line">X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=<span class="number">0.3</span>,</span><br><span class="line">                                          random_state=<span class="number">42</span>, stratify=y)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;如果全猜&#x27;不购买&#x27;，准确率 = &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>((y_te == <span class="number">0</span>).mean()))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;但它的召回率 = 0，毫无价值\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">pipe = Pipeline([(<span class="string">&quot;sc&quot;</span>, StandardScaler()), (<span class="string">&quot;m&quot;</span>, LogisticRegression(max_iter=<span class="number">1000</span>))])</span><br><span class="line">pipe.fit(X_tr, y_tr)</span><br><span class="line">pred = pipe.predict(X_te)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;逻辑回归：准确率 &#123;:.4f&#125;  精确率 &#123;:.4f&#125;  召回率 &#123;:.4f&#125;  AUC &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(</span><br><span class="line">    accuracy_score(y_te, pred), precision_score(y_te, pred),</span><br><span class="line">    recall_score(y_te, pred), roc_auc_score(y_te, pipe.predict_proba(X_te)[:, <span class="number">1</span>])))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加上类别权重</span></span><br><span class="line">pipe2 = Pipeline([(<span class="string">&quot;sc&quot;</span>, StandardScaler()),</span><br><span class="line">                  (<span class="string">&quot;m&quot;</span>, LogisticRegression(max_iter=<span class="number">1000</span>, class_weight=<span class="string">&quot;balanced&quot;</span>))])</span><br><span class="line">pipe2.fit(X_tr, y_tr)</span><br><span class="line">pred2 = pipe2.predict(X_te)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;加 class_weight：准确率 &#123;:.4f&#125;  精确率 &#123;:.4f&#125;  召回率 &#123;:.4f&#125;  AUC &#123;:.4f&#125;&quot;</span>.<span class="built_in">format</span>(</span><br><span class="line">    accuracy_score(y_te, pred2), precision_score(y_te, pred2),</span><br><span class="line">    recall_score(y_te, pred2), roc_auc_score(y_te, pipe2.predict_proba(X_te)[:, <span class="number">1</span>])))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">正例率: 23.88%</span><br><span class="line">如果全猜&#x27;不购买&#x27;，准确率 = 0.7625</span><br><span class="line">但它的召回率 = 0，毫无价值</span><br><span class="line"></span><br><span class="line">逻辑回归：准确率 0.7583  精确率 0.4000  召回率 0.0351  AUC 0.6794</span><br><span class="line">加 class_weight：准确率 0.5875  精确率 0.3190  召回率 0.6491  AUC 0.6842</span><br></pre></td></tr></table></figure>
+
+<p><strong>诊断套路</strong>：<strong>只要看到”准确率很高但召回率极低”，就是类别不平衡。</strong><br><strong>对策</strong>：看 AUC 和 F1、加 <code>class_weight=&quot;balanced&quot;</code>、或调整分类阈值。</p>
+<hr>
+<h2 id="六、性能类问题"><a href="#六、性能类问题" class="headerlink" title="六、性能类问题"></a>六、性能类问题</h2><h3 id="6-1-apply-太慢"><a href="#6-1-apply-太慢" class="headerlink" title="6.1 apply 太慢"></a>6.1 <code>apply</code> 太慢</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> warnings</span><br><span class="line">warnings.filterwarnings(<span class="string">&quot;ignore&quot;</span>)</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">N = <span class="number">200_000</span></span><br><span class="line">df = pd.DataFrame(&#123;<span class="string">&quot;x&quot;</span>: np.random.default_rng(<span class="number">42</span>).normal(<span class="number">0</span>, <span class="number">1</span>, N)&#125;)</span><br><span class="line"></span><br><span class="line">t0 = time.perf_counter()</span><br><span class="line">r1 = df[<span class="string">&quot;x&quot;</span>].apply(<span class="keyword">lambda</span> v: v * <span class="number">2</span>)</span><br><span class="line">t1 = time.perf_counter()</span><br><span class="line">r2 = df[<span class="string">&quot;x&quot;</span>] * <span class="number">2</span></span><br><span class="line">t2 = time.perf_counter()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;apply 耗时   <span class="subst">&#123;(t1 - t0) * <span class="number">1000</span>:<span class="number">.0</span>f&#125;</span> ms&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;向量化 耗时  <span class="subst">&#123;(t2 - t1) * <span class="number">1000</span>:<span class="number">.1</span>f&#125;</span> ms&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;快约 <span class="subst">&#123;(t1 - t0) / (t2 - t1):<span class="number">.0</span>f&#125;</span> 倍&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;结果一致:&quot;</span>, np.allclose(r1, r2))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">apply 耗时   34 ms</span><br><span class="line">向量化 耗时  0.6 ms</span><br><span class="line">快约 57 倍</span><br><span class="line">结果一致: True</span><br></pre></td></tr></table></figure>
+
+<p><strong>替代方案速查</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>想做的事</th>
+<th>❌ 慢写法</th>
+<th>✅ 快写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>简单运算</td>
+<td><code>df[&quot;x&quot;].apply(lambda v: v * 2)</code></td>
+<td><code>df[&quot;x&quot;] * 2</code></td>
+</tr>
+<tr>
+<td>条件赋值（二选一）</td>
+<td><code>df[&quot;a&quot;].apply(lambda v: &quot;高&quot; if v &gt; 5 else &quot;低&quot;)</code></td>
+<td><code>np.where(df[&quot;a&quot;] &gt; 5, &quot;高&quot;, &quot;低&quot;)</code></td>
+</tr>
+<tr>
+<td>条件赋值（多分支）</td>
+<td>自定义函数 + apply</td>
+<td><code>np.select([...], [...], default=)</code></td>
+</tr>
+<tr>
+<td>分组后算统计</td>
+<td>循环 + apply</td>
+<td><code>df.groupby(k).agg(...)</code></td>
+</tr>
+<tr>
+<td>分组后广播回原表</td>
+<td>循环</td>
+<td><code>df.groupby(k)[&quot;v&quot;].transform(&quot;mean&quot;)</code></td>
+</tr>
+<tr>
+<td>字符串处理</td>
+<td>apply + 自定义</td>
+<td><code>.str.replace/.str.contains/.str.extract</code></td>
+</tr>
+<tr>
+<td>日期处理</td>
+<td>apply</td>
+<td><code>.dt.year/.dt.strftime</code></td>
+</tr>
+</tbody></table>
+<h3 id="6-2-大数据内存不足（MemoryError）"><a href="#6-2-大数据内存不足（MemoryError）" class="headerlink" title="6.2 大数据内存不足（MemoryError）"></a>6.2 大数据内存不足（<code>MemoryError</code>）</h3><p><strong>五个手段，按优先级排</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># ① usecols：只读需要的列（最有效）</span></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/california_housing.csv&quot;</span>,</span><br><span class="line">                 usecols=[<span class="string">&quot;longitude&quot;</span>, <span class="string">&quot;latitude&quot;</span>, <span class="string">&quot;median_house_value&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;① usecols 后:&quot;</span>, df.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;   内存: &#123;:.0f&#125; KB&quot;</span>.<span class="built_in">format</span>(df.memory_usage(deep=<span class="literal">True</span>).<span class="built_in">sum</span>() / <span class="number">1024</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># ② dtype 指定类型 + category 压缩字符串</span></span><br><span class="line">df2 = pd.read_csv(<span class="string">&quot;../data/california_housing.csv&quot;</span>,</span><br><span class="line">                  usecols=[<span class="string">&quot;ocean_proximity&quot;</span>, <span class="string">&quot;median_house_value&quot;</span>],</span><br><span class="line">                  dtype=&#123;<span class="string">&quot;ocean_proximity&quot;</span>: <span class="string">&quot;category&quot;</span>&#125;)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n② category 类型:&quot;</span>, df2.dtypes.tolist())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;   内存: &#123;:.0f&#125; KB&quot;</span>.<span class="built_in">format</span>(df2.memory_usage(deep=<span class="literal">True</span>).<span class="built_in">sum</span>() / <span class="number">1024</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># ③ nrows：先小样本探路</span></span><br><span class="line">df3 = pd.read_csv(<span class="string">&quot;../data/california_housing.csv&quot;</span>, nrows=<span class="number">1000</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n③ nrows=1000:&quot;</span>, df3.shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">① usecols 后: (20640, 3)</span><br><span class="line">   内存: 483 KB</span><br><span class="line"></span><br><span class="line">② category 类型: [&#x27;category&#x27;, &#x27;float64&#x27;]</span><br><span class="line">   内存: 200 KB</span><br><span class="line"></span><br><span class="line">③ nrows=1000: (1000, 10)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"><span class="comment"># ④ chunksize：分块处理（内存恒定）</span></span><br><span class="line">total = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> pd.read_csv(<span class="string">&quot;../data/california_housing.csv&quot;</span>,</span><br><span class="line">                         usecols=[<span class="string">&quot;median_house_value&quot;</span>], chunksize=<span class="number">5000</span>):</span><br><span class="line">    total += <span class="built_in">len</span>(chunk)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;④ 分块处理总行数:&quot;</span>, total)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ⑤ 换 Parquet（体积小 1/3，类型保留）</span></span><br><span class="line">df = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, parse_dates=[<span class="string">&quot;订单日期&quot;</span>])</span><br><span class="line">df.to_parquet(<span class="string">&quot;_test/chA3/perf.parquet&quot;</span>, index=<span class="literal">False</span>)</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n⑤ CSV 体积: &#123;:.0f&#125; KB&quot;</span>.<span class="built_in">format</span>(os.path.getsize(<span class="string">&quot;../data/sales_clean.csv&quot;</span>) / <span class="number">1024</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;   Parquet 体积: &#123;:.0f&#125; KB&quot;</span>.<span class="built_in">format</span>(os.path.getsize(<span class="string">&quot;_test/chA3/perf.parquet&quot;</span>) / <span class="number">1024</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">④ 分块处理总行数: 20640</span><br><span class="line"></span><br><span class="line">⑤ CSV 体积: 116 KB</span><br><span class="line">   Parquet 体积: 43 KB</span><br></pre></td></tr></table></figure>
+
+<p><strong>还有第六招</strong>：数据量上千万行时，考虑 <strong>polars</strong>（第 2 章 2.9.4 节介绍过）。</p>
+<hr>
+<h2 id="七、报错自查流程"><a href="#七、报错自查流程" class="headerlink" title="七、报错自查流程"></a>七、报错自查流程</h2><p>遇到报错，<strong>按这个顺序查</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">第1步：看报错的&quot;最后一行&quot;</span><br><span class="line">        → 那里写着错误类型（KeyError / ValueError / ...）和关键信息</span><br><span class="line">        → 前面的 &quot;File ... line N&quot; 是调用栈，用来定位是哪一行代码</span><br><span class="line"></span><br><span class="line">第2步：定位到自己的代码</span><br><span class="line">        → 调用栈里**最后一个属于你自己文件**的 &quot;line N&quot; 就是出错位置</span><br><span class="line">        → 库内部的那些帧不用看</span><br><span class="line"></span><br><span class="line">第3步：对照本手册的类型目录</span><br><span class="line">        → KeyError     → 3.1 / 3.5 / 3.6（列名、硬编码、loc/iloc 混用）</span><br><span class="line">        → ValueError   → 3.2 / 3.3（and/or、parse_dates）</span><br><span class="line">        → AttributeError → 1.2 / 1.7 / 3.4（applymap、round、.dt）</span><br><span class="line">        → TypeError    → 1.3（fillna method）</span><br><span class="line">        → FileNotFoundError → 2.3（工作目录）</span><br><span class="line">        → UnicodeDecodeError → 2.4（编码）</span><br><span class="line">        → 各种 Warning → 第 1 章、第 4 章</span><br><span class="line">        → 模型相关     → 第五章</span><br><span class="line"></span><br><span class="line">第4步：打印中间状态</span><br><span class="line">        → print(df.shape) / print(df.dtypes) / print(df.columns.tolist())</span><br><span class="line">        → 这三行能解决 80% 的 pandas 问题</span><br><span class="line"></span><br><span class="line">第5步：上网搜索</span><br><span class="line">        → 见下面&quot;搜索技巧&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="搜索技巧：怎么搜报错才能搜到答案"><a href="#搜索技巧：怎么搜报错才能搜到答案" class="headerlink" title="搜索技巧：怎么搜报错才能搜到答案"></a>搜索技巧：怎么搜报错才能搜到答案</h3><p><strong>❌ 错误搜法</strong>（搜不到）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KeyError: &#x27;我的表里的列名&#x27;</span><br><span class="line">ValueError: 我的数据不行</span><br></pre></td></tr></table></figure>
+
+<p><strong>✅ 正确搜法</strong>（去掉自己的变量名和数据值）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">① 只保留&quot;错误类型 + 通用消息&quot;，去掉自己的业务名词</span><br><span class="line">   搜：pandas resample Invalid frequency M use ME instead</span><br><span class="line">   不要搜：ValueError: Invalid frequency: M（我的销售数据）</span><br><span class="line"></span><br><span class="line">② 加上库名和版本</span><br><span class="line">   搜：pandas 3.0 applymap removed alternative</span><br><span class="line">   不要搜：applymap 报错</span><br><span class="line"></span><br><span class="line">③ 用英文搜（英文资料多 10 倍）</span><br><span class="line">   搜：pandas to_datetime mixed format ValueError time data doesn&#x27;t match format</span><br><span class="line">   不要搜：pandas 时间解析报错怎么办</span><br><span class="line"></span><br><span class="line">④ 报错信息里的&quot;建议&quot;直接照着做</span><br><span class="line">   比如 pandas 会告诉你：</span><br><span class="line">     &quot;Please use &#x27;ME&#x27; instead.&quot;</span><br><span class="line">     &quot;passing `format=&#x27;mixed&#x27;`&quot;</span><br><span class="line">   这些提示是官方给的解法，直接照做往往就对</span><br></pre></td></tr></table></figure>
+
+<h3 id="三条通用排错原则"><a href="#三条通用排错原则" class="headerlink" title="三条通用排错原则"></a>三条通用排错原则</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">原则1：先看数据类型，再看数据内容</span><br><span class="line">       print(df.dtypes)  ← 90% 的诡异问题都是类型不对</span><br><span class="line"></span><br><span class="line">原则2：先看形状，再看值</span><br><span class="line">       print(df.shape)   ← 形状不对说明前面的筛选/合并出了问题</span><br><span class="line"></span><br><span class="line">原则3：把大问题切成小问题</span><br><span class="line">       不要一口气写 30 行然后调试；</span><br><span class="line">       每写 5 行就跑一次 print，确认中间结果对</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、快速索引（按报错原文搜）"><a href="#八、快速索引（按报错原文搜）" class="headerlink" title="八、快速索引（按报错原文搜）"></a>八、快速索引（按报错原文搜）</h2><table>
+<thead>
+<tr>
+<th>报错原文关键词</th>
+<th>跳转到</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Invalid frequency: M</code></td>
+<td>1.1</td>
+</tr>
+<tr>
+<td><code>no attribute &#39;applymap&#39;</code></td>
+<td>1.2</td>
+</tr>
+<tr>
+<td><code>unexpected keyword argument &#39;method&#39;</code></td>
+<td>1.3</td>
+</tr>
+<tr>
+<td><code>doesn&#39;t match format</code> &#x2F; <code>format=&quot;mixed&quot;</code></td>
+<td>1.6</td>
+</tr>
+<tr>
+<td><code>&#39;float&#39; object has no attribute &#39;round&#39;</code></td>
+<td>1.7</td>
+</tr>
+<tr>
+<td><code>No module named &#39;pandas&#39;</code></td>
+<td>2.1</td>
+</tr>
+<tr>
+<td><code>&#39;conda&#39; 不是内部或外部命令</code></td>
+<td>2.2</td>
+</tr>
+<tr>
+<td><code>No such file or directory</code></td>
+<td>2.3</td>
+</tr>
+<tr>
+<td><code>UnicodeDecodeError</code></td>
+<td>2.4</td>
+</tr>
+<tr>
+<td><code>\ufeff</code></td>
+<td>2.5</td>
+</tr>
+<tr>
+<td><code>HTTP Error 403</code></td>
+<td>2.6</td>
+</tr>
+<tr>
+<td><code>KeyError: (&#39;城市&#39;, &#39;销售额&#39;)</code></td>
+<td>3.1</td>
+</tr>
+<tr>
+<td><code>truth value of a Series is ambiguous</code></td>
+<td>3.2</td>
+</tr>
+<tr>
+<td><code>Missing column provided to &#39;parse_dates&#39;</code></td>
+<td>3.3</td>
+</tr>
+<tr>
+<td><code>Can only use .dt accessor</code></td>
+<td>3.4</td>
+</tr>
+<tr>
+<td><code>KeyError: 0</code></td>
+<td>3.6</td>
+</tr>
+<tr>
+<td><code>observed=False is deprecated</code></td>
+<td>3.8</td>
+</tr>
+<tr>
+<td><code>Glyph ... missing from font</code></td>
+<td>4.1</td>
+</tr>
+<tr>
+<td><code>More than 20 figures</code></td>
+<td>4.4</td>
+</tr>
+<tr>
+<td><code>Input X contains NaN</code></td>
+<td>5.1</td>
+</tr>
+<tr>
+<td><code>could not convert string to float</code></td>
+<td>5.2</td>
+</tr>
+<tr>
+<td><code>ArrowInvalid</code></td>
+<td>第 2 章 2.5.4</td>
+</tr>
+<tr>
+<td><code>copy_on_write</code> &#x2F; <code>Pandas4Warning</code></td>
+<td>1.5</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="九、本手册的验证方式"><a href="#九、本手册的验证方式" class="headerlink" title="九、本手册的验证方式"></a>九、本手册的验证方式</h2><p>本手册里每个报错和修复方式都跑过。验证脚本：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$env:PYTHONIOENCODING</span>=<span class="string">&#x27;utf-8&#x27;</span></span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;&lt;教程目录&gt;\code&quot;</span></span><br><span class="line">&amp; D:\conda\miniconda3\envs\pyviz\python.exe verify_docs.py A3</span><br></pre></td></tr></table></figure>
+
+<p>如果某个修复方式在你的机器上不生效，<strong>先 <code>print(pd.__version__)</code></strong>——<br>很可能你的版本和我这里不同，行为也会有差异。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/a2-viz-cheatsheet/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">附录 A2 · 可视化速查表</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/09-project/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">09 项目实战</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-2" title="本机环境版本（先记住这个）"><a rel="nofollow" class="trm-toc-link" href="#本机环境版本（先记住这个）"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">本机环境版本（先记住这个）</span></a></li><li class="trm-toc-item trm-toc-level-2" title="一、pandas 3.0 破坏性变更（最容易踩，务必看）"><a rel="nofollow" class="trm-toc-link" href="#一、pandas-3-0-破坏性变更（最容易踩，务必看）"><span class="trm-toc-number">2.</span> <span class="trm-toc-text">一、pandas 3.0 破坏性变更（最容易踩，务必看）</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="1.1 resample(&quot;M&quot;) 已废弃 → 用 &quot;ME&quot;"><a rel="nofollow" class="trm-toc-link" href="#1-1-resample-M-已废弃-→-用-ME"><span class="trm-toc-number">2.1.</span> <span class="trm-toc-text">1.1 resample(&quot;M&quot;) 已废弃 → 用 &quot;ME&quot;</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.2 DataFrame.applymap 被彻底移除 → 用 DataFrame.map"><a rel="nofollow" class="trm-toc-link" href="#1-2-DataFrame-applymap-被彻底移除-→-用-DataFrame-map"><span class="trm-toc-number">2.2.</span> <span class="trm-toc-text">1.2 DataFrame.applymap 被彻底移除 → 用 DataFrame.map</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.3 fillna(method&#x3D;...) 被移除 → 用 ffill() &#x2F; bfill()"><a rel="nofollow" class="trm-toc-link" href="#1-3-fillna-method-被移除-→-用-ffill-bfill"><span class="trm-toc-number">2.3.</span> <span class="trm-toc-text">1.3 fillna(method&#x3D;...) 被移除 → 用 ffill() &#x2F; bfill()</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.4 字符串列的 dtype 从 object 变成了 str"><a rel="nofollow" class="trm-toc-link" href="#1-4-字符串列的-dtype-从-object-变成了-str"><span class="trm-toc-number">2.4.</span> <span class="trm-toc-text">1.4 字符串列的 dtype 从 object 变成了 str</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.5 Copy-on-Write 已强制开启且无法关闭"><a rel="nofollow" class="trm-toc-link" href="#1-5-Copy-on-Write-已强制开启且无法关闭"><span class="trm-toc-number">2.5.</span> <span class="trm-toc-text">1.5 Copy-on-Write 已强制开启且无法关闭</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.6 pd.to_datetime 混合格式必须显式声明"><a rel="nofollow" class="trm-toc-link" href="#1-6-pd-to-datetime-混合格式必须显式声明"><span class="trm-toc-number">2.6.</span> <span class="trm-toc-text">1.6 pd.to_datetime 混合格式必须显式声明</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.7 &#39;float&#39; object has no attribute &#39;round&#39;"><a rel="nofollow" class="trm-toc-link" href="#1-7-float-object-has-no-attribute-round"><span class="trm-toc-number">2.7.</span> <span class="trm-toc-text">1.7 &#39;float&#39; object has no attribute &#39;round&#39;</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.8 其他已移除的老 API"><a rel="nofollow" class="trm-toc-link" href="#1-8-其他已移除的老-API"><span class="trm-toc-number">2.8.</span> <span class="trm-toc-text">1.8 其他已移除的老 API</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="二、环境与导入类报错"><a rel="nofollow" class="trm-toc-link" href="#二、环境与导入类报错"><span class="trm-toc-number">3.</span> <span class="trm-toc-text">二、环境与导入类报错</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="2.1 ModuleNotFoundError: No module named &#39;pandas&#39;"><a rel="nofollow" class="trm-toc-link" href="#2-1-ModuleNotFoundError-No-module-named-pandas"><span class="trm-toc-number">3.1.</span> <span class="trm-toc-text">2.1 ModuleNotFoundError: No module named &#39;pandas&#39;</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.2 &#39;conda&#39; 不是内部或外部命令"><a rel="nofollow" class="trm-toc-link" href="#2-2-conda-不是内部或外部命令"><span class="trm-toc-number">3.2.</span> <span class="trm-toc-text">2.2 &#39;conda&#39; 不是内部或外部命令</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.3 FileNotFoundError: [Errno 2] No such file or directory: &#39;..&#x2F;data&#x2F;xxx.csv&#39;"><a rel="nofollow" class="trm-toc-link" href="#2-3-FileNotFoundError-Errno-2-No-such-file-or-directory-data-xxx-csv"><span class="trm-toc-number">3.3.</span> <span class="trm-toc-text">2.3 FileNotFoundError: [Errno 2] No such file or directory: &#39;..&#x2F;data&#x2F;xxx.csv&#39;</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.4 UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xb6"><a rel="nofollow" class="trm-toc-link" href="#2-4-UnicodeDecodeError-utf-8-codec-can-t-decode-byte-0xb6"><span class="trm-toc-number">3.4.</span> <span class="trm-toc-text">2.4 UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0xb6</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.5 首列名前面带 \ufeff（BOM 问题）"><a rel="nofollow" class="trm-toc-link" href="#2-5-首列名前面带-ufeff（BOM-问题）"><span class="trm-toc-number">3.5.</span> <span class="trm-toc-text">2.5 首列名前面带 \ufeff（BOM 问题）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.6 sklearn 在线数据集下载失败"><a rel="nofollow" class="trm-toc-link" href="#2-6-sklearn-在线数据集下载失败"><span class="trm-toc-number">3.6.</span> <span class="trm-toc-text">2.6 sklearn 在线数据集下载失败</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="三、pandas 使用类报错"><a rel="nofollow" class="trm-toc-link" href="#三、pandas-使用类报错"><span class="trm-toc-number">4.</span> <span class="trm-toc-text">三、pandas 使用类报错</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="3.1 KeyError: (&#39;城市&#39;, &#39;销售额&#39;) —— 多列忘了双层方括号"><a rel="nofollow" class="trm-toc-link" href="#3-1-KeyError-城市-销售额-——-多列忘了双层方括号"><span class="trm-toc-number">4.1.</span> <span class="trm-toc-text">3.1 KeyError: (&#39;城市&#39;, &#39;销售额&#39;) —— 多列忘了双层方括号</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.2 ValueError: The truth value of a Series is ambiguous"><a rel="nofollow" class="trm-toc-link" href="#3-2-ValueError-The-truth-value-of-a-Series-is-ambiguous"><span class="trm-toc-number">4.2.</span> <span class="trm-toc-text">3.2 ValueError: The truth value of a Series is ambiguous</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.3 ValueError: Missing column provided to &#39;parse_dates&#39;"><a rel="nofollow" class="trm-toc-link" href="#3-3-ValueError-Missing-column-provided-to-parse-dates"><span class="trm-toc-number">4.3.</span> <span class="trm-toc-text">3.3 ValueError: Missing column provided to &#39;parse_dates&#39;</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.4 AttributeError: Can only use .dt accessor with datetimelike values"><a rel="nofollow" class="trm-toc-link" href="#3-4-AttributeError-Can-only-use-dt-accessor-with-datetimelike-values"><span class="trm-toc-number">4.4.</span> <span class="trm-toc-text">3.4 AttributeError: Can only use .dt accessor with datetimelike values</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.5 KeyError: &#39;SO20230100001&#39; —— 硬编码了数据里的值"><a rel="nofollow" class="trm-toc-link" href="#3-5-KeyError-SO20230100001-——-硬编码了数据里的值"><span class="trm-toc-number">4.5.</span> <span class="trm-toc-text">3.5 KeyError: &#39;SO20230100001&#39; —— 硬编码了数据里的值</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.6 KeyError: 0 —— loc &#x2F; iloc 混用"><a rel="nofollow" class="trm-toc-link" href="#3-6-KeyError-0-——-loc-iloc-混用"><span class="trm-toc-number">4.6.</span> <span class="trm-toc-text">3.6 KeyError: 0 —— loc &#x2F; iloc 混用</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.7 merge 之后行数变多变少"><a rel="nofollow" class="trm-toc-link" href="#3-7-merge-之后行数变多变少"><span class="trm-toc-number">4.7.</span> <span class="trm-toc-text">3.7 merge 之后行数变多变少</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.8 FutureWarning: The default of observed&#x3D;False is deprecated"><a rel="nofollow" class="trm-toc-link" href="#3-8-FutureWarning-The-default-of-observed-False-is-deprecated"><span class="trm-toc-number">4.8.</span> <span class="trm-toc-text">3.8 FutureWarning: The default of observed&#x3D;False is deprecated</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.9 中文列名对齐难看"><a rel="nofollow" class="trm-toc-link" href="#3-9-中文列名对齐难看"><span class="trm-toc-number">4.9.</span> <span class="trm-toc-text">3.9 中文列名对齐难看</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.10 SettingWithCopyWarning 去哪了？"><a rel="nofollow" class="trm-toc-link" href="#3-10-SettingWithCopyWarning-去哪了？"><span class="trm-toc-number">4.10.</span> <span class="trm-toc-text">3.10 SettingWithCopyWarning 去哪了？</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="四、matplotlib &#x2F; seaborn 显示问题"><a rel="nofollow" class="trm-toc-link" href="#四、matplotlib-seaborn-显示问题"><span class="trm-toc-number">5.</span> <span class="trm-toc-text">四、matplotlib &#x2F; seaborn 显示问题</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="4.1 中文变方块（最常见）"><a rel="nofollow" class="trm-toc-link" href="#4-1-中文变方块（最常见）"><span class="trm-toc-number">5.1.</span> <span class="trm-toc-text">4.1 中文变方块（最常见）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.2 负号变方块"><a rel="nofollow" class="trm-toc-link" href="#4-2-负号变方块"><span class="trm-toc-number">5.2.</span> <span class="trm-toc-text">4.2 负号变方块</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.3 plt.show() 之后 savefig 保存出空白图"><a rel="nofollow" class="trm-toc-link" href="#4-3-plt-show-之后-savefig-保存出空白图"><span class="trm-toc-number">5.3.</span> <span class="trm-toc-text">4.3 plt.show() 之后 savefig 保存出空白图</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.4 RuntimeWarning: More than 20 figures have been opened"><a rel="nofollow" class="trm-toc-link" href="#4-4-RuntimeWarning-More-than-20-figures-have-been-opened"><span class="trm-toc-number">5.4.</span> <span class="trm-toc-text">4.4 RuntimeWarning: More than 20 figures have been opened</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.5 seaborn 的 set_theme 会覆盖字体设置"><a rel="nofollow" class="trm-toc-link" href="#4-5-seaborn-的-set-theme-会覆盖字体设置"><span class="trm-toc-number">5.5.</span> <span class="trm-toc-text">4.5 seaborn 的 set_theme 会覆盖字体设置</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.6 图片模糊"><a rel="nofollow" class="trm-toc-link" href="#4-6-图片模糊"><span class="trm-toc-number">5.6.</span> <span class="trm-toc-text">4.6 图片模糊</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.7 后端相关：matplotlib.use(&quot;Agg&quot;) 什么时候用"><a rel="nofollow" class="trm-toc-link" href="#4-7-后端相关：matplotlib-use-Agg-什么时候用"><span class="trm-toc-number">5.7.</span> <span class="trm-toc-text">4.7 后端相关：matplotlib.use(&quot;Agg&quot;) 什么时候用</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="五、机器学习类报错"><a rel="nofollow" class="trm-toc-link" href="#五、机器学习类报错"><span class="trm-toc-number">6.</span> <span class="trm-toc-text">五、机器学习类报错</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="5.1 ValueError: Input X contains NaN"><a rel="nofollow" class="trm-toc-link" href="#5-1-ValueError-Input-X-contains-NaN"><span class="trm-toc-number">6.1.</span> <span class="trm-toc-text">5.1 ValueError: Input X contains NaN</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.2 ValueError: could not convert string to float"><a rel="nofollow" class="trm-toc-link" href="#5-2-ValueError-could-not-convert-string-to-float"><span class="trm-toc-number">6.2.</span> <span class="trm-toc-text">5.2 ValueError: could not convert string to float</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.3 中文列名导致的问题"><a rel="nofollow" class="trm-toc-link" href="#5-3-中文列名导致的问题"><span class="trm-toc-number">6.3.</span> <span class="trm-toc-text">5.3 中文列名导致的问题</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.4 特征尺度差异导致 KNN&#x2F;SVM 效果差"><a rel="nofollow" class="trm-toc-link" href="#5-4-特征尺度差异导致-KNN-SVM-效果差"><span class="trm-toc-number">6.4.</span> <span class="trm-toc-text">5.4 特征尺度差异导致 KNN&#x2F;SVM 效果差</span></a></li><li class="trm-toc-item trm-toc-level-3" title="5.5 类别不平衡导致的指标误导"><a rel="nofollow" class="trm-toc-link" href="#5-5-类别不平衡导致的指标误导"><span class="trm-toc-number">6.5.</span> <span class="trm-toc-text">5.5 类别不平衡导致的指标误导</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="六、性能类问题"><a rel="nofollow" class="trm-toc-link" href="#六、性能类问题"><span class="trm-toc-number">7.</span> <span class="trm-toc-text">六、性能类问题</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="6.1 apply 太慢"><a rel="nofollow" class="trm-toc-link" href="#6-1-apply-太慢"><span class="trm-toc-number">7.1.</span> <span class="trm-toc-text">6.1 apply 太慢</span></a></li><li class="trm-toc-item trm-toc-level-3" title="6.2 大数据内存不足（MemoryError）"><a rel="nofollow" class="trm-toc-link" href="#6-2-大数据内存不足（MemoryError）"><span class="trm-toc-number">7.2.</span> <span class="trm-toc-text">6.2 大数据内存不足（MemoryError）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="七、报错自查流程"><a rel="nofollow" class="trm-toc-link" href="#七、报错自查流程"><span class="trm-toc-number">8.</span> <span class="trm-toc-text">七、报错自查流程</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="搜索技巧：怎么搜报错才能搜到答案"><a rel="nofollow" class="trm-toc-link" href="#搜索技巧：怎么搜报错才能搜到答案"><span class="trm-toc-number">8.1.</span> <span class="trm-toc-text">搜索技巧：怎么搜报错才能搜到答案</span></a></li><li class="trm-toc-item trm-toc-level-3" title="三条通用排错原则"><a rel="nofollow" class="trm-toc-link" href="#三条通用排错原则"><span class="trm-toc-number">8.2.</span> <span class="trm-toc-text">三条通用排错原则</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="八、快速索引（按报错原文搜）"><a rel="nofollow" class="trm-toc-link" href="#八、快速索引（按报错原文搜）"><span class="trm-toc-number">9.</span> <span class="trm-toc-text">八、快速索引（按报错原文搜）</span></a></li><li class="trm-toc-item trm-toc-level-2" title="九、本手册的验证方式"><a rel="nofollow" class="trm-toc-link" href="#九、本手册的验证方式"><span class="trm-toc-number">10.</span> <span class="trm-toc-text">九、本手册的验证方式</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,2899 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/pyviz/a1-pandas-cheatsheet/">
+<meta name="description" content="适用环境：Python 3.11.16 &#x2F; pandas 3.0.6 &#x2F; numpy 2.4.6用法：Ctrl+F 搜函数名，找到就用。每条都配了能直接复制运行的代码。代码里的 df 指 ..&#x2F;data&#x2F;sales_clean.csv（1064 行 × 14 列），stu 指 ..&#x2F;data&#x2F;students.csv，ts 指 ..&#x2F;data&#x2F;timeseries.csv。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="附录 A1 · Pandas 速查表">
+<meta property="og:url" content="https://blog.tdcqcx.cn/pyviz/a1-pandas-cheatsheet/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="适用环境：Python 3.11.16 &#x2F; pandas 3.0.6 &#x2F; numpy 2.4.6用法：Ctrl+F 搜函数名，找到就用。每条都配了能直接复制运行的代码。代码里的 df 指 ..&#x2F;data&#x2F;sales_clean.csv（1064 行 × 14 列），stu 指 ..&#x2F;data&#x2F;students.csv，ts 指 ..&#x2F;data&#x2F;timeseries.csv。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="数据分析与可视化">
+<meta property="article:tag" content="速查表">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Python 数据分析, 数据可视化, 附录 A1 · Pandas 速查表, Pandas, NumPy, Matplotlib, 教程">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"附录 A1 · Pandas 速查表","datePublished":"2026-09-26T02:00:00.000Z","dateModified":"2026-09-26T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/pyviz/a1-pandas-cheatsheet/","image":"https://blog.tdcqcx.cn/post-covers/pyviz.jpg"}
+</script>
+
+
+<title >附录 A1 · Pandas 速查表</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-26 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/pyviz.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/pyviz.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            附录 A1 · Pandas 速查表
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            附录 A1 · Pandas 速查表
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        pyviz
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/26
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <blockquote>
+<p>适用环境：Python 3.11.16 &#x2F; pandas <strong>3.0.6</strong> &#x2F; numpy 2.4.6<br>用法：<strong>Ctrl+F 搜函数名</strong>，找到就用。每条都配了能直接复制运行的代码。<br>代码里的 <code>df</code> 指 <code>../data/sales_clean.csv</code>（1064 行 × 14 列），<br><code>stu</code> 指 <code>../data/students.csv</code>，<code>ts</code> 指 <code>../data/timeseries.csv</code>。</p>
+</blockquote>
+<hr>
+<h2 id="A1-0-先用这-6-行把环境搭好"><a href="#A1-0-先用这-6-行把环境搭好" class="headerlink" title="A1.0 先用这 6 行把环境搭好"></a>A1.0 先用这 6 行把环境搭好</h2><p>后面的每一段代码都假设你已经跑过下面这块。<strong>只跑一次</strong>，不用重复。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np                      <span class="comment"># 数值计算</span></span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd                     <span class="comment"># 主角</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt         <span class="comment"># 有些例子要画图</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 中文图表必须的两行，缺第二行负号会变成方块（详见 A2 速查表）</span></span><br><span class="line">plt.rcParams[<span class="string">&quot;font.sans-serif&quot;</span>] = [<span class="string">&quot;Microsoft YaHei&quot;</span>]</span><br><span class="line">plt.rcParams[<span class="string">&quot;axes.unicode_minus&quot;</span>] = <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 让表格打印出来对齐、不被省略号截断</span></span><br><span class="line">pd.set_option(<span class="string">&quot;display.unicode.east_asian_width&quot;</span>, <span class="literal">True</span>)</span><br><span class="line">pd.set_option(<span class="string">&quot;display.width&quot;</span>, <span class="number">300</span>)</span><br><span class="line">pd.set_option(<span class="string">&quot;display.max_columns&quot;</span>, <span class="number">60</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"># 三张最常用的表，本节所有例子都基于它们</span><br><span class="line">df = pd.read_csv(&quot;../data/sales_clean.csv&quot;, parse_dates=[&quot;订单日期&quot;])   # 销售明细</span><br><span class="line">stu = pd.read_csv(&quot;../data/students.csv&quot;)                              # 学生成绩</span><br><span class="line">ts = pd.read_csv(&quot;../data/timeseries.csv&quot;, parse_dates=[&quot;日期&quot;]).set_index(&quot;日期&quot;)</span><br><span class="line"></span><br><span class="line">print(df.shape, stu.shape, ts.shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(1064, 14) (300, 12) (1096, 3)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>路径必须是 <code>../data/...</code></strong>：教程约定你在 <code>code</code> 目录里启动 Jupyter。<br>如果你看到 <code>FileNotFoundError</code>，先确认当前目录（A3 手册 B 节有排查步骤）。</p>
+</blockquote>
+<hr>
+<h2 id="A1-1-数据读取"><a href="#A1-1-数据读取" class="headerlink" title="A1.1 数据读取"></a>A1.1 数据读取</h2><h3 id="A1-1-1-pd-read-csv-全部常用参数"><a href="#A1-1-1-pd-read-csv-全部常用参数" class="headerlink" title="A1.1.1 pd.read_csv 全部常用参数"></a>A1.1.1 <code>pd.read_csv</code> 全部常用参数</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>常用取值 &#x2F; 示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sep</code></td>
+<td>字段分隔符。默认 <code>&quot;,&quot;</code>，读 TSV 要用制表符</td>
+<td><code>sep=&quot;\t&quot;</code>、<code>sep=&quot;;&quot;</code>、<code>sep=r&quot;\s+&quot;</code></td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td><code>sep</code> 的老名字，功能完全一样</td>
+<td><code>delimiter=&quot;\t&quot;</code>（新代码统一用 <code>sep</code>）</td>
+</tr>
+<tr>
+<td><code>encoding</code></td>
+<td>文件编码。中文 CSV 常见两种：UTF-8 和 GBK</td>
+<td><code>encoding=&quot;utf-8&quot;</code>、<code>&quot;utf-8-sig&quot;</code>、<code>&quot;gbk&quot;</code></td>
+</tr>
+<tr>
+<td><code>header</code></td>
+<td>用第几行当列名。<code>0</code> 是第一行，<code>None</code> 表示没有表头</td>
+<td><code>header=0</code>、<code>header=None</code>、<code>header=2</code></td>
+</tr>
+<tr>
+<td><code>names</code></td>
+<td>自己指定列名（和 <code>header=None</code> 搭配）</td>
+<td><code>names=[&quot;城市&quot;, &quot;销售额&quot;]</code></td>
+</tr>
+<tr>
+<td><code>index_col</code></td>
+<td>把哪一列设为行索引</td>
+<td><code>index_col=&quot;订单编号&quot;</code>、<code>index_col=0</code></td>
+</tr>
+<tr>
+<td><code>usecols</code></td>
+<td>只读这几列，<strong>大文件提速第一招</strong></td>
+<td><code>usecols=[&quot;订单编号&quot;, &quot;城市&quot;, &quot;销售额&quot;]</code></td>
+</tr>
+<tr>
+<td><code>dtype</code></td>
+<td>指定列的类型，避免 pandas 猜错</td>
+<td><code>dtype=&#123;&quot;客户年龄&quot;: &quot;float32&quot;, &quot;订单编号&quot;: str&#125;</code></td>
+</tr>
+<tr>
+<td><code>parse_dates</code></td>
+<td>把这几列解析成日期类型</td>
+<td><code>parse_dates=[&quot;订单日期&quot;]</code></td>
+</tr>
+<tr>
+<td><code>date_format</code></td>
+<td>日期格式；多种格式混排时必须写 <code>&quot;mixed&quot;</code></td>
+<td><code>date_format=&quot;mixed&quot;</code>、<code>date_format=&quot;%Y-%m-%d&quot;</code></td>
+</tr>
+<tr>
+<td><code>na_values</code></td>
+<td>除了默认空值，还把这些字符串当缺失值</td>
+<td><code>na_values=[&quot;无&quot;, &quot;N/A&quot;, &quot;-&quot;, &quot;未知&quot;]</code></td>
+</tr>
+<tr>
+<td><code>nrows</code></td>
+<td>只读前 N 行，<strong>看数据结构时必用</strong></td>
+<td><code>nrows=100</code></td>
+</tr>
+<tr>
+<td><code>skiprows</code></td>
+<td>跳过开头的行（表头上面有说明文字时用）</td>
+<td><code>skiprows=3</code>、<code>skiprows=[1, 2]</code></td>
+</tr>
+<tr>
+<td><code>encoding_errors</code></td>
+<td>遇到非法字节怎么办</td>
+<td><code>encoding_errors=&quot;replace&quot;</code>（最实用）&#x2F; <code>&quot;ignore&quot;</code> &#x2F; <code>&quot;strict&quot;</code></td>
+</tr>
+<tr>
+<td><code>chunksize</code></td>
+<td>分块读，返回迭代器，<strong>内存不够时的救命参数</strong></td>
+<td><code>chunksize=100_000</code></td>
+</tr>
+<tr>
+<td><code>keep_default_na</code></td>
+<td>是否把默认空值串（<code>&quot;&quot;</code>、<code>NA</code>、<code>NULL</code>）当缺失</td>
+<td><code>keep_default_na=False</code></td>
+</tr>
+</tbody></table>
+<p><code>sep</code> &#x2F; <code>names</code> &#x2F; <code>header=None</code> 的用法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 造一个制表符分隔、没有表头的文件，演示 sep + names</span></span><br><span class="line">pd.DataFrame(&#123;<span class="string">&quot;a&quot;</span>: [<span class="number">1</span>, <span class="number">2</span>], <span class="string">&quot;b&quot;</span>: [<span class="number">3</span>, <span class="number">4</span>]&#125;).to_csv(</span><br><span class="line">    <span class="string">&quot;_test/appendix/_a1_tab.txt&quot;</span>, sep=<span class="string">&quot;\t&quot;</span>, index=<span class="literal">False</span>, header=<span class="literal">False</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># sep 指定分隔符，names 补上列名，header=None 表示文件里本来没有列名</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_csv(<span class="string">&quot;_test/appendix/_a1_tab.txt&quot;</span>, sep=<span class="string">&quot;\t&quot;</span>, header=<span class="literal">None</span>,</span><br><span class="line">                  names=[<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>]).to_dict(<span class="string">&quot;list&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;x&#x27;: [1, 2], &#x27;y&#x27;: [3, 4]&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>usecols</code> &#x2F; <code>index_col</code> &#x2F; <code>dtype</code> &#x2F; <code>nrows</code> 一次性演示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">small = pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>,</span><br><span class="line">                    usecols=[<span class="string">&quot;订单编号&quot;</span>, <span class="string">&quot;城市&quot;</span>, <span class="string">&quot;客户年龄&quot;</span>],  <span class="comment"># 只读 3 列，快很多</span></span><br><span class="line">                    index_col=<span class="string">&quot;订单编号&quot;</span>,                     <span class="comment"># 订单号当行索引</span></span><br><span class="line">                    dtype=&#123;<span class="string">&quot;客户年龄&quot;</span>: <span class="string">&quot;float32&quot;</span>&#125;,             <span class="comment"># 省内存的写法</span></span><br><span class="line">                    nrows=<span class="number">3</span>)                                  <span class="comment"># 只读前 3 行</span></span><br><span class="line"><span class="built_in">print</span>(small)</span><br><span class="line"><span class="built_in">print</span>(small[<span class="string">&quot;客户年龄&quot;</span>].dtype)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">               城市  客户年龄</span><br><span class="line">订单编号                     </span><br><span class="line">SO20230300508  杭州      32.0</span><br><span class="line">SO20231100279  成都      28.0</span><br><span class="line">SO20231200633  杭州      31.0</span><br><span class="line">float32</span><br></pre></td></tr></table></figure>
+
+<p><code>skiprows</code> 的坑和正确写法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># skiprows=3 会把表头也一起跳过，列名就丢了 —— 这时要配 header=None</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">2</span>, skiprows=<span class="number">3</span>, header=<span class="literal">None</span>).shape)</span><br><span class="line"><span class="comment"># 想&quot;保留表头、只跳过某几行数据&quot;，用列表形式</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">2</span>, skiprows=[<span class="number">1</span>, <span class="number">2</span>])[<span class="string">&quot;订单编号&quot;</span>].tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(2, 14)</span><br><span class="line">[&#x27;SO20231200633&#x27;, &#x27;SO20241001045&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p><code>na_values</code> 与「空字符串不是缺失值」：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 默认情况下，&quot;杭州&quot; 是正常值；把它写进 na_values 后就会被当成缺失</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, nrows=<span class="number">3</span>, na_values=[<span class="string">&quot;杭州&quot;</span>])[<span class="string">&quot;城市&quot;</span>].isna().<span class="built_in">sum</span>())</span><br><span class="line"><span class="comment"># 反过来：keep_default_na=False 会让 pandas 连空字符串都不当缺失</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_csv(<span class="string">&quot;../data/sales.csv&quot;</span>, nrows=<span class="number">3</span>, keep_default_na=<span class="literal">False</span>)[<span class="string">&quot;客户性别&quot;</span>].tolist()[:<span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2</span><br><span class="line">[&#x27;男&#x27;, &#x27;女&#x27;, &#x27;女&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p><code>chunksize</code> 分块读大文件：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">total = <span class="number">0</span></span><br><span class="line"><span class="comment"># 每次只把 300 行装进内存，累加完就丢掉，几 GB 的 CSV 也能算</span></span><br><span class="line"><span class="keyword">for</span> chunk <span class="keyword">in</span> pd.read_csv(<span class="string">&quot;../data/sales_clean.csv&quot;</span>, usecols=[<span class="string">&quot;销售额&quot;</span>], chunksize=<span class="number">300</span>):</span><br><span class="line">    total += <span class="built_in">len</span>(chunk)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;总行数:&quot;</span>, total)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">总行数: 1064</span><br></pre></td></tr></table></figure>
+
+<p><code>encoding_errors</code> 处理脏字节：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 造一个含非法字节的 csv（\ufffd 是替换字符，模拟编码坏掉的数据）</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;_test/appendix/_a1_bad.csv&quot;</span>, <span class="string">&quot;w&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">&quot;城市,销售额\n北京,100\n上海\ufffd,200\n&quot;</span>)</span><br><span class="line"><span class="comment"># replace: 坏字符换成占位符，程序继续跑（最实用）</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_csv(<span class="string">&quot;_test/appendix/_a1_bad.csv&quot;</span>, encoding_errors=<span class="string">&quot;replace&quot;</span>)[<span class="string">&quot;城市&quot;</span>].tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;北京&#x27;, &#x27;上海�&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="A1-1-2-pd-read-excel"><a href="#A1-1-2-pd-read-excel" class="headerlink" title="A1.1.2 pd.read_excel"></a>A1.1.2 <code>pd.read_excel</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先看一个 Excel 文件里都有哪些工作表</span></span><br><span class="line"><span class="built_in">print</span>(pd.ExcelFile(<span class="string">&quot;../data/销售与会员.xlsx&quot;</span>).sheet_names)</span><br><span class="line"><span class="comment"># sheet_name 可以是表名、序号，也可以是 None（一次性读全部工作表，返回字典）</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_excel(<span class="string">&quot;../data/销售与会员.xlsx&quot;</span>, sheet_name=<span class="string">&quot;销售明细&quot;</span>).shape)</span><br><span class="line"><span class="built_in">print</span>(pd.read_excel(<span class="string">&quot;../data/销售与会员.xlsx&quot;</span>, sheet_name=<span class="literal">None</span>).keys())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;销售明细&#x27;, &#x27;会员信息&#x27;, &#x27;品类目标&#x27;]</span><br><span class="line">(300, 14)</span><br><span class="line">dict_keys([&#x27;销售明细&#x27;, &#x27;会员信息&#x27;, &#x27;品类目标&#x27;])</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sheet_name</code></td>
+<td>工作表：名字 &#x2F; 序号 &#x2F; <code>None</code>(全部) &#x2F; 列表</td>
+<td><code>sheet_name=&quot;会员信息&quot;</code>、<code>sheet_name=0</code>、<code>sheet_name=None</code></td>
+</tr>
+<tr>
+<td><code>skiprows</code></td>
+<td>表头上面有空行、说明文字时跳过</td>
+<td><code>skiprows=2</code></td>
+</tr>
+<tr>
+<td><code>header</code></td>
+<td>用第几行当表头</td>
+<td><code>header=0</code>、<code>header=None</code></td>
+</tr>
+<tr>
+<td><code>dtype</code></td>
+<td>指定列类型（<strong>证件号、手机号一定要用 <code>str</code></strong>，否则前导 0 会消失）</td>
+<td><code>dtype=&#123;&quot;会员编号&quot;: str&#125;</code></td>
+</tr>
+<tr>
+<td><code>usecols</code></td>
+<td>只读部分列</td>
+<td><code>usecols=&quot;A:C&quot;</code>（Excel 列字母也行）</td>
+</tr>
+<tr>
+<td><code>nrows</code></td>
+<td>只读前 N 行</td>
+<td><code>nrows=100</code></td>
+</tr>
+<tr>
+<td><code>na_values</code></td>
+<td>额外视为缺失的值</td>
+<td><code>na_values=[&quot;无&quot;, &quot;NA&quot;]</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># &quot;品类目标&quot; 表的前两行是说明文字，表头在第 3 行 —— 必须 skiprows=2</span></span><br><span class="line">tgt = pd.read_excel(<span class="string">&quot;../data/销售与会员.xlsx&quot;</span>, sheet_name=<span class="string">&quot;品类目标&quot;</span>, skiprows=<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(tgt.shape, tgt.columns.tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(5, 3) [&#x27;商品类别&#x27;, &#x27;负责人&#x27;, &#x27;目标销售额&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="A1-1-3-pd-read-json-read-sql-read-parquet"><a href="#A1-1-3-pd-read-json-read-sql-read-parquet" class="headerlink" title="A1.1.3 pd.read_json &#x2F; read_sql &#x2F; read_parquet"></a>A1.1.3 <code>pd.read_json</code> &#x2F; <code>read_sql</code> &#x2F; <code>read_parquet</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># JSON：默认按行解析；orient 参数要和写出去时一致</span></span><br><span class="line">pd.DataFrame(&#123;<span class="string">&quot;城市&quot;</span>: [<span class="string">&quot;北京&quot;</span>, <span class="string">&quot;上海&quot;</span>], <span class="string">&quot;销售额&quot;</span>: [<span class="number">100</span>, <span class="number">200</span>]&#125;).to_json(</span><br><span class="line">    <span class="string">&quot;_test/appendix/_a1_demo.json&quot;</span>, orient=<span class="string">&quot;records&quot;</span>, force_ascii=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(pd.read_json(<span class="string">&quot;_test/appendix/_a1_demo.json&quot;</span>).to_dict(<span class="string">&quot;list&quot;</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;城市&#x27;: [&#x27;北京&#x27;, &#x27;上海&#x27;], &#x27;销售额&#x27;: [100, 200]&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sqlite3</span><br><span class="line"></span><br><span class="line"><span class="comment"># read_sql：把 SQL 查询结果直接变成 DataFrame。</span></span><br><span class="line"><span class="comment"># 强烈建议写完整 SQL（含聚合、筛选），让数据库算，比读出来再用 pandas 算快得多。</span></span><br><span class="line"><span class="comment"># 注意：数据库里的城市名前后带空格（&#x27; 上海 &#x27;），要在 SQL 里用 TRIM 处理干净</span></span><br><span class="line"><span class="keyword">with</span> sqlite3.connect(<span class="string">&quot;../data/company.db&quot;</span>) <span class="keyword">as</span> con:</span><br><span class="line">    q = <span class="string">&quot;SELECT TRIM(城市) AS 城市, ROUND(SUM(销售额), 2) AS 总额 FROM sales GROUP BY TRIM(城市)&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(pd.read_sql(q, con).set_index(<span class="string">&quot;城市&quot;</span>)[<span class="string">&quot;总额&quot;</span>].sort_values(ascending=<span class="literal">False</span>).to_dict())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;北京&#x27;: 338951.64, &#x27;深圳&#x27;: 288815.83, &#x27;广州&#x27;: 261782.96, &#x27;杭州&#x27;: 242979.88, &#x27;上海&#x27;: 212927.65, &#x27;成都&#x27;: 145536.91, &#x27;武汉&#x27;:</span><br><span class="line">   122399.77, &#x27;西安&#x27;: 116427.91&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Parquet：列式存储，比 CSV 小、比 CSV 快，且自带数据类型，是本地分析的首选格式</span></span><br><span class="line">df.head(<span class="number">100</span>).to_parquet(<span class="string">&quot;_test/appendix/_a1_demo.parquet&quot;</span>, index=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(pd.read_parquet(<span class="string">&quot;_test/appendix/_a1_demo.parquet&quot;</span>).shape)</span><br><span class="line"><span class="comment"># read_parquet 支持只读部分列：只取需要的列时，速度提升非常明显</span></span><br><span class="line"><span class="built_in">print</span>(pd.read_parquet(<span class="string">&quot;_test/appendix/_a1_demo.parquet&quot;</span>, columns=[<span class="string">&quot;城市&quot;</span>]).columns.tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(100, 14)</span><br><span class="line">[&#x27;城市&#x27;]</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="A1-2-数据写出"><a href="#A1-2-数据写出" class="headerlink" title="A1.2 数据写出"></a>A1.2 数据写出</h2><h3 id="A1-2-1-五种写出方式对照"><a href="#A1-2-1-五种写出方式对照" class="headerlink" title="A1.2.1 五种写出方式对照"></a>A1.2.1 五种写出方式对照</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>适用场景</th>
+<th>关键参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>to_csv</code></td>
+<td>通用、可读、给别的软件用</td>
+<td><code>index=False</code>（几乎总要用）、<code>encoding=&quot;utf-8-sig&quot;</code>（Excel 打开不乱码）、<code>sep</code>、<code>na_rep</code></td>
+</tr>
+<tr>
+<td><code>to_excel</code></td>
+<td>给同事看、要格式&#x2F;多工作表</td>
+<td><code>sheet_name</code>、<code>index=False</code>、<code>startrow</code>、<code>freeze_panes</code></td>
+</tr>
+<tr>
+<td><code>to_parquet</code></td>
+<td><strong>本地反复读写时首选</strong>，小且快</td>
+<td><code>compression=&quot;snappy&quot;</code>、<code>index=False</code></td>
+</tr>
+<tr>
+<td><code>to_json</code></td>
+<td>给前端&#x2F;接口用</td>
+<td><code>orient=&quot;records&quot;</code>（最通用）、<code>force_ascii=False</code>（中文不转义）</td>
+</tr>
+<tr>
+<td><code>to_sql</code></td>
+<td>存进数据库</td>
+<td><code>if_exists=&quot;replace&quot;</code>&#x2F;<code>&quot;append&quot;</code>、<code>index=False</code>、<code>dtype</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">out = df.head(<span class="number">20</span>)</span><br><span class="line"></span><br><span class="line">out.to_csv(<span class="string">&quot;_test/appendix/_a1_out.csv&quot;</span>, index=<span class="literal">False</span>, encoding=<span class="string">&quot;utf-8-sig&quot;</span>)</span><br><span class="line">out.to_excel(<span class="string">&quot;_test/appendix/_a1_out.xlsx&quot;</span>, sheet_name=<span class="string">&quot;明细&quot;</span>, index=<span class="literal">False</span>)</span><br><span class="line">out.to_parquet(<span class="string">&quot;_test/appendix/_a1_out.parquet&quot;</span>, index=<span class="literal">False</span>, compression=<span class="string">&quot;snappy&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">for</span> f <span class="keyword">in</span> [<span class="string">&quot;_a1_out.csv&quot;</span>, <span class="string">&quot;_a1_out.xlsx&quot;</span>, <span class="string">&quot;_a1_out.parquet&quot;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(f, os.path.getsize(<span class="string">&quot;_test/appendix/&quot;</span> + f), <span class="string">&quot;字节&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_a1_out.csv 2422 字节</span><br><span class="line">_a1_out.xlsx 7118 字节</span><br><span class="line">_a1_out.parquet 10410 字节</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 20 行的表 Parquet 反而更大（它要存元数据）。数据量上千行以后<br>Parquet 的体积和读取速度才会明显优于 CSV，选型看的是”行数”不是”习惯”。</p>
+</blockquote>
+<p>一次写出多个工作表：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ExcelWriter 上下文管理器：一个文件里写多张表</span></span><br><span class="line"><span class="keyword">with</span> pd.ExcelWriter(<span class="string">&quot;_test/appendix/_a1_multi.xlsx&quot;</span>) <span class="keyword">as</span> w:</span><br><span class="line">    df.head(<span class="number">5</span>).to_excel(w, sheet_name=<span class="string">&quot;前5行&quot;</span>, index=<span class="literal">False</span>)</span><br><span class="line">    df.tail(<span class="number">5</span>).to_excel(w, sheet_name=<span class="string">&quot;后5行&quot;</span>, index=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(pd.ExcelFile(<span class="string">&quot;_test/appendix/_a1_multi.xlsx&quot;</span>).sheet_names)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;前5行&#x27;, &#x27;后5行&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="A1-2-2-格式选型建议（照这张表选就够）"><a href="#A1-2-2-格式选型建议（照这张表选就够）" class="headerlink" title="A1.2.2 格式选型建议（照这张表选就够）"></a>A1.2.2 格式选型建议（照这张表选就够）</h3><table>
+<thead>
+<tr>
+<th>你的需求</th>
+<th>选它</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>交给别人 &#x2F; 在 Excel 里打开</td>
+<td><code>to_csv(encoding=&quot;utf-8-sig&quot;)</code> 或 <code>to_excel</code></td>
+<td><code>utf-8-sig</code> 带 BOM，Excel 双击不乱码</td>
+</tr>
+<tr>
+<td>自己下次还要读回来</td>
+<td><code>to_parquet</code></td>
+<td>快、小、类型不丢</td>
+</tr>
+<tr>
+<td>数据里有换行、逗号</td>
+<td><code>to_csv</code>（默认会自动加引号）</td>
+<td>或改用 <code>to_parquet</code></td>
+</tr>
+<tr>
+<td>要存几百万行</td>
+<td><code>to_parquet</code></td>
+<td>CSV 会很大很慢</td>
+</tr>
+<tr>
+<td>要给网页&#x2F;App</td>
+<td><code>to_json(orient=&quot;records&quot;, force_ascii=False)</code></td>
+<td>前端直接能解析</td>
+</tr>
+<tr>
+<td>要存数据库给多人共享</td>
+<td><code>to_sql</code></td>
+<td>支持增量 <code>if_exists=&quot;append&quot;</code></td>
+</tr>
+</tbody></table>
+<p>中文编码的直观对比：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 三种编码写同一个文件，看前 12 个字节就知道区别</span></span><br><span class="line">df.head(<span class="number">3</span>)[[<span class="string">&quot;城市&quot;</span>, <span class="string">&quot;销售额&quot;</span>]].to_csv(<span class="string">&quot;_test/appendix/_a1_utf8.csv&quot;</span>,</span><br><span class="line">                                      index=<span class="literal">False</span>, encoding=<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line">df.head(<span class="number">3</span>)[[<span class="string">&quot;城市&quot;</span>, <span class="string">&quot;销售额&quot;</span>]].to_csv(<span class="string">&quot;_test/appendix/_a1_bom.csv&quot;</span>,</span><br><span class="line">                                      index=<span class="literal">False</span>, encoding=<span class="string">&quot;utf-8-sig&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> [<span class="string">&quot;_a1_utf8.csv&quot;</span>, <span class="string">&quot;_a1_bom.csv&quot;</span>]:</span><br><span class="line">    head = <span class="built_in">open</span>(<span class="string">&quot;_test/appendix/&quot;</span> + n, <span class="string">&quot;rb&quot;</span>).read(<span class="number">9</span>)     <span class="comment"># 读原始字节</span></span><br><span class="line">    <span class="built_in">print</span>(n, head)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">_a1_utf8.csv b&#x27;\xe5\x9f\x8e\xe5\xb8\x82,\xe9\x94&#x27;</span><br><span class="line">_a1_bom.csv b&#x27;\xef\xbb\xbf\xe5\x9f\x8e\xe5\xb8\x82&#x27;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>utf-8-sig</code> 就是普通 UTF-8 前面多了 <code>EF BB BF</code> 三个字节（BOM）。<br>Excel 靠这三个字节判断编码，所以加了它才不乱码。</p>
+</blockquote>
+<hr>
+<h2 id="A1-3-查看数据：拿到表先做这-17-件事"><a href="#A1-3-查看数据：拿到表先做这-17-件事" class="headerlink" title="A1.3 查看数据：拿到表先做这 17 件事"></a>A1.3 查看数据：拿到表先做这 17 件事</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;① 头几行&quot;</span>); <span class="built_in">print</span>(df.head(<span class="number">3</span>)[[<span class="string">&quot;订单编号&quot;</span>, <span class="string">&quot;城市&quot;</span>, <span class="string">&quot;销售额&quot;</span>]])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;② 随机抽样（看整体面貌比 head 更可靠）&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(df.sample(<span class="number">3</span>, random_state=<span class="number">0</span>)[[<span class="string">&quot;订单编号&quot;</span>, <span class="string">&quot;城市&quot;</span>, <span class="string">&quot;销售额&quot;</span>]])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">① 头几行</span><br><span class="line">        订单编号  城市    销售额</span><br><span class="line">0  SO20230300508  杭州   3313.80</span><br><span class="line">1  SO20231100279  成都  15717.66</span><br><span class="line">2  SO20231200633  杭州    853.09</span><br><span class="line">② 随机抽样（看整体面貌比 head 更可靠）</span><br><span class="line">          订单编号  城市   销售额</span><br><span class="line">175  SO20230900987  成都   826.77</span><br><span class="line">986  SO20230300198  成都  2306.61</span><br><span class="line">686  SO20230200068  武汉   297.81</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df.shape)                            <span class="comment"># (行数, 列数)</span></span><br><span class="line"><span class="built_in">print</span>(df.dtypes.to_string())               <span class="comment"># 每列类型：pandas 3.0 里字符串是 str</span></span><br><span class="line"><span class="built_in">print</span>(df.columns.tolist()[:<span class="number">5</span>])             <span class="comment"># 列名</span></span><br><span class="line"><span class="built_in">print</span>(df.index[:<span class="number">3</span>].tolist())               <span class="comment"># 行索引</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">(1064, 14)</span><br><span class="line">订单编号               str</span><br><span class="line">订单日期    datetime64[us]</span><br><span class="line">省份区域               str</span><br><span class="line">城市                   str</span><br><span class="line">商品类别               str</span><br><span class="line">商品名称               str</span><br><span class="line">单价               float64</span><br><span class="line">数量                 int64</span><br><span class="line">折扣               float64</span><br><span class="line">销售额             float64</span><br><span class="line">客户年龄           float64</span><br><span class="line">客户性别               str</span><br><span class="line">支付方式               str</span><br><span class="line">下单渠道               str</span><br><span class="line">[&#x27;订单编号&#x27;, &#x27;订单日期&#x27;, &#x27;省份区域&#x27;, &#x27;城市&#x27;, &#x27;商品类别&#x27;]</span><br><span class="line">[0, 1, 2]</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>一句话作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>head(n)</code></td>
+<td>看前 n 行（默认 5）</td>
+<td><code>df.head(10)</code></td>
+</tr>
+<tr>
+<td><code>tail(n)</code></td>
+<td>看最后 n 行</td>
+<td><code>df.tail(3)</code></td>
+</tr>
+<tr>
+<td><code>sample(n)</code></td>
+<td>随机抽 n 行，看分布比看头几行更靠谱</td>
+<td><code>df.sample(5, random_state=0)</code></td>
+</tr>
+<tr>
+<td><code>shape</code></td>
+<td><code>(行, 列)</code> 元组</td>
+<td><code>df.shape</code></td>
+</tr>
+<tr>
+<td><code>info()</code></td>
+<td>每列类型 + <strong>非空数量</strong> + 内存占用，最重要</td>
+<td><code>df.info()</code></td>
+</tr>
+<tr>
+<td><code>describe()</code></td>
+<td>数值列统计摘要（count&#x2F;mean&#x2F;std&#x2F;分位数）</td>
+<td><code>df.describe().round(2)</code></td>
+</tr>
+<tr>
+<td><code>dtypes</code></td>
+<td>只看类型</td>
+<td><code>df.dtypes</code></td>
+</tr>
+<tr>
+<td><code>columns</code></td>
+<td>列名索引</td>
+<td><code>df.columns.tolist()</code></td>
+</tr>
+<tr>
+<td><code>index</code></td>
+<td>行索引</td>
+<td><code>df.index</code></td>
+</tr>
+<tr>
+<td><code>nunique()</code></td>
+<td>每列有多少个不重复值</td>
+<td><code>df.nunique()</code></td>
+</tr>
+<tr>
+<td><code>value_counts()</code></td>
+<td>一列里每个值出现几次（<strong>默认按频次降序</strong>）</td>
+<td><code>df[&quot;城市&quot;].value_counts()</code></td>
+</tr>
+<tr>
+<td><code>isna()</code></td>
+<td>是否缺失（缺失为 <code>True</code>）</td>
+<td><code>df.isna().sum()</code></td>
+</tr>
+<tr>
+<td><code>notna()</code></td>
+<td>是否非缺失</td>
+<td><code>df[&quot;客户年龄&quot;].notna().sum()</code></td>
+</tr>
+<tr>
+<td><code>sum()</code></td>
+<td>求和；对布尔列求和 &#x3D; 数个数</td>
+<td><code>df[&quot;销售额&quot;].sum()</code></td>
+</tr>
+<tr>
+<td><code>duplicated()</code></td>
+<td>是否是重复行</td>
+<td><code>df.duplicated().sum()</code></td>
+</tr>
+<tr>
+<td><code>memory_usage()</code></td>
+<td>每列占多少内存</td>
+<td><code>df.memory_usage(deep=True)</code></td>
+</tr>
+<tr>
+<td><code>T</code></td>
+<td>转置（列太多时看结构方便）</td>
+<td><code>df.head(2).T</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df.nunique().head(<span class="number">6</span>).to_dict())            <span class="comment"># 每列基数：基数=1 的列可以删</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;城市&quot;</span>].value_counts().head(<span class="number">4</span>).to_dict())  <span class="comment"># 频次分布，默认降序</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(df.isna().<span class="built_in">sum</span>().<span class="built_in">sum</span>()), <span class="built_in">int</span>(df.duplicated().<span class="built_in">sum</span>()))  <span class="comment"># 缺失数、重复行数</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;订单编号&#x27;: 1064, &#x27;订单日期&#x27;: 557, &#x27;省份区域&#x27;: 6, &#x27;城市&#x27;: 8, &#x27;商品类别&#x27;: 5, &#x27;商品名称&#x27;: 25&#125;</span><br><span class="line">&#123;&#x27;上海&#x27;: 196, &#x27;深圳&#x27;: 175, &#x27;北京&#x27;: 173, &#x27;广州&#x27;: 150&#125;</span><br><span class="line">0 0</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 哪一列有缺失、缺多少 —— 一行搞定</span></span><br><span class="line">missing = df.isna().<span class="built_in">sum</span>()</span><br><span class="line"><span class="built_in">print</span>(missing[missing &gt; <span class="number">0</span>].to_dict())      <span class="comment"># 干净数据返回空字典</span></span><br><span class="line"><span class="comment"># 学生表故意留了缺失，换成它就能看到</span></span><br><span class="line">m2 = stu.isna().<span class="built_in">sum</span>()</span><br><span class="line"><span class="built_in">print</span>(m2[m2 &gt; <span class="number">0</span>].to_dict())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;</span><br><span class="line">&#123;&#x27;每周自习小时&#x27;: 12, &#x27;期末成绩&#x27;: 5&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong><code>value_counts</code> 和 <code>isna</code> 的默认值</strong><br><code>value_counts()</code> 默认 <code>ascending=False</code>（多的在前）、<code>dropna=True</code>（<strong>不统计缺失值</strong>）。<br>想连缺失值一起看，写 <code>df[&quot;客户年龄&quot;].value_counts(dropna=False)</code>。</p>
+</blockquote>
+<hr>
+<h2 id="A1-4-选取与筛选"><a href="#A1-4-选取与筛选" class="headerlink" title="A1.4 选取与筛选"></a>A1.4 选取与筛选</h2><h3 id="A1-4-1-五种取数方式一览"><a href="#A1-4-1-五种取数方式一览" class="headerlink" title="A1.4.1 五种取数方式一览"></a>A1.4.1 五种取数方式一览</h3><table>
+<thead>
+<tr>
+<th>写法</th>
+<th>取什么</th>
+<th>索引规则</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>df[&quot;列名&quot;]</code></td>
+<td>一列 → Series</td>
+<td>—</td>
+<td><code>df[&quot;销售额&quot;]</code></td>
+</tr>
+<tr>
+<td><code>df[[&quot;列1&quot;,&quot;列2&quot;]]</code></td>
+<td>多列 → DataFrame</td>
+<td><strong>里面必须是列表，双层方括号</strong></td>
+<td><code>df[[&quot;城市&quot;,&quot;销售额&quot;]]</code></td>
+</tr>
+<tr>
+<td><code>df[条件]</code></td>
+<td>满足条件的行</td>
+<td>长度必须和行数一致</td>
+<td><code>df[df[&quot;销售额&quot;]&gt;5000]</code></td>
+</tr>
+<tr>
+<td><code>df.loc[行标签, 列名]</code></td>
+<td>按<strong>名字</strong>取</td>
+<td><strong>切片含结尾</strong></td>
+<td><code>df.loc[0:3, &quot;城市&quot;]</code></td>
+</tr>
+<tr>
+<td><code>df.iloc[行位置, 列位置]</code></td>
+<td>按<strong>位置</strong>取</td>
+<td><strong>切片不含结尾</strong>（和列表一样）</td>
+<td><code>df.iloc[0:3, 3]</code></td>
+</tr>
+<tr>
+<td><code>df.at[行标签, 列名]</code></td>
+<td>单个值，最快</td>
+<td>只取一个</td>
+<td><code>df.at[0, &quot;城市&quot;]</code></td>
+</tr>
+<tr>
+<td><code>df.iat[行号, 列号]</code></td>
+<td>单个值，按位置</td>
+<td>只取一个</td>
+<td><code>df.iat[0, 3]</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># loc 是&quot;闭区间&quot;：0:3 会取到索引 0,1,2,3 共 4 行</span></span><br><span class="line"><span class="built_in">print</span>(df.loc[<span class="number">0</span>:<span class="number">3</span>, <span class="string">&quot;城市&quot;</span>].tolist())</span><br><span class="line"><span class="comment"># iloc 是&quot;左闭右开&quot;：0:3 只取位置 0,1,2 共 3 行 —— 最经典的踩坑点</span></span><br><span class="line"><span class="built_in">print</span>(df.iloc[<span class="number">0</span>:<span class="number">3</span>, <span class="number">3</span>].tolist())</span><br><span class="line"><span class="comment"># 单个值用 at / iat，比 loc / iloc 快</span></span><br><span class="line"><span class="built_in">print</span>(df.at[<span class="number">0</span>, <span class="string">&quot;城市&quot;</span>], df.iat[<span class="number">0</span>, <span class="number">3</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;杭州&#x27;, &#x27;成都&#x27;, &#x27;杭州&#x27;, &#x27;广州&#x27;]</span><br><span class="line">[&#x27;杭州&#x27;, &#x27;成都&#x27;, &#x27;杭州&#x27;]</span><br><span class="line">杭州 杭州</span><br></pre></td></tr></table></figure>
+
+<h3 id="A1-4-2-布尔筛选、query、isin、between"><a href="#A1-4-2-布尔筛选、query、isin、between" class="headerlink" title="A1.4.2 布尔筛选、query、isin、between"></a>A1.4.2 布尔筛选、query、isin、between</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 多个条件必须用 &amp; (与) / | (或) / ~ (非)，且每个条件都要加括号</span></span><br><span class="line"><span class="built_in">print</span>(df[(df[<span class="string">&quot;销售额&quot;</span>] &gt; <span class="number">5000</span>) &amp; (df[<span class="string">&quot;城市&quot;</span>] == <span class="string">&quot;北京&quot;</span>)].shape)</span><br><span class="line"><span class="built_in">print</span>(df[(df[<span class="string">&quot;销售额&quot;</span>] &gt; <span class="number">5000</span>) | (df[<span class="string">&quot;城市&quot;</span>] == <span class="string">&quot;上海&quot;</span>)].shape)</span><br><span class="line"><span class="built_in">print</span>(df[~(df[<span class="string">&quot;城市&quot;</span>] == <span class="string">&quot;北京&quot;</span>)].shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(12, 14)</span><br><span class="line">(259, 14)</span><br><span class="line">(891, 14)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>df[条件]</code></td>
+<td>布尔索引筛行</td>
+<td><code>df[df[&quot;销售额&quot;] &gt; 5000]</code></td>
+</tr>
+<tr>
+<td><code>query(&quot;表达式&quot;)</code></td>
+<td>用字符串写条件，<strong>不用重复写 <code>df[&quot;...&quot;]</code></strong>，最易读</td>
+<td><code>df.query(&quot;销售额 &gt; 5000 and 城市 == &#39;北京&#39;&quot;)</code></td>
+</tr>
+<tr>
+<td><code>isin(列表)</code></td>
+<td>值在列表里</td>
+<td><code>df[df[&quot;城市&quot;].isin([&quot;北京&quot;,&quot;上海&quot;])]</code></td>
+</tr>
+<tr>
+<td><code>between(a, b)</code></td>
+<td>值在区间内（<strong>含两端</strong>）</td>
+<td><code>df[df[&quot;销售额&quot;].between(1000, 2000)]</code></td>
+</tr>
+<tr>
+<td><code>filter(like=/regex=/items=)</code></td>
+<td>按<strong>列名</strong>筛列，不是筛行</td>
+<td><code>df.filter(like=&quot;订单&quot;)</code></td>
+</tr>
+<tr>
+<td><code>where(条件)</code></td>
+<td>不满足的<strong>置为 NaN</strong>（保留行数）</td>
+<td><code>s.where(s &lt;= 5000, 5000)</code></td>
+</tr>
+<tr>
+<td><code>mask(条件)</code></td>
+<td>满足的<strong>置为 NaN</strong>（和 where 相反）</td>
+<td><code>s.mask(s &gt; 5000, 0)</code></td>
+</tr>
+<tr>
+<td><code>nlargest(n, 列)</code></td>
+<td>取最大 n 行</td>
+<td><code>df.nlargest(3, &quot;销售额&quot;)</code></td>
+</tr>
+<tr>
+<td><code>nsmallest(n, 列)</code></td>
+<td>取最小 n 行</td>
+<td><code>df.nsmallest(3, &quot;销售额&quot;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># query 里引用外部变量要加 @，这是它的独门优势</span></span><br><span class="line">threshold = <span class="number">5000</span></span><br><span class="line"><span class="built_in">print</span>(df.query(<span class="string">&quot;销售额 &gt; @threshold and 城市 == &#x27;北京&#x27;&quot;</span>).shape)</span><br><span class="line"><span class="built_in">print</span>(df[df[<span class="string">&quot;城市&quot;</span>].isin([<span class="string">&quot;北京&quot;</span>, <span class="string">&quot;上海&quot;</span>])].shape)</span><br><span class="line"><span class="built_in">print</span>(df[df[<span class="string">&quot;销售额&quot;</span>].between(<span class="number">1000</span>, <span class="number">2000</span>)].shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(12, 14)</span><br><span class="line">(369, 14)</span><br><span class="line">(127, 14)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># filter 筛的是&quot;列名&quot;，别和筛行搞混</span></span><br><span class="line"><span class="built_in">print</span>(df.<span class="built_in">filter</span>(like=<span class="string">&quot;订单&quot;</span>).columns.tolist())</span><br><span class="line"><span class="built_in">print</span>(df.<span class="built_in">filter</span>(regex=<span class="string">&quot;城市|销售额&quot;</span>).columns.tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;订单编号&#x27;, &#x27;订单日期&#x27;]</span><br><span class="line">[&#x27;城市&#x27;, &#x27;销售额&#x27;]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># where / mask 不删行，只是把不符合的位置换成 NaN 或指定值</span></span><br><span class="line">s = df[<span class="string">&quot;销售额&quot;</span>].head(<span class="number">5</span>).<span class="built_in">round</span>(<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(s.tolist())</span><br><span class="line"><span class="built_in">print</span>(s.where(s &lt;= <span class="number">5000</span>, <span class="number">5000</span>).tolist())   <span class="comment"># 大于 5000 的压成 5000</span></span><br><span class="line"><span class="built_in">print</span>(s.mask(s &gt; <span class="number">5000</span>, <span class="number">0</span>).tolist())        <span class="comment"># 大于 5000 的变成 0</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[3313.8, 15717.66, 853.09, 1006.24, 607.72]</span><br><span class="line">[3313.8, 5000.0, 853.09, 1006.24, 607.72]</span><br><span class="line">[3313.8, 0.0, 853.09, 1006.24, 607.72]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>常见报错</strong>：<code>ValueError: The truth value of a Series is ambiguous</code><br><strong>原因</strong>：用了 Python 的 <code>and</code> &#x2F; <code>or</code> &#x2F; <code>not</code> 连接条件。<br><strong>解决</strong>：改成 <code>&amp;</code> &#x2F; <code>|</code> &#x2F; <code>~</code>，并且每个条件都套一层括号。<br>详见 A3 手册 C 节。</p>
+</blockquote>
+<hr>
+<h2 id="A1-5-排序与排名"><a href="#A1-5-排序与排名" class="headerlink" title="A1.5 排序与排名"></a>A1.5 排序与排名</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sort_values(by)</code></td>
+<td>按<strong>值</strong>排序</td>
+<td><code>df.sort_values(&quot;销售额&quot;, ascending=False)</code></td>
+</tr>
+<tr>
+<td><code>sort_values([多列], ascending=[...])</code></td>
+<td>多列不同方向排序</td>
+<td><code>df.sort_values([&quot;省份区域&quot;,&quot;销售额&quot;], ascending=[True, False])</code></td>
+</tr>
+<tr>
+<td><code>sort_index()</code></td>
+<td>按<strong>索引</strong>排序（时间序列 resample 前必做）</td>
+<td><code>df.sort_index()</code></td>
+</tr>
+<tr>
+<td><code>nlargest(n, 列)</code></td>
+<td>最大的 n 行</td>
+<td><code>df.nlargest(3, &quot;销售额&quot;)</code></td>
+</tr>
+<tr>
+<td><code>nsmallest(n, 列)</code></td>
+<td>最小的 n 行</td>
+<td><code>df.nsmallest(3, &quot;销售额&quot;)</code></td>
+</tr>
+<tr>
+<td><code>rank()</code></td>
+<td>排名（返回名次，不是值）</td>
+<td><code>df[&quot;销售额&quot;].rank(ascending=False)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df.sort_values(<span class="string">&quot;销售额&quot;</span>, ascending=<span class="literal">False</span>).head(<span class="number">3</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">round</span>(<span class="number">2</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df.nlargest(<span class="number">3</span>, <span class="string">&quot;销售额&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">round</span>(<span class="number">2</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df.nsmallest(<span class="number">3</span>, <span class="string">&quot;销售额&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">round</span>(<span class="number">2</span>).tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[51083.44, 29761.15, 27383.28]</span><br><span class="line">[51083.44, 29761.15, 27383.28]</span><br><span class="line">[9.11, 9.41, 10.32]</span><br></pre></td></tr></table></figure>
+
+<p><code>rank</code> 的三个常用参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># method=&quot;min&quot; 并列取最小名次；pct=True 返回百分位（0~1）</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;销售额&quot;</span>].rank(ascending=<span class="literal">False</span>).head(<span class="number">5</span>).tolist())          <span class="comment"># 名次，值是浮点</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;销售额&quot;</span>].rank(ascending=<span class="literal">False</span>, method=<span class="string">&quot;min&quot;</span>).head(<span class="number">5</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">round</span>(<span class="built_in">float</span>(df[<span class="string">&quot;销售额&quot;</span>].rank(pct=<span class="literal">True</span>).<span class="built_in">max</span>()), <span class="number">3</span>))            <span class="comment"># 最大值的百分位</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[118.0, 14.0, 368.0, 322.0, 447.0]</span><br><span class="line">[118.0, 14.0, 368.0, 322.0, 447.0]</span><br><span class="line">1.0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <code>df[&quot;销售额&quot;].rank(pct=True).max()</code> 返回的是 <strong>Python float</strong>，不是 pandas 标量，<br>直接写 <code>.round(3)</code> 会报 <code>AttributeError: &#39;float&#39; object has no attribute &#39;round&#39;</code>。<br>用 <code>round(float(x), 3)</code>。详见 A3 手册 C 节。</p>
+</blockquote>
+<hr>
+<h2 id="A1-6-增删改"><a href="#A1-6-增删改" class="headerlink" title="A1.6 增删改"></a>A1.6 增删改</h2><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>写法</th>
+<th>注意</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>新增列（常量）</td>
+<td><code>df.assign(新列=1)</code></td>
+<td><code>assign</code> 返回新表，不改原表</td>
+</tr>
+<tr>
+<td>新增列（算出来）</td>
+<td><code>df.assign(金额=df[&quot;单价&quot;] * df[&quot;数量&quot;])</code></td>
+<td>向量化，最快</td>
+</tr>
+<tr>
+<td>新增列（引用刚加的列）</td>
+<td><code>df.assign(a=df[&quot;单价&quot;]*2, b=lambda d: d[&quot;a&quot;]+1)</code></td>
+<td>后面的要用 <code>lambda d:</code></td>
+</tr>
+<tr>
+<td>条件赋值</td>
+<td><code>df.assign(等级=np.where(df[&quot;销售额&quot;]&gt;5000, &quot;大单&quot;, &quot;小单&quot;))</code></td>
+<td><code>np.where</code> 是向量化的 if</td>
+</tr>
+<tr>
+<td>插入到指定位置</td>
+<td><code>df.insert(2, &quot;新列&quot;, 值)</code></td>
+<td>原地修改，返回 None</td>
+</tr>
+<tr>
+<td>删列</td>
+<td><code>df.drop(columns=[&quot;客户性别&quot;])</code></td>
+<td><strong>一定要写 <code>columns=</code></strong></td>
+</tr>
+<tr>
+<td>删行</td>
+<td><code>df.drop(index=[0, 1])</code></td>
+<td>或 <code>df.drop([0,1], axis=0)</code></td>
+</tr>
+<tr>
+<td>按条件删行</td>
+<td><code>df[df[&quot;销售额&quot;] &gt; 100]</code></td>
+<td>保留而不是删除，思路更简单</td>
+</tr>
+<tr>
+<td>重命名列</td>
+<td><code>df.rename(columns=&#123;&quot;城市&quot;: &quot;city&quot;&#125;)</code></td>
+<td>只改指定的，其余不动</td>
+</tr>
+<tr>
+<td>批量改列名</td>
+<td><code>df.rename(columns=str.lower)</code> &#x2F; <code>lambda c: c.strip()</code></td>
+<td>传函数</td>
+</tr>
+<tr>
+<td>改类型</td>
+<td><code>df.astype(&#123;&quot;数量&quot;: &quot;float64&quot;&#125;)</code></td>
+<td>转不了会报错，脏数据用 <code>to_numeric</code></td>
+</tr>
+<tr>
+<td>转分类</td>
+<td><code>df[&quot;城市&quot;].astype(&quot;category&quot;)</code></td>
+<td>省内存 + 固定取值顺序</td>
+</tr>
+<tr>
+<td>替换值</td>
+<td><code>df[&quot;客户性别&quot;].replace(&#123;&quot;男&quot;: &quot;M&quot;, &quot;女&quot;: &quot;F&quot;&#125;)</code></td>
+<td>字典精确替换；正则要 <code>regex=True</code></td>
+</tr>
+<tr>
+<td>填充缺失</td>
+<td><code>df[&quot;客户年龄&quot;].fillna(df[&quot;客户年龄&quot;].mean())</code></td>
+<td>新版推荐赋值而非 <code>inplace</code></td>
+</tr>
+<tr>
+<td>删缺失行</td>
+<td><code>df.dropna(subset=[&quot;销售额&quot;])</code></td>
+<td><code>subset</code> 限定只看某几列</td>
+</tr>
+<tr>
+<td>插值填补</td>
+<td><code>df[&quot;期末成绩&quot;].interpolate()</code></td>
+<td>时间序列&#x2F;连续变量首选</td>
+</tr>
+<tr>
+<td>截断异常值</td>
+<td><code>df[&quot;销售额&quot;].clip(lower=0, upper=5000)</code></td>
+<td>把越界值压到边界</td>
+</tr>
+<tr>
+<td>复制一份</td>
+<td><code>df.copy()</code></td>
+<td><strong>改数据前先 <code>.copy()</code></strong>（CoW 时代必做）</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df.assign(大单=np.where(df[<span class="string">&quot;销售额&quot;</span>] &gt; <span class="number">5000</span>, <span class="string">&quot;是&quot;</span>, <span class="string">&quot;否&quot;</span>))[<span class="string">&quot;大单&quot;</span>].value_counts().to_dict())</span><br><span class="line"><span class="built_in">print</span>(df.head(<span class="number">2</span>).rename(columns=&#123;<span class="string">&quot;城市&quot;</span>: <span class="string">&quot;city&quot;</span>, <span class="string">&quot;销售额&quot;</span>: <span class="string">&quot;amount&quot;</span>&#125;).columns.tolist()[-<span class="number">2</span>:])</span><br><span class="line"><span class="built_in">print</span>(df.drop(columns=[<span class="string">&quot;客户性别&quot;</span>]).shape)          <span class="comment"># 删掉一列，列数 14 -&gt; 13</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;否&#x27;: 992, &#x27;是&#x27;: 72&#125;</span><br><span class="line">[&#x27;支付方式&#x27;, &#x27;下单渠道&#x27;]</span><br><span class="line">(1064, 13)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;城市&quot;</span>].astype(<span class="string">&quot;category&quot;</span>).cat.categories[:<span class="number">4</span>].tolist())   <span class="comment"># 分类取值表</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;客户性别&quot;</span>].replace(&#123;<span class="string">&quot;男&quot;</span>: <span class="string">&quot;M&quot;</span>, <span class="string">&quot;女&quot;</span>: <span class="string">&quot;F&quot;</span>&#125;).head(<span class="number">3</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(stu[<span class="string">&quot;每周自习小时&quot;</span>].isna().<span class="built_in">sum</span>()), <span class="string">&quot;-&gt;&quot;</span>, <span class="built_in">int</span>(stu[<span class="string">&quot;每周自习小时&quot;</span>].fillna(<span class="number">0</span>).isna().<span class="built_in">sum</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(stu[<span class="string">&quot;期末成绩&quot;</span>].interpolate().isna().<span class="built_in">sum</span>()))            <span class="comment"># 线性插值补上 5 个缺失</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;销售额&quot;</span>].clip(lower=<span class="number">0</span>, upper=<span class="number">5000</span>).<span class="built_in">max</span>())                <span class="comment"># 压到上限</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;上海&#x27;, &#x27;北京&#x27;, &#x27;广州&#x27;, &#x27;成都&#x27;]</span><br><span class="line">[&#x27;M&#x27;, &#x27;F&#x27;, &#x27;F&#x27;]</span><br><span class="line">12 -&gt; 0</span><br><span class="line">0</span><br><span class="line">5000.0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>📌 <strong>pandas 3.0 差异</strong>：切片出来的子表<strong>必须先 <code>.copy()</code> 再改</strong>，<br>否则你的修改不会写回原表（有时还会被静默丢弃）。<br><code>inplace=True</code> 也逐步退出历史舞台，推荐 <code>df[&quot;列&quot;] = df[&quot;列&quot;].xxx()</code> 这种赋值写法。</p>
+</blockquote>
+<hr>
+<h2 id="A1-7-分组聚合：数据分析的核心动作"><a href="#A1-7-分组聚合：数据分析的核心动作" class="headerlink" title="A1.7 分组聚合：数据分析的核心动作"></a>A1.7 分组聚合：数据分析的核心动作</h2><h3 id="A1-7-1-groupby-的标准三步（split-→-apply-→-combine）"><a href="#A1-7-1-groupby-的标准三步（split-→-apply-→-combine）" class="headerlink" title="A1.7.1 groupby 的标准三步（split → apply → combine）"></a>A1.7.1 groupby 的标准三步（split → apply → combine）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 最基础：按区域把销售额加起来</span></span><br><span class="line"><span class="built_in">print</span>(df.groupby(<span class="string">&quot;省份区域&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">sum</span>().<span class="built_in">round</span>(<span class="number">2</span>).to_dict())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;华东&#x27;: 437015.73, &#x27;华中&#x27;: 106733.83, &#x27;华北&#x27;: 324090.24, &#x27;华南&#x27;: 509605.32, &#x27;西北&#x27;: 83828.1, &#x27;西南&#x27;: 130822.67&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推荐写法：具名聚合，一次算多个指标，列名直接起中文</span></span><br><span class="line">rep = df.groupby(<span class="string">&quot;省份区域&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].agg(总额=<span class="string">&quot;sum&quot;</span>, 均值=<span class="string">&quot;mean&quot;</span>, 单数=<span class="string">&quot;count&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(rep.<span class="built_in">round</span>(<span class="number">2</span>).head(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">               总额     均值  单数</span><br><span class="line">省份区域                          </span><br><span class="line">华东      437015.73  1308.43   334</span><br><span class="line">华中      106733.83  1462.11    73</span><br><span class="line">华北      324090.24  1873.35   173</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分组 + 交叉表：多列分组得到多级索引，unstack 摊平成表格</span></span><br><span class="line"><span class="built_in">print</span>(df.groupby([<span class="string">&quot;省份区域&quot;</span>, <span class="string">&quot;商品类别&quot;</span>])[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">sum</span>().unstack().<span class="built_in">round</span>(<span class="number">0</span>).iloc[:<span class="number">2</span>, :<span class="number">3</span>])</span><br><span class="line"><span class="comment"># 组内描述统计：一次看 count/mean/std/四分位</span></span><br><span class="line"><span class="built_in">print</span>(df.groupby(<span class="string">&quot;省份区域&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].describe().<span class="built_in">round</span>(<span class="number">1</span>).iloc[:<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">商品类别  图书文娱  家用电器  手机数码</span><br><span class="line">省份区域                          </span><br><span class="line">华东        4444.0  178108.0  211084.0</span><br><span class="line">华中         600.0   49176.0   48827.0</span><br><span class="line">          count    mean     std   min    25%    50%     75%      max</span><br><span class="line">省份区域                                                             </span><br><span class="line">华东      334.0  1308.4  2825.6   9.1  147.7  359.5  1119.1  24914.2</span><br><span class="line">华中       73.0  1462.1  2948.7  18.7  124.9  433.9  1318.6  17628.2</span><br></pre></td></tr></table></figure>
+
+<h3 id="A1-7-2-常用聚合函数速查"><a href="#A1-7-2-常用聚合函数速查" class="headerlink" title="A1.7.2 常用聚合函数速查"></a>A1.7.2 常用聚合函数速查</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>含义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sum</code></td>
+<td>求和</td>
+<td>默认跳过 NaN</td>
+</tr>
+<tr>
+<td><code>mean</code> &#x2F; <code>median</code></td>
+<td>均值 &#x2F; 中位数</td>
+<td>中位数抗异常值</td>
+</tr>
+<tr>
+<td><code>count</code> &#x2F; <code>size</code></td>
+<td>非空个数 &#x2F; 行数（含 NaN）</td>
+<td><code>count</code> 不计 NaN，<code>size</code> 计</td>
+</tr>
+<tr>
+<td><code>nunique</code></td>
+<td>去重计数</td>
+<td>数”有多少个不同的客户”</td>
+</tr>
+<tr>
+<td><code>min</code> &#x2F; <code>max</code></td>
+<td>最小 &#x2F; 最大</td>
+<td>配合 <code>idxmin</code>&#x2F;<code>idxmax</code> 定位</td>
+</tr>
+<tr>
+<td><code>std</code> &#x2F; <code>var</code></td>
+<td>标准差 &#x2F; 方差</td>
+<td>默认样本口径 <code>ddof=1</code></td>
+</tr>
+<tr>
+<td><code>first</code> &#x2F; <code>last</code></td>
+<td>第一个 &#x2F; 最后一个</td>
+<td>时间序列常用</td>
+</tr>
+<tr>
+<td><code>quantile</code></td>
+<td>分位数</td>
+<td><code>quantile(.9)</code></td>
+</tr>
+<tr>
+<td><code>agg(list)</code></td>
+<td>把组内值收成列表</td>
+<td>想细看某组明细时</td>
+</tr>
+<tr>
+<td><code>agg(&quot;sum&quot;/&quot;mean&quot;)</code></td>
+<td>字符串写函数名</td>
+<td>一次多个：<code>agg([&quot;sum&quot;,&quot;mean&quot;])</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分组后一次算多个函数（列名是多级索引）</span></span><br><span class="line"><span class="built_in">print</span>(df.groupby(<span class="string">&quot;客户性别&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].agg([<span class="string">&quot;sum&quot;</span>, <span class="string">&quot;mean&quot;</span>]).<span class="built_in">round</span>(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">               sum    mean</span><br><span class="line">客户性别                    </span><br><span class="line">女        746518.0  1400.6</span><br><span class="line">男        845577.9  1592.4</span><br></pre></td></tr></table></figure>
+
+<h3 id="A1-7-3-transform-filter-apply-三兄弟的区别"><a href="#A1-7-3-transform-filter-apply-三兄弟的区别" class="headerlink" title="A1.7.3 transform &#x2F; filter &#x2F; apply 三兄弟的区别"></a>A1.7.3 transform &#x2F; filter &#x2F; apply 三兄弟的区别</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>返回什么</th>
+<th>什么时候用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>agg</code></td>
+<td>每组<strong>一行</strong>（压缩）</td>
+<td>出汇总报表</td>
+</tr>
+<tr>
+<td><code>transform</code></td>
+<td><strong>和原表一样长</strong>，把组内结果广播回每行</td>
+<td>加”占组内均值的比例”这类列</td>
+</tr>
+<tr>
+<td><code>filter</code></td>
+<td><strong>筛掉整组</strong></td>
+<td>“只保留订单数大于 180 的城市”</td>
+</tr>
+<tr>
+<td><code>apply</code></td>
+<td>任意结果</td>
+<td>上面的都不满足时才用（慢）</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># transform：把&quot;本行所在区域的平均销售额&quot;贴回每一行</span></span><br><span class="line"><span class="built_in">print</span>(df.assign(区域均值=df.groupby(<span class="string">&quot;省份区域&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].transform(<span class="string">&quot;mean&quot;</span>))</span><br><span class="line">        .loc[<span class="number">0</span>:<span class="number">2</span>, [<span class="string">&quot;省份区域&quot;</span>, <span class="string">&quot;销售额&quot;</span>, <span class="string">&quot;区域均值&quot;</span>]].<span class="built_in">round</span>(<span class="number">2</span>))</span><br><span class="line"><span class="comment"># filter：按组的大小/条件筛整组</span></span><br><span class="line"><span class="built_in">print</span>(df.groupby(<span class="string">&quot;城市&quot;</span>).<span class="built_in">filter</span>(<span class="keyword">lambda</span> g: <span class="built_in">len</span>(g) &gt; <span class="number">180</span>).shape)</span><br><span class="line"><span class="comment"># apply：自定义组内计算</span></span><br><span class="line"><span class="built_in">print</span>(df.groupby(<span class="string">&quot;城市&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].apply(<span class="keyword">lambda</span> s: s.<span class="built_in">max</span>() - s.<span class="built_in">min</span>()).<span class="built_in">round</span>(<span class="number">1</span>).head(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">  省份区域    销售额  区域均值</span><br><span class="line">0     华东   3313.80   1308.43</span><br><span class="line">1     西南  15717.66   1321.44</span><br><span class="line">2     华东    853.09   1308.43</span><br><span class="line">(196, 14)</span><br><span class="line">城市</span><br><span class="line">上海    24503.8</span><br><span class="line">北京    51072.9</span><br><span class="line">广州    24533.5</span><br><span class="line">Name: 销售额, dtype: float64</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <code>apply</code> 是”逐组跑 Python 函数”，比 <code>transform(&quot;mean&quot;)</code> 这种内置聚合慢几十倍。<br>能用 <code>agg</code> &#x2F; <code>transform</code> 就绝不用 <code>apply</code>（A3 手册 F 节有对比）。</p>
+</blockquote>
+<h3 id="A1-7-4-透视、交叉表、宽长转换、独热编码"><a href="#A1-7-4-透视、交叉表、宽长转换、独热编码" class="headerlink" title="A1.7.4 透视、交叉表、宽长转换、独热编码"></a>A1.7.4 透视、交叉表、宽长转换、独热编码</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+<th>一句话记住</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pivot_table</code></td>
+<td>透视表：行维度 × 列维度 × 聚合值</td>
+<td>Excel 数据透视表的代码版</td>
+</tr>
+<tr>
+<td><code>crosstab</code></td>
+<td>频次交叉表（数个数）</td>
+<td>专做”两个分类变量各多少组合”</td>
+</tr>
+<tr>
+<td><code>melt</code></td>
+<td>宽表 → 长表</td>
+<td>画图前必做的一步</td>
+</tr>
+<tr>
+<td><code>pivot</code></td>
+<td>长表 → 宽表</td>
+<td>不聚合，要求组合唯一</td>
+</tr>
+<tr>
+<td><code>get_dummies</code></td>
+<td>独热编码</td>
+<td>把”城市”变成 8 个 0&#x2F;1 列，喂模型用</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pivot_table：行=省份区域，列=商品类别，值=销售额合计</span></span><br><span class="line"><span class="built_in">print</span>(df.pivot_table(index=<span class="string">&quot;省份区域&quot;</span>, columns=<span class="string">&quot;商品类别&quot;</span>, values=<span class="string">&quot;销售额&quot;</span>,</span><br><span class="line">                     aggfunc=<span class="string">&quot;sum&quot;</span>, fill_value=<span class="number">0</span>).<span class="built_in">round</span>(<span class="number">0</span>).iloc[:<span class="number">2</span>, :<span class="number">3</span>])</span><br><span class="line"><span class="comment"># crosstab：默认数字数</span></span><br><span class="line"><span class="built_in">print</span>(pd.crosstab(df[<span class="string">&quot;客户性别&quot;</span>], df[<span class="string">&quot;支付方式&quot;</span>]).iloc[:, :<span class="number">3</span>])</span><br><span class="line"><span class="comment"># 加 normalize=&quot;index&quot; 变成行占比，比数字更容易比较</span></span><br><span class="line"><span class="built_in">print</span>(pd.crosstab(df[<span class="string">&quot;客户性别&quot;</span>], df[<span class="string">&quot;支付方式&quot;</span>], normalize=<span class="string">&quot;index&quot;</span>).<span class="built_in">round</span>(<span class="number">3</span>).iloc[:, :<span class="number">2</span>])</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">商品类别  图书文娱  家用电器  手机数码</span><br><span class="line">省份区域                          </span><br><span class="line">华东        4444.0  178108.0  211084.0</span><br><span class="line">华中         600.0   49176.0   48827.0</span><br><span class="line">支付方式  微信支付  支付宝  花呗</span><br><span class="line">客户性别                    </span><br><span class="line">女             179     234    53</span><br><span class="line">男             182     221    55</span><br><span class="line">支付方式  微信支付  支付宝</span><br><span class="line">客户性别                  </span><br><span class="line">女           0.336   0.439</span><br><span class="line">男           0.343   0.416</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># get_dummies：独热编码。dtype=int 让结果好看又好存</span></span><br><span class="line"><span class="built_in">print</span>(pd.get_dummies(df[<span class="string">&quot;客户性别&quot;</span>], dtype=<span class="built_in">int</span>).head(<span class="number">3</span>))</span><br><span class="line"><span class="comment"># melt：宽转长。3 行 × 2 个指标 = 6 行</span></span><br><span class="line"><span class="built_in">print</span>(pd.melt(df.head(<span class="number">3</span>), id_vars=[<span class="string">&quot;订单编号&quot;</span>], value_vars=[<span class="string">&quot;单价&quot;</span>, <span class="string">&quot;销售额&quot;</span>]).shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   女  男</span><br><span class="line">0   0   1</span><br><span class="line">1   1   0</span><br><span class="line">2   1   0</span><br><span class="line">(6, 3)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="A1-8-合并连接：merge-concat-join"><a href="#A1-8-合并连接：merge-concat-join" class="headerlink" title="A1.8 合并连接：merge &#x2F; concat &#x2F; join"></a>A1.8 合并连接：merge &#x2F; concat &#x2F; join</h2><h3 id="A1-8-1-merge-的四种-how（示意图）"><a href="#A1-8-1-merge-的四种-how（示意图）" class="headerlink" title="A1.8.1 merge 的四种 how（示意图）"></a>A1.8.1 merge 的四种 how（示意图）</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">左表 A                    右表 B</span><br><span class="line">左外连接(left)            右外连接(right)</span><br><span class="line"> ┌────────┐               ┌────────┐</span><br><span class="line"> │  A ┌───┼───┐ B         │  A ┌───┼───┐ B</span><br><span class="line"> │    │███████│  ← A全部  │    │███████│  ← B全部</span><br><span class="line"> │    └───┼───┘  + 匹配的 │    └───┼───┘  + 匹配的</span><br><span class="line"> └────────┘       B       └────────┘       A</span><br><span class="line"></span><br><span class="line">内连接(inner)             全外连接(outer)</span><br><span class="line"> ┌────────┐               ┌────────┐</span><br><span class="line"> │  A ┌───┼───┐ B         │  A ┌───┼───┐ B</span><br><span class="line"> │    │███│   │  ← 只留  │    │███████│  ← 两边</span><br><span class="line"> │    └───┼───┘    交集   │    └───┼───┘    全都要</span><br><span class="line"> └────────┘               └────────┘</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>how</code></th>
+<th>保留哪些行</th>
+<th>什么时候用</th>
+<th>行数变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&quot;inner&quot;</code></td>
+<td>两边<strong>都</strong>匹配上的</td>
+<td>只分析有完整信息的记录</td>
+<td>通常变少</td>
+</tr>
+<tr>
+<td><code>&quot;left&quot;</code></td>
+<td>左表全部 + 右表匹配的</td>
+<td><strong>最常用</strong>：给主表贴标签</td>
+<td>≥ 左表行数</td>
+</tr>
+<tr>
+<td><code>&quot;right&quot;</code></td>
+<td>右表全部 + 左表匹配的</td>
+<td>少见，等于把左右换个位置</td>
+<td>≥ 右表行数</td>
+</tr>
+<tr>
+<td><code>&quot;outer&quot;</code></td>
+<td>两边全部，缺的填 NaN</td>
+<td>找”只在一侧存在”的异常记录</td>
+<td>最多</td>
+</tr>
+<tr>
+<td><code>cross</code></td>
+<td>笛卡尔积</td>
+<td>造组合（每城市 × 每月份）</td>
+<td>m×n</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 左表：订单；右表：城市等级字典</span></span><br><span class="line">customers = pd.DataFrame(&#123;<span class="string">&quot;城市&quot;</span>: [<span class="string">&quot;北京&quot;</span>, <span class="string">&quot;上海&quot;</span>, <span class="string">&quot;火星&quot;</span>], <span class="string">&quot;城市等级&quot;</span>: [<span class="string">&quot;一线&quot;</span>, <span class="string">&quot;一线&quot;</span>, <span class="string">&quot;未知&quot;</span>]&#125;)</span><br><span class="line"><span class="built_in">print</span>(df[[<span class="string">&quot;订单编号&quot;</span>, <span class="string">&quot;城市&quot;</span>]].head(<span class="number">3</span>).merge(customers, on=<span class="string">&quot;城市&quot;</span>, how=<span class="string">&quot;left&quot;</span>))</span><br><span class="line"><span class="comment"># indicator=True 会多出一列 _merge，一眼看出每行是从哪边来的</span></span><br><span class="line"><span class="built_in">print</span>(df[[<span class="string">&quot;订单编号&quot;</span>, <span class="string">&quot;城市&quot;</span>]].head(<span class="number">3</span>).merge(customers, on=<span class="string">&quot;城市&quot;</span>, how=<span class="string">&quot;left&quot;</span>,</span><br><span class="line">                                              indicator=<span class="literal">True</span>)[<span class="string">&quot;_merge&quot;</span>].tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">        订单编号  城市 城市等级</span><br><span class="line">0  SO20230300508  杭州      NaN</span><br><span class="line">1  SO20231100279  成都      NaN</span><br><span class="line">2  SO20231200633  杭州      NaN</span><br><span class="line">[&#x27;left_only&#x27;, &#x27;left_only&#x27;, &#x27;left_only&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>四种 <code>how</code> 的行数对比（用刻意设计的小表，一眼看清差别）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">left = pd.DataFrame(&#123;<span class="string">&quot;k&quot;</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>], <span class="string">&quot;v&quot;</span>: [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]&#125;)</span><br><span class="line">right = pd.DataFrame(&#123;<span class="string">&quot;k&quot;</span>: [<span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>], <span class="string">&quot;w&quot;</span>: [<span class="string">&quot;x&quot;</span>, <span class="string">&quot;y&quot;</span>, <span class="string">&quot;z&quot;</span>, <span class="string">&quot;q&quot;</span>]&#125;)</span><br><span class="line"><span class="keyword">for</span> how <span class="keyword">in</span> [<span class="string">&quot;inner&quot;</span>, <span class="string">&quot;left&quot;</span>, <span class="string">&quot;right&quot;</span>, <span class="string">&quot;outer&quot;</span>]:</span><br><span class="line">    m = left.merge(right, on=<span class="string">&quot;k&quot;</span>, how=how, indicator=<span class="literal">True</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;how:&gt;<span class="number">5</span>&#125;</span>: <span class="subst">&#123;<span class="built_in">len</span>(m)&#125;</span> 行  <span class="subst">&#123;m[<span class="string">&#x27;_merge&#x27;</span>].value_counts().to_dict()&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">inner: 5 行  &#123;&#x27;both&#x27;: 5, &#x27;left_only&#x27;: 0, &#x27;right_only&#x27;: 0&#125;</span><br><span class="line"> left: 6 行  &#123;&#x27;both&#x27;: 5, &#x27;left_only&#x27;: 1, &#x27;right_only&#x27;: 0&#125;</span><br><span class="line">right: 6 行  &#123;&#x27;both&#x27;: 5, &#x27;right_only&#x27;: 1, &#x27;left_only&#x27;: 0&#125;</span><br><span class="line">outer: 7 行  &#123;&#x27;both&#x27;: 5, &#x27;left_only&#x27;: 1, &#x27;right_only&#x27;: 1&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>merge 参数</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>on</code></td>
+<td>两边列名相同的连接键</td>
+<td><code>on=&quot;订单编号&quot;</code></td>
+</tr>
+<tr>
+<td><code>left_on</code> &#x2F; <code>right_on</code></td>
+<td>两边列名不同时分别指定</td>
+<td><code>left_on=&quot;客户ID&quot;, right_on=&quot;ID&quot;</code></td>
+</tr>
+<tr>
+<td><code>how</code></td>
+<td>连接方式</td>
+<td><code>&quot;left&quot;</code>（默认是 <code>&quot;inner&quot;</code>！）</td>
+</tr>
+<tr>
+<td><code>suffixes</code></td>
+<td>同名列的区分后缀</td>
+<td><code>suffixes=(&quot;_左&quot;, &quot;_右&quot;)</code></td>
+</tr>
+<tr>
+<td><code>indicator</code></td>
+<td>加 <code>_merge</code> 列标出来源</td>
+<td><code>indicator=True</code></td>
+</tr>
+<tr>
+<td><code>validate</code></td>
+<td>校验关系，防止行数意外膨胀</td>
+<td><code>validate=&quot;many_to_one&quot;</code></td>
+</tr>
+<tr>
+<td><code>left_index</code>&#x2F;<code>right_index</code></td>
+<td>用索引当连接键</td>
+<td><code>left_index=True</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>merge 后行数变多&#x2F;变少是最常见的坑</strong><br>变多：连接键在右表不唯一（一对多会<strong>成倍</strong>膨胀）。<br>变少：用了 <code>inner</code> 且左表有匹配不上的键。<br>排查固定套路：加 <code>indicator=True</code> 看 <code>_merge</code> 分布，再加 <code>validate=&quot;many_to_one&quot;</code> 让 pandas 帮你报错。<br>详见 A3 手册 C 节。</p>
+</blockquote>
+<h3 id="A1-8-2-concat-join-combine-first"><a href="#A1-8-2-concat-join-combine-first" class="headerlink" title="A1.8.2 concat &#x2F; join &#x2F; combine_first"></a>A1.8.2 concat &#x2F; join &#x2F; combine_first</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># concat 纵向拼（上下接）：ignore_index 重新编号，否则索引会重复</span></span><br><span class="line"><span class="built_in">print</span>(pd.concat([df.head(<span class="number">2</span>), df.tail(<span class="number">2</span>)], ignore_index=<span class="literal">True</span>).shape)</span><br><span class="line"><span class="comment"># concat 横向拼（左右接）：axis=1，必须靠索引对齐</span></span><br><span class="line"><span class="built_in">print</span>(pd.concat([df.head(<span class="number">3</span>), df.tail(<span class="number">3</span>)], axis=<span class="number">1</span>).shape)</span><br><span class="line"><span class="comment"># join：以索引为准的快捷合并</span></span><br><span class="line">a = df.set_index(<span class="string">&quot;订单编号&quot;</span>)[[<span class="string">&quot;销售额&quot;</span>]].head(<span class="number">3</span>)</span><br><span class="line">b = df.set_index(<span class="string">&quot;订单编号&quot;</span>)[[<span class="string">&quot;数量&quot;</span>]].head(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(a.join(b).shape)</span><br><span class="line"><span class="comment"># combine_first：a 的缺失位置用 b 的值补上</span></span><br><span class="line"><span class="built_in">print</span>(a.combine_first(pd.DataFrame(&#123;<span class="string">&quot;销售额&quot;</span>: [<span class="number">1.0</span>]&#125;, index=[<span class="string">&quot;X&quot;</span>])).shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(4, 14)</span><br><span class="line">(6, 28)</span><br><span class="line">(3, 2)</span><br><span class="line">(4, 1)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>方向</th>
+<th>对齐依据</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pd.concat([a, b])</code></td>
+<td>纵向（默认 <code>axis=0</code>）</td>
+<td>列名</td>
+<td>用 <code>ignore_index=True</code> 重排索引</td>
+</tr>
+<tr>
+<td><code>pd.concat([a, b], axis=1)</code></td>
+<td>横向</td>
+<td>索引</td>
+<td>索引不一致会填 NaN</td>
+</tr>
+<tr>
+<td><code>a.join(b)</code></td>
+<td>横向</td>
+<td>索引</td>
+<td>语法比 merge 短</td>
+</tr>
+<tr>
+<td><code>a.combine_first(b)</code></td>
+<td>叠放</td>
+<td>索引 + 列名</td>
+<td>a 有值用 a，a 缺的用 b</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="A1-9-字符串-str-方法全表"><a href="#A1-9-字符串-str-方法全表" class="headerlink" title="A1.9 字符串 .str 方法全表"></a>A1.9 字符串 <code>.str</code> 方法全表</h2><p>只要一列是字符串类型（pandas 3.0 里 dtype 显示为 <code>str</code>），就能用 <code>.str</code>。<br><strong>注意</strong>：<code>.str</code> 遇到缺失值会返回 NaN，不会报错。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>作用</th>
+<th>例子（结果是 <code>&quot;订单编号&quot;</code> &#x2F; <code>&quot;城市&quot;</code> 列上的效果）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>str.len()</code></td>
+<td>字符个数</td>
+<td><code>df[&quot;城市&quot;].str.len()</code></td>
+</tr>
+<tr>
+<td><code>str.lower()</code> &#x2F; <code>str.upper()</code></td>
+<td>转小写 &#x2F; 大写</td>
+<td><code>df[&quot;城市&quot;].str.upper()</code></td>
+</tr>
+<tr>
+<td><code>str.title()</code> &#x2F; <code>str.capitalize()</code></td>
+<td>词首大写 &#x2F; 首字母大写</td>
+<td><code>s.str.title()</code></td>
+</tr>
+<tr>
+<td><code>str.strip()</code> &#x2F; <code>lstrip()</code> &#x2F; <code>rstrip()</code></td>
+<td>去两端 &#x2F; 左 &#x2F; 右空格</td>
+<td><code>df[&quot;城市&quot;].str.strip()</code></td>
+</tr>
+<tr>
+<td><code>str.contains(pat)</code></td>
+<td>是否包含（支持正则）</td>
+<td><code>df[&quot;商品名称&quot;].str.contains(&quot;手机|耳机&quot;, regex=True)</code></td>
+</tr>
+<tr>
+<td><code>str.startswith()</code> &#x2F; <code>endswith()</code></td>
+<td>开头 &#x2F; 结尾</td>
+<td><code>df[&quot;城市&quot;].str.startswith(&quot;北&quot;).sum()</code></td>
+</tr>
+<tr>
+<td><code>str.match()</code> &#x2F; <code>fullmatch()</code></td>
+<td>正则从头匹配 &#x2F; 完全匹配</td>
+<td><code>s.str.fullmatch(r&quot;\d&#123;3&#125;&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.find()</code> &#x2F; <code>rfind()</code></td>
+<td>首次 &#x2F; 末次出现位置（找不到 -1）</td>
+<td><code>s.str.find(&quot;A&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.index()</code> &#x2F; <code>rindex()</code></td>
+<td>同上，但找不到会报错</td>
+<td><code>s.str.index(&quot;A&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.count(pat)</code></td>
+<td>出现次数</td>
+<td><code>s.str.count(&quot;,&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.replace(a, b)</code></td>
+<td>替换</td>
+<td><code>df[&quot;城市&quot;].str.replace(&quot;北京&quot;, &quot;北京市&quot;, regex=False)</code></td>
+</tr>
+<tr>
+<td><code>str.slice(起, 止)</code></td>
+<td>按位置切片</td>
+<td><code>df[&quot;订单编号&quot;].str.slice(2, 6)</code></td>
+</tr>
+<tr>
+<td><code>str.split(sep)</code></td>
+<td>切成列表</td>
+<td><code>s.str.split(&quot;-&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.rsplit()</code> &#x2F; <code>str.partition()</code> &#x2F; <code>str.rpartition()</code></td>
+<td>从右切 &#x2F; 切成三段</td>
+<td><code>s.str.partition(&quot;-&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.split(expand=True)</code></td>
+<td>切成<strong>多列</strong></td>
+<td><code>df[&quot;商品名称&quot;].str.split(&quot; &quot;, expand=True)</code></td>
+</tr>
+<tr>
+<td><code>str.cat(others, sep)</code></td>
+<td>拼接多列&#x2F;多值</td>
+<td><code>df[&quot;a&quot;].str.cat(df[&quot;b&quot;], sep=&quot;-&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.join(sep)</code></td>
+<td>把列表元素拼成串</td>
+<td><code>s.str.split(&quot;-&quot;).str.join(&quot;&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.get(i)</code></td>
+<td>取列表&#x2F;分组的第 i 个</td>
+<td><code>s.str.get(0)</code></td>
+</tr>
+<tr>
+<td><code>str.extract(pat)</code></td>
+<td>正则<strong>提取</strong>捕获组</td>
+<td><code>s.str.extract(r&quot;(\d+)年&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.extractall(pat)</code></td>
+<td>提取所有匹配（返回多行）</td>
+<td><code>s.str.extractall(r&quot;\d&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.findall(pat)</code></td>
+<td>找出全部匹配（列表）</td>
+<td><code>s.str.findall(r&quot;[\u4e00-\u9fa5]+&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.zfill(n)</code> &#x2F; <code>str.pad(n)</code></td>
+<td>左补 0 &#x2F; 补字符到 n 位</td>
+<td><code>pd.Series([1, 22]).astype(str).str.zfill(4)</code></td>
+</tr>
+<tr>
+<td><code>str.center()</code> &#x2F; <code>ljust()</code> &#x2F; <code>rjust()</code></td>
+<td>居中 &#x2F; 左对齐 &#x2F; 右对齐</td>
+<td><code>s.str.center(10, &quot;*&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.repeat(n)</code></td>
+<td>重复 n 次</td>
+<td><code>s.str.repeat(3)</code></td>
+</tr>
+<tr>
+<td><code>str.wrap(n)</code></td>
+<td>按宽度折行</td>
+<td><code>s.str.wrap(10)</code></td>
+</tr>
+<tr>
+<td><code>str.swapcase()</code></td>
+<td>大小写互换</td>
+<td><code>s.str.swapcase()</code></td>
+</tr>
+<tr>
+<td><code>str.casefold()</code></td>
+<td>更彻底的小写（处理德语 ß 等）</td>
+<td><code>s.str.casefold()</code></td>
+</tr>
+<tr>
+<td><code>str.normalize(&quot;NFKC&quot;)</code></td>
+<td>Unicode 规范化（全角→半角）</td>
+<td><code>s.str.normalize(&quot;NFKC&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.encode()</code> &#x2F; <code>str.decode()</code></td>
+<td>编解码</td>
+<td><code>s.str.encode(&quot;utf-8&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.translate()</code></td>
+<td>按字符映射表替换</td>
+<td><code>s.str.translate(str.maketrans(&quot;ab&quot;, &quot;AB&quot;))</code></td>
+</tr>
+<tr>
+<td><code>str.removeprefix()</code> &#x2F; <code>str.removesuffix()</code></td>
+<td>去前缀 &#x2F; 后缀</td>
+<td><code>s.str.removeprefix(&quot;SO&quot;)</code></td>
+</tr>
+<tr>
+<td><code>str.isalpha()</code> &#x2F; <code>isnumeric()</code> &#x2F; <code>isdigit()</code> &#x2F; <code>isdecimal()</code></td>
+<td>是否全字母 &#x2F; 数字 &#x2F; 数字 &#x2F; 十进制数</td>
+<td><code>s.str.isdigit()</code></td>
+</tr>
+<tr>
+<td><code>str.isalnum()</code> &#x2F; <code>isspace()</code> &#x2F; <code>islower()</code> &#x2F; <code>isupper()</code> &#x2F; <code>istitle()</code></td>
+<td>其它判断</td>
+<td><code>s.str.isspace()</code></td>
+</tr>
+<tr>
+<td><code>str.isascii()</code></td>
+<td>是否全是 ASCII 字符（<strong>判断有没有中文的好帮手</strong>）</td>
+<td><code>s.str.isascii()</code></td>
+</tr>
+<tr>
+<td><code>str.get_dummies(sep)</code></td>
+<td>按分隔符做独热编码</td>
+<td><code>s.str.get_dummies(sep=&quot;,&quot;)</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;商品名称&quot;</span>].head(<span class="number">3</span>).tolist())            <span class="comment"># 先看看长什么样</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;商品名称&quot;</span>].<span class="built_in">str</span>.contains(<span class="string">&quot;手机|耳机&quot;</span>, regex=<span class="literal">True</span>).<span class="built_in">sum</span>())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;商品名称&quot;</span>].<span class="built_in">str</span>.extract(<span class="string">r&quot;(\D+)&quot;</span>)[<span class="number">0</span>].head(<span class="number">3</span>).tolist())   <span class="comment"># 提取非数字部分</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单编号&quot;</span>].<span class="built_in">str</span>.<span class="built_in">slice</span>(<span class="number">2</span>, <span class="number">6</span>).head(<span class="number">3</span>).tolist())            <span class="comment"># 从订单号里切出年份</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;城市&quot;</span>].<span class="built_in">str</span>.<span class="built_in">len</span>().head(<span class="number">3</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;城市&quot;</span>].<span class="built_in">str</span>.startswith(<span class="string">&quot;北&quot;</span>).<span class="built_in">sum</span>())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;商品名称&quot;</span>].<span class="built_in">str</span>.findall(<span class="string">r&quot;[\u4e00-\u9fa5]+&quot;</span>).head(<span class="number">2</span>).tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;扫地机器人&#x27;, &#x27;蓝牙耳机&#x27;, &#x27;坚果礼盒&#x27;]</span><br><span class="line">119</span><br><span class="line">[&#x27;扫地机器人&#x27;, &#x27;蓝牙耳机&#x27;, &#x27;坚果礼盒&#x27;]</span><br><span class="line">[&#x27;2023&#x27;, &#x27;2023&#x27;, &#x27;2023&#x27;]</span><br><span class="line">[2, 2, 2]</span><br><span class="line">173</span><br><span class="line">[[&#x27;扫地机器人&#x27;], [&#x27;蓝牙耳机&#x27;]]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>去掉空格用 <code>str.strip()</code></strong>：<code>sales.csv</code> 里有 61 行的城市名前后带空格，<br>不 strip 会让”北京”和”北京 “被当成两个不同的城市（这是第 5 章的经典练习题）。</p>
+</blockquote>
+<hr>
+<h2 id="A1-10-时间-dt-属性全表-resample-频率别名"><a href="#A1-10-时间-dt-属性全表-resample-频率别名" class="headerlink" title="A1.10 时间 .dt 属性全表 + resample 频率别名"></a>A1.10 时间 <code>.dt</code> 属性全表 + <code>resample</code> 频率别名</h2><h3 id="A1-10-1-dt-属性速查"><a href="#A1-10-1-dt-属性速查" class="headerlink" title="A1.10.1 .dt 属性速查"></a>A1.10.1 <code>.dt</code> 属性速查</h3><p>前提：这一列的 dtype 必须是 <code>datetime64[ns]</code> &#x2F; <code>datetime64[us]</code>。<br>不是日期类型会报 <code>AttributeError: Can only use .dt accessor with datetimelike values</code>。</p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>含义</th>
+<th>示例值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dt.year</code> &#x2F; <code>month</code> &#x2F; <code>day</code></td>
+<td>年 &#x2F; 月 &#x2F; 日</td>
+<td><code>df[&quot;订单日期&quot;].dt.year</code> → <code>2023</code></td>
+</tr>
+<tr>
+<td><code>dt.hour</code> &#x2F; <code>minute</code> &#x2F; <code>second</code> &#x2F; <code>microsecond</code> &#x2F; <code>nanosecond</code></td>
+<td>时 &#x2F; 分 &#x2F; 秒 &#x2F; 微秒 &#x2F; 纳秒</td>
+<td><code>s.dt.hour</code></td>
+</tr>
+<tr>
+<td><code>dt.quarter</code></td>
+<td>季度（1~4）</td>
+<td><code>s.dt.quarter</code> → <code>1</code></td>
+</tr>
+<tr>
+<td><code>dt.week</code> &#x2F; <code>weekofyear</code></td>
+<td>一年中第几周</td>
+<td><code>s.dt.week</code></td>
+</tr>
+<tr>
+<td><code>dt.dayofweek</code> &#x2F; <code>weekday</code></td>
+<td>星期几（<strong>周一&#x3D;0</strong>）</td>
+<td><code>s.dt.dayofweek</code> → <code>2</code></td>
+</tr>
+<tr>
+<td><code>dt.day_name()</code></td>
+<td>星期几的英文名</td>
+<td><code>&#39;Wednesday&#39;</code></td>
+</tr>
+<tr>
+<td><code>dt.month_name()</code></td>
+<td>月份英文名</td>
+<td><code>&#39;March&#39;</code></td>
+</tr>
+<tr>
+<td><code>dt.dayofyear</code> &#x2F; <code>day_of_year</code></td>
+<td>一年中第几天</td>
+<td><code>s.dt.dayofyear</code></td>
+</tr>
+<tr>
+<td><code>dt.days_in_month</code> &#x2F; <code>daysinmonth</code></td>
+<td>当月天数</td>
+<td><code>s.dt.days_in_month</code></td>
+</tr>
+<tr>
+<td><code>dt.is_leap_year</code></td>
+<td>是否闰年</td>
+<td><code>True</code></td>
+</tr>
+<tr>
+<td><code>dt.is_month_start</code> &#x2F; <code>is_month_end</code></td>
+<td>是否月初 &#x2F; 月末</td>
+<td><code>s.dt.is_month_end</code></td>
+</tr>
+<tr>
+<td><code>dt.is_quarter_start</code> &#x2F; <code>is_quarter_end</code></td>
+<td>是否季初 &#x2F; 季末</td>
+<td><code>s.dt.is_quarter_end</code></td>
+</tr>
+<tr>
+<td><code>dt.is_year_start</code> &#x2F; <code>is_year_end</code></td>
+<td>是否年初 &#x2F; 年末</td>
+<td><code>s.dt.is_year_end</code></td>
+</tr>
+<tr>
+<td><code>dt.date</code></td>
+<td>只取日期部分（Python date 对象）</td>
+<td><code>s.dt.date</code></td>
+</tr>
+<tr>
+<td><code>dt.time</code></td>
+<td>只取时间部分</td>
+<td><code>s.dt.time</code></td>
+</tr>
+<tr>
+<td><code>dt.strftime(格式)</code></td>
+<td>格式化成字符串</td>
+<td><code>s.dt.strftime(&quot;%Y-%m&quot;)</code> → <code>&#39;2023-03&#39;</code></td>
+</tr>
+<tr>
+<td><code>dt.to_period(&quot;M&quot;)</code></td>
+<td>转成”月份周期”</td>
+<td><code>Period(&#39;2023-03&#39;, &#39;M&#39;)</code></td>
+</tr>
+<tr>
+<td><code>dt.to_pydatetime()</code></td>
+<td>转成 Python datetime 对象</td>
+<td><code>s.dt.to_pydatetime()</code></td>
+</tr>
+<tr>
+<td><code>dt.days</code> &#x2F; <code>seconds</code> &#x2F; <code>microseconds</code> &#x2F; <code>nanoseconds</code></td>
+<td>时间差的分量（<strong>Timedelta 专用</strong>）</td>
+<td><code>(s - s.min()).dt.days</code></td>
+</tr>
+<tr>
+<td><code>dt.total_seconds()</code></td>
+<td>时间差总秒数（Timedelta 专用）</td>
+<td><code>td.dt.total_seconds()</code></td>
+</tr>
+<tr>
+<td><code>dt.components</code></td>
+<td>时间差拆成 days&#x2F;hours&#x2F;… 的表</td>
+<td><code>td.dt.components</code></td>
+</tr>
+<tr>
+<td><code>dt.normalize()</code></td>
+<td>把时间部分归零（当天 00:00）</td>
+<td><code>s.dt.normalize()</code></td>
+</tr>
+<tr>
+<td><code>dt.floor(&quot;h&quot;)</code> &#x2F; <code>dt.ceil(&quot;h&quot;)</code> &#x2F; <code>dt.round(&quot;h&quot;)</code></td>
+<td>向下 &#x2F; 向上 &#x2F; 就近取整到整点</td>
+<td><code>s.dt.floor(&quot;h&quot;)</code></td>
+</tr>
+<tr>
+<td><code>dt.asfreq(&quot;D&quot;)</code></td>
+<td>改频率</td>
+<td><code>s.dt.asfreq(&quot;D&quot;)</code></td>
+</tr>
+<tr>
+<td><code>dt.tz</code> &#x2F; <code>tz_localize()</code> &#x2F; <code>tz_convert()</code></td>
+<td>时区查看 &#x2F; 本地化 &#x2F; 转换</td>
+<td><code>s.dt.tz_localize(&quot;Asia/Shanghai&quot;)</code></td>
+</tr>
+<tr>
+<td><code>dt.isocalendar()</code></td>
+<td>ISO 年&#x2F;周&#x2F;星期表</td>
+<td><code>s.dt.isocalendar()</code></td>
+</tr>
+<tr>
+<td><code>dt.unit</code> &#x2F; <code>dt.freq</code></td>
+<td>时间精度 &#x2F; 频率</td>
+<td><code>s.dt.unit</code></td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.year.value_counts().to_dict())      <span class="comment"># 各年份订单数</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.day_name().head(<span class="number">3</span>).tolist())        <span class="comment"># 星期几（英文）</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.month_name().head(<span class="number">3</span>).tolist())      <span class="comment"># 月份名</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.dayofweek.head(<span class="number">3</span>).tolist())         <span class="comment"># 周一=0</span></span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.quarter.head(<span class="number">3</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.is_month_end.head(<span class="number">3</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.to_period(<span class="string">&quot;M&quot;</span>).head(<span class="number">3</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;订单日期&quot;</span>].dt.strftime(<span class="string">&quot;%Y-%m&quot;</span>).head(<span class="number">3</span>).tolist())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;2024: 533, 2023: 531&#125;</span><br><span class="line">[&#x27;Wednesday&#x27;, &#x27;Tuesday&#x27;, &#x27;Sunday&#x27;]</span><br><span class="line">[&#x27;March&#x27;, &#x27;November&#x27;, &#x27;December&#x27;]</span><br><span class="line">[2, 1, 6]</span><br><span class="line">[1, 4, 4]</span><br><span class="line">[False, False, False]</span><br><span class="line">[Period(&#x27;2023-03&#x27;, &#x27;M&#x27;), Period(&#x27;2023-11&#x27;, &#x27;M&#x27;), Period(&#x27;2023-12&#x27;, &#x27;M&#x27;)]</span><br><span class="line">[&#x27;2023-03&#x27;, &#x27;2023-11&#x27;, &#x27;2023-12&#x27;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="A1-10-2-resample-频率别名表（⚠️-含-pandas-3-0-变更）"><a href="#A1-10-2-resample-频率别名表（⚠️-含-pandas-3-0-变更）" class="headerlink" title="A1.10.2 resample 频率别名表（⚠️ 含 pandas 3.0 变更）"></a>A1.10.2 <code>resample</code> 频率别名表（⚠️ 含 pandas 3.0 变更）</h3><table>
+<thead>
+<tr>
+<th>想做什么</th>
+<th>正确别名</th>
+<th><strong>pandas 3.0 不能再用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>按日</td>
+<td><code>D</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>按周（周日为周期末）</td>
+<td><code>W</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>按月末</td>
+<td><code>ME</code></td>
+<td><del><code>M</code></del> 报错</td>
+</tr>
+<tr>
+<td>按月初</td>
+<td><code>MS</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>按季末</td>
+<td><code>QE</code></td>
+<td><del><code>Q</code></del> 报错</td>
+</tr>
+<tr>
+<td>按季初</td>
+<td><code>QS</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>按年末</td>
+<td><code>YE</code></td>
+<td><del><code>Y</code></del> 报错</td>
+</tr>
+<tr>
+<td>按年初</td>
+<td><code>YS</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>按小时</td>
+<td><code>h</code></td>
+<td><del><code>H</code></del></td>
+</tr>
+<tr>
+<td>按分钟</td>
+<td><code>min</code></td>
+<td><del><code>T</code></del></td>
+</tr>
+<tr>
+<td>按 15 分钟</td>
+<td><code>15min</code></td>
+<td>—</td>
+</tr>
+<tr>
+<td>按月末 + <code>DEC</code> 结尾</td>
+<td><code>ME-DEC</code>（财年）</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ts_sales = df.set_index(<span class="string">&quot;订单日期&quot;</span>)[<span class="string">&quot;销售额&quot;</span>]      <span class="comment"># 把日期设为索引才能 resample</span></span><br><span class="line"><span class="built_in">print</span>(ts_sales.resample(<span class="string">&quot;ME&quot;</span>).<span class="built_in">sum</span>().<span class="built_in">round</span>(<span class="number">0</span>).head(<span class="number">3</span>).to_dict())    <span class="comment"># 月 ✅</span></span><br><span class="line"><span class="built_in">print</span>(ts_sales.resample(<span class="string">&quot;QE&quot;</span>).<span class="built_in">sum</span>().<span class="built_in">round</span>(<span class="number">0</span>).to_dict())            <span class="comment"># 季 ✅</span></span><br><span class="line"><span class="built_in">print</span>(ts_sales.resample(<span class="string">&quot;YE&quot;</span>).<span class="built_in">sum</span>().<span class="built_in">round</span>(<span class="number">0</span>).to_dict())            <span class="comment"># 年 ✅</span></span><br><span class="line"><span class="built_in">print</span>(ts_sales.resample(<span class="string">&quot;W&quot;</span>).<span class="built_in">sum</span>().<span class="built_in">round</span>(<span class="number">0</span>).head(<span class="number">3</span>).to_dict())     <span class="comment"># 周 ✅</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;Timestamp(&#x27;2023-01-31 00:00:00&#x27;): 115679.0, Timestamp(&#x27;2023-02-28 00:00:00&#x27;): 62860.0, Timestamp(&#x27;2023-03-31</span><br><span class="line">   00:00:00&#x27;): 81994.0&#125;</span><br><span class="line">&#123;Timestamp(&#x27;2023-03-31 00:00:00&#x27;): 260533.0, Timestamp(&#x27;2023-06-30 00:00:00&#x27;): 168113.0, Timestamp(&#x27;2023-09-30</span><br><span class="line">   00:00:00&#x27;): 169248.0, Timestamp(&#x27;2023-12-31 00:00:00&#x27;): 227244.0, Timestamp(&#x27;2024-03-31 00:00:00&#x27;): 202003.0,</span><br><span class="line">   Timestamp(&#x27;2024-06-30 00:00:00&#x27;): 205162.0, Timestamp(&#x27;2024-09-30 00:00:00&#x27;): 187820.0, Timestamp(&#x27;2024-12-31</span><br><span class="line">   00:00:00&#x27;): 171974.0&#125;</span><br><span class="line">&#123;Timestamp(&#x27;2023-12-31 00:00:00&#x27;): 825138.0, Timestamp(&#x27;2024-12-31 00:00:00&#x27;): 766958.0&#125;</span><br><span class="line">&#123;Timestamp(&#x27;2023-01-01 00:00:00&#x27;): 510.0, Timestamp(&#x27;2023-01-08 00:00:00&#x27;): 17509.0, Timestamp(&#x27;2023-01-15 00:00:00&#x27;):</span><br><span class="line">   78098.0&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>最常见的新版报错</strong><br><code>ValueError: Invalid frequency: M. ... Please use &#39;ME&#39; instead.</code><br>老教材、老博客里全是 <code>resample(&quot;M&quot;)</code>，在 pandas 3.0 里直接报错。<br>记忆方法：<strong>M 已经”属于”月初（Month Start 是 MS）之外的含义了，<br>月末一律加 E（End）：ME &#x2F; QE &#x2F; YE</strong>。详见 A3 手册 A 节。</p>
+</blockquote>
+<h3 id="A1-10-3-date-range-to-period-Timedelta"><a href="#A1-10-3-date-range-to-period-Timedelta" class="headerlink" title="A1.10.3 date_range &#x2F; to_period &#x2F; Timedelta"></a>A1.10.3 <code>date_range</code> &#x2F; <code>to_period</code> &#x2F; <code>Timedelta</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 造日期序列：freq 用同一套别名</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(pd.date_range(<span class="string">&quot;2024-01-01&quot;</span>, <span class="string">&quot;2024-12-31&quot;</span>, freq=<span class="string">&quot;ME&quot;</span>)))       <span class="comment"># 12 个月末</span></span><br><span class="line"><span class="built_in">print</span>(pd.date_range(<span class="string">&quot;2024-01-01&quot;</span>, periods=<span class="number">3</span>, freq=<span class="string">&quot;D&quot;</span>).tolist())</span><br><span class="line"><span class="comment"># to_period：把时间戳变&quot;周期&quot;。用 Period 做分组键，输出比 Timestamp 干净得多</span></span><br><span class="line">monthly_p = ts_sales.resample(<span class="string">&quot;ME&quot;</span>).<span class="built_in">sum</span>().to_period(<span class="string">&quot;M&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(monthly_p.head(<span class="number">3</span>).<span class="built_in">round</span>(<span class="number">2</span>).tolist())</span><br><span class="line"><span class="comment"># 时间差：两个 Timestamp 相减得到 Timedelta</span></span><br><span class="line"><span class="built_in">print</span>((pd.Timestamp(<span class="string">&quot;2024-12-31&quot;</span>) - pd.Timestamp(<span class="string">&quot;2024-01-01&quot;</span>)).days)</span><br><span class="line"><span class="built_in">print</span>((pd.Timestamp(<span class="string">&quot;2024-01-02 12:00&quot;</span>) - pd.Timestamp(<span class="string">&quot;2024-01-01 00:00&quot;</span>)).total_seconds())</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">12</span><br><span class="line">[Timestamp(&#x27;2024-01-01 00:00:00&#x27;), Timestamp(&#x27;2024-01-02 00:00:00&#x27;), Timestamp(&#x27;2024-01-03 00:00:00&#x27;)]</span><br><span class="line">[115678.79, 62860.35, 81993.68]</span><br><span class="line">365</span><br><span class="line">129600.0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">12</span><br><span class="line">[Timestamp(&#x27;2024-01-01 00:00:00&#x27;), Timestamp(&#x27;2024-01-02 00:00:00&#x27;), Timestamp(&#x27;2024-01-03 00:00:00&#x27;)]</span><br><span class="line">[Period(&#x27;2023-01&#x27;, &#x27;M&#x27;), Period(&#x27;2023-02&#x27;, &#x27;M&#x27;), Period(&#x27;2023-03&#x27;, &#x27;M&#x27;)]</span><br><span class="line">365</span><br><span class="line">129600.0</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>类&#x2F;函数</th>
+<th>作用</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pd.Timestamp</code></td>
+<td>单个时间点</td>
+<td><code>pd.Timestamp(&quot;2024-01-01&quot;)</code></td>
+</tr>
+<tr>
+<td><code>pd.Timedelta</code></td>
+<td>一段时间</td>
+<td><code>pd.Timedelta(days=7)</code></td>
+</tr>
+<tr>
+<td><code>pd.date_range</code></td>
+<td>生成日期序列</td>
+<td><code>pd.date_range(&quot;2024-01-01&quot;, periods=7, freq=&quot;D&quot;)</code></td>
+</tr>
+<tr>
+<td><code>pd.to_datetime</code></td>
+<td>字符串 → 日期</td>
+<td><code>pd.to_datetime(s, format=&quot;mixed&quot;)</code></td>
+</tr>
+<tr>
+<td><code>pd.to_timedelta</code></td>
+<td>数字&#x2F;字符串 → 时间差</td>
+<td><code>pd.to_timedelta(&quot;1 days 02:00&quot;)</code></td>
+</tr>
+<tr>
+<td><code>Series.dt</code></td>
+<td>日期属性访问器</td>
+<td><code>df[&quot;订单日期&quot;].dt.year</code></td>
+</tr>
+<tr>
+<td><code>Series.resample</code></td>
+<td>按时间频率重采样</td>
+<td><code>s.resample(&quot;ME&quot;).sum()</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="A1-11-统计函数速查"><a href="#A1-11-统计函数速查" class="headerlink" title="A1.11 统计函数速查"></a>A1.11 统计函数速查</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一次拿到 9 个统计量；取其中几个常用值看，避免输出太长</span></span><br><span class="line">st = df[<span class="string">&quot;销售额&quot;</span>].agg([<span class="string">&quot;sum&quot;</span>, <span class="string">&quot;mean&quot;</span>, <span class="string">&quot;median&quot;</span>, <span class="string">&quot;std&quot;</span>, <span class="string">&quot;var&quot;</span>,</span><br><span class="line">                       <span class="string">&quot;min&quot;</span>, <span class="string">&quot;max&quot;</span>, <span class="string">&quot;skew&quot;</span>, <span class="string">&quot;kurt&quot;</span>]).<span class="built_in">round</span>(<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(st[[<span class="string">&quot;sum&quot;</span>, <span class="string">&quot;mean&quot;</span>, <span class="string">&quot;median&quot;</span>, <span class="string">&quot;std&quot;</span>, <span class="string">&quot;skew&quot;</span>]].to_dict())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;支付方式&quot;</span>].mode().tolist())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;销售额&quot;</span>].quantile([<span class="number">.25</span>, <span class="number">.5</span>, <span class="number">.75</span>]).<span class="built_in">round</span>(<span class="number">2</span>).to_dict())</span><br><span class="line"><span class="built_in">print</span>(df.corr(numeric_only=<span class="literal">True</span>).loc[<span class="string">&quot;单价&quot;</span>, <span class="string">&quot;销售额&quot;</span>].<span class="built_in">round</span>(<span class="number">3</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#x27;sum&#x27;: 1592095.89, &#x27;mean&#x27;: 1496.331, &#x27;median&#x27;: 413.025, &#x27;std&#x27;: 3367.49, &#x27;skew&#x27;: 6.383&#125;</span><br><span class="line">[&#x27;支付宝&#x27;]</span><br><span class="line">&#123;0.25: 156.56, 0.5: 413.02, 0.75: 1306.19&#125;</span><br><span class="line">0.746</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>含义</th>
+<th>白话</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sum()</code></td>
+<td>求和</td>
+<td>加起来</td>
+</tr>
+<tr>
+<td><code>mean()</code></td>
+<td>均值</td>
+<td>加起来除以个数，<strong>怕极端值</strong></td>
+</tr>
+<tr>
+<td><code>median()</code></td>
+<td>中位数</td>
+<td>排队站中间的那个，<strong>不怕极端值</strong></td>
+</tr>
+<tr>
+<td><code>mode()</code></td>
+<td>众数</td>
+<td>出现最多的值（返回 Series，可能多个）</td>
+</tr>
+<tr>
+<td><code>std()</code></td>
+<td>标准差</td>
+<td>波动大小，和原始数据<strong>同量纲</strong></td>
+</tr>
+<tr>
+<td><code>var()</code></td>
+<td>方差</td>
+<td>标准差的平方，<strong>不同量纲</strong></td>
+</tr>
+<tr>
+<td><code>min()</code> &#x2F; <code>max()</code></td>
+<td>最小 &#x2F; 最大</td>
+<td>极值</td>
+</tr>
+<tr>
+<td><code>quantile(q)</code></td>
+<td>分位数</td>
+<td><code>q=0.5</code> 就是中位数</td>
+</tr>
+<tr>
+<td><code>describe()</code></td>
+<td>一次出 8 个统计量</td>
+<td>报告首选</td>
+</tr>
+<tr>
+<td><code>corr()</code></td>
+<td>相关系数矩阵</td>
+<td>线性相关强弱，范围 -1~1</td>
+</tr>
+<tr>
+<td><code>corrwith(other)</code></td>
+<td>和另一个序列&#x2F;表的相关系数</td>
+<td><code>df.corrwith(df[&quot;销售额&quot;])</code></td>
+</tr>
+<tr>
+<td><code>cov()</code></td>
+<td>协方差</td>
+<td>同向变动程度，量纲受单位影响</td>
+</tr>
+<tr>
+<td><code>skew()</code></td>
+<td>偏度</td>
+<td><code>&gt;0</code> 右偏（长尾在右边，收入&#x2F;销售额典型）</td>
+</tr>
+<tr>
+<td><code>kurt()</code></td>
+<td>峰度</td>
+<td><code>&gt;0</code> 尖峰厚尾（极端值多）</td>
+</tr>
+<tr>
+<td><code>cumsum()</code> &#x2F; <code>cumprod()</code> &#x2F; <code>cummax()</code> &#x2F; <code>cummin()</code></td>
+<td>累计和 &#x2F; 积 &#x2F; 最大 &#x2F; 最小</td>
+<td>累计曲线</td>
+</tr>
+<tr>
+<td><code>diff()</code></td>
+<td>一阶差分（后一个减前一个）</td>
+<td>看每天增长量</td>
+</tr>
+<tr>
+<td><code>pct_change()</code></td>
+<td>环比变化率</td>
+<td><code>(今天-昨天)/昨天</code></td>
+</tr>
+<tr>
+<td><code>shift(n)</code></td>
+<td>整体下移 n 行</td>
+<td>造”上一期”列做同比</td>
+</tr>
+<tr>
+<td><code>idxmin()</code> &#x2F; <code>idxmax()</code></td>
+<td>最小 &#x2F; 最大值的索引</td>
+<td>定位极值在哪一行</td>
+</tr>
+<tr>
+<td><code>rolling(n)</code></td>
+<td>移动窗口</td>
+<td>移动平均</td>
+</tr>
+<tr>
+<td><code>expanding()</code></td>
+<td>扩张窗口（从第一行到现在）</td>
+<td>累计均值</td>
+</tr>
+<tr>
+<td><code>ewm(span=n)</code></td>
+<td>指数加权</td>
+<td>近期数据权重更高</td>
+</tr>
+<tr>
+<td><code>value_counts()</code></td>
+<td>频次统计（对 Series）</td>
+<td>分类变量第一件事</td>
+</tr>
+<tr>
+<td><code>nunique()</code></td>
+<td>去重计数</td>
+<td>有几个不同的值</td>
+</tr>
+<tr>
+<td><code>abs()</code></td>
+<td>绝对值</td>
+<td>处理负销售额</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;销售额&quot;</span>].cumsum().iloc[-<span class="number">1</span>].<span class="built_in">round</span>(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(df.sort_values(<span class="string">&quot;订单日期&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].diff().dropna().head(<span class="number">3</span>).<span class="built_in">round</span>(<span class="number">2</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df.sort_values(<span class="string">&quot;订单日期&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].pct_change().dropna().head(<span class="number">3</span>).<span class="built_in">round</span>(<span class="number">4</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(df[<span class="string">&quot;销售额&quot;</span>].expanding().mean().iloc[-<span class="number">1</span>].<span class="built_in">round</span>(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(df[[<span class="string">&quot;单价&quot;</span>, <span class="string">&quot;销售额&quot;</span>]].cov().<span class="built_in">round</span>(<span class="number">1</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1592095.89</span><br><span class="line">[-419.83, -13.98, 148.67]</span><br><span class="line">[-0.9028, -0.3092, 4.7605]</span><br><span class="line">1496.33</span><br><span class="line">             单价        销售额</span><br><span class="line">单价    1536309.4   3115681.9</span><br><span class="line">销售额  3115681.9  11339991.4</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <code>std(ddof=1)</code> 是<strong>样本标准差</strong>（除以 n-1），<code>std(ddof=0)</code> 是<strong>总体标准差</strong>（除以 n）。<br>pandas 默认 <code>ddof=1</code>，和 Excel 的 <code>STDEV.S</code> 一致，和 <code>STDEV.P</code> 不一致 —— 对不上数时先查这里。</p>
+</blockquote>
+<hr>
+<h2 id="A1-12-窗口函数：rolling-expanding-ewm"><a href="#A1-12-窗口函数：rolling-expanding-ewm" class="headerlink" title="A1.12 窗口函数：rolling &#x2F; expanding &#x2F; ewm"></a>A1.12 窗口函数：rolling &#x2F; expanding &#x2F; ewm</h2><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>窗口</th>
+<th>权重</th>
+<th>典型用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>rolling(window=n)</code></td>
+<td>固定长度 n，<strong>滑动</strong></td>
+<td>等权</td>
+<td>7 日移动平均、30 日均线</td>
+</tr>
+<tr>
+<td><code>expanding()</code></td>
+<td>从开头到当前行，<strong>不断变长</strong></td>
+<td>等权</td>
+<td>累计均值、累计最大回撤</td>
+</tr>
+<tr>
+<td><code>ewm(span=n)</code></td>
+<td>全部历史，<strong>指数衰减</strong></td>
+<td>越近越重</td>
+<td>平滑指标、监控告警基线</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>含义</th>
+<th>常用取值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>window</code></td>
+<td>窗口长度（行数或 <code>&quot;7D&quot;</code> 这类时间字符串）</td>
+<td><code>7</code>、<code>30</code>、<code>&quot;7D&quot;</code></td>
+</tr>
+<tr>
+<td><code>min_periods</code></td>
+<td>至少要有几个数才出结果</td>
+<td><code>1</code>（开头不留 NaN）</td>
+</tr>
+<tr>
+<td><code>center</code></td>
+<td>窗口是否居中（把当前点放中间）</td>
+<td><code>False</code> 默认 &#x2F; <code>True</code> 用于平滑曲线</td>
+</tr>
+<tr>
+<td><code>closed</code></td>
+<td>时间窗口的闭区间方向（时间窗口时用）</td>
+<td><code>&quot;right&quot;</code>（默认）&#x2F; <code>&quot;left&quot;</code> &#x2F; <code>&quot;both&quot;</code></td>
+</tr>
+<tr>
+<td><code>win_type</code></td>
+<td>窗口形状（高斯、汉宁等）</td>
+<td><code>&quot;gaussian&quot;</code></td>
+</tr>
+<tr>
+<td><code>on</code></td>
+<td>用哪一列当时间轴（DataFrame 上用时间窗口时必填）</td>
+<td><code>on=&quot;订单日期&quot;</code></td>
+</tr>
+<tr>
+<td><code>span</code>（仅 ewm）</td>
+<td>衰减跨度，越大越平滑</td>
+<td><code>7</code>、<code>30</code></td>
+</tr>
+<tr>
+<td><code>alpha</code>（仅 ewm）</td>
+<td>平滑系数，<code>alpha = 2/(span+1)</code></td>
+<td><code>0.2</code></td>
+</tr>
+<tr>
+<td><code>halflife</code>（仅 ewm）</td>
+<td>半衰期</td>
+<td><code>&quot;3D&quot;</code></td>
+</tr>
+<tr>
+<td><code>adjust</code>（仅 ewm）</td>
+<td>是否做偏差修正</td>
+<td><code>True</code> 默认</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = df.sort_values(<span class="string">&quot;订单日期&quot;</span>)[<span class="string">&quot;销售额&quot;</span>]           <span class="comment"># 必须先按时间排序，否则窗口是乱的</span></span><br><span class="line"><span class="built_in">print</span>(s.rolling(<span class="number">7</span>).mean().dropna().head(<span class="number">3</span>).<span class="built_in">round</span>(<span class="number">2</span>).tolist())          <span class="comment"># 默认 min_periods=window</span></span><br><span class="line"><span class="built_in">print</span>(s.rolling(<span class="number">7</span>, min_periods=<span class="number">1</span>).mean().head(<span class="number">3</span>).<span class="built_in">round</span>(<span class="number">2</span>).tolist())    <span class="comment"># 开头也有数</span></span><br><span class="line"><span class="built_in">print</span>(s.ewm(span=<span class="number">7</span>).mean().iloc[-<span class="number">1</span>].<span class="built_in">round</span>(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(s.rolling(<span class="number">7</span>, center=<span class="literal">True</span>).mean().dropna().shape)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[360.11, 294.98, 301.71]</span><br><span class="line">[465.04, 255.12, 180.49]</span><br><span class="line">896.7</span><br><span class="line">(1058,)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 时间窗口：window 也可以写 &quot;7D&quot;，这时要先用 set_index 让索引是时间</span></span><br><span class="line">ts2 = df.set_index(<span class="string">&quot;订单日期&quot;</span>).sort_index()</span><br><span class="line"><span class="comment"># 同一天可能有多笔订单，所以 &quot;7D&quot; = 最近 7 个自然日内的所有订单之和</span></span><br><span class="line">last7 = ts2[<span class="string">&quot;销售额&quot;</span>].rolling(<span class="string">&quot;7D&quot;</span>).<span class="built_in">sum</span>()</span><br><span class="line"><span class="built_in">print</span>(last7.shape, <span class="built_in">int</span>(last7.isna().<span class="built_in">sum</span>()))          <span class="comment"># min_periods 默认 1，所以没有 NaN</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">round</span>(<span class="built_in">float</span>(last7.iloc[<span class="number">0</span>]), <span class="number">2</span>), <span class="built_in">round</span>(<span class="built_in">float</span>(last7.iloc[-<span class="number">1</span>]), <span class="number">2</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(1064,) 0</span><br><span class="line">465.04 9583.69</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 时间窗口 <code>&quot;7D&quot;</code> 是”最近 7 个<strong>自然日</strong>“，而 <code>rolling(7)</code> 是”最近 7 <strong>行</strong>“。<br>数据不是每天一行时（比如订单流水），两者结果完全不同，用错了移动平均就没有业务含义。</p>
+</blockquote>
+<hr>
+<h2 id="A1-13-缺失值速查"><a href="#A1-13-缺失值速查" class="headerlink" title="A1.13 缺失值速查"></a>A1.13 缺失值速查</h2><table>
+<thead>
+<tr>
+<th>任务</th>
+<th>写法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有多少缺失</td>
+<td><code>df.isna().sum()</code></td>
+<td>每列统计；<code>df.isna().sum().sum()</code> 是总数</td>
+</tr>
+<tr>
+<td>缺失比例</td>
+<td><code>df.isna().mean().round(3)</code></td>
+<td>超过 0.5 的列通常直接删</td>
+</tr>
+<tr>
+<td>看哪些行有缺失</td>
+<td><code>df[df.isna().any(axis=1)]</code></td>
+<td><code>any(axis=1)</code> &#x3D; 这一行只要有一个缺失就 True</td>
+</tr>
+<tr>
+<td>删缺失行</td>
+<td><code>df.dropna()</code></td>
+<td>只要有一个缺失就删整行</td>
+</tr>
+<tr>
+<td>删指定列的缺失行</td>
+<td><code>df.dropna(subset=[&quot;销售额&quot;])</code></td>
+<td>最常用：只关心目标列</td>
+</tr>
+<tr>
+<td>删缺失列</td>
+<td><code>df.dropna(axis=1)</code></td>
+<td>谨慎，容易删掉有用信息</td>
+</tr>
+<tr>
+<td>全空才删</td>
+<td><code>df.dropna(how=&quot;all&quot;)</code></td>
+<td>默认 <code>how=&quot;any&quot;</code></td>
+</tr>
+<tr>
+<td>填常数</td>
+<td><code>df.fillna(0)</code> &#x2F; <code>fillna(&quot;未知&quot;)</code></td>
+<td>分类列常用”未知”</td>
+</tr>
+<tr>
+<td>填均值&#x2F;中位数</td>
+<td><code>df[&quot;客户年龄&quot;].fillna(df[&quot;客户年龄&quot;].mean())</code></td>
+<td>数值列；有异常值时用中位数</td>
+</tr>
+<tr>
+<td>前向&#x2F;后向填充</td>
+<td><code>df.ffill()</code> &#x2F; <code>df.bfill()</code></td>
+<td>时间序列；<strong>pandas 3.0 只能用这两个</strong></td>
+</tr>
+<tr>
+<td>限制填充行数</td>
+<td><code>df.ffill(limit=2)</code></td>
+<td>最多连续填 2 个</td>
+</tr>
+<tr>
+<td>线性插值</td>
+<td><code>df[&quot;期末成绩&quot;].interpolate()</code></td>
+<td>连续变量、时间序列</td>
+</tr>
+<tr>
+<td>按时间插值</td>
+<td><code>df.interpolate(method=&quot;time&quot;)</code></td>
+<td>索引是时间时更准</td>
+</tr>
+<tr>
+<td>组内填充</td>
+<td><code>df.groupby(&quot;班级&quot;)[&quot;每周自习小时&quot;].transform(lambda s: s.fillna(s.median()))</code></td>
+<td>用本班中位数填本班，比全局均值合理</td>
+</tr>
+<tr>
+<td>标记缺失再填充</td>
+<td><code>df.assign(年龄缺失=df[&quot;客户年龄&quot;].isna())</code></td>
+<td>缺失本身可能就是信息（”没填”&#x3D;不愿意说）</td>
+</tr>
+</tbody></table>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(stu.isna().<span class="built_in">sum</span>().<span class="built_in">sum</span>()))</span><br><span class="line"><span class="built_in">print</span>(stu.isna().<span class="built_in">sum</span>()[stu.isna().<span class="built_in">sum</span>() &gt; <span class="number">0</span>].to_dict())</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(stu[<span class="string">&quot;每周自习小时&quot;</span>].fillna(stu[<span class="string">&quot;每周自习小时&quot;</span>].median()).isna().<span class="built_in">sum</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(stu[<span class="string">&quot;每周自习小时&quot;</span>].ffill().isna().<span class="built_in">sum</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">int</span>(stu.groupby(<span class="string">&quot;班级&quot;</span>)[<span class="string">&quot;每周自习小时&quot;</span>]</span><br><span class="line">          .transform(<span class="keyword">lambda</span> x: x.fillna(x.median())).isna().<span class="built_in">sum</span>()))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">17</span><br><span class="line">&#123;&#x27;每周自习小时&#x27;: 12, &#x27;期末成绩&#x27;: 5&#125;</span><br><span class="line">0</span><br><span class="line">0</span><br><span class="line">0</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>⚠️ <strong>空字符串 ≠ 缺失值</strong><br><code>sales.csv</code> 的 <code>客户性别</code> 有 22 行是 <code>&quot;&quot;</code>（空字符串）。<br><code>df.isna().sum()</code> 统计不到它们！必须自己转：<br><code>df[&quot;客户性别&quot;].replace(&quot;&quot;, np.nan)</code>，然后再 <code>isna()</code> 才看得见。<br>详见 A4 术语表的”缺失值 vs 空字符串 vs 零值”。</p>
+</blockquote>
+<hr>
+<h2 id="A1-14-最常用的-25-个操作-Top-25"><a href="#A1-14-最常用的-25-个操作-Top-25" class="headerlink" title="A1.14 最常用的 25 个操作 Top 25"></a>A1.14 最常用的 25 个操作 Top 25</h2><p>按真实工作里的使用频率排序。<strong>背下来这 25 条，日常 90% 的活都能干</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>操作</th>
+<th>一行代码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>读 CSV</td>
+<td><code>df = pd.read_csv(&quot;../data/sales_clean.csv&quot;, parse_dates=[&quot;订单日期&quot;])</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td>看前几行</td>
+<td><code>df.head()</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>看结构（类型+缺失+内存）</td>
+<td><code>df.info()</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>看数值摘要</td>
+<td><code>df.describe().round(2)</code></td>
+</tr>
+<tr>
+<td>5</td>
+<td>看每列缺失情况</td>
+<td><code>df.isna().sum()</code></td>
+</tr>
+<tr>
+<td>6</td>
+<td>看分类变量分布</td>
+<td><code>df[&quot;城市&quot;].value_counts()</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>选一列</td>
+<td><code>df[&quot;销售额&quot;]</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td>选多列</td>
+<td><code>df[[&quot;城市&quot;, &quot;销售额&quot;]]</code></td>
+</tr>
+<tr>
+<td>9</td>
+<td>条件筛行</td>
+<td><code>df[df[&quot;销售额&quot;] &gt; 5000]</code></td>
+</tr>
+<tr>
+<td>10</td>
+<td>多条件筛行</td>
+<td><code>df[(df[&quot;销售额&quot;] &gt; 5000) &amp; (df[&quot;城市&quot;] == &quot;北京&quot;)]</code></td>
+</tr>
+<tr>
+<td>11</td>
+<td>可读的条件筛行</td>
+<td><code>df.query(&quot;销售额 &gt; 5000 and 城市 == &#39;北京&#39;&quot;)</code></td>
+</tr>
+<tr>
+<td>12</td>
+<td>按值排序</td>
+<td><code>df.sort_values(&quot;销售额&quot;, ascending=False)</code></td>
+</tr>
+<tr>
+<td>13</td>
+<td>取 Top N</td>
+<td><code>df.nlargest(10, &quot;销售额&quot;)</code></td>
+</tr>
+<tr>
+<td>14</td>
+<td>新增计算列</td>
+<td><code>df.assign(金额=df[&quot;单价&quot;] * df[&quot;数量&quot;])</code></td>
+</tr>
+<tr>
+<td>15</td>
+<td>条件新增列</td>
+<td><code>df.assign(大单=np.where(df[&quot;销售额&quot;] &gt; 5000, &quot;是&quot;, &quot;否&quot;))</code></td>
+</tr>
+<tr>
+<td>16</td>
+<td>分组求和</td>
+<td><code>df.groupby(&quot;省份区域&quot;)[&quot;销售额&quot;].sum()</code></td>
+</tr>
+<tr>
+<td>17</td>
+<td>分组多指标（具名聚合）</td>
+<td><code>df.groupby(&quot;省份区域&quot;)[&quot;销售额&quot;].agg(总额=&quot;sum&quot;, 均值=&quot;mean&quot;)</code></td>
+</tr>
+<tr>
+<td>18</td>
+<td>分组占比（广播回原表）</td>
+<td><code>df.assign(占比=df[&quot;销售额&quot;] / df.groupby(&quot;省份区域&quot;)[&quot;销售额&quot;].transform(&quot;sum&quot;))</code></td>
+</tr>
+<tr>
+<td>19</td>
+<td>透视表</td>
+<td><code>df.pivot_table(index=&quot;省份区域&quot;, columns=&quot;商品类别&quot;, values=&quot;销售额&quot;, aggfunc=&quot;sum&quot;, fill_value=0)</code></td>
+</tr>
+<tr>
+<td>20</td>
+<td>交叉表</td>
+<td><code>pd.crosstab(df[&quot;客户性别&quot;], df[&quot;支付方式&quot;], normalize=&quot;index&quot;)</code></td>
+</tr>
+<tr>
+<td>21</td>
+<td>连接两张表</td>
+<td><code>df.merge(customers, on=&quot;城市&quot;, how=&quot;left&quot;)</code></td>
+</tr>
+<tr>
+<td>22</td>
+<td>上下拼接</td>
+<td><code>pd.concat([df1, df2], ignore_index=True)</code></td>
+</tr>
+<tr>
+<td>23</td>
+<td>按月汇总</td>
+<td><code>df.set_index(&quot;订单日期&quot;)[&quot;销售额&quot;].resample(&quot;ME&quot;).sum()</code></td>
+</tr>
+<tr>
+<td>24</td>
+<td>移动平均</td>
+<td><code>df.sort_values(&quot;订单日期&quot;)[&quot;销售额&quot;].rolling(7).mean()</code></td>
+</tr>
+<tr>
+<td>25</td>
+<td>存成 CSV&#x2F;Parquet</td>
+<td><code>df.to_csv(&quot;out.csv&quot;, index=False, encoding=&quot;utf-8-sig&quot;)</code></td>
+</tr>
+</tbody></table>
+<p>把 20~25 这几条串起来，就是一份完整的小分析：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一次跑完：按月汇总 → 求环比 → 找最大的那个月</span></span><br><span class="line">monthly = df.set_index(<span class="string">&quot;订单日期&quot;</span>)[<span class="string">&quot;销售额&quot;</span>].resample(<span class="string">&quot;ME&quot;</span>).<span class="built_in">sum</span>()</span><br><span class="line">report = monthly.to_frame(<span class="string">&quot;销售额&quot;</span>).assign(</span><br><span class="line">    环比=<span class="keyword">lambda</span> d: d[<span class="string">&quot;销售额&quot;</span>].pct_change().<span class="built_in">round</span>(<span class="number">4</span>))</span><br><span class="line"><span class="built_in">print</span>(report.head(<span class="number">3</span>).<span class="built_in">round</span>(<span class="number">2</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;最旺的月份:&quot;</span>, report[<span class="string">&quot;销售额&quot;</span>].idxmax().strftime(<span class="string">&quot;%Y-%m&quot;</span>),</span><br><span class="line">      <span class="built_in">round</span>(<span class="built_in">float</span>(report[<span class="string">&quot;销售额&quot;</span>].<span class="built_in">max</span>()), <span class="number">0</span>))</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+</blockquote>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">               销售额     环比</span><br><span class="line">订单日期                    </span><br><span class="line">2023-01-31 115678.79    NaN</span><br><span class="line">2023-02-28  62860.35  -0.46</span><br><span class="line">2023-03-31  81993.68   0.30</span><br><span class="line">最旺的月份: 2023-01 115679.0</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>拿到数据的固定顺序：<code>head</code> → <code>info</code> → <code>describe</code> → <code>isna().sum()</code> → <code>value_counts()</code>。</li>
+<li>取数三兄弟：<code>[]</code> 筛行、<code>loc</code> 按名字、<code>iloc</code> 按位置；<strong>loc 切片含结尾，iloc 不含</strong>。</li>
+<li>多条件一定用 <code>&amp;</code> &#x2F; <code>|</code> &#x2F; <code>~</code> 加括号，不要用 <code>and</code> &#x2F; <code>or</code> &#x2F; <code>not</code>。</li>
+<li>聚合优先写 <code>groupby().agg(新列名=(&quot;列&quot;, &quot;函数&quot;))</code> 具名聚合。</li>
+<li><code>resample</code> 的月末&#x2F;季末&#x2F;年末是 <code>ME</code> &#x2F; <code>QE</code> &#x2F; <code>YE</code>，写 <code>M</code> &#x2F; <code>Q</code> &#x2F; <code>Y</code> 会报错。</li>
+<li><code>.str</code> 处理文本、<code>.dt</code> 处理日期，两者遇到缺失都返回 NaN 而不报错。</li>
+<li>缺失值、空字符串、零值是三件不同的事，先分清再处理。</li>
+</ul>
+<blockquote>
+<p>相关的两个附录：<strong>A2 可视化速查表</strong>（画图）、<strong>A3 版本差异与常见报错手册</strong>（报错了查这里）。</p>
+</blockquote>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/05-preprocessing/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">05 数据预处理</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/08-machine-learning/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">08 机器学习与数据挖掘</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-2" title="A1.0 先用这 6 行把环境搭好"><a rel="nofollow" class="trm-toc-link" href="#A1-0-先用这-6-行把环境搭好"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">A1.0 先用这 6 行把环境搭好</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.1 数据读取"><a rel="nofollow" class="trm-toc-link" href="#A1-1-数据读取"><span class="trm-toc-number">2.</span> <span class="trm-toc-text">A1.1 数据读取</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A1.1.1 pd.read_csv 全部常用参数"><a rel="nofollow" class="trm-toc-link" href="#A1-1-1-pd-read-csv-全部常用参数"><span class="trm-toc-number">2.1.</span> <span class="trm-toc-text">A1.1.1 pd.read_csv 全部常用参数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.1.2 pd.read_excel"><a rel="nofollow" class="trm-toc-link" href="#A1-1-2-pd-read-excel"><span class="trm-toc-number">2.2.</span> <span class="trm-toc-text">A1.1.2 pd.read_excel</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.1.3 pd.read_json &#x2F; read_sql &#x2F; read_parquet"><a rel="nofollow" class="trm-toc-link" href="#A1-1-3-pd-read-json-read-sql-read-parquet"><span class="trm-toc-number">2.3.</span> <span class="trm-toc-text">A1.1.3 pd.read_json &#x2F; read_sql &#x2F; read_parquet</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A1.2 数据写出"><a rel="nofollow" class="trm-toc-link" href="#A1-2-数据写出"><span class="trm-toc-number">3.</span> <span class="trm-toc-text">A1.2 数据写出</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A1.2.1 五种写出方式对照"><a rel="nofollow" class="trm-toc-link" href="#A1-2-1-五种写出方式对照"><span class="trm-toc-number">3.1.</span> <span class="trm-toc-text">A1.2.1 五种写出方式对照</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.2.2 格式选型建议（照这张表选就够）"><a rel="nofollow" class="trm-toc-link" href="#A1-2-2-格式选型建议（照这张表选就够）"><span class="trm-toc-number">3.2.</span> <span class="trm-toc-text">A1.2.2 格式选型建议（照这张表选就够）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A1.3 查看数据：拿到表先做这 17 件事"><a rel="nofollow" class="trm-toc-link" href="#A1-3-查看数据：拿到表先做这-17-件事"><span class="trm-toc-number">4.</span> <span class="trm-toc-text">A1.3 查看数据：拿到表先做这 17 件事</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.4 选取与筛选"><a rel="nofollow" class="trm-toc-link" href="#A1-4-选取与筛选"><span class="trm-toc-number">5.</span> <span class="trm-toc-text">A1.4 选取与筛选</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A1.4.1 五种取数方式一览"><a rel="nofollow" class="trm-toc-link" href="#A1-4-1-五种取数方式一览"><span class="trm-toc-number">5.1.</span> <span class="trm-toc-text">A1.4.1 五种取数方式一览</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.4.2 布尔筛选、query、isin、between"><a rel="nofollow" class="trm-toc-link" href="#A1-4-2-布尔筛选、query、isin、between"><span class="trm-toc-number">5.2.</span> <span class="trm-toc-text">A1.4.2 布尔筛选、query、isin、between</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A1.5 排序与排名"><a rel="nofollow" class="trm-toc-link" href="#A1-5-排序与排名"><span class="trm-toc-number">6.</span> <span class="trm-toc-text">A1.5 排序与排名</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.6 增删改"><a rel="nofollow" class="trm-toc-link" href="#A1-6-增删改"><span class="trm-toc-number">7.</span> <span class="trm-toc-text">A1.6 增删改</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.7 分组聚合：数据分析的核心动作"><a rel="nofollow" class="trm-toc-link" href="#A1-7-分组聚合：数据分析的核心动作"><span class="trm-toc-number">8.</span> <span class="trm-toc-text">A1.7 分组聚合：数据分析的核心动作</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A1.7.1 groupby 的标准三步（split → apply → combine）"><a rel="nofollow" class="trm-toc-link" href="#A1-7-1-groupby-的标准三步（split-→-apply-→-combine）"><span class="trm-toc-number">8.1.</span> <span class="trm-toc-text">A1.7.1 groupby 的标准三步（split → apply → combine）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.7.2 常用聚合函数速查"><a rel="nofollow" class="trm-toc-link" href="#A1-7-2-常用聚合函数速查"><span class="trm-toc-number">8.2.</span> <span class="trm-toc-text">A1.7.2 常用聚合函数速查</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.7.3 transform &#x2F; filter &#x2F; apply 三兄弟的区别"><a rel="nofollow" class="trm-toc-link" href="#A1-7-3-transform-filter-apply-三兄弟的区别"><span class="trm-toc-number">8.3.</span> <span class="trm-toc-text">A1.7.3 transform &#x2F; filter &#x2F; apply 三兄弟的区别</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.7.4 透视、交叉表、宽长转换、独热编码"><a rel="nofollow" class="trm-toc-link" href="#A1-7-4-透视、交叉表、宽长转换、独热编码"><span class="trm-toc-number">8.4.</span> <span class="trm-toc-text">A1.7.4 透视、交叉表、宽长转换、独热编码</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A1.8 合并连接：merge &#x2F; concat &#x2F; join"><a rel="nofollow" class="trm-toc-link" href="#A1-8-合并连接：merge-concat-join"><span class="trm-toc-number">9.</span> <span class="trm-toc-text">A1.8 合并连接：merge &#x2F; concat &#x2F; join</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A1.8.1 merge 的四种 how（示意图）"><a rel="nofollow" class="trm-toc-link" href="#A1-8-1-merge-的四种-how（示意图）"><span class="trm-toc-number">9.1.</span> <span class="trm-toc-text">A1.8.1 merge 的四种 how（示意图）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.8.2 concat &#x2F; join &#x2F; combine_first"><a rel="nofollow" class="trm-toc-link" href="#A1-8-2-concat-join-combine-first"><span class="trm-toc-number">9.2.</span> <span class="trm-toc-text">A1.8.2 concat &#x2F; join &#x2F; combine_first</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A1.9 字符串 .str 方法全表"><a rel="nofollow" class="trm-toc-link" href="#A1-9-字符串-str-方法全表"><span class="trm-toc-number">10.</span> <span class="trm-toc-text">A1.9 字符串 .str 方法全表</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.10 时间 .dt 属性全表 + resample 频率别名"><a rel="nofollow" class="trm-toc-link" href="#A1-10-时间-dt-属性全表-resample-频率别名"><span class="trm-toc-number">11.</span> <span class="trm-toc-text">A1.10 时间 .dt 属性全表 + resample 频率别名</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="A1.10.1 .dt 属性速查"><a rel="nofollow" class="trm-toc-link" href="#A1-10-1-dt-属性速查"><span class="trm-toc-number">11.1.</span> <span class="trm-toc-text">A1.10.1 .dt 属性速查</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.10.2 resample 频率别名表（⚠️ 含 pandas 3.0 变更）"><a rel="nofollow" class="trm-toc-link" href="#A1-10-2-resample-频率别名表（⚠️-含-pandas-3-0-变更）"><span class="trm-toc-number">11.2.</span> <span class="trm-toc-text">A1.10.2 resample 频率别名表（⚠️ 含 pandas 3.0 变更）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="A1.10.3 date_range &#x2F; to_period &#x2F; Timedelta"><a rel="nofollow" class="trm-toc-link" href="#A1-10-3-date-range-to-period-Timedelta"><span class="trm-toc-number">11.3.</span> <span class="trm-toc-text">A1.10.3 date_range &#x2F; to_period &#x2F; Timedelta</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="A1.11 统计函数速查"><a rel="nofollow" class="trm-toc-link" href="#A1-11-统计函数速查"><span class="trm-toc-number">12.</span> <span class="trm-toc-text">A1.11 统计函数速查</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.12 窗口函数：rolling &#x2F; expanding &#x2F; ewm"><a rel="nofollow" class="trm-toc-link" href="#A1-12-窗口函数：rolling-expanding-ewm"><span class="trm-toc-number">13.</span> <span class="trm-toc-text">A1.12 窗口函数：rolling &#x2F; expanding &#x2F; ewm</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.13 缺失值速查"><a rel="nofollow" class="trm-toc-link" href="#A1-13-缺失值速查"><span class="trm-toc-number">14.</span> <span class="trm-toc-text">A1.13 缺失值速查</span></a></li><li class="trm-toc-item trm-toc-level-2" title="A1.14 最常用的 25 个操作 Top 25"><a rel="nofollow" class="trm-toc-link" href="#A1-14-最常用的-25-个操作-Top-25"><span class="trm-toc-number">15.</span> <span class="trm-toc-text">A1.14 最常用的 25 个操作 Top 25</span></a></li><li class="trm-toc-item trm-toc-level-2" title="小结"><a rel="nofollow" class="trm-toc-link" href="#小结"><span class="trm-toc-number">16.</span> <span class="trm-toc-text">小结</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/2026/09/23/jq-basics/">
+<meta name="description" content="jq 基础教程 — 命令行处理 JSON 数据 接口返回一大坨 JSON，肉眼找出某个字段很痛苦。jq 是 JSON 的 sed&#x2F;awk：用一条表达式就能过滤、提取、重组数据。这篇教程按”先能取出值，再会筛选和重组”的顺序讲，所有示例都可以直接复制执行。  目录 jq 是什么，解决什么问题 安装与第一个查询 访问字段与数组 管道：把多个过滤器串起来 数组操作：map 与迭代 筛选：sel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="jq 基础教程 — 命令行处理 JSON 数据">
+<meta property="og:url" content="https://blog.tdcqcx.cn/2026/09/23/jq-basics/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="jq 基础教程 — 命令行处理 JSON 数据 接口返回一大坨 JSON，肉眼找出某个字段很痛苦。jq 是 JSON 的 sed&#x2F;awk：用一条表达式就能过滤、提取、重组数据。这篇教程按”先能取出值，再会筛选和重组”的顺序讲，所有示例都可以直接复制执行。  目录 jq 是什么，解决什么问题 安装与第一个查询 访问字段与数组 管道：把多个过滤器串起来 数组操作：map 与迭代 筛选：sel">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-23T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-23T06:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="命令行">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="jq">
+<meta property="article:tag" content="JSON">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="jq 教程, JSON 处理, 命令行 JSON, 过滤器, 管道, select, map, 数据提取, API 调试">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"jq 基础教程 — 命令行处理 JSON 数据","datePublished":"2026-09-23T06:00:00.000Z","dateModified":"2026-09-23T06:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/2026/09/23/jq-basics/","image":"https://blog.tdcqcx.cn/post-covers/jq-basics.jpg"}
+</script>
+
+
+<title >jq 基础教程 — 命令行处理 JSON 数据</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-23 14:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/jq-basics.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/jq-basics.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            jq 基础教程 — 命令行处理 JSON 数据
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            jq 基础教程 — 命令行处理 JSON 数据
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2026
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/23
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            14:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="jq-基础教程-—-命令行处理-JSON-数据"><a href="#jq-基础教程-—-命令行处理-JSON-数据" class="headerlink" title="jq 基础教程 — 命令行处理 JSON 数据"></a>jq 基础教程 — 命令行处理 JSON 数据</h1><blockquote>
+<p>接口返回一大坨 JSON，肉眼找出某个字段很痛苦。jq 是 JSON 的 <code>sed</code>&#x2F;<code>awk</code>：用一条表达式就能过滤、提取、重组数据。<br>这篇教程按”先能取出值，再会筛选和重组”的顺序讲，所有示例都可以直接复制执行。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-jq-%E6%98%AF%E4%BB%80%E4%B9%88%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98">jq 是什么，解决什么问题</a></li>
+<li><a href="#2-%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%9F%A5%E8%AF%A2">安装与第一个查询</a></li>
+<li><a href="#3-%E8%AE%BF%E9%97%AE%E5%AD%97%E6%AE%B5%E4%B8%8E%E6%95%B0%E7%BB%84">访问字段与数组</a></li>
+<li><a href="#4-%E7%AE%A1%E9%81%93%E6%8A%8A%E5%A4%9A%E4%B8%AA%E8%BF%87%E6%BB%A4%E5%99%A8%E4%B8%B2%E8%B5%B7%E6%9D%A5">管道：把多个过滤器串起来</a></li>
+<li><a href="#5-%E6%95%B0%E7%BB%84%E6%93%8D%E4%BD%9Cmap-%E4%B8%8E%E8%BF%AD%E4%BB%A3">数组操作：map 与迭代</a></li>
+<li><a href="#6-%E7%AD%9B%E9%80%89select-%E4%B8%8E%E6%9D%A1%E4%BB%B6%E8%A1%A8%E8%BE%BE%E5%BC%8F">筛选：select 与条件表达式</a></li>
+<li><a href="#7-%E6%9E%84%E9%80%A0%E6%96%B0%E5%AF%B9%E8%B1%A1%E4%B8%8E%E6%95%B0%E7%BB%84">构造新对象与数组</a></li>
+<li><a href="#8-%E6%8E%92%E5%BA%8F%E5%8E%BB%E9%87%8D%E4%B8%8E%E8%81%9A%E5%90%88">排序、去重与聚合</a></li>
+<li><a href="#9-%E5%B8%B8%E7%94%A8%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0">常用内置函数</a></li>
+<li><a href="#10-%E8%BE%93%E5%87%BA%E6%A0%BC%E5%BC%8F%E6%8E%A7%E5%88%B6">输出格式控制</a></li>
+<li><a href="#11-%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B">实战案例</a></li>
+<li><a href="#12-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-faq">常见问题 FAQ</a></li>
+</ol>
+<hr>
+<h2 id="1-jq-是什么，解决什么问题"><a href="#1-jq-是什么，解决什么问题" class="headerlink" title="1. jq 是什么，解决什么问题"></a>1. jq 是什么，解决什么问题</h2><p>jq 是一个命令行 JSON 处理器。它把 JSON 当作<strong>流</strong>来处理：输入 JSON，经过一系列<strong>过滤器</strong>，输出新的 JSON 或纯文本。</p>
+<p>对比一下”取 API 里所有用户的邮箱”这件事：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 没有 jq: 靠 grep 和正则, 脆弱且容易出错</span></span><br><span class="line">curl -s https://api.example.com/users | grep -o <span class="string">&#x27;&quot;email&quot;:&quot;[^&quot;]*&quot;&#x27;</span> | <span class="built_in">cut</span> -d<span class="string">&#x27;&quot;&#x27;</span> -f4</span><br><span class="line"></span><br><span class="line"><span class="comment"># 有 jq: 明确表达&quot;取每个元素的 email 字段&quot;</span></span><br><span class="line">curl -s https://api.example.com/users | jq -r <span class="string">&#x27;.[].email&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>后者的优势在于<strong>它理解 JSON 的结构</strong>，不受缩进、字段顺序、嵌套层级影响。grep 的做法遇到字段名里出现 <code>email</code> 就会误匹配。</p>
+<h3 id="什么时候用-jq"><a href="#什么时候用-jq" class="headerlink" title="什么时候用 jq"></a>什么时候用 jq</h3><ul>
+<li>调试 API：快速看清返回结构、提取目标字段；</li>
+<li>处理日志：日志是 JSON 行格式时，jq 能高效统计和过滤；</li>
+<li>写脚本：把 JSON 配置转成 shell 变量；</li>
+<li>数据转换：JSON 转 CSV、重塑结构。</li>
+</ul>
+<hr>
+<h2 id="2-安装与第一个查询"><a href="#2-安装与第一个查询" class="headerlink" title="2. 安装与第一个查询"></a>2. 安装与第一个查询</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Debian / Ubuntu</span></span><br><span class="line"><span class="built_in">sudo</span> apt install jq</span><br><span class="line"></span><br><span class="line"><span class="comment"># macOS</span></span><br><span class="line">brew install jq</span><br><span class="line"></span><br><span class="line"><span class="comment"># Windows (scoop)</span></span><br><span class="line">scoop install jq</span><br><span class="line"><span class="comment"># 或者下载 jq.exe 放进 PATH</span></span><br></pre></td></tr></table></figure>
+
+<p>验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq --version</span><br><span class="line"><span class="comment"># jq-1.7.1</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="准备示例数据"><a href="#准备示例数据" class="headerlink" title="准备示例数据"></a>准备示例数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; users.json &lt;&lt; <span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">&quot;total&quot;</span>: 3,</span><br><span class="line">  <span class="string">&quot;users&quot;</span>: [</span><br><span class="line">    &#123; <span class="string">&quot;id&quot;</span>: 1, <span class="string">&quot;name&quot;</span>: <span class="string">&quot;张明&quot;</span>, <span class="string">&quot;age&quot;</span>: 28, <span class="string">&quot;city&quot;</span>: <span class="string">&quot;成都&quot;</span>, <span class="string">&quot;active&quot;</span>: <span class="literal">true</span>,  <span class="string">&quot;tags&quot;</span>: [<span class="string">&quot;java&quot;</span>, <span class="string">&quot;sql&quot;</span>] &#125;,</span><br><span class="line">    &#123; <span class="string">&quot;id&quot;</span>: 2, <span class="string">&quot;name&quot;</span>: <span class="string">&quot;李华&quot;</span>, <span class="string">&quot;age&quot;</span>: 34, <span class="string">&quot;city&quot;</span>: <span class="string">&quot;北京&quot;</span>, <span class="string">&quot;active&quot;</span>: <span class="literal">false</span>, <span class="string">&quot;tags&quot;</span>: [<span class="string">&quot;vue&quot;</span>] &#125;,</span><br><span class="line">    &#123; <span class="string">&quot;id&quot;</span>: 3, <span class="string">&quot;name&quot;</span>: <span class="string">&quot;王芳&quot;</span>, <span class="string">&quot;age&quot;</span>: 25, <span class="string">&quot;city&quot;</span>: <span class="string">&quot;成都&quot;</span>, <span class="string">&quot;active&quot;</span>: <span class="literal">true</span>,  <span class="string">&quot;tags&quot;</span>: [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;sql&quot;</span>] &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<h3 id="最简单的一次调用"><a href="#最简单的一次调用" class="headerlink" title="最简单的一次调用"></a>最简单的一次调用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p><code>.</code> 是<strong>恒等过滤器</strong>（identity），输出和输入完全相同，只是重新格式化了。它的实际用途是<strong>把压缩的一行 JSON 展开成可读格式</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&#123;&quot;a&quot;:1,&quot;b&quot;:&#123;&quot;c&quot;:2&#125;&#125;&#x27;</span> | jq .</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;a&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;b&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;c&quot;</span><span class="punctuation">:</span> <span class="number">2</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你只想要这个”美化”功能，<code>python -m json.tool</code> 也能做。jq 的价值在于后面的过滤能力。</p>
+</blockquote>
+<hr>
+<h2 id="3-访问字段与数组"><a href="#3-访问字段与数组" class="headerlink" title="3. 访问字段与数组"></a>3. 访问字段与数组</h2><h3 id="取字段"><a href="#取字段" class="headerlink" title="取字段"></a>取字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.total&#x27;</span> users.json          <span class="comment"># 3</span></span><br><span class="line">jq <span class="string">&#x27;.users&#x27;</span> users.json          <span class="comment"># 整个数组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="取数组元素"><a href="#取数组元素" class="headerlink" title="取数组元素"></a>取数组元素</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[0]&#x27;</span> users.json       <span class="comment"># 第一个元素</span></span><br><span class="line">jq <span class="string">&#x27;.users[-1]&#x27;</span> users.json      <span class="comment"># 最后一个元素(负数从末尾数)</span></span><br><span class="line">jq <span class="string">&#x27;.users[0:2]&#x27;</span> users.json     <span class="comment"># 前两个(切片)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="链式访问"><a href="#链式访问" class="headerlink" title="链式访问"></a>链式访问</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[0].name&#x27;</span> users.json  <span class="comment"># &quot;张明&quot;</span></span><br><span class="line">jq <span class="string">&#x27;.users[0].tags[1]&#x27;</span> users.json  <span class="comment"># &quot;sql&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="安全访问：-运算符"><a href="#安全访问：-运算符" class="headerlink" title="安全访问：? 运算符"></a>安全访问：? 运算符</h3><p>字段不存在时 jq 会报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&#123;&quot;a&quot;:1&#125;&#x27;</span> | jq <span class="string">&#x27;.b.c&#x27;</span></span><br><span class="line"><span class="comment"># jq: error: Cannot index null with &quot;c&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>加 <code>?</code> 让缺失路径返回 <code>null</code> 而不报错：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;&#123;&quot;a&quot;:1&#125;&#x27;</span> | jq <span class="string">&#x27;.b.c?&#x27;</span></span><br><span class="line"><span class="comment"># null</span></span><br></pre></td></tr></table></figure>
+
+<p>在处理结构不稳定的第三方 API 响应时，<code>?</code> 很实用。</p>
+<h3 id="遍历数组的所有元素"><a href="#遍历数组的所有元素" class="headerlink" title="遍历数组的所有元素"></a>遍历数组的所有元素</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[]&#x27;</span> users.json        <span class="comment"># 逐个输出每个用户对象</span></span><br><span class="line">jq <span class="string">&#x27;.users[].name&#x27;</span> users.json   <span class="comment"># 逐个输出每个名字</span></span><br></pre></td></tr></table></figure>
+
+<p><code>[]</code>（不加索引）表示”展开数组的每一项”。</p>
+<h3 id="可选链与默认值"><a href="#可选链与默认值" class="headerlink" title="可选链与默认值"></a>可选链与默认值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取不到的字段给个默认值</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | .nickname // &quot;未设置&quot;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p><code>//</code> 是”备用运算符”：左边为 <code>null</code> 或 <code>false</code> 时取右边的值。</p>
+<hr>
+<h2 id="4-管道：把多个过滤器串起来"><a href="#4-管道：把多个过滤器串起来" class="headerlink" title="4. 管道：把多个过滤器串起来"></a>4. 管道：把多个过滤器串起来</h2><p><code>|</code> 把左边过滤器的输出交给右边，和 shell 管道的思路一致。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | length&#x27;</span> users.json           <span class="comment"># 3</span></span><br><span class="line">jq <span class="string">&#x27;.users | .[0] | .name&#x27;</span> users.json     <span class="comment"># &quot;张明&quot;</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | .city&#x27;</span> users.json          <span class="comment"># 逐个输出城市</span></span><br></pre></td></tr></table></figure>
+
+<p>等价改写：<code>.users[0].name</code> 和 <code>.users | .[0] | .name</code> 结果一样。<strong>用管道把长路径拆开，可读性更好</strong>，尤其是需要在中途做转换时。</p>
+<h3 id="管道的实际用法：先取再筛"><a href="#管道的实际用法：先取再筛" class="headerlink" title="管道的实际用法：先取再筛"></a>管道的实际用法：先取再筛</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | map(select(.active)) | .[].name&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p>读法：”取 users 数组 → 只保留 active 为真的 → 输出每个名字”。</p>
+<h3 id="组合多个输出"><a href="#组合多个输出" class="headerlink" title=", 组合多个输出"></a><code>,</code> 组合多个输出</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.total, .users[0].name&#x27;</span> users.json</span><br><span class="line"><span class="comment"># 3</span></span><br><span class="line"><span class="comment"># &quot;张明&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>逗号让同一个输入产生多个输出，等同于把两条查询合并执行。</p>
+<hr>
+<h2 id="5-数组操作：map-与迭代"><a href="#5-数组操作：map-与迭代" class="headerlink" title="5. 数组操作：map 与迭代"></a>5. 数组操作：map 与迭代</h2><h3 id="map：对每个元素做转换"><a href="#map：对每个元素做转换" class="headerlink" title="map：对每个元素做转换"></a>map：对每个元素做转换</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 取出所有名字</span></span><br><span class="line">jq <span class="string">&#x27;.users | map(.name)&#x27;</span> users.json</span><br><span class="line"><span class="comment"># [&quot;张明&quot;, &quot;李华&quot;, &quot;王芳&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 每个用户拼一句描述</span></span><br><span class="line">jq <span class="string">&#x27;.users | map(&quot;\\(.name) 来自 \\(.city)&quot;)&#x27;</span> users.json</span><br><span class="line"><span class="comment"># [&quot;张明 来自 成都&quot;, &quot;李华 来自 北京&quot;, &quot;王芳 来自 成都&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>map(f)</code> 等价于 <code>[.[] | f]</code>——对每个元素应用 f，再把结果收成一个数组。<strong>它保留数组结构</strong>，而 <code>.users[].name</code> 输出的是一串独立的字符串。</p>
+<h3 id="map-与-的区别"><a href="#map-与-的区别" class="headerlink" title="map 与 [] 的区别"></a>map 与 [] 的区别</h3><table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>.users[].name</code></td>
+<td>三个独立的值（可以逐个处理）</td>
+</tr>
+<tr>
+<td><code>.users | map(.name)</code></td>
+<td>一个数组 <code>[&quot;张明&quot;,&quot;李华&quot;,&quot;王芳&quot;]</code></td>
+</tr>
+</tbody></table>
+<p><strong>要后续整体处理（排序、统计）就用 map；只是遍历输出就用 <code>[]</code>。</strong></p>
+<h3 id="字符串插值"><a href="#字符串插值" class="headerlink" title="字符串插值"></a>字符串插值</h3><p>jq 1.6 起支持 <code>\\(...)</code> 插值：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq -r <span class="string">&#x27;.users[] | &quot;\\(.id)\\t\\(.name)\\t\\(.city)&quot;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p>配合 <code>-r</code> 输出原始文本，可以生成制表符分隔的数据，方便导入表格软件。</p>
+<h3 id="操作多个字段"><a href="#操作多个字段" class="headerlink" title="操作多个字段"></a>操作多个字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每个用户取 name 和 city 两个字段</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | &#123;name, city&#125;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p><code>&#123;name, city&#125;</code> 是 <code>&#123;&quot;name&quot;: .name, &quot;city&quot;: .city&#125;</code> 的简写——<strong>当键名和字段名相同时可以省略冒号右侧</strong>。</p>
+<hr>
+<h2 id="6-筛选：select-与条件表达式"><a href="#6-筛选：select-与条件表达式" class="headerlink" title="6. 筛选：select 与条件表达式"></a>6. 筛选：select 与条件表达式</h2><h3 id="select：按条件过滤"><a href="#select：按条件过滤" class="headerlink" title="select：按条件过滤"></a>select：按条件过滤</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 只要成都的用户</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.city == &quot;成都&quot;)&#x27;</span> users.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只要活跃用户的名字</span></span><br><span class="line">jq -r <span class="string">&#x27;.users[] | select(.active) | .name&#x27;</span> users.json</span><br><span class="line"><span class="comment"># 张明</span></span><br><span class="line"><span class="comment"># 王芳</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="比较运算符"><a href="#比较运算符" class="headerlink" title="比较运算符"></a>比较运算符</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[] | select(.age &gt; 30)&#x27;</span> users.json          <span class="comment"># 年龄大于 30</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.age &gt;= 25 and .age &lt;= 30)&#x27;</span> users.json</span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.city == &quot;成都&quot; or .city == &quot;北京&quot;)&#x27;</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.name != &quot;李华&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="判断字段存在与类型"><a href="#判断字段存在与类型" class="headerlink" title="判断字段存在与类型"></a>判断字段存在与类型</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[] | select(.email != null)&#x27;</span> users.json      <span class="comment"># 有 email 字段的</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(has(&quot;tags&quot;))&#x27;</span> users.json         <span class="comment"># 含 tags 键的</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.tags | type == &quot;array&quot;)&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串匹配"><a href="#字符串匹配" class="headerlink" title="字符串匹配"></a>字符串匹配</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 正则匹配</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.name | test(&quot;明&quot;))&#x27;</span> users.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 包含子串</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.name | contains(&quot;芳&quot;))&#x27;</span> users.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 前缀匹配</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.name | startswith(&quot;张&quot;))&#x27;</span> users.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不区分大小写的正则</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.city | test(&quot;成都&quot;; &quot;i&quot;))&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组包含判断"><a href="#数组包含判断" class="headerlink" title="数组包含判断"></a>数组包含判断</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># tags 里含 &quot;sql&quot; 的用户</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.tags | index(&quot;sql&quot;))&#x27;</span> users.json</span><br><span class="line"></span><br><span class="line"><span class="comment"># 用 any 检查</span></span><br><span class="line">jq <span class="string">&#x27;.users[] | select(.tags | any(. == &quot;sql&quot;))&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="筛选后保留原结构"><a href="#筛选后保留原结构" class="headerlink" title="筛选后保留原结构"></a>筛选后保留原结构</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出是数组而非流</span></span><br><span class="line">jq <span class="string">&#x27;.users | map(select(.active))&#x27;</span> users.json</span><br><span class="line">jq <span class="string">&#x27;&#123; total: (.users | map(select(.active)) | length), users: (.users | map(select(.active))) &#125;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="条件表达式-if-then-else"><a href="#条件表达式-if-then-else" class="headerlink" title="条件表达式 if-then-else"></a>条件表达式 if-then-else</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[] | if .age &gt;= 30 then &quot;\\(.name) 是资深&quot; else &quot;\\(.name) 是新人&quot; end&#x27;</span> -r users.json</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-构造新对象与数组"><a href="#7-构造新对象与数组" class="headerlink" title="7. 构造新对象与数组"></a>7. 构造新对象与数组</h2><h3 id="构造对象"><a href="#构造对象" class="headerlink" title="构造对象"></a>构造对象</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[] | &#123; id, name, 城市: .city &#125;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;id&quot;</span><span class="punctuation">:</span> <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;张明&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;城市&quot;</span><span class="punctuation">:</span> <span class="string">&quot;成都&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>要点：</p>
+<ul>
+<li><code>&#123;id&#125;</code> 简写自 <code>&#123;id: .id&#125;</code>；</li>
+<li>需要改名或加中文键时写成 <code>&#123;新键: .原字段&#125;</code>。</li>
+</ul>
+<h3 id="构造嵌套对象"><a href="#构造嵌套对象" class="headerlink" title="构造嵌套对象"></a>构造嵌套对象</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;&#123; summary: &#123; count: (.users | length), cities: (.users | map(.city) | unique) &#125; &#125;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;summary&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;count&quot;</span><span class="punctuation">:</span> <span class="number">3</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;cities&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;北京&quot;</span><span class="punctuation">,</span> <span class="string">&quot;成都&quot;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="构造数组"><a href="#构造数组" class="headerlink" title="构造数组"></a>构造数组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;[.users[].name]&#x27;</span> users.json              <span class="comment"># 名字收集成数组</span></span><br><span class="line">jq <span class="string">&#x27;[(.users[] | select(.active) | .name)]&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p><code>[ ... ]</code> 把流式输出收成一个数组，这是<strong>替代 map 的通用写法</strong>。</p>
+<h3 id="合并对象"><a href="#合并对象" class="headerlink" title="合并对象"></a>合并对象</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># + 合并对象, 右边覆盖同名键</span></span><br><span class="line">jq <span class="string">&#x27;.users[0] + &#123; city: &quot;重庆&quot;, level: &quot;A&quot; &#125;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="给数组元素加字段"><a href="#给数组元素加字段" class="headerlink" title="给数组元素加字段"></a>给数组元素加字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | map(. + &#123; label: &quot;\\(.name)(\\(.city))&quot; &#125;)&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-排序、去重与聚合"><a href="#8-排序、去重与聚合" class="headerlink" title="8. 排序、去重与聚合"></a>8. 排序、去重与聚合</h2><h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | sort_by(.age)&#x27;</span> users.json          <span class="comment"># 按年龄升序</span></span><br><span class="line">jq <span class="string">&#x27;.users | sort_by(.age) | reverse&#x27;</span> users.json  <span class="comment"># 降序</span></span><br><span class="line">jq <span class="string">&#x27;.users | sort_by(-.age)&#x27;</span> users.json           <span class="comment"># 降序(另一种写法)</span></span><br><span class="line">jq <span class="string">&#x27;.users | sort_by(.city, .age)&#x27;</span> users.json     <span class="comment"># 多字段排序</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;[.users[].city] | unique&#x27;</span> users.json</span><br><span class="line"><span class="comment"># [&quot;北京&quot;, &quot;成都&quot;]</span></span><br><span class="line"></span><br><span class="line">jq <span class="string">&#x27;[.users[].tags[]] | unique&#x27;</span> users.json</span><br><span class="line"><span class="comment"># [&quot;java&quot;, &quot;python&quot;, &quot;sql&quot;, &quot;vue&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>unique</code> 会<strong>先排序再去重</strong>。只想删除相邻重复项（保持原顺序）用 <code>unique_by</code> 或先用 <code>group_by</code>。</p>
+<h3 id="统计"><a href="#统计" class="headerlink" title="统计"></a>统计</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | length&#x27;</span> users.json                    <span class="comment"># 3</span></span><br><span class="line">jq <span class="string">&#x27;[.users[].age] | add&#x27;</span> users.json               <span class="comment"># 求和 87</span></span><br><span class="line">jq <span class="string">&#x27;[.users[].age] | add / length&#x27;</span> users.json      <span class="comment"># 平均 29</span></span><br><span class="line">jq <span class="string">&#x27;[.users[].age] | min, max&#x27;</span> users.json          <span class="comment"># 25  34</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分组"><a href="#分组" class="headerlink" title="分组"></a>分组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | group_by(.city) | map(&#123; city: .[0].city, count: length &#125;)&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span> <span class="string">&quot;北京&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;count&quot;</span><span class="punctuation">:</span> <span class="number">1</span> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span> <span class="attr">&quot;city&quot;</span><span class="punctuation">:</span> <span class="string">&quot;成都&quot;</span><span class="punctuation">,</span> <span class="attr">&quot;count&quot;</span><span class="punctuation">:</span> <span class="number">2</span> <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="按条件计数"><a href="#按条件计数" class="headerlink" title="按条件计数"></a>按条件计数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;[.users[] | select(.active)] | length&#x27;</span> users.json    <span class="comment"># 2</span></span><br><span class="line">jq <span class="string">&#x27;&#123; total: (.users|length), active: ([.users[]|select(.active)]|length) &#125;&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="转成另一种索引结构"><a href="#转成另一种索引结构" class="headerlink" title="转成另一种索引结构"></a>转成另一种索引结构</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 以 id 为键重建索引</span></span><br><span class="line">jq <span class="string">&#x27;.users | map(&#123; key: (.id | tostring), value: . &#125;) | from_entries&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p>输出是一个以 id 为键的对象，方便后续 <code>.[&quot;1&quot;].name</code> 这样快速访问。</p>
+<hr>
+<h2 id="9-常用内置函数"><a href="#9-常用内置函数" class="headerlink" title="9. 常用内置函数"></a>9. 常用内置函数</h2><h3 id="类型与转换"><a href="#类型与转换" class="headerlink" title="类型与转换"></a>类型与转换</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>type</code></td>
+<td>返回类型名（”object”&#x2F;“array”&#x2F;“string”&#x2F;“number”&#x2F;“boolean”&#x2F;“null”）</td>
+</tr>
+<tr>
+<td><code>tostring</code></td>
+<td>转成字符串</td>
+</tr>
+<tr>
+<td><code>tonumber</code></td>
+<td>转成数字</td>
+</tr>
+<tr>
+<td><code>tojson</code></td>
+<td>转成 JSON 字符串</td>
+</tr>
+<tr>
+<td><code>fromjson</code></td>
+<td>解析 JSON 字符串</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[0] | type&#x27;</span> users.json              <span class="comment"># &quot;object&quot;</span></span><br><span class="line">jq <span class="string">&#x27;.users[0].id | tostring&#x27;</span> users.json       <span class="comment"># &quot;1&quot;</span></span><br><span class="line">jq <span class="string">&#x27;&quot;123&quot; | tonumber&#x27;</span> &lt;&lt;&lt; <span class="string">&#x27;&quot;123&quot;&#x27;</span>             <span class="comment"># 123</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串处理"><a href="#字符串处理" class="headerlink" title="字符串处理"></a>字符串处理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jq -r <span class="string">&#x27;.users[0].name | ascii_downcase, ascii_upcase&#x27;</span> users.json</span><br><span class="line">jq -r <span class="string">&#x27;.users[0].name | length&#x27;</span> users.json            <span class="comment"># 字符数</span></span><br><span class="line">jq -r <span class="string">&#x27;&quot;a,b,c&quot; | split(&quot;,&quot;)&#x27;</span> &lt;&lt;&lt; <span class="string">&#x27;&quot;a,b,c&quot;&#x27;</span>            <span class="comment"># [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</span></span><br><span class="line">jq -r <span class="string">&#x27;[&quot;a&quot;,&quot;b&quot;] | join(&quot;-&quot;)&#x27;</span> &lt;&lt;&lt; <span class="string">&#x27;[&quot;a&quot;,&quot;b&quot;]&#x27;</span>         <span class="comment"># a-b</span></span><br><span class="line">jq -r <span class="string">&#x27;&quot;  x  &quot; | ltrimstr(&quot; &quot;)&#x27;</span> &lt;&lt;&lt; <span class="string">&#x27;&quot;  x  &quot;&#x27;</span></span><br><span class="line">jq -r <span class="string">&#x27;&quot;hello&quot; | sub(&quot;l&quot;; &quot;L&quot;)&#x27;</span> &lt;&lt;&lt; <span class="string">&#x27;&quot;hello&quot;&#x27;</span>         <span class="comment"># heLlo(只替换第一处)</span></span><br><span class="line">jq -r <span class="string">&#x27;&quot;hello&quot; | gsub(&quot;l&quot;; &quot;L&quot;)&#x27;</span> &lt;&lt;&lt; <span class="string">&#x27;&quot;hello&quot;&#x27;</span>        <span class="comment"># heLLo(全部替换)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数组与对象"><a href="#数组与对象" class="headerlink" title="数组与对象"></a>数组与对象</h3><table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>keys</code> &#x2F; <code>keys_unsorted</code></td>
+<td>取所有键</td>
+</tr>
+<tr>
+<td><code>values</code></td>
+<td>取所有值</td>
+</tr>
+<tr>
+<td><code>has(&quot;k&quot;)</code></td>
+<td>是否含某个键</td>
+</tr>
+<tr>
+<td><code>length</code></td>
+<td>长度</td>
+</tr>
+<tr>
+<td><code>add</code></td>
+<td>求和（数字）或拼接（字符串&#x2F;数组）</td>
+</tr>
+<tr>
+<td><code>flatten</code></td>
+<td>展平嵌套数组</td>
+</tr>
+<tr>
+<td><code>unique</code></td>
+<td>去重</td>
+</tr>
+<tr>
+<td><code>reverse</code></td>
+<td>反转</td>
+</tr>
+<tr>
+<td><code>first</code> &#x2F; <code>last</code></td>
+<td>首个 &#x2F; 末尾元素</td>
+</tr>
+<tr>
+<td><code>del(.k)</code></td>
+<td>删除字段</td>
+</tr>
+<tr>
+<td><code>paths</code></td>
+<td>列出所有路径</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;. | keys&#x27;</span> users.json</span><br><span class="line">jq <span class="string">&#x27;.users[0] | del(.tags)&#x27;</span> users.json</span><br><span class="line">jq <span class="string">&#x27;[1,[2,[3]]] | flatten&#x27;</span> &lt;&lt;&lt; <span class="string">&#x27;[1,[2,[3]]]&#x27;</span>    <span class="comment"># [1,2,3]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq --arg city <span class="string">&quot;成都&quot;</span> <span class="string">&#x27;.users[] | select(.city == $city) | .name&#x27;</span> users.json</span><br><span class="line">jq --argjson minAge 30 <span class="string">&#x27;.users[] | select(.age &gt;= $minAge) | .name&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p><code>--arg</code> 传入字符串，<code>--argjson</code> 传入 JSON 值（数字、布尔、对象）。<strong>这是把 shell 变量安全带入 jq 表达式的方式</strong>——不要用字符串拼接，那样在值含特殊字符时会出问题。</p>
+<hr>
+<h2 id="10-输出格式控制"><a href="#10-输出格式控制" class="headerlink" title="10. 输出格式控制"></a>10. 输出格式控制</h2><h3 id="四个最常用的输出选项"><a href="#四个最常用的输出选项" class="headerlink" title="四个最常用的输出选项"></a>四个最常用的输出选项</h3><table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无</td>
+<td>格式化 JSON，带缩进和颜色</td>
+</tr>
+<tr>
+<td><code>-r</code></td>
+<td>原始输出（raw），字符串不带引号</td>
+</tr>
+<tr>
+<td><code>-c</code></td>
+<td>紧凑输出，一行一个 JSON</td>
+</tr>
+<tr>
+<td><code>-j</code></td>
+<td>不加换行符</td>
+</tr>
+<tr>
+<td><code>-e</code></td>
+<td>按结果设置退出码（无输出或 null 时返回非 0）</td>
+</tr>
+</tbody></table>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">jq -r <span class="string">&#x27;.users[].name&#x27;</span> users.json</span><br><span class="line"><span class="comment"># 张明</span></span><br><span class="line"><span class="comment"># 李华</span></span><br><span class="line"><span class="comment"># 王芳</span></span><br><span class="line"></span><br><span class="line">jq -c <span class="string">&#x27;.users[]&#x27;</span> users.json</span><br><span class="line"><span class="comment"># &#123;&quot;id&quot;:1,&quot;name&quot;:&quot;张明&quot;,...&#125;</span></span><br><span class="line"><span class="comment"># &#123;&quot;id&quot;:2,...&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-r</code> 是把 jq 结果用在 shell 脚本里的<strong>必备选项</strong>，否则字符串会带上双引号。</p>
+<h3 id="从文件读取与多个文件"><a href="#从文件读取与多个文件" class="headerlink" title="从文件读取与多个文件"></a>从文件读取与多个文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.&#x27;</span> users.json other.json     <span class="comment"># 依次处理每个文件</span></span><br><span class="line">jq -s <span class="string">&#x27;.&#x27;</span> users.json other.json  <span class="comment"># -s 把多个文件合并成一个数组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="输出-TSV-CSV"><a href="#输出-TSV-CSV" class="headerlink" title="输出 TSV &#x2F; CSV"></a>输出 TSV &#x2F; CSV</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 制表符分隔</span></span><br><span class="line">jq -r <span class="string">&#x27;.users[] | [.id, .name, .city] | @tsv&#x27;</span> users.json</span><br><span class="line"><span class="comment"># 1	张明	成都</span></span><br><span class="line"><span class="comment"># 2	李华	北京</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 逗号分隔(会正确加引号转义)</span></span><br><span class="line">jq -r <span class="string">&#x27;.users[] | [.id, .name, .city] | @csv&#x27;</span> users.json</span><br><span class="line"><span class="comment"># 1,&quot;张明&quot;,&quot;成都&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 先输出表头</span></span><br><span class="line">jq -r <span class="string">&#x27;[&quot;id&quot;,&quot;name&quot;,&quot;city&quot;], (.users[] | [.id,.name,.city]) | @tsv&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="用-e-在脚本里做判断"><a href="#用-e-在脚本里做判断" class="headerlink" title="用 -e 在脚本里做判断"></a>用 -e 在脚本里做判断</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> jq -e <span class="string">&#x27;.users | any(.active)&#x27;</span> users.json &gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;存在活跃用户&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-e</code> 让 jq 在结果为 <code>null</code> 或 <code>false</code> 时返回退出码 1，这样能直接用在 <code>if</code> 里。</p>
+<hr>
+<h2 id="11-实战案例"><a href="#11-实战案例" class="headerlink" title="11. 实战案例"></a>11. 实战案例</h2><h3 id="案例一：从-API-提取需要的字段"><a href="#案例一：从-API-提取需要的字段" class="headerlink" title="案例一：从 API 提取需要的字段"></a>案例一：从 API 提取需要的字段</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -s https://api.github.com/repos/TDCQCX/TDCQCX.github.io | \\</span><br><span class="line">  jq <span class="string">&#x27;&#123; name, stars: .stargazers_count, forks: .forks_count, updated: .updated_at &#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;TDCQCX.github.io&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;stars&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;forks&quot;</span><span class="punctuation">:</span> <span class="number">0</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;updated&quot;</span><span class="punctuation">:</span> <span class="string">&quot;2026-09-30T00:00:00Z&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="案例二：统计日志里的错误分布"><a href="#案例二：统计日志里的错误分布" class="headerlink" title="案例二：统计日志里的错误分布"></a>案例二：统计日志里的错误分布</h3><p>假设日志是每行一个 JSON：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;time&quot;:&quot;2026-09-22T10:00:01Z&quot;,&quot;level&quot;:&quot;ERROR&quot;,&quot;module&quot;:&quot;order&quot;&#125;</span><br><span class="line">&#123;&quot;time&quot;:&quot;2026-09-22T10:00:02Z&quot;,&quot;level&quot;:&quot;INFO&quot;,&quot;module&quot;:&quot;web&quot;&#125;</span><br><span class="line">&#123;&quot;time&quot;:&quot;2026-09-22T10:00:03Z&quot;,&quot;level&quot;:&quot;ERROR&quot;,&quot;module&quot;:&quot;web&quot;&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 每行的 level 分布</span></span><br><span class="line">jq -r <span class="string">&#x27;.level&#x27;</span> app.log | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 只看错误, 按模块聚合</span></span><br><span class="line">jq -r <span class="string">&#x27;select(.level == &quot;ERROR&quot;) | .module&#x27;</span> app.log | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c</span><br><span class="line"></span><br><span class="line"><span class="comment"># 超过 500ms 的慢请求</span></span><br><span class="line">jq -r <span class="string">&#x27;select(.duration_ms &gt; 500) | &quot;\\(.time) \\(.path) \\(.duration_ms)ms&quot;&#x27;</span> app.log</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例三：比较两个-JSON-的差异"><a href="#案例三：比较两个-JSON-的差异" class="headerlink" title="案例三：比较两个 JSON 的差异"></a>案例三：比较两个 JSON 的差异</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 找出只在 a.json 里的键</span></span><br><span class="line"><span class="built_in">comm</span> -23 &lt;(jq -r <span class="string">&#x27;keys[]&#x27;</span> a.json | <span class="built_in">sort</span>) &lt;(jq -r <span class="string">&#x27;keys[]&#x27;</span> b.json | <span class="built_in">sort</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例四：把嵌套结构拍平"><a href="#案例四：把嵌套结构拍平" class="headerlink" title="案例四：把嵌套结构拍平"></a>案例四：把嵌套结构拍平</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">jq -r <span class="string">&#x27;.users[] | . as $u | .tags[] | [$u.name, .] | @tsv&#x27;</span> users.json</span><br><span class="line"><span class="comment"># 张明	java</span></span><br><span class="line"><span class="comment"># 张明	sql</span></span><br><span class="line"><span class="comment"># 王芳	python</span></span><br><span class="line"><span class="comment"># 王芳	sql</span></span><br></pre></td></tr></table></figure>
+
+<p>这里 <code>. as $u</code> 把当前对象存进变量，内层循环遍历 <code>tags</code> 时还能引用外层的 <code>name</code>。<strong>这是处理”一对多”结构的标准套路。</strong></p>
+<h3 id="案例五：校验并格式化配置文件"><a href="#案例五：校验并格式化配置文件" class="headerlink" title="案例五：校验并格式化配置文件"></a>案例五：校验并格式化配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 校验 JSON 合法性(不合法时退出码非 0)</span></span><br><span class="line">jq empty config.json &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;JSON 合法&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 就地格式化</span></span><br><span class="line">jq . config.json &gt; tmp &amp;&amp; <span class="built_in">mv</span> tmp config.json</span><br></pre></td></tr></table></figure>
+
+<h3 id="案例六：从-JSON-配置生成环境变量"><a href="#案例六：从-JSON-配置生成环境变量" class="headerlink" title="案例六：从 JSON 配置生成环境变量"></a>案例六：从 JSON 配置生成环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> <span class="string">&quot;<span class="subst">$(jq -r &#x27;.env | to_entries[] | <span class="string">&quot;export \\(.key)=\\(.value)&quot;</span>&#x27; config.json)</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>例如配置是 <code>&#123;&quot;env&quot;:&#123;&quot;API_URL&quot;:&quot;https://a.example.com&quot;,&quot;DEBUG&quot;:&quot;true&quot;&#125;&#125;</code>，执行后就有了两个环境变量。</p>
+<blockquote>
+<p><strong>安全提醒</strong>：<code>eval</code> 能执行任意代码，只对<strong>你自己完全可控</strong>的配置文件使用。配置文件来自外部或用户输入时，改成显式读取各个字段。</p>
+</blockquote>
+<h3 id="案例七：取数组里满足条件的第一个元素"><a href="#案例七：取数组里满足条件的第一个元素" class="headerlink" title="案例七：取数组里满足条件的第一个元素"></a>案例七：取数组里满足条件的第一个元素</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | map(select(.city == &quot;北京&quot;)) | first&#x27;</span> users.json</span><br><span class="line">jq <span class="string">&#x27;.users | first(.city == &quot;北京&quot;)&#x27;</span> users.json       <span class="comment"># jq 1.6+ 写法</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="12-常见问题-FAQ"><a href="#12-常见问题-FAQ" class="headerlink" title="12. 常见问题 FAQ"></a>12. 常见问题 FAQ</h2><p><strong>Q：输出带引号，怎么去掉？</strong></p>
+<p>加 <code>-r</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq -r <span class="string">&#x27;.users[].name&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：报错 <code>Cannot index string with &quot;x&quot;</code> 是什么原因？</strong></p>
+<p>路径类型不对——你在一个字符串上继续取字段了。用 <code>jq .</code> 先看清结构，或用 <code>.a?.b?</code> 让缺失路径返回 null。</p>
+<p><strong>Q：怎么处理字段名里有特殊字符的情况？</strong></p>
+<p>用 <code>.[&quot;字段名&quot;]</code> 语法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.[&quot;my-field&quot;]&#x27;</span> data.json</span><br><span class="line">jq <span class="string">&#x27;.[&quot;内容 有空格&quot;]&#x27;</span> data.json</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：jq 能修改原文件吗？</strong></p>
+<p>不能就地改。需要重定向：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.a = 1&#x27;</span> config.json &gt; tmp &amp;&amp; <span class="built_in">mv</span> tmp config.json</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：怎么把 shell 变量传进 jq 表达式？</strong></p>
+<p>用 <code>--arg</code>（字符串）或 <code>--argjson</code>（JSON 值），<strong>不要拼接字符串</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq --arg name <span class="string">&quot;张明&quot;</span> <span class="string">&#x27;.users[] | select(.name == $name)&#x27;</span> users.json</span><br><span class="line">jq --argjson age 30 <span class="string">&#x27;.users[] | select(.age &gt; $age)&#x27;</span> users.json</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：<code>map(select(...))</code> 和 <code>select(...)</code> 有什么区别？</strong></p>
+<p><code>.users | map(select(.x))</code> 得到的是<strong>数组</strong>；<code>.users[] | select(.x)</code> 得到的是<strong>元素流</strong>。要保留数组结构就用前者的写法（或用 <code>[ ... ]</code> 包裹）。</p>
+<p><strong>Q：怎么只取数组的前 N 个元素？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users[:2]&#x27;</span> users.json       <span class="comment"># 前 2 个</span></span><br><span class="line">jq <span class="string">&#x27;.users[-2:]&#x27;</span> users.json      <span class="comment"># 后 2 个</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：数字精度会丢吗？</strong></p>
+<p>jq 内部用双精度浮点表示数字。<strong>处理超过 15 位有效数字的 ID（如雪花算法 ID、大额金额）时可能丢精度</strong>。遇到这种情况，用 <code>--argjson</code> 传入或用 <code>tostring</code> 提前转成字符串处理，也可以考虑 jq 1.7 的 <code>--use-decnum-for-json-number</code> 之类的选项。</p>
+<p><strong>Q：怎么过滤掉 null 值？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">jq <span class="string">&#x27;.users | map(select(.email != null))&#x27;</span> users.json</span><br><span class="line">jq <span class="string">&#x27;with_entries(select(.value != null))&#x27;</span> data.json</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：能处理 JSON 数组以外的东西吗？</strong></p>
+<p>jq 也能读纯文本（用 <code>-R</code> 按行读、<code>-s</code> 整体读），能把非 JSON 输入转成 JSON 流。处理非结构化日志时很有用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">jq -R -s <span class="string">&#x27;split(&quot;\\n&quot;) | map(select(length &gt; 0))&#x27;</span> plain.txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：为什么 <code>jq</code> 输出有颜色，重定向到文件就没了？</strong></p>
+<p>jq 检测到输出不是终端时自动关闭颜色，这是刻意设计（避免颜色转义码污染文件）。想强制着色用 <code>-C</code>。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/24/ssh-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/ssh-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">SSH 基础教程 — 密钥登录、端口转发与安全加固</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/24</li>
+                <li>10:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/23/curl-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/curl-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">curl 基础教程 — 命令行调试 HTTP 接口</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/23</li>
+                <li>10:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="jq 基础教程 — 命令行处理 JSON 数据"><a rel="nofollow" class="trm-toc-link" href="#jq-基础教程-—-命令行处理-JSON-数据"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">jq 基础教程 — 命令行处理 JSON 数据</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="目录"><a rel="nofollow" class="trm-toc-link" href="#目录"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">目录</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1. jq 是什么，解决什么问题"><a rel="nofollow" class="trm-toc-link" href="#1-jq-是什么，解决什么问题"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">1. jq 是什么，解决什么问题</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="什么时候用 jq"><a rel="nofollow" class="trm-toc-link" href="#什么时候用-jq"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">什么时候用 jq</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="2. 安装与第一个查询"><a rel="nofollow" class="trm-toc-link" href="#2-安装与第一个查询"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">2. 安装与第一个查询</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="安装"><a rel="nofollow" class="trm-toc-link" href="#安装"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">安装</span></a></li><li class="trm-toc-item trm-toc-level-3" title="准备示例数据"><a rel="nofollow" class="trm-toc-link" href="#准备示例数据"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">准备示例数据</span></a></li><li class="trm-toc-item trm-toc-level-3" title="最简单的一次调用"><a rel="nofollow" class="trm-toc-link" href="#最简单的一次调用"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">最简单的一次调用</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="3. 访问字段与数组"><a rel="nofollow" class="trm-toc-link" href="#3-访问字段与数组"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">3. 访问字段与数组</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="取字段"><a rel="nofollow" class="trm-toc-link" href="#取字段"><span class="trm-toc-number">1.4.1.</span> <span class="trm-toc-text">取字段</span></a></li><li class="trm-toc-item trm-toc-level-3" title="取数组元素"><a rel="nofollow" class="trm-toc-link" href="#取数组元素"><span class="trm-toc-number">1.4.2.</span> <span class="trm-toc-text">取数组元素</span></a></li><li class="trm-toc-item trm-toc-level-3" title="链式访问"><a rel="nofollow" class="trm-toc-link" href="#链式访问"><span class="trm-toc-number">1.4.3.</span> <span class="trm-toc-text">链式访问</span></a></li><li class="trm-toc-item trm-toc-level-3" title="安全访问：? 运算符"><a rel="nofollow" class="trm-toc-link" href="#安全访问：-运算符"><span class="trm-toc-number">1.4.4.</span> <span class="trm-toc-text">安全访问：? 运算符</span></a></li><li class="trm-toc-item trm-toc-level-3" title="遍历数组的所有元素"><a rel="nofollow" class="trm-toc-link" href="#遍历数组的所有元素"><span class="trm-toc-number">1.4.5.</span> <span class="trm-toc-text">遍历数组的所有元素</span></a></li><li class="trm-toc-item trm-toc-level-3" title="可选链与默认值"><a rel="nofollow" class="trm-toc-link" href="#可选链与默认值"><span class="trm-toc-number">1.4.6.</span> <span class="trm-toc-text">可选链与默认值</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="4. 管道：把多个过滤器串起来"><a rel="nofollow" class="trm-toc-link" href="#4-管道：把多个过滤器串起来"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">4. 管道：把多个过滤器串起来</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="管道的实际用法：先取再筛"><a rel="nofollow" class="trm-toc-link" href="#管道的实际用法：先取再筛"><span class="trm-toc-number">1.5.1.</span> <span class="trm-toc-text">管道的实际用法：先取再筛</span></a></li><li class="trm-toc-item trm-toc-level-3" title=", 组合多个输出"><a rel="nofollow" class="trm-toc-link" href="#组合多个输出"><span class="trm-toc-number">1.5.2.</span> <span class="trm-toc-text">, 组合多个输出</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="5. 数组操作：map 与迭代"><a rel="nofollow" class="trm-toc-link" href="#5-数组操作：map-与迭代"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">5. 数组操作：map 与迭代</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="map：对每个元素做转换"><a rel="nofollow" class="trm-toc-link" href="#map：对每个元素做转换"><span class="trm-toc-number">1.6.1.</span> <span class="trm-toc-text">map：对每个元素做转换</span></a></li><li class="trm-toc-item trm-toc-level-3" title="map 与 [] 的区别"><a rel="nofollow" class="trm-toc-link" href="#map-与-的区别"><span class="trm-toc-number">1.6.2.</span> <span class="trm-toc-text">map 与 [] 的区别</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符串插值"><a rel="nofollow" class="trm-toc-link" href="#字符串插值"><span class="trm-toc-number">1.6.3.</span> <span class="trm-toc-text">字符串插值</span></a></li><li class="trm-toc-item trm-toc-level-3" title="操作多个字段"><a rel="nofollow" class="trm-toc-link" href="#操作多个字段"><span class="trm-toc-number">1.6.4.</span> <span class="trm-toc-text">操作多个字段</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="6. 筛选：select 与条件表达式"><a rel="nofollow" class="trm-toc-link" href="#6-筛选：select-与条件表达式"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">6. 筛选：select 与条件表达式</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="select：按条件过滤"><a rel="nofollow" class="trm-toc-link" href="#select：按条件过滤"><span class="trm-toc-number">1.7.1.</span> <span class="trm-toc-text">select：按条件过滤</span></a></li><li class="trm-toc-item trm-toc-level-3" title="比较运算符"><a rel="nofollow" class="trm-toc-link" href="#比较运算符"><span class="trm-toc-number">1.7.2.</span> <span class="trm-toc-text">比较运算符</span></a></li><li class="trm-toc-item trm-toc-level-3" title="判断字段存在与类型"><a rel="nofollow" class="trm-toc-link" href="#判断字段存在与类型"><span class="trm-toc-number">1.7.3.</span> <span class="trm-toc-text">判断字段存在与类型</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符串匹配"><a rel="nofollow" class="trm-toc-link" href="#字符串匹配"><span class="trm-toc-number">1.7.4.</span> <span class="trm-toc-text">字符串匹配</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数组包含判断"><a rel="nofollow" class="trm-toc-link" href="#数组包含判断"><span class="trm-toc-number">1.7.5.</span> <span class="trm-toc-text">数组包含判断</span></a></li><li class="trm-toc-item trm-toc-level-3" title="筛选后保留原结构"><a rel="nofollow" class="trm-toc-link" href="#筛选后保留原结构"><span class="trm-toc-number">1.7.6.</span> <span class="trm-toc-text">筛选后保留原结构</span></a></li><li class="trm-toc-item trm-toc-level-3" title="条件表达式 if-then-else"><a rel="nofollow" class="trm-toc-link" href="#条件表达式-if-then-else"><span class="trm-toc-number">1.7.7.</span> <span class="trm-toc-text">条件表达式 if-then-else</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="7. 构造新对象与数组"><a rel="nofollow" class="trm-toc-link" href="#7-构造新对象与数组"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">7. 构造新对象与数组</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="构造对象"><a rel="nofollow" class="trm-toc-link" href="#构造对象"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">构造对象</span></a></li><li class="trm-toc-item trm-toc-level-3" title="构造嵌套对象"><a rel="nofollow" class="trm-toc-link" href="#构造嵌套对象"><span class="trm-toc-number">1.8.2.</span> <span class="trm-toc-text">构造嵌套对象</span></a></li><li class="trm-toc-item trm-toc-level-3" title="构造数组"><a rel="nofollow" class="trm-toc-link" href="#构造数组"><span class="trm-toc-number">1.8.3.</span> <span class="trm-toc-text">构造数组</span></a></li><li class="trm-toc-item trm-toc-level-3" title="合并对象"><a rel="nofollow" class="trm-toc-link" href="#合并对象"><span class="trm-toc-number">1.8.4.</span> <span class="trm-toc-text">合并对象</span></a></li><li class="trm-toc-item trm-toc-level-3" title="给数组元素加字段"><a rel="nofollow" class="trm-toc-link" href="#给数组元素加字段"><span class="trm-toc-number">1.8.5.</span> <span class="trm-toc-text">给数组元素加字段</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="8. 排序、去重与聚合"><a rel="nofollow" class="trm-toc-link" href="#8-排序、去重与聚合"><span class="trm-toc-number">1.9.</span> <span class="trm-toc-text">8. 排序、去重与聚合</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="排序"><a rel="nofollow" class="trm-toc-link" href="#排序"><span class="trm-toc-number">1.9.1.</span> <span class="trm-toc-text">排序</span></a></li><li class="trm-toc-item trm-toc-level-3" title="去重"><a rel="nofollow" class="trm-toc-link" href="#去重"><span class="trm-toc-number">1.9.2.</span> <span class="trm-toc-text">去重</span></a></li><li class="trm-toc-item trm-toc-level-3" title="统计"><a rel="nofollow" class="trm-toc-link" href="#统计"><span class="trm-toc-number">1.9.3.</span> <span class="trm-toc-text">统计</span></a></li><li class="trm-toc-item trm-toc-level-3" title="分组"><a rel="nofollow" class="trm-toc-link" href="#分组"><span class="trm-toc-number">1.9.4.</span> <span class="trm-toc-text">分组</span></a></li><li class="trm-toc-item trm-toc-level-3" title="按条件计数"><a rel="nofollow" class="trm-toc-link" href="#按条件计数"><span class="trm-toc-number">1.9.5.</span> <span class="trm-toc-text">按条件计数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="转成另一种索引结构"><a rel="nofollow" class="trm-toc-link" href="#转成另一种索引结构"><span class="trm-toc-number">1.9.6.</span> <span class="trm-toc-text">转成另一种索引结构</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="9. 常用内置函数"><a rel="nofollow" class="trm-toc-link" href="#9-常用内置函数"><span class="trm-toc-number">1.10.</span> <span class="trm-toc-text">9. 常用内置函数</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="类型与转换"><a rel="nofollow" class="trm-toc-link" href="#类型与转换"><span class="trm-toc-number">1.10.1.</span> <span class="trm-toc-text">类型与转换</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符串处理"><a rel="nofollow" class="trm-toc-link" href="#字符串处理"><span class="trm-toc-number">1.10.2.</span> <span class="trm-toc-text">字符串处理</span></a></li><li class="trm-toc-item trm-toc-level-3" title="数组与对象"><a rel="nofollow" class="trm-toc-link" href="#数组与对象"><span class="trm-toc-number">1.10.3.</span> <span class="trm-toc-text">数组与对象</span></a></li><li class="trm-toc-item trm-toc-level-3" title="使用变量"><a rel="nofollow" class="trm-toc-link" href="#使用变量"><span class="trm-toc-number">1.10.4.</span> <span class="trm-toc-text">使用变量</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="10. 输出格式控制"><a rel="nofollow" class="trm-toc-link" href="#10-输出格式控制"><span class="trm-toc-number">1.11.</span> <span class="trm-toc-text">10. 输出格式控制</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="四个最常用的输出选项"><a rel="nofollow" class="trm-toc-link" href="#四个最常用的输出选项"><span class="trm-toc-number">1.11.1.</span> <span class="trm-toc-text">四个最常用的输出选项</span></a></li><li class="trm-toc-item trm-toc-level-3" title="从文件读取与多个文件"><a rel="nofollow" class="trm-toc-link" href="#从文件读取与多个文件"><span class="trm-toc-number">1.11.2.</span> <span class="trm-toc-text">从文件读取与多个文件</span></a></li><li class="trm-toc-item trm-toc-level-3" title="输出 TSV &#x2F; CSV"><a rel="nofollow" class="trm-toc-link" href="#输出-TSV-CSV"><span class="trm-toc-number">1.11.3.</span> <span class="trm-toc-text">输出 TSV &#x2F; CSV</span></a></li><li class="trm-toc-item trm-toc-level-3" title="用 -e 在脚本里做判断"><a rel="nofollow" class="trm-toc-link" href="#用-e-在脚本里做判断"><span class="trm-toc-number">1.11.4.</span> <span class="trm-toc-text">用 -e 在脚本里做判断</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="11. 实战案例"><a rel="nofollow" class="trm-toc-link" href="#11-实战案例"><span class="trm-toc-number">1.12.</span> <span class="trm-toc-text">11. 实战案例</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="案例一：从 API 提取需要的字段"><a rel="nofollow" class="trm-toc-link" href="#案例一：从-API-提取需要的字段"><span class="trm-toc-number">1.12.1.</span> <span class="trm-toc-text">案例一：从 API 提取需要的字段</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例二：统计日志里的错误分布"><a rel="nofollow" class="trm-toc-link" href="#案例二：统计日志里的错误分布"><span class="trm-toc-number">1.12.2.</span> <span class="trm-toc-text">案例二：统计日志里的错误分布</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例三：比较两个 JSON 的差异"><a rel="nofollow" class="trm-toc-link" href="#案例三：比较两个-JSON-的差异"><span class="trm-toc-number">1.12.3.</span> <span class="trm-toc-text">案例三：比较两个 JSON 的差异</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例四：把嵌套结构拍平"><a rel="nofollow" class="trm-toc-link" href="#案例四：把嵌套结构拍平"><span class="trm-toc-number">1.12.4.</span> <span class="trm-toc-text">案例四：把嵌套结构拍平</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例五：校验并格式化配置文件"><a rel="nofollow" class="trm-toc-link" href="#案例五：校验并格式化配置文件"><span class="trm-toc-number">1.12.5.</span> <span class="trm-toc-text">案例五：校验并格式化配置文件</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例六：从 JSON 配置生成环境变量"><a rel="nofollow" class="trm-toc-link" href="#案例六：从-JSON-配置生成环境变量"><span class="trm-toc-number">1.12.6.</span> <span class="trm-toc-text">案例六：从 JSON 配置生成环境变量</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例七：取数组里满足条件的第一个元素"><a rel="nofollow" class="trm-toc-link" href="#案例七：取数组里满足条件的第一个元素"><span class="trm-toc-number">1.12.7.</span> <span class="trm-toc-text">案例七：取数组里满足条件的第一个元素</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="12. 常见问题 FAQ"><a rel="nofollow" class="trm-toc-link" href="#12-常见问题-FAQ"><span class="trm-toc-number">1.13.</span> <span class="trm-toc-text">12. 常见问题 FAQ</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

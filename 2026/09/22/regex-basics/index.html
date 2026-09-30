@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/2026/09/22/regex-basics/">
+<meta name="description" content="正则表达式基础教程 — 语法、实战与避坑 正则表达式（regex）是描述文本模式的迷你语言。它强大到能一行完成复杂校验，也危险到能写出让服务器 CPU 打满的表达式。这篇教程从最基本的元字符讲到回溯与 ReDoS，目标是让你既能写出正确的正则，也知道什么时候不该用正则。  目录 正则是什么，什么时候不该用 字符匹配：从字面量到字符类 量词：控制重复次数 锚点与边界 分组与捕获 量词的贪婪与懒惰 断">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正则表达式基础教程 — 语法、实战与避坑">
+<meta property="og:url" content="https://blog.tdcqcx.cn/2026/09/22/regex-basics/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="正则表达式基础教程 — 语法、实战与避坑 正则表达式（regex）是描述文本模式的迷你语言。它强大到能一行完成复杂校验，也危险到能写出让服务器 CPU 打满的表达式。这篇教程从最基本的元字符讲到回溯与 ReDoS，目标是让你既能写出正确的正则，也知道什么时候不该用正则。  目录 正则是什么，什么时候不该用 字符匹配：从字面量到字符类 量词：控制重复次数 锚点与边界 分组与捕获 量词的贪婪与懒惰 断">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-22T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-22T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="正则表达式">
+<meta property="article:tag" content="文本处理">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="正则表达式教程, regex, 元字符, 分组, 断言, 贪婪匹配, ReDoS, 正则调试, 表单校验">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"正则表达式基础教程 — 语法、实战与避坑","datePublished":"2026-09-22T02:00:00.000Z","dateModified":"2026-09-22T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/2026/09/22/regex-basics/","image":"https://blog.tdcqcx.cn/post-covers/regex-basics.jpg"}
+</script>
+
+
+<title >正则表达式基础教程 — 语法、实战与避坑</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-22 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/regex-basics.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/regex-basics.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            正则表达式基础教程 — 语法、实战与避坑
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            正则表达式基础教程 — 语法、实战与避坑
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2026
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/22
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="正则表达式基础教程-—-语法、实战与避坑"><a href="#正则表达式基础教程-—-语法、实战与避坑" class="headerlink" title="正则表达式基础教程 — 语法、实战与避坑"></a>正则表达式基础教程 — 语法、实战与避坑</h1><blockquote>
+<p>正则表达式（regex）是描述文本模式的迷你语言。它强大到能一行完成复杂校验，也危险到能写出让服务器 CPU 打满的表达式。<br>这篇教程从最基本的元字符讲到回溯与 ReDoS，目标是让你既能写出正确的正则，也知道什么时候<strong>不该</strong>用正则。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-%E6%AD%A3%E5%88%99%E6%98%AF%E4%BB%80%E4%B9%88%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E8%AF%A5%E7%94%A8">正则是什么，什么时候不该用</a></li>
+<li><a href="#2-%E5%AD%97%E7%AC%A6%E5%8C%B9%E9%85%8D%E4%BB%8E%E5%AD%97%E9%9D%A2%E9%87%8F%E5%88%B0%E5%AD%97%E7%AC%A6%E7%B1%BB">字符匹配：从字面量到字符类</a></li>
+<li><a href="#3-%E9%87%8F%E8%AF%8D%E6%8E%A7%E5%88%B6%E9%87%8D%E5%A4%8D%E6%AC%A1%E6%95%B0">量词：控制重复次数</a></li>
+<li><a href="#4-%E9%94%9A%E7%82%B9%E4%B8%8E%E8%BE%B9%E7%95%8C">锚点与边界</a></li>
+<li><a href="#5-%E5%88%86%E7%BB%84%E4%B8%8E%E6%8D%95%E8%8E%B7">分组与捕获</a></li>
+<li><a href="#6-%E9%87%8F%E8%AF%8D%E7%9A%84%E8%B4%AA%E5%A9%AA%E4%B8%8E%E6%87%92%E6%83%B0">量词的贪婪与懒惰</a></li>
+<li><a href="#7-%E6%96%AD%E8%A8%80%E4%B8%8D%E6%B6%88%E8%B4%B9%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9D%A1%E4%BB%B6">断言：不消费字符的条件</a></li>
+<li><a href="#8-%E6%A0%87%E5%BF%97%E4%BD%8D%E4%B8%8E%E5%B8%B8%E7%94%A8-api">标志位与常用 API</a></li>
+<li><a href="#9-%E5%AE%9E%E6%88%98%E6%A1%88%E4%BE%8B">实战案例</a></li>
+<li><a href="#10-%E6%80%A7%E8%83%BD%E9%99%B7%E9%98%B1%E4%B8%8E-redos">性能陷阱与 ReDoS</a></li>
+<li><a href="#11-%E8%B0%83%E8%AF%95%E4%B8%8E%E5%8F%AF%E8%AF%BB%E6%80%A7%E5%BB%BA%E8%AE%AE">调试与可读性建议</a></li>
+<li><a href="#12-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-faq">常见问题 FAQ</a></li>
+</ol>
+<hr>
+<h2 id="1-正则是什么，什么时候不该用"><a href="#1-正则是什么，什么时候不该用" class="headerlink" title="1. 正则是什么，什么时候不该用"></a>1. 正则是什么，什么时候不该用</h2><p>正则表达式用一个模式字符串描述”哪些文本算匹配”。比如 <code>\\d&#123;3&#125;-\\d&#123;4&#125;</code> 描述”3 位数字、连字符、4 位数字”，能匹配 <code>555-1234</code>。</p>
+<p>它适合处理<strong>结构简单、上下文无关</strong>的文本：</p>
+<ul>
+<li>校验手机号、邮箱、日期格式；</li>
+<li>从日志里提取 IP、时间戳、状态码；</li>
+<li>批量查找替换；</li>
+<li>切分格式规整的字符串。</li>
+</ul>
+<h3 id="这四种情况不要用正则"><a href="#这四种情况不要用正则" class="headerlink" title="这四种情况不要用正则"></a>这四种情况不要用正则</h3><p><strong>1. 嵌套结构。</strong> 正则本质上处理的是<strong>正则语言</strong>，无法匹配任意深度的嵌套括号、标签、JSON&#x2F;HTML。解析这类内容要用真正的解析器（如 <code>JSON.parse</code>、HTML 解析库）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 想用正则解析 HTML 是典型的错误尝试, 遇到嵌套就会失败</span></span><br><span class="line">html.<span class="title function_">match</span>(<span class="regexp">/&lt;div&gt;(.*)&lt;\\/</span>div&gt;/s)</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 涉及语义校验。</strong> 比如”邮箱是否真实存在”、”日期是否是合法日期”（<code>2025-02-30</code> 格式正确但不存在）、”身份证校验位是否正确”。正则可以挡住格式错误，但最终的语义校验要在代码里做。</p>
+<p><strong>3. 性能敏感且可预计算的场景。</strong> 高频调用时，预编译正则（见第 8 节）或改用字符串方法会更快。</p>
+<p><strong>4. 简单的字符串操作。</strong> 找子串、判断前缀，用 <code>includes()</code>、<code>startsWith()</code> 就够，不必上正则。</p>
+<blockquote>
+<p><strong>判断标准</strong>：如果你的正则长到需要写注释才看得懂，多半说明这个任务该用解析器或拆成多步。</p>
+</blockquote>
+<hr>
+<h2 id="2-字符匹配：从字面量到字符类"><a href="#2-字符匹配：从字面量到字符类" class="headerlink" title="2. 字符匹配：从字面量到字符类"></a>2. 字符匹配：从字面量到字符类</h2><h3 id="字面量与转义"><a href="#字面量与转义" class="headerlink" title="字面量与转义"></a>字面量与转义</h3><p>大多数字符直接写就表示自身。但下面这 12 个字符有特殊含义，想匹配它们本身要加反斜杠：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">. * + ? ^ $ &#123; &#125; [ ] ( ) | \\</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/\\./.<span class="title function_">test</span>(<span class="string">&quot;a.b&quot;</span>)      <span class="comment">// true, 匹配字面量点号</span></span><br><span class="line">/\\d\\.\\d/.<span class="title function_">test</span>(<span class="string">&quot;1.5&quot;</span>)  <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>在字符串里写正则时还要注意<strong>双重转义</strong>：JavaScript 字符串中 <code>&quot;\\\\d&quot;</code> 才是正则看到的一个 <code>\d</code>。所以优先用正则字面量 <code>/\\d/</code> 而不是 <code>new RegExp(&quot;\\\\d&quot;)</code>。</p>
+<h3 id="字符类"><a href="#字符类" class="headerlink" title="字符类 [...]"></a>字符类 <code>[...]</code></h3><p>方括号表示”这里可以是其中任意一个字符”：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/[abc]/        <span class="comment">// a 或 b 或 c</span></span><br><span class="line"><span class="regexp">/[a-z]/</span>        <span class="comment">// 任意小写字母</span></span><br><span class="line"><span class="regexp">/[a-zA-Z0-9]/</span>  <span class="comment">// 字母或数字</span></span><br><span class="line"><span class="regexp">/[^0-9]/</span>       <span class="comment">// 不是数字(^ 在方括号内表示取反)</span></span><br><span class="line"><span class="regexp">/[.-]/</span>         <span class="comment">// 点或连字符(注意转义规则不同)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>方括号内的特殊规则</strong>：</p>
+<ul>
+<li>大多数元字符在方括号内<strong>失去特殊含义</strong>：<code>[.+*]</code> 匹配的就是点、加号、星号；</li>
+<li><code>^</code> 放在开头表示取反；</li>
+<li><code>-</code> 放在开头或结尾表示字面量，否则表示范围；</li>
+<li><code>]</code> 需要转义或用 <code>[\\]]</code> 写法。</li>
+</ul>
+<h3 id="预定义字符类"><a href="#预定义字符类" class="headerlink" title="预定义字符类"></a>预定义字符类</h3><table>
+<thead>
+<tr>
+<th>简写</th>
+<th>含义</th>
+<th>等价写法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>\\d</code></td>
+<td>数字</td>
+<td><code>[0-9]</code></td>
+</tr>
+<tr>
+<td><code>\\D</code></td>
+<td>非数字</td>
+<td><code>[^0-9]</code></td>
+</tr>
+<tr>
+<td><code>\\w</code></td>
+<td>单词字符</td>
+<td><code>[A-Za-z0-9_]</code></td>
+</tr>
+<tr>
+<td><code>\\W</code></td>
+<td>非单词字符</td>
+<td><code>[^A-Za-z0-9_]</code></td>
+</tr>
+<tr>
+<td><code>\\s</code></td>
+<td>空白（空格、Tab、换行）</td>
+<td><code>[ \\t\\n\\r\\f\\v]</code></td>
+</tr>
+<tr>
+<td><code>\\S</code></td>
+<td>非空白</td>
+<td></td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>除换行外的任意字符</td>
+<td><code>[^\\n]</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>注意</strong>：<code>\\w</code> 只覆盖 ASCII 字母，<strong>不匹配中文</strong>。要匹配中文用 <code>[\\u4e00-\\u9fa5]</code> 或更完整的 Unicode 属性转义 <code>\\p&#123;Script=Han&#125;</code>（需 <code>u</code> 标志）。</p>
+</blockquote>
+<hr>
+<h2 id="3-量词：控制重复次数"><a href="#3-量词：控制重复次数" class="headerlink" title="3. 量词：控制重复次数"></a>3. 量词：控制重复次数</h2><table>
+<thead>
+<tr>
+<th>量词</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*</code></td>
+<td>0 次或多次</td>
+</tr>
+<tr>
+<td><code>+</code></td>
+<td>1 次或多次</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>0 次或 1 次</td>
+</tr>
+<tr>
+<td><code>&#123;n&#125;</code></td>
+<td>恰好 n 次</td>
+</tr>
+<tr>
+<td><code>&#123;n,&#125;</code></td>
+<td>至少 n 次</td>
+</tr>
+<tr>
+<td><code>&#123;n,m&#125;</code></td>
+<td>n 到 m 次</td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/^\\d&#123;<span class="number">11</span>&#125;$/        <span class="comment">// 恰好 11 位数字(手机号格式)</span></span><br><span class="line"><span class="regexp">/^\\d&#123;3,4&#125;$/</span>       <span class="comment">// 3 到 4 位数字</span></span><br><span class="line"><span class="regexp">/ab*c/</span>             <span class="comment">// a, 0或多个b, c  -&gt;  ac, abc, abbc</span></span><br><span class="line"><span class="regexp">/ab+c/</span>             <span class="comment">// a, 1或多个b, c  -&gt;  abc, abbc(不含 ac)</span></span><br><span class="line"><span class="regexp">/colou?r/</span>          <span class="comment">// color 或 colour</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>量词只作用于它前面紧邻的那一个元素</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/^abc+$/     <span class="comment">// &quot;ab&quot; 后面跟一个或多个 c   -&gt;  abc, abcc</span></span><br><span class="line"><span class="regexp">/^(abc)+$/</span>   <span class="comment">// &quot;abc&quot; 整体重复一次或多次 -&gt;  abc, abcabc</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-锚点与边界"><a href="#4-锚点与边界" class="headerlink" title="4. 锚点与边界"></a>4. 锚点与边界</h2><p>锚点不匹配字符，只匹配<strong>位置</strong>。</p>
+<table>
+<thead>
+<tr>
+<th>锚点</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>^</code></td>
+<td>字符串开头（多行模式下为行首）</td>
+</tr>
+<tr>
+<td><code>$</code></td>
+<td>字符串结尾（多行模式下为行尾）</td>
+</tr>
+<tr>
+<td><code>\\b</code></td>
+<td>单词边界</td>
+</tr>
+<tr>
+<td><code>\\B</code></td>
+<td>非单词边界</td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/^\\d&#123;<span class="number">4</span>&#125;-\\d&#123;<span class="number">2</span>&#125;-\\d&#123;<span class="number">2</span>&#125;$/.<span class="title function_">test</span>(<span class="string">&quot;2026-09-22&quot;</span>)  <span class="comment">// true</span></span><br><span class="line">/^\\d&#123;<span class="number">4</span>&#125;-\\d&#123;<span class="number">2</span>&#125;-\\d&#123;<span class="number">2</span>&#125;$/.<span class="title function_">test</span>(<span class="string">&quot;2026-09-22 10:00&quot;</span>)  <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么校验一定要加-和"><a href="#为什么校验一定要加-和" class="headerlink" title="为什么校验一定要加 ^ 和 $"></a>为什么校验一定要加 ^ 和 $</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 危险: 只要包含 11 位数字就算通过, &quot;abc13800138000xyz&quot; 也会通过</span></span><br><span class="line">/\\d&#123;<span class="number">11</span>&#125;/.<span class="title function_">test</span>(<span class="string">&quot;abc13800138000xyz&quot;</span>)   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 正确: 限定整串</span></span><br><span class="line">/^\\d&#123;<span class="number">11</span>&#125;$/.<span class="title function_">test</span>(<span class="string">&quot;abc13800138000xyz&quot;</span>) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>这是表单校验里最常见的漏洞——<strong>忘了锚定，导致校验形同虚设</strong>。</p>
+<h3 id="单词边界的用处"><a href="#单词边界的用处" class="headerlink" title="单词边界的用处"></a>单词边界的用处</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/\\bcat\\b/.<span class="title function_">test</span>(<span class="string">&quot;a cat here&quot;</span>)   <span class="comment">// true</span></span><br><span class="line">/\\bcat\\b/.<span class="title function_">test</span>(<span class="string">&quot;category&quot;</span>)     <span class="comment">// false, &quot;cat&quot; 是 category 的一部分</span></span><br></pre></td></tr></table></figure>
+
+<p><code>\\b</code> 的判定基于 <code>\\w</code>：一侧是单词字符、另一侧不是，那里就是边界。注意中文和空格之间不算单词边界，中文场景下 <code>\\b</code> 通常不管用。</p>
+<hr>
+<h2 id="5-分组与捕获"><a href="#5-分组与捕获" class="headerlink" title="5. 分组与捕获"></a>5. 分组与捕获</h2><h3 id="捕获分组"><a href="#捕获分组" class="headerlink" title="捕获分组 ( )"></a>捕获分组 <code>( )</code></h3><p>括号把一部分模式打包，并<strong>记住</strong>匹配到的内容：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="string">&quot;2026-09-22&quot;</span>.<span class="title function_">match</span>(<span class="regexp">/(\\d&#123;4&#125;)-(\\d&#123;2&#125;)-(\\d&#123;2&#125;)/</span>);</span><br><span class="line">m[<span class="number">0</span>]   <span class="comment">// &quot;2026-09-22&quot;  完整匹配</span></span><br><span class="line">m[<span class="number">1</span>]   <span class="comment">// &quot;2026&quot;        第 1 个分组</span></span><br><span class="line">m[<span class="number">2</span>]   <span class="comment">// &quot;09&quot;          第 2 个分组</span></span><br><span class="line">m[<span class="number">3</span>]   <span class="comment">// &quot;22&quot;          第 3 个分组</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="命名分组（推荐）"><a href="#命名分组（推荐）" class="headerlink" title="命名分组（推荐）"></a>命名分组（推荐）</h3><p>编号分组在正则变长后极易错位，命名分组可读性高得多：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> m = <span class="string">&quot;2026-09-22&quot;</span>.<span class="title function_">match</span>(<span class="regexp">/(?&lt;year&gt;\\d&#123;4&#125;)-(?&lt;month&gt;\\d&#123;2&#125;)-(?&lt;day&gt;\\d&#123;2&#125;)/</span>);</span><br><span class="line">m.<span class="property">groups</span>.<span class="property">year</span>   <span class="comment">// &quot;2026&quot;</span></span><br><span class="line">m.<span class="property">groups</span>.<span class="property">month</span>  <span class="comment">// &quot;09&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="非捕获分组"><a href="#非捕获分组" class="headerlink" title="非捕获分组 (?: )"></a>非捕获分组 <code>(?: )</code></h3><p>只想分组、不需要记住内容时用 <code>(?: )</code>，能减少不必要的开销：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/(?:https?|ftp):\\/\\<span class="comment">//    // 分组用于 | , 但不捕获</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="反向引用"><a href="#反向引用" class="headerlink" title="反向引用"></a>反向引用</h3><p>引用前面分组匹配到的<strong>内容</strong>（不是模式）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配重复的单词: hello hello</span></span><br><span class="line">/\\<span class="title function_">b</span>(\\w+)\\s+\\<span class="number">1</span>\\b/.<span class="title function_">test</span>(<span class="string">&quot;hello hello&quot;</span>)   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配成对的引号</span></span><br><span class="line">/([<span class="string">&quot;&#x27;])(.*?)\\1/   // \\1 引用前面捕获的引号类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="替换时的引用"><a href="#替换时的引用" class="headerlink" title="替换时的引用"></a>替换时的引用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;2026-09-22&quot;</span>.<span class="title function_">replace</span>(<span class="regexp">/(\\d&#123;4&#125;)-(\\d&#123;2&#125;)-(\\d&#123;2&#125;)/</span>, <span class="string">&quot;$3/$2/$1&quot;</span>)</span><br><span class="line"><span class="comment">// &quot;22/09/2026&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 命名分组在替换中的写法</span></span><br><span class="line"><span class="string">&quot;2026-09-22&quot;</span>.<span class="title function_">replace</span>(<span class="regexp">/(?&lt;y&gt;\\d&#123;4&#125;)-(?&lt;m&gt;\\d&#123;2&#125;)-(?&lt;d&gt;\\d&#123;2&#125;)/</span>, <span class="string">&quot;$&lt;d&gt;/$&lt;m&gt;/$&lt;y&gt;&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-量词的贪婪与懒惰"><a href="#6-量词的贪婪与懒惰" class="headerlink" title="6. 量词的贪婪与懒惰"></a>6. 量词的贪婪与懒惰</h2><p>默认情况下量词是<strong>贪婪</strong>的：尽可能多地匹配。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> html = <span class="string">&quot;&lt;b&gt;粗体&lt;/b&gt;&lt;i&gt;斜体&lt;/i&gt;&quot;</span>;</span><br><span class="line"></span><br><span class="line">html.<span class="title function_">match</span>(<span class="regexp">/&lt;b&gt;.*&lt;\\/</span>b&gt;<span class="regexp">/)     /</span>/ 贪婪: 匹配整个串</span><br><span class="line">html.<span class="title function_">match</span>(<span class="regexp">/&lt;b&gt;.*?&lt;\\/</span>b&gt;<span class="regexp">/)    /</span><span class="regexp">/ 懒惰: 只匹配 &lt;b&gt;粗体&lt;/</span>b&gt;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>行为</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>*</code> <code>+</code> <code>?</code> <code>&#123;n,m&#125;</code></td>
+<td>贪婪，尽可能多</td>
+</tr>
+<tr>
+<td><code>*?</code> <code>+?</code> <code>??</code> <code>&#123;n,m&#125;?</code></td>
+<td>懒惰，尽可能少</td>
+</tr>
+<tr>
+<td><code>*+</code> <code>++</code></td>
+<td>占有（部分引擎支持），不回溯</td>
+</tr>
+</tbody></table>
+<h3 id="用懒惰解决”匹配到最后一个”的误判"><a href="#用懒惰解决”匹配到最后一个”的误判" class="headerlink" title="用懒惰解决”匹配到最后一个”的误判"></a>用懒惰解决”匹配到最后一个”的误判</h3><p>处理 <code>a=1&amp;b=2&amp;c=3</code> 这类字符串时，贪婪的 <code>.*</code> 会一路吃到末尾：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;a=1&amp;b=2&amp;c=3&quot;</span>.<span class="title function_">match</span>(<span class="regexp">/a=(.*)&amp;/</span>)     <span class="comment">// 贪婪: 抓到 &quot;1&amp;b=2&quot;</span></span><br><span class="line"><span class="string">&quot;a=1&amp;b=2&amp;c=3&quot;</span>.<span class="title function_">match</span>(<span class="regexp">/a=(.*?)&amp;/</span>)    <span class="comment">// 懒惰: 抓到 &quot;1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更好的办法：用否定字符类代替懒惰"><a href="#更好的办法：用否定字符类代替懒惰" class="headerlink" title="更好的办法：用否定字符类代替懒惰"></a>更好的办法：用否定字符类代替懒惰</h3><p><code>.*?</code> 虽然能解决问题，但需要回溯。<strong>如果知道”不该匹配什么”，用否定字符类更快也更明确</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配双引号内的内容: 用 [^&quot;]* 而非 .*?</span></span><br><span class="line">/<span class="string">&quot;[^&quot;</span>]*<span class="string">&quot;/.exec(&#x27;say &quot;</span>hello<span class="string">&quot; now&#x27;)   // [&quot;</span>\\<span class="string">&quot;hello\\&quot;</span><span class="string">&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<p><code>[^&quot;]*</code> 不需要回溯试探，性能更好，意图也更清楚。</p>
+<hr>
+<h2 id="7-断言：不消费字符的条件"><a href="#7-断言：不消费字符的条件" class="headerlink" title="7. 断言：不消费字符的条件"></a>7. 断言：不消费字符的条件</h2><p>断言（lookaround）检查某个位置前后<strong>是否符合条件</strong>，但不把这些字符算进匹配结果。</p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>(?=...)</code></td>
+<td>先行断言</td>
+<td>后面必须是什么</td>
+</tr>
+<tr>
+<td><code>(?!...)</code></td>
+<td>否定先行断言</td>
+<td>后面不能是什么</td>
+</tr>
+<tr>
+<td><code>(?&lt;=...)</code></td>
+<td>后行断言</td>
+<td>前面必须是什么</td>
+</tr>
+<tr>
+<td><code>(?&lt;!...)</code></td>
+<td>否定后行断言</td>
+<td>前面不能是什么</td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 密码必须包含数字, 但数字本身不出现在结果里</span></span><br><span class="line">/(?=.*\\d)[A-<span class="title class_">Za</span>-z\\d]&#123;<span class="number">8</span>,&#125;/.<span class="title function_">test</span>(<span class="string">&quot;abcd1234&quot;</span>)   <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配金额里的数字, 前面要有 ¥ 符号</span></span><br><span class="line"><span class="string">&quot;价格 ¥199&quot;</span>.<span class="title function_">match</span>(<span class="regexp">/(?&lt;=¥)\\d+/</span>)   <span class="comment">// [&quot;199&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 匹配后面不是 &quot;px&quot; 的数字</span></span><br><span class="line"><span class="string">&quot;12px 34em&quot;</span>.<span class="title function_">match</span>(<span class="regexp">/\\d+(?!px)/</span>)   <span class="comment">// [&quot;34&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="实用场景：密码强度校验"><a href="#实用场景：密码强度校验" class="headerlink" title="实用场景：密码强度校验"></a>实用场景：密码强度校验</h3><p>用多个先行断言叠加条件，比写一长串复杂分支清晰得多：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 8-20 位, 且同时包含大写、小写、数字</span></span><br><span class="line">/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).&#123;<span class="number">8</span>,<span class="number">20</span>&#125;$/.<span class="title function_">test</span>(<span class="string">&quot;Abc12345&quot;</span>)   <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>拆开看：<code>^(?=.*[a-z])</code> 检查”某处有小写字母”，<code>(?=.*[A-Z])</code> 检查大写，<code>(?=.*\\d)</code> 检查数字，<code>(?!...)</code> 部分最后统一限定长度。</p>
+<blockquote>
+<p><strong>兼容性提醒</strong>：后行断言（<code>(?&lt;=)</code>）在较旧的浏览器和部分运行时里不支持。若需兼容老环境，改用捕获分组 + <code>$1</code> 提取。</p>
+</blockquote>
+<hr>
+<h2 id="8-标志位与常用-API"><a href="#8-标志位与常用-API" class="headerlink" title="8. 标志位与常用 API"></a>8. 标志位与常用 API</h2><h3 id="标志位"><a href="#标志位" class="headerlink" title="标志位"></a>标志位</h3><table>
+<thead>
+<tr>
+<th>标志</th>
+<th>名称</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>g</code></td>
+<td>global</td>
+<td>查找所有匹配，而非只找第一个</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td>ignoreCase</td>
+<td>忽略大小写</td>
+</tr>
+<tr>
+<td><code>m</code></td>
+<td>multiline</td>
+<td>让 <code>^</code> <code>$</code> 匹配每行首尾</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>dotAll</td>
+<td>让 <code>.</code> 也能匹配换行</td>
+</tr>
+<tr>
+<td><code>u</code></td>
+<td>unicode</td>
+<td>启用 Unicode 模式</td>
+</tr>
+<tr>
+<td><code>y</code></td>
+<td>sticky</td>
+<td>从上一次匹配位置严格继续</td>
+</tr>
+</tbody></table>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/hello/i.<span class="title function_">test</span>(<span class="string">&quot;Hello&quot;</span>)            <span class="comment">// true</span></span><br><span class="line"><span class="string">&quot;a1b2c3&quot;</span>.<span class="title function_">match</span>(<span class="regexp">/\\d/g</span>)             <span class="comment">// [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;]  不加 g 只有 [&quot;1&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="JavaScript-四个常用方法"><a href="#JavaScript-四个常用方法" class="headerlink" title="JavaScript 四个常用方法"></a>JavaScript 四个常用方法</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> re = <span class="regexp">/\\d+/g</span>;</span><br><span class="line"></span><br><span class="line">re.<span class="title function_">test</span>(<span class="string">&quot;a1b2&quot;</span>)          <span class="comment">// true  —— 只判断有没有匹配</span></span><br><span class="line"><span class="string">&quot;a1b2c3&quot;</span>.<span class="title function_">match</span>(re)       <span class="comment">// [&quot;1&quot;,&quot;2&quot;,&quot;3&quot;]  —— 取出所有匹配</span></span><br><span class="line"><span class="string">&quot;a1b2&quot;</span>.<span class="title function_">search</span>(<span class="regexp">/\\d/</span>)      <span class="comment">// 1 —— 返回第一个匹配的位置, 找不到返回 -1</span></span><br><span class="line"><span class="string">&quot;a1b2&quot;</span>.<span class="title function_">replace</span>(re, <span class="string">&quot;#&quot;</span>)  <span class="comment">// &quot;a#b#c#&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// exec 可循环取出每次匹配及分组信息</span></span><br><span class="line"><span class="keyword">let</span> m;</span><br><span class="line"><span class="keyword">const</span> rx = <span class="regexp">/(\\d)(\\d)/g</span>;</span><br><span class="line"><span class="keyword">while</span> ((m = rx.<span class="title function_">exec</span>(<span class="string">&quot;12 34 56&quot;</span>)) !== <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(m[<span class="number">0</span>], m[<span class="number">1</span>], m[<span class="number">2</span>], <span class="string">&quot;index=&quot;</span> + m.<span class="property">index</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="g-标志的陷阱：lastIndex"><a href="#g-标志的陷阱：lastIndex" class="headerlink" title="g 标志的陷阱：lastIndex"></a><code>g</code> 标志的陷阱：lastIndex</h3><p>带 <code>g</code> 的正则对象<strong>会在内部记录 lastIndex</strong>，重复用同一个对象会得到出乎意料的结果：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> re = <span class="regexp">/\\d/g</span>;</span><br><span class="line">re.<span class="title function_">test</span>(<span class="string">&quot;123&quot;</span>);   <span class="comment">// true   (lastIndex 变成 1)</span></span><br><span class="line">re.<span class="title function_">test</span>(<span class="string">&quot;123&quot;</span>);   <span class="comment">// true   (lastIndex 变成 2)</span></span><br><span class="line">re.<span class="title function_">test</span>(<span class="string">&quot;123&quot;</span>);   <span class="comment">// true   (lastIndex 变成 3)</span></span><br><span class="line">re.<span class="title function_">test</span>(<span class="string">&quot;123&quot;</span>);   <span class="comment">// false  (lastIndex 已到末尾, 重置为 0)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>解决办法</strong>：不要在需要反复判断的场景复用带 <code>g</code> 的正则对象，或者每次把 <code>re.lastIndex = 0</code> 重置。</p>
+<h3 id="预编译正则"><a href="#预编译正则" class="headerlink" title="预编译正则"></a>预编译正则</h3><p>在循环里每次都新建正则字面量会重复编译。提到循环外能显著提速：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 差: 每轮都编译一次</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> line <span class="keyword">of</span> lines) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="regexp">/^\\d&#123;4&#125;-\\d&#123;2&#125;-\\d&#123;2&#125;/</span>.<span class="title function_">test</span>(line)) &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 好: 只编译一次</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DATE_RE</span> = <span class="regexp">/^\\d&#123;4&#125;-\\d&#123;2&#125;-\\d&#123;2&#125;/</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> line <span class="keyword">of</span> lines) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="variable constant_">DATE_RE</span>.<span class="title function_">test</span>(line)) &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-实战案例"><a href="#9-实战案例" class="headerlink" title="9. 实战案例"></a>9. 实战案例</h2><h3 id="案例一：日期格式校验（含范围检查）"><a href="#案例一：日期格式校验（含范围检查）" class="headerlink" title="案例一：日期格式校验（含范围检查）"></a>案例一：日期格式校验（含范围检查）</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 格式校验: 只保证&quot;长得像&quot;日期</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DATE_RE</span> = <span class="regexp">/^\\d&#123;4&#125;-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable constant_">DATE_RE</span>.<span class="title function_">test</span>(<span class="string">&quot;2026-09-22&quot;</span>);   <span class="comment">// true</span></span><br><span class="line"><span class="variable constant_">DATE_RE</span>.<span class="title function_">test</span>(<span class="string">&quot;2026-13-01&quot;</span>);   <span class="comment">// false, 月份不合法</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 语义校验: 必须再做一步, 因为 2026-02-30 也能通过上面</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">isValidDate</span>(<span class="params">s</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="variable constant_">DATE_RE</span>.<span class="title function_">test</span>(s)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">const</span> d = <span class="keyword">new</span> <span class="title class_">Date</span>(s + <span class="string">&quot;T00:00:00Z&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> !<span class="title class_">Number</span>.<span class="built_in">isNaN</span>(d.<span class="title function_">getTime</span>()) &amp;&amp; d.<span class="title function_">toISOString</span>().<span class="title function_">slice</span>(<span class="number">0</span>, <span class="number">10</span>) === s;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这个例子说明了正则的边界</strong>：它能挡住格式错误，但挡住 <code>2 月 30 日</code> 需要日期库参与。</p>
+<h3 id="案例二：从日志中提取字段"><a href="#案例二：从日志中提取字段" class="headerlink" title="案例二：从日志中提取字段"></a>案例二：从日志中提取字段</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">2026-09-22 10:15:32 ERROR [order-service] Failed to process order 88231</span><br><span class="line">2026-09-22 10:15:33 INFO  [web] Health check ok</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">LOG_RE</span> = <span class="regexp">/^(?&lt;time&gt;\\d&#123;4&#125;-\\d&#123;2&#125;-\\d&#123;2&#125; \\d&#123;2&#125;:\\d&#123;2&#125;:\\d&#123;2&#125;)\\s+(?&lt;level&gt;\\w+)\\s+\\[(?&lt;module&gt;[^\\]]+)\\]\\s+(?&lt;msg&gt;.+)$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> m = <span class="variable constant_">LOG_RE</span>.<span class="title function_">exec</span>(line);</span><br><span class="line"><span class="keyword">if</span> (m) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(m.<span class="property">groups</span>.<span class="property">time</span>, m.<span class="property">groups</span>.<span class="property">level</span>, m.<span class="property">groups</span>.<span class="property">module</span>, m.<span class="property">groups</span>.<span class="property">msg</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>注意这里用 <code>[^\\]]+</code> 而不是 <code>.*?</code> 来匹配模块名——因为模块名里不可能有 <code>]</code>，否定字符类更精确也更快。</p>
+<h3 id="案例三：千分位格式化"><a href="#案例三：千分位格式化" class="headerlink" title="案例三：千分位格式化"></a>案例三：千分位格式化</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">thousands</span>(<span class="params">n</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">String</span>(n).<span class="title function_">replace</span>(<span class="regexp">/\\B(?=(\\d&#123;3&#125;)+(?!\\d))/g</span>, <span class="string">&quot;,&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="title function_">thousands</span>(<span class="number">1234567</span>);   <span class="comment">// &quot;1,234,567&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>拆解：</p>
+<ul>
+<li><code>\\B</code> 匹配非单词边界（排除字符串最开头的位置）；</li>
+<li><code>(?=(\\d&#123;3&#125;)+(?!\\d))</code> 要求右边剩余的数字恰好是 3 的整数倍；</li>
+<li><code>g</code> 让它在每个符合条件的位置插入逗号。</li>
+</ul>
+<h3 id="案例四：安全地切分-CSV-行"><a href="#案例四：安全地切分-CSV-行" class="headerlink" title="案例四：安全地切分 CSV 行"></a>案例四：安全地切分 CSV 行</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 处理被引号包裹的字段, 字段内可含逗号</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">CSV_RE</span> = <span class="regexp">/(?:^|,)(?:&quot;([^&quot;]*)&quot;|([^,]*))/g</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">parseCsvLine</span>(<span class="params">line</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> out = [];</span><br><span class="line">  <span class="keyword">let</span> m;</span><br><span class="line">  <span class="keyword">while</span> ((m = <span class="variable constant_">CSV_RE</span>.<span class="title function_">exec</span>(line)) !== <span class="literal">null</span>) &#123;</span><br><span class="line">    out.<span class="title function_">push</span>(m[<span class="number">1</span>] !== <span class="literal">undefined</span> ? m[<span class="number">1</span>] : m[<span class="number">2</span>]);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">parseCsvLine</span>(<span class="string">&#x27;a,&quot;b,c&quot;,d&#x27;</span>);   <span class="comment">// [&quot;a&quot;, &quot;b,c&quot;, &quot;d&quot;]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个例子再次说明边界：只要 CSV 里出现转义引号或换行，正则就不够用了，应该换用成熟的 CSV 解析库。</p>
+</blockquote>
+<h3 id="案例五：提取-URL-中的查询参数"><a href="#案例五：提取-URL-中的查询参数" class="headerlink" title="案例五：提取 URL 中的查询参数"></a>案例五：提取 URL 中的查询参数</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> url = <span class="string">&quot;https://example.com/search?q=regex&amp;page=2&amp;sort=desc&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">PARAM_RE</span> = <span class="regexp">/[?&amp;]([^=&amp;]+)=([^&amp;]*)/g</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> m; <span class="keyword">const</span> params = &#123;&#125;;</span><br><span class="line"><span class="keyword">while</span> ((m = <span class="variable constant_">PARAM_RE</span>.<span class="title function_">exec</span>(url)) !== <span class="literal">null</span>) &#123;</span><br><span class="line">  params[<span class="built_in">decodeURIComponent</span>(m[<span class="number">1</span>])] = <span class="built_in">decodeURIComponent</span>(m[<span class="number">2</span>]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// &#123; q: &quot;regex&quot;, page: &quot;2&quot;, sort: &quot;desc&quot; &#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>若只需处理当前页面 URL，用浏览器内置的 <code>URLSearchParams</code> 更可靠——<strong>能不用正则就不用</strong>。</p>
+<hr>
+<h2 id="10-性能陷阱与-ReDoS"><a href="#10-性能陷阱与-ReDoS" class="headerlink" title="10. 性能陷阱与 ReDoS"></a>10. 性能陷阱与 ReDoS</h2><h3 id="回溯：正则变慢的根源"><a href="#回溯：正则变慢的根源" class="headerlink" title="回溯：正则变慢的根源"></a>回溯：正则变慢的根源</h3><p>正则引擎（NFA 类型）在匹配失败时会<strong>回溯</strong>——退回到上一个选择点，换一条路再试。选择点越多，可能的路径就越呈指数增长。</p>
+<p>看这个危险的正则：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/^(a+)+$/</span><br></pre></td></tr></table></figure>
+
+<p>用它测试 <code>&quot;aaaaaaaaaaaaaaaaaaaaaaaaaaaaaX&quot;</code>（29 个 a 加一个 X）。引擎会尝试所有把 a 分给内外层 <code>+</code> 的组合，路径数是 2 的幂级。30 个字符就足以让 CPU 卡住几秒，40 个字符可能卡几分钟。</p>
+<p><strong>这就是 ReDoS（正则表达式拒绝服务）</strong>。攻击者只要提交一个精心构造的字符串，就能让你的服务线程被占满。</p>
+<h3 id="引发-ReDoS-的典型模式"><a href="#引发-ReDoS-的典型模式" class="headerlink" title="引发 ReDoS 的典型模式"></a>引发 ReDoS 的典型模式</h3><table>
+<thead>
+<tr>
+<th>危险写法</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>(a+)+</code></td>
+<td>嵌套量词，同一段字符有多种切分方式</td>
+</tr>
+<tr>
+<td><code>(a|aa)+</code></td>
+<td>重叠的分支选择</td>
+</tr>
+<tr>
+<td><code>(.*)*</code></td>
+<td>通配符被重复包裹</td>
+</tr>
+<tr>
+<td><code>(\\w+\\s?)*</code></td>
+<td>相邻的可选量词</td>
+</tr>
+</tbody></table>
+<p>共同特征是：<strong>存在”同一段输入可以被多种方式分配”的结构</strong>。</p>
+<h3 id="怎么写才安全"><a href="#怎么写才安全" class="headerlink" title="怎么写才安全"></a>怎么写才安全</h3><ol>
+<li><p><strong>避免嵌套量词</strong>。需要”至少一个”用 <code>+</code>，不要写成 <code>(x+)+</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 危险</span></span><br><span class="line">/^(\\w+)+$/</span><br><span class="line"><span class="comment">// 安全: 效果相同, 但没有嵌套</span></span><br><span class="line"><span class="regexp">/^\\w+$/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>用否定字符类替代 <code>.*?</code></strong>，消除不必要的回溯（见第 6 节）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 危险</span></span><br><span class="line">/&lt;div&gt;(.*?)&lt;\\/div&gt;/s</span><br><span class="line"><span class="comment">// 更安全: 明确&quot;内容里不能有 &lt;&quot;</span></span><br><span class="line">/&lt;div&gt;([^&lt;]*)&lt;\\/div&gt;/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>让分支互斥</strong>。把互不重叠的分支放在前面，减少尝试。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 危险: a 和 aa 有重叠</span></span><br><span class="line">/(a|aa)+/</span><br><span class="line"><span class="comment">// 更好: 先匹配长的</span></span><br><span class="line"><span class="regexp">/(aa|a)+/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>给输入设上限</strong>。校验前先判断长度，超长直接拒绝。这是最省事也最有效的一道防线。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">safeTest</span>(<span class="params">re, input, maxLen = <span class="number">1000</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> input !== <span class="string">&quot;string&quot;</span> || input.<span class="property">length</span> &gt; maxLen) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">return</span> re.<span class="title function_">test</span>(input);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>给正则加超时</strong>。部分运行时支持超时参数（如 .NET 的 <code>Regex</code> 构造函数、Python 的 <code>regex</code> 模块）。Node.js 没有内置超时，需要靠输入长度限制或换用 RE2 这类不会回溯的引擎。</p>
+</li>
+<li><p><strong>核对用户可控的正则输入</strong>。如果应用允许用户自定义正则（搜索、过滤、脱敏规则），必须限制长度并拒绝危险结构，否则等于把 ReDoS 入口对外开放。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>实践建议</strong>：任何用户输入参与的正则，都当作”可能被恶意构造”来对待：限长度 + 避免嵌套量词 + 服务端有整体超时。</p>
+</blockquote>
+<hr>
+<h2 id="11-调试与可读性建议"><a href="#11-调试与可读性建议" class="headerlink" title="11. 调试与可读性建议"></a>11. 调试与可读性建议</h2><h3 id="用工具调试，别靠脑内推演"><a href="#用工具调试，别靠脑内推演" class="headerlink" title="用工具调试，别靠脑内推演"></a>用工具调试，别靠脑内推演</h3><p>复杂的正则用在线调试器验证，能实时看到匹配和分组结果：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://regex101.com/">regex101.com</a> — 支持多语言引擎，会逐步解释每个分组的含义，还能提示潜在的灾难性回溯；</li>
+<li><a target="_blank" rel="noopener" href="https://www.debuggex.com/">debuggex.com</a> — 把正则画成铁路图，理解分组结构很直观。</li>
+</ul>
+<p>养成习惯：<strong>写完先测边界用例</strong>——空字符串、超长输入、含特殊字符、多个匹配、不该匹配的相似串。</p>
+<h3 id="提高可读性的四个做法"><a href="#提高可读性的四个做法" class="headerlink" title="提高可读性的四个做法"></a>提高可读性的四个做法</h3><ol>
+<li><p><strong>给正则起个名字</strong>，用常量保存：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="variable constant_">PHONE_CN</span> = <span class="regexp">/^1[3-9]\\d&#123;9&#125;$/</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>用命名分组</strong>代替编号分组，见第 5 节。</p>
+</li>
+<li><p><strong>加注释说明意图</strong>，尤其是别人不容易看懂的部分：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 匹配形如 2026-09-22T10:15:32Z 的 ISO 时间戳</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ISO_RE</span> = <span class="regexp">/^\\d&#123;4&#125;-\\d&#123;2&#125;-\\d&#123;2&#125;T\\d&#123;2&#125;:\\d&#123;2&#125;:\\d&#123;2&#125;Z$/</span>;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>拆分复杂正则</strong>。如果一条正则同时做”格式校验 + 提取 + 范围检查”，拆成多步更好维护。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 差: 一条正则包办所有事, 出错很难定位</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ALL_IN_ONE</span> = <span class="regexp">/^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?!.*\\s)[A-Za-z\\d!@#$%^&amp;*]&#123;8,20&#125;$/</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 好: 拆开, 每条都能单独测试和阅读</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">LENGTH_RE</span>  = <span class="regexp">/^.&#123;8,20&#125;$/</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">LOWER_RE</span>   = <span class="regexp">/[a-z]/</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">UPPER_RE</span>   = <span class="regexp">/[A-Z]/</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">DIGIT_RE</span>   = <span class="regexp">/\\d/</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">SPACE_RE</span>   = <span class="regexp">/\\s/</span>;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="12-常见问题-FAQ"><a href="#12-常见问题-FAQ" class="headerlink" title="12. 常见问题 FAQ"></a>12. 常见问题 FAQ</h2><p><strong>Q：<code>.test()</code> 结果为什么忽真忽假？</strong></p>
+<p>因为正则带了 <code>g</code> 标志，<code>test()</code> 会从上一次的 <code>lastIndex</code> 继续找。要么去掉 <code>g</code>，要么每次重置 <code>re.lastIndex = 0</code>。</p>
+<p><strong>Q：<code>\\d</code> 能匹配中文数字吗？</strong></p>
+<p>不能。<code>\\d</code> 只匹配 ASCII 的 0-9。要匹配中文数字得显式写 <code>[零一二三四五六七八九十]</code>，或使用 Unicode 属性转义（需 <code>u</code> 标志）。</p>
+<p><strong>Q：为什么 <code>[^&quot;]*</code> 比 <code>.*?</code> 好？</strong></p>
+<p><code>[^&quot;]*</code> 直接声明”内容里不能有引号”，一步到底不需要回溯；<code>.*?</code> 要靠反复试探和回退才能停下。语义更明确，性能也更好。</p>
+<p><strong>Q：怎么匹配换行符？</strong></p>
+<p>默认 <code>.</code> 不匹配换行。加 <code>s</code> 标志（dotAll）让 <code>.</code> 包括换行，或显式用 <code>[\\s\\S]</code> 这个经典写法兼容旧环境。</p>
+<p><strong>Q：邮箱校验用一条正则就够了吗？</strong></p>
+<p>格式可以用正则挡掉明显错误的输入，但<strong>唯一可靠的验证是发一封确认邮件</strong>。另外 RFC 允许的合法邮箱格式极其复杂，追求”完美正则”往往得不偿失——常见做法是用一条宽松的格式正则（拒绝明显非法输入）+ 发送验证邮件。</p>
+<p><strong>Q：正则能解析 HTML &#x2F; JSON 吗？</strong></p>
+<p>不能可靠解析。嵌套结构超出正则语言的能力范围，遇到深层嵌套或特殊字符就会失败。用专门的解析器：浏览器里 <code>DOMParser</code>、Node 里用 HTML 解析库，JSON 用 <code>JSON.parse</code>。</p>
+<p><strong>Q：<code>^</code> 和 <code>$</code> 在多行文本里怎么用？</strong></p>
+<p>加 <code>m</code> 标志后，<code>^</code> 和 <code>$</code> 匹配每一行的首尾。不加时它们只匹配整个字符串的开头和结尾。处理逐行日志时通常需要 <code>m</code>。</p>
+<p><strong>Q：怎么验证我的正则不会被 ReDoS 攻击？</strong></p>
+<p>重点看有没有嵌套量词（<code>(x+)+</code>）、重叠分支（<code>(a|aa)+</code>）、以及 <code>(.*)*</code> 之类的结构。用 regex101 会给出灾难性回溯警告，再把最长的恶意输入（同一字符重复几千次）喂进去实测耗时。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/22/markdown-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/markdown-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">Markdown 基础教程 — 语法、写作规范与工具链</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/22</li>
+                <li>14:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/21/sql-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/sql-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">SQL 基础教程 — 从查询语句到多表关联</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/21</li>
+                <li>14:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="正则表达式基础教程 — 语法、实战与避坑"><a rel="nofollow" class="trm-toc-link" href="#正则表达式基础教程-—-语法、实战与避坑"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">正则表达式基础教程 — 语法、实战与避坑</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="目录"><a rel="nofollow" class="trm-toc-link" href="#目录"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">目录</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1. 正则是什么，什么时候不该用"><a rel="nofollow" class="trm-toc-link" href="#1-正则是什么，什么时候不该用"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">1. 正则是什么，什么时候不该用</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="这四种情况不要用正则"><a rel="nofollow" class="trm-toc-link" href="#这四种情况不要用正则"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">这四种情况不要用正则</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="2. 字符匹配：从字面量到字符类"><a rel="nofollow" class="trm-toc-link" href="#2-字符匹配：从字面量到字符类"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">2. 字符匹配：从字面量到字符类</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="字面量与转义"><a rel="nofollow" class="trm-toc-link" href="#字面量与转义"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">字面量与转义</span></a></li><li class="trm-toc-item trm-toc-level-3" title="字符类 [...]"><a rel="nofollow" class="trm-toc-link" href="#字符类"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">字符类 [...]</span></a></li><li class="trm-toc-item trm-toc-level-3" title="预定义字符类"><a rel="nofollow" class="trm-toc-link" href="#预定义字符类"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">预定义字符类</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="3. 量词：控制重复次数"><a rel="nofollow" class="trm-toc-link" href="#3-量词：控制重复次数"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">3. 量词：控制重复次数</span></a></li><li class="trm-toc-item trm-toc-level-2" title="4. 锚点与边界"><a rel="nofollow" class="trm-toc-link" href="#4-锚点与边界"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">4. 锚点与边界</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="为什么校验一定要加 ^ 和 $"><a rel="nofollow" class="trm-toc-link" href="#为什么校验一定要加-和"><span class="trm-toc-number">1.5.1.</span> <span class="trm-toc-text">为什么校验一定要加 ^ 和 $</span></a></li><li class="trm-toc-item trm-toc-level-3" title="单词边界的用处"><a rel="nofollow" class="trm-toc-link" href="#单词边界的用处"><span class="trm-toc-number">1.5.2.</span> <span class="trm-toc-text">单词边界的用处</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="5. 分组与捕获"><a rel="nofollow" class="trm-toc-link" href="#5-分组与捕获"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">5. 分组与捕获</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="捕获分组 ( )"><a rel="nofollow" class="trm-toc-link" href="#捕获分组"><span class="trm-toc-number">1.6.1.</span> <span class="trm-toc-text">捕获分组 ( )</span></a></li><li class="trm-toc-item trm-toc-level-3" title="命名分组（推荐）"><a rel="nofollow" class="trm-toc-link" href="#命名分组（推荐）"><span class="trm-toc-number">1.6.2.</span> <span class="trm-toc-text">命名分组（推荐）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="非捕获分组 (?: )"><a rel="nofollow" class="trm-toc-link" href="#非捕获分组"><span class="trm-toc-number">1.6.3.</span> <span class="trm-toc-text">非捕获分组 (?: )</span></a></li><li class="trm-toc-item trm-toc-level-3" title="反向引用"><a rel="nofollow" class="trm-toc-link" href="#反向引用"><span class="trm-toc-number">1.6.4.</span> <span class="trm-toc-text">反向引用</span></a></li><li class="trm-toc-item trm-toc-level-3" title="替换时的引用"><a rel="nofollow" class="trm-toc-link" href="#替换时的引用"><span class="trm-toc-number">1.6.5.</span> <span class="trm-toc-text">替换时的引用</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="6. 量词的贪婪与懒惰"><a rel="nofollow" class="trm-toc-link" href="#6-量词的贪婪与懒惰"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">6. 量词的贪婪与懒惰</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="用懒惰解决”匹配到最后一个”的误判"><a rel="nofollow" class="trm-toc-link" href="#用懒惰解决”匹配到最后一个”的误判"><span class="trm-toc-number">1.7.1.</span> <span class="trm-toc-text">用懒惰解决”匹配到最后一个”的误判</span></a></li><li class="trm-toc-item trm-toc-level-3" title="更好的办法：用否定字符类代替懒惰"><a rel="nofollow" class="trm-toc-link" href="#更好的办法：用否定字符类代替懒惰"><span class="trm-toc-number">1.7.2.</span> <span class="trm-toc-text">更好的办法：用否定字符类代替懒惰</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="7. 断言：不消费字符的条件"><a rel="nofollow" class="trm-toc-link" href="#7-断言：不消费字符的条件"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">7. 断言：不消费字符的条件</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="实用场景：密码强度校验"><a rel="nofollow" class="trm-toc-link" href="#实用场景：密码强度校验"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">实用场景：密码强度校验</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="8. 标志位与常用 API"><a rel="nofollow" class="trm-toc-link" href="#8-标志位与常用-API"><span class="trm-toc-number">1.9.</span> <span class="trm-toc-text">8. 标志位与常用 API</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="标志位"><a rel="nofollow" class="trm-toc-link" href="#标志位"><span class="trm-toc-number">1.9.1.</span> <span class="trm-toc-text">标志位</span></a></li><li class="trm-toc-item trm-toc-level-3" title="JavaScript 四个常用方法"><a rel="nofollow" class="trm-toc-link" href="#JavaScript-四个常用方法"><span class="trm-toc-number">1.9.2.</span> <span class="trm-toc-text">JavaScript 四个常用方法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="g 标志的陷阱：lastIndex"><a rel="nofollow" class="trm-toc-link" href="#g-标志的陷阱：lastIndex"><span class="trm-toc-number">1.9.3.</span> <span class="trm-toc-text">g 标志的陷阱：lastIndex</span></a></li><li class="trm-toc-item trm-toc-level-3" title="预编译正则"><a rel="nofollow" class="trm-toc-link" href="#预编译正则"><span class="trm-toc-number">1.9.4.</span> <span class="trm-toc-text">预编译正则</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="9. 实战案例"><a rel="nofollow" class="trm-toc-link" href="#9-实战案例"><span class="trm-toc-number">1.10.</span> <span class="trm-toc-text">9. 实战案例</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="案例一：日期格式校验（含范围检查）"><a rel="nofollow" class="trm-toc-link" href="#案例一：日期格式校验（含范围检查）"><span class="trm-toc-number">1.10.1.</span> <span class="trm-toc-text">案例一：日期格式校验（含范围检查）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例二：从日志中提取字段"><a rel="nofollow" class="trm-toc-link" href="#案例二：从日志中提取字段"><span class="trm-toc-number">1.10.2.</span> <span class="trm-toc-text">案例二：从日志中提取字段</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例三：千分位格式化"><a rel="nofollow" class="trm-toc-link" href="#案例三：千分位格式化"><span class="trm-toc-number">1.10.3.</span> <span class="trm-toc-text">案例三：千分位格式化</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例四：安全地切分 CSV 行"><a rel="nofollow" class="trm-toc-link" href="#案例四：安全地切分-CSV-行"><span class="trm-toc-number">1.10.4.</span> <span class="trm-toc-text">案例四：安全地切分 CSV 行</span></a></li><li class="trm-toc-item trm-toc-level-3" title="案例五：提取 URL 中的查询参数"><a rel="nofollow" class="trm-toc-link" href="#案例五：提取-URL-中的查询参数"><span class="trm-toc-number">1.10.5.</span> <span class="trm-toc-text">案例五：提取 URL 中的查询参数</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="10. 性能陷阱与 ReDoS"><a rel="nofollow" class="trm-toc-link" href="#10-性能陷阱与-ReDoS"><span class="trm-toc-number">1.11.</span> <span class="trm-toc-text">10. 性能陷阱与 ReDoS</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="回溯：正则变慢的根源"><a rel="nofollow" class="trm-toc-link" href="#回溯：正则变慢的根源"><span class="trm-toc-number">1.11.1.</span> <span class="trm-toc-text">回溯：正则变慢的根源</span></a></li><li class="trm-toc-item trm-toc-level-3" title="引发 ReDoS 的典型模式"><a rel="nofollow" class="trm-toc-link" href="#引发-ReDoS-的典型模式"><span class="trm-toc-number">1.11.2.</span> <span class="trm-toc-text">引发 ReDoS 的典型模式</span></a></li><li class="trm-toc-item trm-toc-level-3" title="怎么写才安全"><a rel="nofollow" class="trm-toc-link" href="#怎么写才安全"><span class="trm-toc-number">1.11.3.</span> <span class="trm-toc-text">怎么写才安全</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="11. 调试与可读性建议"><a rel="nofollow" class="trm-toc-link" href="#11-调试与可读性建议"><span class="trm-toc-number">1.12.</span> <span class="trm-toc-text">11. 调试与可读性建议</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="用工具调试，别靠脑内推演"><a rel="nofollow" class="trm-toc-link" href="#用工具调试，别靠脑内推演"><span class="trm-toc-number">1.12.1.</span> <span class="trm-toc-text">用工具调试，别靠脑内推演</span></a></li><li class="trm-toc-item trm-toc-level-3" title="提高可读性的四个做法"><a rel="nofollow" class="trm-toc-link" href="#提高可读性的四个做法"><span class="trm-toc-number">1.12.2.</span> <span class="trm-toc-text">提高可读性的四个做法</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="12. 常见问题 FAQ"><a rel="nofollow" class="trm-toc-link" href="#12-常见问题-FAQ"><span class="trm-toc-number">1.13.</span> <span class="trm-toc-text">12. 常见问题 FAQ</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

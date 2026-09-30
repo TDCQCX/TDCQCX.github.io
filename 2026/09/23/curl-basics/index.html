@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/2026/09/23/curl-basics/">
+<meta name="description" content="curl 基础教程 — 命令行调试 HTTP 接口 curl 是几乎所有系统都自带的 HTTP 客户端。它能在没有 Postman、没有浏览器的情况下把一次请求的每个细节都打印出来，是排查接口问题最直接的工具。这篇教程从”把请求发出去”讲到”看懂响应、定位问题、避免把密钥泄露到 shell 历史里”。  目录 curl 是什么，什么时候用它 第一个请求与响应拆解 查看请求与响应的细节 GET 请求">
+<meta property="og:type" content="article">
+<meta property="og:title" content="curl 基础教程 — 命令行调试 HTTP 接口">
+<meta property="og:url" content="https://blog.tdcqcx.cn/2026/09/23/curl-basics/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="curl 基础教程 — 命令行调试 HTTP 接口 curl 是几乎所有系统都自带的 HTTP 客户端。它能在没有 Postman、没有浏览器的情况下把一次请求的每个细节都打印出来，是排查接口问题最直接的工具。这篇教程从”把请求发出去”讲到”看懂响应、定位问题、避免把密钥泄露到 shell 历史里”。  目录 curl 是什么，什么时候用它 第一个请求与响应拆解 查看请求与响应的细节 GET 请求">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-23T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-23T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="curl">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="命令行">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="curl 教程, HTTP 调试, 接口测试, POST 请求, JSON, 认证, cookie, 超时, 断点续传, 安全">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"curl 基础教程 — 命令行调试 HTTP 接口","datePublished":"2026-09-23T02:00:00.000Z","dateModified":"2026-09-23T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/2026/09/23/curl-basics/","image":"https://blog.tdcqcx.cn/post-covers/curl-basics.jpg"}
+</script>
+
+
+<title >curl 基础教程 — 命令行调试 HTTP 接口</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-23 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/curl-basics.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/curl-basics.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            curl 基础教程 — 命令行调试 HTTP 接口
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            curl 基础教程 — 命令行调试 HTTP 接口
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2026
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/23
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="curl-基础教程-—-命令行调试-HTTP-接口"><a href="#curl-基础教程-—-命令行调试-HTTP-接口" class="headerlink" title="curl 基础教程 — 命令行调试 HTTP 接口"></a>curl 基础教程 — 命令行调试 HTTP 接口</h1><blockquote>
+<p>curl 是几乎所有系统都自带的 HTTP 客户端。它能在没有 Postman、没有浏览器的情况下把一次请求的每个细节都打印出来，是排查接口问题最直接的工具。<br>这篇教程从”把请求发出去”讲到”看懂响应、定位问题、避免把密钥泄露到 shell 历史里”。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-curl-%E6%98%AF%E4%BB%80%E4%B9%88%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8%E5%AE%83">curl 是什么，什么时候用它</a></li>
+<li><a href="#2-%E7%AC%AC%E4%B8%80%E4%B8%AA%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94%E6%8B%86%E8%A7%A3">第一个请求与响应拆解</a></li>
+<li><a href="#3-%E6%9F%A5%E7%9C%8B%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94%E7%9A%84%E7%BB%86%E8%8A%82">查看请求与响应的细节</a></li>
+<li><a href="#4-get-%E8%AF%B7%E6%B1%82%E4%B8%8E%E6%9F%A5%E8%AF%A2%E5%8F%82%E6%95%B0">GET 请求与查询参数</a></li>
+<li><a href="#5-post-%E4%B8%8E%E5%9B%9B%E7%A7%8D%E8%AF%B7%E6%B1%82%E4%BD%93%E6%A0%BC%E5%BC%8F">POST 与四种请求体格式</a></li>
+<li><a href="#6-%E8%AF%B7%E6%B1%82%E5%A4%B4%E8%AE%A4%E8%AF%81%E4%B8%8E-cookie">请求头、认证与 Cookie</a></li>
+<li><a href="#7-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E4%B8%8B%E8%BD%BD">文件上传与下载</a></li>
+<li><a href="#8-%E9%87%8D%E5%AE%9A%E5%90%91%E8%B6%85%E6%97%B6%E4%B8%8E%E9%87%8D%E8%AF%95">重定向、超时与重试</a></li>
+<li><a href="#9-%E4%BF%9D%E5%AD%98%E5%93%8D%E5%BA%94%E4%B8%8E%E5%8F%AA%E5%8F%96%E7%8A%B6%E6%80%81%E7%A0%81">保存响应与只取状态码</a></li>
+<li><a href="#10-%E6%8A%8A-curl-%E5%91%BD%E4%BB%A4%E8%BD%AC%E6%88%90%E4%BB%A3%E7%A0%81">把 curl 命令转成代码</a></li>
+<li><a href="#11-%E5%AE%89%E5%85%A8%E4%B8%8E%E8%B0%83%E8%AF%95%E4%B9%A0%E6%83%AF">安全与调试习惯</a></li>
+<li><a href="#12-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-faq">常见问题 FAQ</a></li>
+</ol>
+<hr>
+<h2 id="1-curl-是什么，什么时候用它"><a href="#1-curl-是什么，什么时候用它" class="headerlink" title="1. curl 是什么，什么时候用它"></a>1. curl 是什么，什么时候用它</h2><p>curl（client for URL）是一个用命令行发起网络请求的工具，支持 HTTP、HTTPS、FTP 等几十种协议。因为几乎所有 Linux&#x2F;macOS 都预装、Windows 10 以后也自带 <code>curl.exe</code>，它成了跨环境调试的通用语言。</p>
+<p><strong>curl 比图形化工具强在三点</strong>：</p>
+<ol>
+<li><strong>能看见细节</strong>。<code>-v</code> 会把完整的请求头和响应头打印出来，包括 TLS 握手、重定向过程。图形工具往往会隐藏这些。</li>
+<li><strong>可复制可版本化</strong>。命令就是一行文本，能贴进 issue、写进脚本、存进文档。图形工具的配置大多没法直接复用。</li>
+<li><strong>服务器上一定有</strong>。生产环境出问题时，你不能在服务器上装一个 Postman，但一定能敲 curl。</li>
+</ol>
+<p><strong>什么时候不该用它</strong>：需要频繁改参数、管理多套环境变量、看复杂断言结果时，图形化工具（Postman、Insomnia）或脚本（Python requests）效率更高。curl 是”快速确认”的工具，不是”长期维护测试集”的工具。</p>
+<h3 id="确认可用"><a href="#确认可用" class="headerlink" title="确认可用"></a>确认可用</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --version</span><br><span class="line"><span class="comment"># curl 8.4.0 (x86_64-pc-linux-gnu) libcurl/8.4.0 OpenSSL/3.0.11 zlib/1.2.13</span></span><br></pre></td></tr></table></figure>
+
+<p>Windows PowerShell 里有个坑：<code>curl</code> 曾经是 <code>Invoke-WebRequest</code> 的别名，行为与真正的 curl 不同。用 <code>curl.exe</code> 明确调用真正的 curl：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl.exe <span class="literal">--version</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-第一个请求与响应拆解"><a href="#2-第一个请求与响应拆解" class="headerlink" title="2. 第一个请求与响应拆解"></a>2. 第一个请求与响应拆解</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://example.com</span><br></pre></td></tr></table></figure>
+
+<p>不带任何参数时，curl 把响应体直接打印到终端。</p>
+<h3 id="拆解一次完整交互"><a href="#拆解一次完整交互" class="headerlink" title="拆解一次完整交互"></a>拆解一次完整交互</h3><p>用 <code>-v</code>（verbose）看看背后发生了什么：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v https://example.com</span><br></pre></td></tr></table></figure>
+
+<p>输出分三部分，用 <code>*</code>、<code>&gt;</code>、<code>&lt;</code> 区分：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">*   Trying 93.184.216.34:443...            ← * 是 curl 自己的信息(连接、TLS、耗时)</span><br><span class="line">* Connected to example.com</span><br><span class="line">* SSL connection using TLSv1.3</span><br><span class="line">&gt; GET / HTTP/2                             ← &gt; 是发出的请求</span><br><span class="line">&gt; Host: example.com</span><br><span class="line">&gt; User-Agent: curl/8.4.0</span><br><span class="line">&gt; Accept: */*</span><br><span class="line">&gt;</span><br><span class="line">&lt; HTTP/2 200                               ← &lt; 是收到的响应</span><br><span class="line">&lt; content-type: text/html; charset=UTF-8</span><br><span class="line">&lt; content-length: 1256</span><br><span class="line">&lt;</span><br><span class="line">&lt;!doctype html&gt;                            ← 响应体</span><br></pre></td></tr></table></figure>
+
+<p><strong>这个三段结构是排查问题的关键</strong>：<code>*</code> 段的报错说明连不上（DNS、网络、证书），<code>&gt;</code> 段有问题说明请求构造错了，<code>&lt;</code> 段才是服务端返回的内容。</p>
+<h3 id="三个层次的详细程度"><a href="#三个层次的详细程度" class="headerlink" title="三个层次的详细程度"></a>三个层次的详细程度</h3><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>输出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无</td>
+<td>只有响应体</td>
+</tr>
+<tr>
+<td><code>-i</code></td>
+<td>响应头 + 响应体</td>
+</tr>
+<tr>
+<td><code>-I</code></td>
+<td>只有响应头（发 HEAD 请求）</td>
+</tr>
+<tr>
+<td><code>-v</code></td>
+<td>上面全部 + 请求头 + 连接过程（<code>*</code> <code>&gt;</code> <code>&lt;</code>）</td>
+</tr>
+<tr>
+<td><code>-s</code></td>
+<td>静默模式，去掉进度条和错误信息</td>
+</tr>
+</tbody></table>
+<p><code>-s</code> 常和 <code>-S</code> 搭配：<code>-sS</code> 表示”平时安静，出错时仍然报错”。</p>
+<hr>
+<h2 id="3-查看请求与响应的细节"><a href="#3-查看请求与响应的细节" class="headerlink" title="3. 查看请求与响应的细节"></a>3. 查看请求与响应的细节</h2><h3 id="只看响应头"><a href="#只看响应头" class="headerlink" title="只看响应头"></a>只看响应头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -I https://example.com</span><br></pre></td></tr></table></figure>
+
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/2 200</span><br><span class="line">content-type: text/html; charset=UTF-8</span><br><span class="line">content-length: 1256</span><br><span class="line">cache-control: max-age=604800</span><br></pre></td></tr></table></figure>
+
+<p><code>-I</code> 发的是 HEAD 请求，只取头部不取正文，检查链接是否有效、看缓存策略时最快。</p>
+<h3 id="响应头-正文一起看"><a href="#响应头-正文一起看" class="headerlink" title="响应头 + 正文一起看"></a>响应头 + 正文一起看</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i https://example.com</span><br></pre></td></tr></table></figure>
+
+<h3 id="只看连接和-TLS-信息"><a href="#只看连接和-TLS-信息" class="headerlink" title="只看连接和 TLS 信息"></a>只看连接和 TLS 信息</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v --trace-time https://example.com 2&gt;&amp;1 | <span class="built_in">head</span> -30</span><br></pre></td></tr></table></figure>
+
+<h3 id="测量各阶段耗时"><a href="#测量各阶段耗时" class="headerlink" title="测量各阶段耗时"></a>测量各阶段耗时</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -w <span class="string">&quot;\\n--- 耗时 ---\\nDNS: %&#123;time_namelookup&#125;s\\n连接: %&#123;time_connect&#125;s\\nTLS握手: %&#123;time_appconnect&#125;s\\n首字节: %&#123;time_starttransfer&#125;s\\n总计: %&#123;time_total&#125;s\\n&quot;</span> -o /dev/null -s https://example.com</span><br></pre></td></tr></table></figure>
+
+<p>这是定位”接口慢在哪”的标准手段：DNS 慢说明域名解析有问题，首字节慢说明服务端处理慢，总计远大于首字节说明传输体量大。</p>
+<h3 id="关键耗时字段"><a href="#关键耗时字段" class="headerlink" title="关键耗时字段"></a>关键耗时字段</h3><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>time_namelookup</code></td>
+<td>DNS 解析耗时</td>
+</tr>
+<tr>
+<td><code>time_connect</code></td>
+<td>TCP 连接建立耗时</td>
+</tr>
+<tr>
+<td><code>time_appconnect</code></td>
+<td>TLS 握手完成耗时</td>
+</tr>
+<tr>
+<td><code>time_starttransfer</code></td>
+<td>收到第一个字节（含服务端处理时间）</td>
+</tr>
+<tr>
+<td><code>time_total</code></td>
+<td>整次请求总耗时</td>
+</tr>
+<tr>
+<td><code>http_code</code></td>
+<td>HTTP 状态码</td>
+</tr>
+<tr>
+<td><code>size_download</code></td>
+<td>下载字节数</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-GET-请求与查询参数"><a href="#4-GET-请求与查询参数" class="headerlink" title="4. GET 请求与查询参数"></a>4. GET 请求与查询参数</h2><h3 id="直接拼-URL"><a href="#直接拼-URL" class="headerlink" title="直接拼 URL"></a>直接拼 URL</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&quot;https://api.example.com/search?q=curl&amp;page=2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>URL 里有 <code>&amp;</code> 时必须加引号</strong>，否则 shell 会把 <code>&amp;</code> 理解成”放到后台执行”，命令行为完全出乎意料。</p>
+<h3 id="用-G-和-–data-urlencode-安全传参"><a href="#用-G-和-–data-urlencode-安全传参" class="headerlink" title="用 -G 和 –data-urlencode 安全传参"></a>用 -G 和 –data-urlencode 安全传参</h3><p>手工拼 URL 时，参数里的空格、中文、<code>&amp;</code> 都需要转义。更安全的做法是让 curl 处理：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -G <span class="string">&quot;https://api.example.com/search&quot;</span> \\</span><br><span class="line">  --data-urlencode <span class="string">&quot;q=curl 教程&quot;</span> \\</span><br><span class="line">  --data-urlencode <span class="string">&quot;page=2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-G</code> 表示”把下面这些数据当作查询参数附到 URL 上”（默认 <code>--data</code> 是 POST 请求体）。<code>--data-urlencode</code> 会自动做百分号编码，中文和空格都不用自己处理。</p>
+<h3 id="只取响应的某个字段（配合-jq）"><a href="#只取响应的某个字段（配合-jq）" class="headerlink" title="只取响应的某个字段（配合 jq）"></a>只取响应的某个字段（配合 jq）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s <span class="string">&quot;https://api.example.com/users/1&quot;</span> | jq <span class="string">&#x27;.name&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>jq</code> 是处理 JSON 的专用工具（见配套教程）。<code>-s</code> 去掉进度信息，输出才能干净地交给管道。</p>
+<hr>
+<h2 id="5-POST-与四种请求体格式"><a href="#5-POST-与四种请求体格式" class="headerlink" title="5. POST 与四种请求体格式"></a>5. POST 与四种请求体格式</h2><h3 id="JSON（最常用）"><a href="#JSON（最常用）" class="headerlink" title="JSON（最常用）"></a>JSON（最常用）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&quot;https://api.example.com/users&quot;</span> \\</span><br><span class="line">  -H <span class="string">&quot;Content-Type: application/json&quot;</span> \\</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;name&quot;:&quot;张明&quot;,&quot;email&quot;:&quot;zhangming@example.com&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>要点：</p>
+<ol>
+<li><strong>必须带 <code>-H &quot;Content-Type: application/json&quot;</code></strong>。很多 API 靠这个头决定怎么解析请求体，漏掉会返回 400 或解析失败。</li>
+<li><strong>JSON 用单引号包裹</strong>，这样里面的双引号不用转义。</li>
+<li><code>-X POST</code> 在用了 <code>-d</code> 时其实可以省略——curl 看到 <code>-d</code> 会自动用 POST。但显式写出来意图更清楚。</li>
+</ol>
+<h3 id="表单提交（application-x-www-form-urlencoded）"><a href="#表单提交（application-x-www-form-urlencoded）" class="headerlink" title="表单提交（application&#x2F;x-www-form-urlencoded）"></a>表单提交（application&#x2F;x-www-form-urlencoded）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&quot;https://api.example.com/login&quot;</span> \\</span><br><span class="line">  -d <span class="string">&quot;username=admin&amp;password=secret&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-d</code> 默认就是这种格式。注意参数值同样需要 URL 编码，含特殊字符时用 <code>--data-urlencode</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&quot;https://api.example.com/login&quot;</span> \\</span><br><span class="line">  --data-urlencode <span class="string">&quot;username=admin&quot;</span> \\</span><br><span class="line">  --data-urlencode <span class="string">&quot;password=p@ss word&amp;x&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="multipart-表单（带文件上传）"><a href="#multipart-表单（带文件上传）" class="headerlink" title="multipart 表单（带文件上传）"></a>multipart 表单（带文件上传）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&quot;https://api.example.com/upload&quot;</span> \\</span><br><span class="line">  -F <span class="string">&quot;file=@./report.pdf&quot;</span> \\</span><br><span class="line">  -F <span class="string">&quot;title=季度报告&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-F</code> 会构造 <code>multipart/form-data</code>，<code>@</code> 表示”读取这个文件的内容”。<code>-d</code> 和 <code>-F</code> 不能混用。</p>
+<h3 id="纯文本或其他格式"><a href="#纯文本或其他格式" class="headerlink" title="纯文本或其他格式"></a>纯文本或其他格式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&quot;https://api.example.com/raw&quot;</span> \\</span><br><span class="line">  -H <span class="string">&quot;Content-Type: text/plain&quot;</span> \\</span><br><span class="line">  --data-binary @payload.txt</span><br></pre></td></tr></table></figure>
+
+<p><code>--data-binary</code> 会<strong>原样发送文件内容</strong>，不做换行处理。相比之下 <code>-d @file</code> 会去掉换行符——上传二进制或需要保留格式时一定用 <code>--data-binary</code>。</p>
+<h3 id="四种方式对照"><a href="#四种方式对照" class="headerlink" title="四种方式对照"></a>四种方式对照</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>参数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>JSON API</td>
+<td><code>-H &quot;Content-Type: application/json&quot; -d &#39;&#123;...&#125;&#39;</code></td>
+</tr>
+<tr>
+<td>表单登录</td>
+<td><code>--data-urlencode &quot;k=v&quot;</code></td>
+</tr>
+<tr>
+<td>上传文件</td>
+<td><code>-F &quot;file=@路径&quot;</code></td>
+</tr>
+<tr>
+<td>原始二进制</td>
+<td><code>--data-binary @路径</code></td>
+</tr>
+</tbody></table>
+<h3 id="其他-HTTP-方法"><a href="#其他-HTTP-方法" class="headerlink" title="其他 HTTP 方法"></a>其他 HTTP 方法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -X PUT    <span class="string">&quot;https://api.example.com/users/1&quot;</span> -d <span class="string">&#x27;&#123;...&#125;&#x27;</span>   <span class="comment"># 全量更新</span></span><br><span class="line">curl -X PATCH  <span class="string">&quot;https://api.example.com/users/1&quot;</span> -d <span class="string">&#x27;&#123;...&#125;&#x27;</span>   <span class="comment"># 局部更新</span></span><br><span class="line">curl -X DELETE <span class="string">&quot;https://api.example.com/users/1&quot;</span></span><br><span class="line">curl -X HEAD   <span class="string">&quot;https://api.example.com/users/1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-请求头、认证与-Cookie"><a href="#6-请求头、认证与-Cookie" class="headerlink" title="6. 请求头、认证与 Cookie"></a>6. 请求头、认证与 Cookie</h2><h3 id="自定义请求头"><a href="#自定义请求头" class="headerlink" title="自定义请求头"></a>自定义请求头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">&quot;Accept: application/json&quot;</span> \\</span><br><span class="line">     -H <span class="string">&quot;X-Request-Id: abc-123&quot;</span> \\</span><br><span class="line">     <span class="string">&quot;https://api.example.com/users&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>需要<strong>删掉</strong>某个默认头时，值留空即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">&quot;User-Agent:&quot;</span> <span class="string">&quot;https://api.example.com/users&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Bearer-Token"><a href="#Bearer-Token" class="headerlink" title="Bearer Token"></a>Bearer Token</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">&quot;Authorization: Bearer <span class="variable">$TOKEN</span>&quot;</span> <span class="string">&quot;https://api.example.com/profile&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Basic-认证"><a href="#Basic-认证" class="headerlink" title="Basic 认证"></a>Basic 认证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 推荐: curl 会自己拼出正确的 Base64, 且密码不会出现在进程列表里</span></span><br><span class="line">curl -u <span class="string">&quot;用户名:密码&quot;</span> <span class="string">&quot;https://api.example.com/private&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以只写用户名，curl 会交互式提示输入密码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -u <span class="string">&quot;用户名&quot;</span> <span class="string">&quot;https://api.example.com/private&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>不要手工拼 <code>Authorization: Basic ...</code></strong>。手动做 Base64 容易出错，而且明文密码会出现在 shell 历史和进程列表里。用 <code>-u</code> 让 curl 处理。</p>
+</blockquote>
+<h3 id="发送-Cookie"><a href="#发送-Cookie" class="headerlink" title="发送 Cookie"></a>发送 Cookie</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -b <span class="string">&quot;session=abc123; theme=dark&quot;</span> <span class="string">&quot;https://example.com/dashboard&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="保存与复用-Cookie（模拟登录会话）"><a href="#保存与复用-Cookie（模拟登录会话）" class="headerlink" title="保存与复用 Cookie（模拟登录会话）"></a>保存与复用 Cookie（模拟登录会话）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 登录并把服务器下发的 Cookie 存到文件</span></span><br><span class="line">curl -c cookies.txt -X POST <span class="string">&quot;https://example.com/login&quot;</span> \\</span><br><span class="line">  -d <span class="string">&quot;username=admin&amp;password=secret&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 带着这份 Cookie 访问需要登录的页面</span></span><br><span class="line">curl -b cookies.txt <span class="string">&quot;https://example.com/dashboard&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-c</code> 是写入 cookie jar，<code>-b</code> 是读取。这是调试”登录后跳转异常””会话丢失”这类问题最直接的方法。</p>
+<hr>
+<h2 id="7-文件上传与下载"><a href="#7-文件上传与下载" class="headerlink" title="7. 文件上传与下载"></a>7. 文件上传与下载</h2><h3 id="下载文件"><a href="#下载文件" class="headerlink" title="下载文件"></a>下载文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -o 指定输出文件名</span></span><br><span class="line">curl -o report.pdf <span class="string">&quot;https://example.com/report.pdf&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># -O 用 URL 里的文件名</span></span><br><span class="line">curl -O <span class="string">&quot;https://example.com/files/data.zip&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 显示进度条(默认就有), 静默下载则不显示</span></span><br><span class="line">curl -sS -o data.zip <span class="string">&quot;https://example.com/data.zip&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="断点续传"><a href="#断点续传" class="headerlink" title="断点续传"></a>断点续传</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -C - -O <span class="string">&quot;https://example.com/big-file.iso&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-C -</code> 表示”自动从已下载的位置继续”。下载大文件中断后，重跑这条命令能接着下，不用从头开始。</p>
+<h3 id="跟随重定向"><a href="#跟随重定向" class="headerlink" title="跟随重定向"></a>跟随重定向</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L -O <span class="string">&quot;https://example.com/download&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>很多下载链接是 302 跳到真实地址，不加 <code>-L</code> 只会拿到一个空的跳转响应。</p>
+<h3 id="限制速度与超时"><a href="#限制速度与超时" class="headerlink" title="限制速度与超时"></a>限制速度与超时</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl --limit-rate 1M -O <span class="string">&quot;https://example.com/big.iso&quot;</span>       <span class="comment"># 限速 1MB/s</span></span><br><span class="line">curl --max-time 60 -o out.zip <span class="string">&quot;https://example.com/data.zip&quot;</span> <span class="comment"># 整次请求最多 60 秒</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="上传文件"><a href="#上传文件" class="headerlink" title="上传文件"></a>上传文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 简单 PUT 上传</span></span><br><span class="line">curl -T local-file.txt <span class="string">&quot;https://example.com/upload/dest.txt&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过 multipart 表单上传(带其他字段)</span></span><br><span class="line">curl -F <span class="string">&quot;file=@./photo.jpg&quot;</span> -F <span class="string">&quot;album=旅行&quot;</span> <span class="string">&quot;https://api.example.com/photos&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="一次传多个文件"><a href="#一次传多个文件" class="headerlink" title="一次传多个文件"></a>一次传多个文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -F <span class="string">&quot;files=@a.txt&quot;</span> -F <span class="string">&quot;files=@b.txt&quot;</span> <span class="string">&quot;https://api.example.com/upload&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-重定向、超时与重试"><a href="#8-重定向、超时与重试" class="headerlink" title="8. 重定向、超时与重试"></a>8. 重定向、超时与重试</h2><h3 id="跟随重定向-1"><a href="#跟随重定向-1" class="headerlink" title="跟随重定向"></a>跟随重定向</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L <span class="string">&quot;https://example.com/old-path&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-L</code> 会跟随 <code>Location</code> 头。默认最多跟 50 次，可用 <code>--max-redirs</code> 限制。</p>
+<p><strong>只关心最终落在哪里</strong>时：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sL -o /dev/null -w <span class="string">&quot;%&#123;url_effective&#125;\\n&quot;</span> <span class="string">&quot;https://example.com/old-path&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="超时设置"><a href="#超时设置" class="headerlink" title="超时设置"></a>超时设置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 连接阶段最多等 5 秒</span></span><br><span class="line">curl --connect-timeout 5 <span class="string">&quot;https://api.example.com/slow&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 整次请求最多 30 秒</span></span><br><span class="line">curl --max-time 30 <span class="string">&quot;https://api.example.com/slow&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>两个都要设</strong>。只设 <code>--max-time</code> 时，如果对端一直不接受连接，你可能要等到总超时才失败；只设 <code>--connect-timeout</code> 时，连接上了但对方一直不回数据，请求会一直挂着。</p>
+<h3 id="失败重试"><a href="#失败重试" class="headerlink" title="失败重试"></a>失败重试</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --retry 3 --retry-delay 2 --retry-connrefused <span class="string">&quot;https://api.example.com/flaky&quot;</span></span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--retry N</code></td>
+<td>失败时最多重试 N 次</td>
+</tr>
+<tr>
+<td><code>--retry-delay S</code></td>
+<td>每次重试间隔 S 秒</td>
+</tr>
+<tr>
+<td><code>--retry-connrefused</code></td>
+<td>连接被拒绝时也重试（默认不重试）</td>
+</tr>
+<tr>
+<td><code>--retry-max-time S</code></td>
+<td>重试总时长上限</td>
+</tr>
+</tbody></table>
+<h3 id="严格模式"><a href="#严格模式" class="headerlink" title="严格模式"></a>严格模式</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -f <span class="string">&quot;https://api.example.com/maybe-404&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-f</code>（<code>--fail</code>）让 curl 在 HTTP 状态码 &gt;&#x3D; 400 时返回非零退出码，并且不输出错误页面内容。<strong>写脚本时必须加</strong>，否则 404 的错误页面会被当成正常结果写进文件。</p>
+<p>配合 <code>-sS</code> 使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsS -o out.json <span class="string">&quot;https://api.example.com/data&quot;</span> || <span class="built_in">echo</span> <span class="string">&quot;请求失败&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-保存响应与只取状态码"><a href="#9-保存响应与只取状态码" class="headerlink" title="9. 保存响应与只取状态码"></a>9. 保存响应与只取状态码</h2><h3 id="保存到文件"><a href="#保存到文件" class="headerlink" title="保存到文件"></a>保存到文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o response.json <span class="string">&quot;https://api.example.com/users&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="只看状态码"><a href="#只看状态码" class="headerlink" title="只看状态码"></a>只看状态码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -s -o /dev/null -w <span class="string">&quot;%&#123;http_code&#125;\\n&quot;</span> <span class="string">&quot;https://example.com&quot;</span></span><br><span class="line"><span class="comment"># 输出: 200</span></span><br></pre></td></tr></table></figure>
+
+<p><code>-o /dev/null</code> 丢弃响应体，<code>-w</code> 打印指定信息。这是<strong>检查接口可用性最常用的组合</strong>，可以批量跑：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> https://a.example.com https://b.example.com; <span class="keyword">do</span></span><br><span class="line">  code=$(curl -s -o /dev/null -w <span class="string">&quot;%&#123;http_code&#125;&quot;</span> --max-time 10 <span class="string">&quot;<span class="variable">$url</span>&quot;</span>)</span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$code</span>  <span class="variable">$url</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="分离响应体与响应头"><a href="#分离响应体与响应头" class="headerlink" title="分离响应体与响应头"></a>分离响应体与响应头</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把头和体分别写到不同文件</span></span><br><span class="line">curl -D headers.txt -o body.html <span class="string">&quot;https://example.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 只保存响应头</span></span><br><span class="line">curl -I <span class="string">&quot;https://example.com&quot;</span> &gt; headers.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="多种输出信息一次打印"><a href="#多种输出信息一次打印" class="headerlink" title="多种输出信息一次打印"></a>多种输出信息一次打印</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -s -o /dev/null -w <span class="string">&quot;状态码: %&#123;http_code&#125;\\n耗时: %&#123;time_total&#125;s\\n大小: %&#123;size_download&#125; 字节\\n&quot;</span> \\</span><br><span class="line">  <span class="string">&quot;https://api.example.com/data&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-把-curl-命令转成代码"><a href="#10-把-curl-命令转成代码" class="headerlink" title="10. 把 curl 命令转成代码"></a>10. 把 curl 命令转成代码</h2><p>浏览器开发者工具的”Copy as cURL”能导出网络面板里的任意请求，这是<strong>复现前端请求</strong>最快捷的路径：F12 → Network → 右键请求 → Copy → Copy as cURL。</p>
+<p>拿到 curl 命令后，如果要在代码里用，可以用转换工具：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://curlconverter.com/">curlconverter.com</a> — 转成 Python、JavaScript、Go、Java 等 20 多种语言；</li>
+<li>VS Code 的 “Paste cURL as Code” 扩展。</li>
+</ul>
+<p>比如这条：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -X POST <span class="string">&quot;https://api.example.com/login&quot;</span> \\</span><br><span class="line">  -H <span class="string">&quot;Content-Type: application/json&quot;</span> \\</span><br><span class="line">  -d <span class="string">&#x27;&#123;&quot;username&quot;:&quot;admin&quot;,&quot;password&quot;:&quot;secret&quot;&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>用 Python requests 等价实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">resp = requests.post(</span><br><span class="line">    <span class="string">&quot;https://api.example.com/login&quot;</span>,</span><br><span class="line">    json=&#123;<span class="string">&quot;username&quot;</span>: <span class="string">&quot;admin&quot;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&quot;secret&quot;</span>&#125;,</span><br><span class="line">    timeout=<span class="number">30</span>,</span><br><span class="line">)</span><br><span class="line">resp.raise_for_status()</span><br><span class="line"><span class="built_in">print</span>(resp.json())</span><br></pre></td></tr></table></figure>
+
+<p>用 JavaScript fetch：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> resp = <span class="keyword">await</span> <span class="title function_">fetch</span>(<span class="string">&quot;https://api.example.com/login&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">method</span>: <span class="string">&quot;POST&quot;</span>,</span><br><span class="line">  <span class="attr">headers</span>: &#123; <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json&quot;</span> &#125;,</span><br><span class="line">  <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123; <span class="attr">username</span>: <span class="string">&quot;admin&quot;</span>, <span class="attr">password</span>: <span class="string">&quot;secret&quot;</span> &#125;),</span><br><span class="line">&#125;);</span><br><span class="line"><span class="keyword">if</span> (!resp.<span class="property">ok</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`HTTP <span class="subst">$&#123;resp.status&#125;</span>`</span>);</span><br><span class="line"><span class="keyword">const</span> data = <span class="keyword">await</span> resp.<span class="title function_">json</span>();</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>提醒</strong>：从浏览器复制的 curl 命令里常带着完整的 Cookie 和 Token。转成代码或贴到 issue 之前，<strong>先把凭据替换成占位符</strong>（见第 11 节）。</p>
+</blockquote>
+<hr>
+<h2 id="11-安全与调试习惯"><a href="#11-安全与调试习惯" class="headerlink" title="11. 安全与调试习惯"></a>11. 安全与调试习惯</h2><h3 id="三条硬性规则"><a href="#三条硬性规则" class="headerlink" title="三条硬性规则"></a>三条硬性规则</h3><p><strong>1. 不要把密钥写进命令。</strong></p>
+<p>命令行会进 shell 历史、进进程列表（<code>ps aux</code> 对同机其他用户可见）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 危险: 密码留在了历史里</span></span><br><span class="line">curl -u <span class="string">&quot;admin:MySecretPass&quot;</span> https://api.example.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 好: 从环境变量读</span></span><br><span class="line">curl -H <span class="string">&quot;Authorization: Bearer <span class="variable">$API_TOKEN</span>&quot;</span> https://api.example.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 好: 密码从文件读, 且注意文件权限</span></span><br><span class="line">curl -u <span class="string">&quot;admin:<span class="subst">$(cat ~/.api-secret)</span>&quot;</span> https://api.example.com</span><br></pre></td></tr></table></figure>
+
+<p>环境变量的用法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> API_TOKEN=<span class="string">&quot;xxxxx&quot;</span>      <span class="comment"># 当前会话有效, 不进历史的是值本身</span></span><br><span class="line">curl -H <span class="string">&quot;Authorization: Bearer <span class="variable">$API_TOKEN</span>&quot;</span> https://api.example.com</span><br><span class="line"><span class="built_in">unset</span> API_TOKEN               <span class="comment"># 用完清掉</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 分享命令前先清洗。</strong></p>
+<p>贴到 issue、文档、聊天群之前检查这几处：</p>
+<ul>
+<li><code>Authorization</code> 头的值；</li>
+<li><code>Cookie</code> 里的 session；</li>
+<li>URL 查询参数里的 <code>token</code>、<code>key</code>、<code>secret</code>；</li>
+<li><code>-d</code> 请求体里的密码字段。</li>
+</ul>
+<p>替换成 <code>&lt;YOUR_TOKEN_HERE&gt;</code> 这类占位符。</p>
+<p><strong>3. 调试用的 <code>-k</code> 不要带进生产。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -k 关闭证书校验, 只用于本地自签证书的调试</span></span><br><span class="line">curl -k https://localhost:8443/</span><br></pre></td></tr></table></figure>
+
+<p><code>-k</code>（<code>--insecure</code>）会跳过 TLS 证书验证，等于失去了防中间人攻击的能力。<strong>只在本地调试自签证书时临时使用</strong>，绝不能出现在脚本或生产配置里。</p>
+<h3 id="让命令进历史更安全的做法"><a href="#让命令进历史更安全的做法" class="headerlink" title="让命令进历史更安全的做法"></a>让命令进历史更安全的做法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 命令前加空格, bash 默认不会记录(取决于 HISTCONTROL 设置)</span></span><br><span class="line"> curl -H <span class="string">&quot;Authorization: Bearer secret&quot;</span> https://api.example.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 或者显式从历史里删掉刚执行的那条</span></span><br><span class="line"><span class="built_in">history</span> -d $(<span class="built_in">history</span> 1 | awk <span class="string">&#x27;&#123;print $1&#125;&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="调试脚本里推荐的基础参数"><a href="#调试脚本里推荐的基础参数" class="headerlink" title="调试脚本里推荐的基础参数"></a>调试脚本里推荐的基础参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl -fsS --connect-timeout 5 --max-time 30 --retry 2 \\</span><br><span class="line">  -H <span class="string">&quot;Accept: application/json&quot;</span> \\</span><br><span class="line">  <span class="string">&quot;https://api.example.com/data&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>这一组参数的含义：失败即报错（<code>-f</code>）、安静但保留错误（<code>-sS</code>）、连接和总时长都有上限、偶发失败自动重试两次。</p>
+<h3 id="一个完整的排查流程"><a href="#一个完整的排查流程" class="headerlink" title="一个完整的排查流程"></a>一个完整的排查流程</h3><p>接口不通时按这个顺序查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. DNS 能解析吗</span></span><br><span class="line">nslookup api.example.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 能连上吗(看 * 段有没有 Connected)</span></span><br><span class="line">curl -v --connect-timeout 5 <span class="string">&quot;https://api.example.com/health&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 证书有问题吗(看 * 段的 TLS 信息)</span></span><br><span class="line">curl -vI <span class="string">&quot;https://api.example.com/&quot;</span> 2&gt;&amp;1 | grep -i <span class="string">&quot;SSL\\|TLS\\|certificate&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 请求构造对吗(看 &gt; 段)</span></span><br><span class="line">curl -v -X POST <span class="string">&quot;https://api.example.com/api&quot;</span> \\</span><br><span class="line">  -H <span class="string">&quot;Content-Type: application/json&quot;</span> -d <span class="string">&#x27;&#123;&quot;k&quot;:&quot;v&quot;&#125;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 服务端返回什么(看 &lt; 段和响应体)</span></span><br><span class="line">curl -i <span class="string">&quot;https://api.example.com/api&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 6. 慢在哪(看各阶段耗时)</span></span><br><span class="line">curl -w <span class="string">&quot;首字节: %&#123;time_starttransfer&#125;s 总计: %&#123;time_total&#125;s\\n&quot;</span> -o /dev/null -s <span class="string">&quot;https://api.example.com/api&quot;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="12-常见问题-FAQ"><a href="#12-常见问题-FAQ" class="headerlink" title="12. 常见问题 FAQ"></a>12. 常见问题 FAQ</h2><p><strong>Q：URL 里有 <code>&amp;</code> 命令就出错，为什么？</strong></p>
+<p>shell 把 <code>&amp;</code> 解释成后台执行。给整个 URL 加引号即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">&quot;https://api.example.com/a?x=1&amp;y=2&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：POST 返回 400，提示解析失败？</strong></p>
+<p>八成是漏了 <code>Content-Type</code>。JSON 请求必须带：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-H <span class="string">&quot;Content-Type: application/json&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>另外确认 JSON 本身合法，可以用 <code>jq . &lt;&lt;&lt; &#39;&#123;&quot;a&quot;:1&#125;&#39;</code> 校验。</p>
+<p><strong>Q：中文参数怎么传？</strong></p>
+<p>用 <code>--data-urlencode</code> 让 curl 自动编码，不要手工拼：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -G <span class="string">&quot;https://api.example.com/s&quot;</span> --data-urlencode <span class="string">&quot;q=中文查询&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：怎么处理自签证书的本地服务？</strong></p>
+<p>调试阶段可以用 <code>-k</code>，但更好的做法是把自签 CA 加到信任列表，或用 <code>--cacert</code> 指定证书：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl --cacert ./local-ca.crt https://localhost:8443/</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：<code>-d</code> 和 <code>--data-binary</code> 有什么区别？</strong></p>
+<p><code>-d @file</code> 会去掉文件里的换行符；<code>--data-binary @file</code> 原样发送。上传二进制或需要保留换行的内容用后者。</p>
+<p><strong>Q：响应是乱码怎么办？</strong></p>
+<p>先看响应的 <code>Content-Type</code> 里声明的编码，再按编码转换：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s <span class="string">&quot;https://example.com/page&quot;</span> | iconv -f gbk -t utf-8</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：为什么响应体不完整？</strong></p>
+<p>常见原因是没跟随重定向（加 <code>-L</code>）或响应被压缩（加 <code>--compressed</code> 让 curl 自动解压）。也可能是 <code>--max-time</code> 设得太短被中断。</p>
+<p><strong>Q：怎么只看响应里的某个 JSON 字段？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -s <span class="string">&quot;https://api.example.com/user/1&quot;</span> | jq -r <span class="string">&#x27;.data.name&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：curl 和 wget 该用哪个？</strong></p>
+<ul>
+<li>需要构造请求（自定义头、方法、请求体）→ curl；</li>
+<li>只是递归下载整站 → wget 的 <code>-r</code> 更方便。</li>
+</ul>
+<p>日常调试接口基本都用 curl。</p>
+<p><strong>Q：<code>-X POST</code> 和 <code>-d</code> 会不会冲突？</strong></p>
+<p>不会，但要注意：如果写了 <code>-X GET</code> 又带 <code>-d</code>，curl 会用 GET 方法发送请求体——这在多数服务端会报错。<strong>方法和数据要匹配。</strong></p>
+<p><strong>Q：怎么保存完整的调试信息发给同事？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -v <span class="string">&quot;https://api.example.com/api&quot;</span> &gt; resp.txt 2&gt; trace.txt</span><br></pre></td></tr></table></figure>
+
+<p><code>-v</code> 的信息输出到 stderr，响应体输出到 stdout，所以分别重定向即可。<strong>发送前记得清理 trace.txt 里的凭据。</strong></p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/23/jq-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/jq-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">jq 基础教程 — 命令行处理 JSON 数据</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/23</li>
+                <li>14:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/22/markdown-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/markdown-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">Markdown 基础教程 — 语法、写作规范与工具链</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/22</li>
+                <li>14:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="curl 基础教程 — 命令行调试 HTTP 接口"><a rel="nofollow" class="trm-toc-link" href="#curl-基础教程-—-命令行调试-HTTP-接口"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">curl 基础教程 — 命令行调试 HTTP 接口</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="目录"><a rel="nofollow" class="trm-toc-link" href="#目录"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">目录</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1. curl 是什么，什么时候用它"><a rel="nofollow" class="trm-toc-link" href="#1-curl-是什么，什么时候用它"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">1. curl 是什么，什么时候用它</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="确认可用"><a rel="nofollow" class="trm-toc-link" href="#确认可用"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">确认可用</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="2. 第一个请求与响应拆解"><a rel="nofollow" class="trm-toc-link" href="#2-第一个请求与响应拆解"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">2. 第一个请求与响应拆解</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="拆解一次完整交互"><a rel="nofollow" class="trm-toc-link" href="#拆解一次完整交互"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">拆解一次完整交互</span></a></li><li class="trm-toc-item trm-toc-level-3" title="三个层次的详细程度"><a rel="nofollow" class="trm-toc-link" href="#三个层次的详细程度"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">三个层次的详细程度</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="3. 查看请求与响应的细节"><a rel="nofollow" class="trm-toc-link" href="#3-查看请求与响应的细节"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">3. 查看请求与响应的细节</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="只看响应头"><a rel="nofollow" class="trm-toc-link" href="#只看响应头"><span class="trm-toc-number">1.4.1.</span> <span class="trm-toc-text">只看响应头</span></a></li><li class="trm-toc-item trm-toc-level-3" title="响应头 + 正文一起看"><a rel="nofollow" class="trm-toc-link" href="#响应头-正文一起看"><span class="trm-toc-number">1.4.2.</span> <span class="trm-toc-text">响应头 + 正文一起看</span></a></li><li class="trm-toc-item trm-toc-level-3" title="只看连接和 TLS 信息"><a rel="nofollow" class="trm-toc-link" href="#只看连接和-TLS-信息"><span class="trm-toc-number">1.4.3.</span> <span class="trm-toc-text">只看连接和 TLS 信息</span></a></li><li class="trm-toc-item trm-toc-level-3" title="测量各阶段耗时"><a rel="nofollow" class="trm-toc-link" href="#测量各阶段耗时"><span class="trm-toc-number">1.4.4.</span> <span class="trm-toc-text">测量各阶段耗时</span></a></li><li class="trm-toc-item trm-toc-level-3" title="关键耗时字段"><a rel="nofollow" class="trm-toc-link" href="#关键耗时字段"><span class="trm-toc-number">1.4.5.</span> <span class="trm-toc-text">关键耗时字段</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="4. GET 请求与查询参数"><a rel="nofollow" class="trm-toc-link" href="#4-GET-请求与查询参数"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">4. GET 请求与查询参数</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="直接拼 URL"><a rel="nofollow" class="trm-toc-link" href="#直接拼-URL"><span class="trm-toc-number">1.5.1.</span> <span class="trm-toc-text">直接拼 URL</span></a></li><li class="trm-toc-item trm-toc-level-3" title="用 -G 和 –data-urlencode 安全传参"><a rel="nofollow" class="trm-toc-link" href="#用-G-和-–data-urlencode-安全传参"><span class="trm-toc-number">1.5.2.</span> <span class="trm-toc-text">用 -G 和 –data-urlencode 安全传参</span></a></li><li class="trm-toc-item trm-toc-level-3" title="只取响应的某个字段（配合 jq）"><a rel="nofollow" class="trm-toc-link" href="#只取响应的某个字段（配合-jq）"><span class="trm-toc-number">1.5.3.</span> <span class="trm-toc-text">只取响应的某个字段（配合 jq）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="5. POST 与四种请求体格式"><a rel="nofollow" class="trm-toc-link" href="#5-POST-与四种请求体格式"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">5. POST 与四种请求体格式</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="JSON（最常用）"><a rel="nofollow" class="trm-toc-link" href="#JSON（最常用）"><span class="trm-toc-number">1.6.1.</span> <span class="trm-toc-text">JSON（最常用）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="表单提交（application&#x2F;x-www-form-urlencoded）"><a rel="nofollow" class="trm-toc-link" href="#表单提交（application-x-www-form-urlencoded）"><span class="trm-toc-number">1.6.2.</span> <span class="trm-toc-text">表单提交（application&#x2F;x-www-form-urlencoded）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="multipart 表单（带文件上传）"><a rel="nofollow" class="trm-toc-link" href="#multipart-表单（带文件上传）"><span class="trm-toc-number">1.6.3.</span> <span class="trm-toc-text">multipart 表单（带文件上传）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="纯文本或其他格式"><a rel="nofollow" class="trm-toc-link" href="#纯文本或其他格式"><span class="trm-toc-number">1.6.4.</span> <span class="trm-toc-text">纯文本或其他格式</span></a></li><li class="trm-toc-item trm-toc-level-3" title="四种方式对照"><a rel="nofollow" class="trm-toc-link" href="#四种方式对照"><span class="trm-toc-number">1.6.5.</span> <span class="trm-toc-text">四种方式对照</span></a></li><li class="trm-toc-item trm-toc-level-3" title="其他 HTTP 方法"><a rel="nofollow" class="trm-toc-link" href="#其他-HTTP-方法"><span class="trm-toc-number">1.6.6.</span> <span class="trm-toc-text">其他 HTTP 方法</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="6. 请求头、认证与 Cookie"><a rel="nofollow" class="trm-toc-link" href="#6-请求头、认证与-Cookie"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">6. 请求头、认证与 Cookie</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="自定义请求头"><a rel="nofollow" class="trm-toc-link" href="#自定义请求头"><span class="trm-toc-number">1.7.1.</span> <span class="trm-toc-text">自定义请求头</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Bearer Token"><a rel="nofollow" class="trm-toc-link" href="#Bearer-Token"><span class="trm-toc-number">1.7.2.</span> <span class="trm-toc-text">Bearer Token</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Basic 认证"><a rel="nofollow" class="trm-toc-link" href="#Basic-认证"><span class="trm-toc-number">1.7.3.</span> <span class="trm-toc-text">Basic 认证</span></a></li><li class="trm-toc-item trm-toc-level-3" title="发送 Cookie"><a rel="nofollow" class="trm-toc-link" href="#发送-Cookie"><span class="trm-toc-number">1.7.4.</span> <span class="trm-toc-text">发送 Cookie</span></a></li><li class="trm-toc-item trm-toc-level-3" title="保存与复用 Cookie（模拟登录会话）"><a rel="nofollow" class="trm-toc-link" href="#保存与复用-Cookie（模拟登录会话）"><span class="trm-toc-number">1.7.5.</span> <span class="trm-toc-text">保存与复用 Cookie（模拟登录会话）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="7. 文件上传与下载"><a rel="nofollow" class="trm-toc-link" href="#7-文件上传与下载"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">7. 文件上传与下载</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="下载文件"><a rel="nofollow" class="trm-toc-link" href="#下载文件"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">下载文件</span></a></li><li class="trm-toc-item trm-toc-level-3" title="断点续传"><a rel="nofollow" class="trm-toc-link" href="#断点续传"><span class="trm-toc-number">1.8.2.</span> <span class="trm-toc-text">断点续传</span></a></li><li class="trm-toc-item trm-toc-level-3" title="跟随重定向"><a rel="nofollow" class="trm-toc-link" href="#跟随重定向"><span class="trm-toc-number">1.8.3.</span> <span class="trm-toc-text">跟随重定向</span></a></li><li class="trm-toc-item trm-toc-level-3" title="限制速度与超时"><a rel="nofollow" class="trm-toc-link" href="#限制速度与超时"><span class="trm-toc-number">1.8.4.</span> <span class="trm-toc-text">限制速度与超时</span></a></li><li class="trm-toc-item trm-toc-level-3" title="上传文件"><a rel="nofollow" class="trm-toc-link" href="#上传文件"><span class="trm-toc-number">1.8.5.</span> <span class="trm-toc-text">上传文件</span></a></li><li class="trm-toc-item trm-toc-level-3" title="一次传多个文件"><a rel="nofollow" class="trm-toc-link" href="#一次传多个文件"><span class="trm-toc-number">1.8.6.</span> <span class="trm-toc-text">一次传多个文件</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="8. 重定向、超时与重试"><a rel="nofollow" class="trm-toc-link" href="#8-重定向、超时与重试"><span class="trm-toc-number">1.9.</span> <span class="trm-toc-text">8. 重定向、超时与重试</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="跟随重定向"><a rel="nofollow" class="trm-toc-link" href="#跟随重定向-1"><span class="trm-toc-number">1.9.1.</span> <span class="trm-toc-text">跟随重定向</span></a></li><li class="trm-toc-item trm-toc-level-3" title="超时设置"><a rel="nofollow" class="trm-toc-link" href="#超时设置"><span class="trm-toc-number">1.9.2.</span> <span class="trm-toc-text">超时设置</span></a></li><li class="trm-toc-item trm-toc-level-3" title="失败重试"><a rel="nofollow" class="trm-toc-link" href="#失败重试"><span class="trm-toc-number">1.9.3.</span> <span class="trm-toc-text">失败重试</span></a></li><li class="trm-toc-item trm-toc-level-3" title="严格模式"><a rel="nofollow" class="trm-toc-link" href="#严格模式"><span class="trm-toc-number">1.9.4.</span> <span class="trm-toc-text">严格模式</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="9. 保存响应与只取状态码"><a rel="nofollow" class="trm-toc-link" href="#9-保存响应与只取状态码"><span class="trm-toc-number">1.10.</span> <span class="trm-toc-text">9. 保存响应与只取状态码</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="保存到文件"><a rel="nofollow" class="trm-toc-link" href="#保存到文件"><span class="trm-toc-number">1.10.1.</span> <span class="trm-toc-text">保存到文件</span></a></li><li class="trm-toc-item trm-toc-level-3" title="只看状态码"><a rel="nofollow" class="trm-toc-link" href="#只看状态码"><span class="trm-toc-number">1.10.2.</span> <span class="trm-toc-text">只看状态码</span></a></li><li class="trm-toc-item trm-toc-level-3" title="分离响应体与响应头"><a rel="nofollow" class="trm-toc-link" href="#分离响应体与响应头"><span class="trm-toc-number">1.10.3.</span> <span class="trm-toc-text">分离响应体与响应头</span></a></li><li class="trm-toc-item trm-toc-level-3" title="多种输出信息一次打印"><a rel="nofollow" class="trm-toc-link" href="#多种输出信息一次打印"><span class="trm-toc-number">1.10.4.</span> <span class="trm-toc-text">多种输出信息一次打印</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="10. 把 curl 命令转成代码"><a rel="nofollow" class="trm-toc-link" href="#10-把-curl-命令转成代码"><span class="trm-toc-number">1.11.</span> <span class="trm-toc-text">10. 把 curl 命令转成代码</span></a></li><li class="trm-toc-item trm-toc-level-2" title="11. 安全与调试习惯"><a rel="nofollow" class="trm-toc-link" href="#11-安全与调试习惯"><span class="trm-toc-number">1.12.</span> <span class="trm-toc-text">11. 安全与调试习惯</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="三条硬性规则"><a rel="nofollow" class="trm-toc-link" href="#三条硬性规则"><span class="trm-toc-number">1.12.1.</span> <span class="trm-toc-text">三条硬性规则</span></a></li><li class="trm-toc-item trm-toc-level-3" title="让命令进历史更安全的做法"><a rel="nofollow" class="trm-toc-link" href="#让命令进历史更安全的做法"><span class="trm-toc-number">1.12.2.</span> <span class="trm-toc-text">让命令进历史更安全的做法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="调试脚本里推荐的基础参数"><a rel="nofollow" class="trm-toc-link" href="#调试脚本里推荐的基础参数"><span class="trm-toc-number">1.12.3.</span> <span class="trm-toc-text">调试脚本里推荐的基础参数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="一个完整的排查流程"><a rel="nofollow" class="trm-toc-link" href="#一个完整的排查流程"><span class="trm-toc-number">1.12.4.</span> <span class="trm-toc-text">一个完整的排查流程</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="12. 常见问题 FAQ"><a rel="nofollow" class="trm-toc-link" href="#12-常见问题-FAQ"><span class="trm-toc-number">1.13.</span> <span class="trm-toc-text">12. 常见问题 FAQ</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

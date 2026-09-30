@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/2026/09/22/markdown-basics/">
+<meta name="description" content="Markdown 基础教程 — 语法、写作规范与工具链 Markdown 是技术写作的事实标准：README、博客、文档站、笔记、issue 都在用它。这篇教程按”够用的最小集合 → 完整语法 → 规范 → 工具链”的顺序展开，重点标注哪些写法在多数平台不可用。  目录 Markdown 是什么，各平台差异在哪 标题、段落与换行 强调与行内代码 列表与嵌套 链接与图片 引用、分隔线与转义 代码块与">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown 基础教程 — 语法、写作规范与工具链">
+<meta property="og:url" content="https://blog.tdcqcx.cn/2026/09/22/markdown-basics/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="Markdown 基础教程 — 语法、写作规范与工具链 Markdown 是技术写作的事实标准：README、博客、文档站、笔记、issue 都在用它。这篇教程按”够用的最小集合 → 完整语法 → 规范 → 工具链”的顺序展开，重点标注哪些写法在多数平台不可用。  目录 Markdown 是什么，各平台差异在哪 标题、段落与换行 强调与行内代码 列表与嵌套 链接与图片 引用、分隔线与转义 代码块与">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-22T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-22T06:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="Markdown">
+<meta property="article:tag" content="写作">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Markdown 教程, 语法速查, CommonMark, GFM, 表格, 代码块, 写作规范, 文档工具链">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"Markdown 基础教程 — 语法、写作规范与工具链","datePublished":"2026-09-22T06:00:00.000Z","dateModified":"2026-09-22T06:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/2026/09/22/markdown-basics/","image":"https://blog.tdcqcx.cn/post-covers/markdown-basics.jpg"}
+</script>
+
+
+<title >Markdown 基础教程 — 语法、写作规范与工具链</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-22 14:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/markdown-basics.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/markdown-basics.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            Markdown 基础教程 — 语法、写作规范与工具链
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            Markdown 基础教程 — 语法、写作规范与工具链
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2026
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/22
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            14:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="Markdown-基础教程-—-语法、写作规范与工具链"><a href="#Markdown-基础教程-—-语法、写作规范与工具链" class="headerlink" title="Markdown 基础教程 — 语法、写作规范与工具链"></a>Markdown 基础教程 — 语法、写作规范与工具链</h1><blockquote>
+<p>Markdown 是技术写作的事实标准：README、博客、文档站、笔记、issue 都在用它。<br>这篇教程按”够用的最小集合 → 完整语法 → 规范 → 工具链”的顺序展开，重点标注哪些写法在多数平台不可用。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-markdown-%E6%98%AF%E4%BB%80%E4%B9%88%E5%90%84%E5%B9%B3%E5%8F%B0%E5%B7%AE%E5%BC%82%E5%9C%A8%E5%93%AA">Markdown 是什么，各平台差异在哪</a></li>
+<li><a href="#2-%E6%A0%87%E9%A2%98%E6%AE%B5%E8%90%BD%E4%B8%8E%E6%8D%A2%E8%A1%8C">标题、段落与换行</a></li>
+<li><a href="#3-%E5%BC%BA%E8%B0%83%E4%B8%8E%E8%A1%8C%E5%86%85%E4%BB%A3%E7%A0%81">强调与行内代码</a></li>
+<li><a href="#4-%E5%88%97%E8%A1%A8%E4%B8%8E%E5%B5%8C%E5%A5%97">列表与嵌套</a></li>
+<li><a href="#5-%E9%93%BE%E6%8E%A5%E4%B8%8E%E5%9B%BE%E7%89%87">链接与图片</a></li>
+<li><a href="#6-%E5%BC%95%E7%94%A8%E5%88%86%E9%9A%94%E7%BA%BF%E4%B8%8E%E8%BD%AC%E4%B9%89">引用、分隔线与转义</a></li>
+<li><a href="#7-%E4%BB%A3%E7%A0%81%E5%9D%97%E4%B8%8E%E8%AF%AD%E6%B3%95%E9%AB%98%E4%BA%AE">代码块与语法高亮</a></li>
+<li><a href="#8-%E8%A1%A8%E6%A0%BC">表格</a></li>
+<li><a href="#9-%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8%E8%84%9A%E6%B3%A8%E4%B8%8E%E5%85%B6%E4%BB%96%E6%89%A9%E5%B1%95">任务列表、脚注与其他扩展</a></li>
+<li><a href="#10-%E5%86%99%E4%BD%9C%E8%A7%84%E8%8C%83%E5%BB%BA%E8%AE%AE">写作规范建议</a></li>
+<li><a href="#11-%E5%B7%A5%E5%85%B7%E9%93%BE">工具链</a></li>
+<li><a href="#12-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-faq">常见问题 FAQ</a></li>
+</ol>
+<hr>
+<h2 id="1-Markdown-是什么，各平台差异在哪"><a href="#1-Markdown-是什么，各平台差异在哪" class="headerlink" title="1. Markdown 是什么，各平台差异在哪"></a>1. Markdown 是什么，各平台差异在哪</h2><p>Markdown 由 John Gruber 在 2004 年设计，目标是”用纯文本写出可读的富文本”。它的核心主张是：<strong>源文件本身就该是能直接读的</strong>，标记符号只做最低限度的干扰。</p>
+<h3 id="为什么会有”方言”"><a href="#为什么会有”方言”" class="headerlink" title="为什么会有”方言”"></a>为什么会有”方言”</h3><p>原始 Markdown 规范留了很多模糊地带（比如表格、脚注怎么办），各平台自行扩展出了不同方言：</p>
+<table>
+<thead>
+<tr>
+<th>规范 &#x2F; 方言</th>
+<th>特点</th>
+<th>谁在用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>CommonMark</strong></td>
+<td>严格定义、有完整测试用例的标准化版本</td>
+<td>GitHub、Discourse、多数解析器</td>
+</tr>
+<tr>
+<td><strong>GFM</strong> (GitHub Flavored Markdown)</td>
+<td>CommonMark + 表格、任务列表、删除线、自动链接</td>
+<td>GitHub、GitLab</td>
+</tr>
+<tr>
+<td><strong>Markdown Extra</strong></td>
+<td>增加脚注、定义列表、表格等</td>
+<td>PHP Markdown Extra、部分静态站点</td>
+</tr>
+<tr>
+<td><strong>MultiMarkdown</strong></td>
+<td>面向学术写作，支持元数据、引用</td>
+<td>学术工具链</td>
+</tr>
+</tbody></table>
+<p><strong>实践结论</strong>：写 Markdown 时优先用 <strong>CommonMark + GFM 交集</strong>里的语法。表格、任务列表、删除线在 GitHub&#x2F;博客平台基本通用；脚注、定义列表、内嵌 HTML 的可移植性就差得多。</p>
+<blockquote>
+<p>本项目（Hexo + hexo-renderer-marked）支持 CommonMark 与 GFM 的大部分扩展。要预览效果，最可靠的办法是本地 <code>hexo server</code> 起个预览服务，而不是凭记忆猜渲染结果。</p>
+</blockquote>
+<h3 id="一个自检清单"><a href="#一个自检清单" class="headerlink" title="一个自检清单"></a>一个自检清单</h3><p>在不同平台写作前，先确认三件事：</p>
+<ol>
+<li><strong>表格支持吗？</strong>（GitHub、博客、大部分文档站：支持）</li>
+<li><strong>代码块能用三反引号吗？</strong>（几乎所有现代平台：支持）</li>
+<li><strong>内嵌 HTML 允许吗？</strong>（GitHub 会过滤部分标签，博客平台通常允许）</li>
+</ol>
+<hr>
+<h2 id="2-标题、段落与换行"><a href="#2-标题、段落与换行" class="headerlink" title="2. 标题、段落与换行"></a>2. 标题、段落与换行</h2><h3 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题（H1）</span></span><br><span class="line"><span class="section">## 二级标题（H2）</span></span><br><span class="line"><span class="section">### 三级标题（H3）</span></span><br><span class="line"><span class="section">#### 四级标题（H4）</span></span><br></pre></td></tr></table></figure>
+
+<p>也可以用下划线形式，但只支持到二级：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">一级标题</span></span><br><span class="line"><span class="section">========</span></span><br><span class="line"></span><br><span class="line"><span class="section">二级标题</span></span><br><span class="line"><span class="section">--------</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="三个实用约定"><a href="#三个实用约定" class="headerlink" title="三个实用约定"></a>三个实用约定</h3><ol>
+<li><strong>一篇文档只用一个 H1</strong>。H1 通常就是文档标题，和网页 SEO 的规则一致（本项目的文章页会用 front-matter 的 title 作为 H1，所以正文里如果再写 <code># 标题</code>，页面上会同时出现两个 H1）。</li>
+<li><strong>标题层级不要跳级</strong>。H2 下直接写 H4 会让自动生成的目录（TOC）结构错乱。</li>
+<li><strong><code>#</code> 后留一个空格</strong>。<code>#标题</code> 在多数解析器里不会被识别为标题。</li>
+</ol>
+<blockquote>
+<p><strong>本项目的注意点</strong>：主题的 <code>toc</code> 功能默认只抓 <code>min_depth: 1</code> 到 <code>max_depth: 3</code>，也就是 H1 到 H3。写 H4 及更深层级的内容不会出现在右侧目录里。所以组织结构时尽量把主要章节控制在 H2&#x2F;H3。</p>
+</blockquote>
+<h3 id="段落与换行"><a href="#段落与换行" class="headerlink" title="段落与换行"></a>段落与换行</h3><p>Markdown 里<strong>单独一个换行不会产生新段落</strong>，它会被合并成同一段的空格：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这是第一行</span><br><span class="line">这是第二行</span><br><span class="line"></span><br><span class="line">这是另一个段落（前面有空行）</span><br></pre></td></tr></table></figure>
+
+<p>渲染结果：前两行合为一段，空行才真正分段。</p>
+<p>要强行换行，行尾加<strong>两个空格</strong>（容易看不见，不推荐），或者用一个空行分新段：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这行末尾有两个空格··</span><br><span class="line">所以会换行</span><br></pre></td></tr></table></figure>
+
+<p>在源代码里每句一行（<strong>语义化换行 &#x2F; one sentence per line</strong>）是很多技术文档的推荐做法，好处是 diff 更清晰——改一句话只会产生一行变更。</p>
+<h3 id="常见错误"><a href="#常见错误" class="headerlink" title="常见错误"></a>常见错误</h3><table>
+<thead>
+<tr>
+<th>写法</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>标题和上文之间没有空行</td>
+<td>部分解析器会把它当成上一段的一部分</td>
+</tr>
+<tr>
+<td>段落之间没有空行</td>
+<td>两段会被合并</td>
+</tr>
+<tr>
+<td>用 <code>···</code> 之类的不可见字符换行</td>
+<td>别人复制文本时会把空格一起带走</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-强调与行内代码"><a href="#3-强调与行内代码" class="headerlink" title="3. 强调与行内代码"></a>3. 强调与行内代码</h2><h3 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">*斜体*</span> 或 <span class="emphasis">_斜体_</span></span><br><span class="line"><span class="strong">**粗体**</span> 或 <span class="strong">__粗体__</span></span><br><span class="line"><span class="strong">**<span class="emphasis">*粗斜体*</span>**</span></span><br><span class="line">~~删除线~~        （GFM 扩展）</span><br></pre></td></tr></table></figure>
+
+<h3 id="为什么推荐用星号"><a href="#为什么推荐用星号" class="headerlink" title="为什么推荐用星号"></a>为什么推荐用星号</h3><p>下划线形式的强调有个坑：<code>snake_case_name</code> 这种带下划线的标识符可能被误判成强调的一部分。<strong>统一用星号可以避免这个问题</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">请使用 my<span class="emphasis">_var_</span>name 变量        → 安全</span><br><span class="line">请使用 my<span class="emphasis">*var_name 变量        → 不会误判（星号前后要有空格才生效）</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="行内代码"><a href="#行内代码" class="headerlink" title="行内代码"></a>行内代码</h3><p>用反引号包裹：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">执行 <span class="code">`npm install`</span> 安装依赖。</span><br><span class="line">配置项 <span class="code">`theme.switch`</span> 控制主题切换按钮。</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果内容本身含反引号</strong>，用两个反引号包裹：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">`` 这段里有一个反引号 `</span> ``</span><br></pre></td></tr></table></figure>
+
+<p><strong>转义规则</strong>：行内代码里的内容<strong>不会</strong>被解析成 Markdown。所以想展示 <code>**这两个星号**</code>，写成反引号包裹即可，不用一个个加反斜杠。</p>
+<h3 id="强调符号的边界规则"><a href="#强调符号的边界规则" class="headerlink" title="强调符号的边界规则"></a>强调符号的边界规则</h3><p>星号要生效，<strong>前后必须是空白或标点，不能紧贴字母</strong>（右边界同理）。这就是为什么 <code>2*3*4</code> 里的星号不会触发斜体——这是设计上的刻意行为，避免公式里的星号被误解析。</p>
+<hr>
+<h2 id="4-列表与嵌套"><a href="#4-列表与嵌套" class="headerlink" title="4. 列表与嵌套"></a>4. 列表与嵌套</h2><h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> 苹果</span><br><span class="line"><span class="bullet">-</span> 香蕉</span><br><span class="line"><span class="bullet">-</span> 橙子</span><br></pre></td></tr></table></figure>
+
+<p><code>-</code>、<code>*</code>、<code>+</code> 都可以，但<strong>同一列表里不要混用</strong>（不同符号会被解析成不同列表）。</p>
+<h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 安装依赖</span><br><span class="line"><span class="bullet">2.</span> 启动服务</span><br><span class="line"><span class="bullet">3.</span> 打开浏览器</span><br></pre></td></tr></table></figure>
+
+<p><strong>序号不必连续</strong>。下面的写法渲染结果完全一样：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 第一项</span><br><span class="line"><span class="bullet">1.</span> 第二项</span><br><span class="line"><span class="bullet">1.</span> 第三项</span><br></pre></td></tr></table></figure>
+
+<p>这是个实用技巧：调整顺序时不用重新编号，diff 里也不会因为数字变化而出现噪音。</p>
+<h3 id="嵌套列表"><a href="#嵌套列表" class="headerlink" title="嵌套列表"></a>嵌套列表</h3><p><strong>子列表要缩进 2 到 4 个空格</strong>（具体数量取决于是哪种父级，多数解析器接受 2 空格）：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> 前端技术</span><br><span class="line"><span class="bullet">  -</span> HTML</span><br><span class="line"><span class="bullet">  -</span> CSS</span><br><span class="line"><span class="bullet">    -</span> Flexbox</span><br><span class="line"><span class="bullet">    -</span> Grid</span><br><span class="line"><span class="bullet">-</span> 后端技术</span><br><span class="line"><span class="bullet">  -</span> Java</span><br><span class="line"><span class="bullet">  -</span> Python</span><br></pre></td></tr></table></figure>
+
+<h3 id="列表里放代码块或段落"><a href="#列表里放代码块或段落" class="headerlink" title="列表里放代码块或段落"></a>列表里放代码块或段落</h3><p>关键是把内容<strong>缩进到与列表项文字对齐</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> 先安装依赖：</span><br><span class="line"></span><br><span class="line">   <span class="code">```bash</span></span><br><span class="line"><span class="code">   npm install</span></span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li><p>然后启动：</p>
+<p>注意这一步需要网络。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 列表的常见坑</span><br><span class="line"></span><br><span class="line">| 现象 | 原因 |</span><br><span class="line">|---|---|</span><br><span class="line">| 列表没渲染，显示成一段 | 符号和内容之间少了空格 |</span><br><span class="line">| 嵌套层级不对 | 缩进量不一致（同一层要用相同空格数） |</span><br><span class="line">| 代码块跑出列表外 | 缩进量不够，要和列表项首字对齐 |</span><br><span class="line">| 有序列表从 3 开始 | 前一项实际上被解析成了独立段落 |</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line">## 5. 链接与图片</span><br><span class="line"></span><br><span class="line">### 基本语法</span><br><span class="line"></span><br><span class="line">```markdown</span><br><span class="line">[链接文字](https://example.com)</span><br><span class="line">[带标题的链接](https://example.com &quot;鼠标悬停显示的文字&quot;)</span><br><span class="line">![图片替代文字](/images/pic.png)</span><br></pre></td></tr></table></figure>
+
+<p><strong><code>!</code> 是图片与链接的唯一区别</strong>，记住这个符号及其位置（在最前面）就不会混。</p>
+<h3 id="参考式链接"><a href="#参考式链接" class="headerlink" title="参考式链接"></a>参考式链接</h3><p>当同一个链接在文中出现多次，或 URL 很长影响阅读时，用参考式：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">本项目使用 [<span class="string">Hexo</span>][<span class="symbol">hexo</span>] 构建，主题是 [<span class="string">Async</span>][<span class="symbol">async</span>]。</span><br><span class="line"></span><br><span class="line">[<span class="symbol">hexo</span>]: <span class="link">https://hexo.io/</span></span><br><span class="line">[<span class="symbol">async</span>]: <span class="link">https://github.com/MaLuns/hexo-theme-async</span></span><br></pre></td></tr></table></figure>
+
+<p>定义部分可以集中放在文末。这样正文更干净，链接变更时也只需改一处。</p>
+<h3 id="图片作为链接"><a href="#图片作为链接" class="headerlink" title="图片作为链接"></a>图片作为链接</h3><p>需要”点击图片跳转”时，把图片语法嵌进链接语法：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">![替代文字</span>](<span class="link">/images/badge.svg</span>)](<span class="link">https://example.com</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="图片路径的三种写法"><a href="#图片路径的三种写法" class="headerlink" title="图片路径的三种写法"></a>图片路径的三种写法</h3><table>
+<thead>
+<tr>
+<th>写法</th>
+<th>适用</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/images/pic.png</code></td>
+<td>站点内绝对路径</td>
+<td>本项目推荐，部署后路径稳定</td>
+</tr>
+<tr>
+<td><code>./pic.png</code></td>
+<td>相对当前文件</td>
+<td>文件移动后容易失效</td>
+</tr>
+<tr>
+<td><code>https://…</code></td>
+<td>外链</td>
+<td>对方站点挂掉就裂图，<strong>不推荐</strong></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>本项目的实践</strong>：文章图片统一放在 <code>source/images/posts/</code>，引用时写 <code>/images/posts/xxx.png</code>。外链图片（如 shields.io 徽章）在源站不可用时会变成裂图，本项目已把正文里用到的外链图片全部本地化。</p>
+</blockquote>
+<h3 id="自动链接"><a href="#自动链接" class="headerlink" title="自动链接"></a>自动链接</h3><p>GFM 会把裸 URL 自动变成链接：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://example.com</span><br></pre></td></tr></table></figure>
+
+<p>但<strong>不要依赖这个行为</strong>，因为并非所有平台都支持。显式写成 <code>[https://example.com](https://example.com)</code> 或 <code>&lt;https://example.com&gt;</code> 更稳。</p>
+<h3 id="图片的可访问性"><a href="#图片的可访问性" class="headerlink" title="图片的可访问性"></a>图片的可访问性</h3><p><strong>替代文字（alt）不是可选项</strong>。它有三个作用：</p>
+<ol>
+<li>屏幕阅读器会朗读它，这是无障碍访问的基础；</li>
+<li>图片加载失败时显示的文字；</li>
+<li>搜索引擎用它理解图片内容。</li>
+</ol>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 差: 无意义 --&gt;</span><br><span class="line">![](<span class="link">/images/chart.png</span>)</span><br><span class="line"></span><br><span class="line">&lt;!-- 好: 说明图片在讲什么 --&gt;</span><br><span class="line">![<span class="string">2026 年 Q1 到 Q3 的接口响应时间逐月下降趋势图</span>](<span class="link">/images/chart.png</span>)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-引用、分隔线与转义"><a href="#6-引用、分隔线与转义" class="headerlink" title="6. 引用、分隔线与转义"></a>6. 引用、分隔线与转义</h2><h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; 这是一段引用。</span></span><br><span class="line"><span class="quote">&gt; 可以有多行。</span></span><br><span class="line"><span class="quote">&gt;</span></span><br><span class="line"><span class="quote">&gt; 空行加 &gt; 可以分出新段落。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="嵌套引用"><a href="#嵌套引用" class="headerlink" title="嵌套引用"></a>嵌套引用</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; 外层引用</span></span><br><span class="line"><span class="quote">&gt;</span></span><br><span class="line"><span class="quote">&gt; &gt; 嵌套的引用</span></span><br></pre></td></tr></table></figure>
+
+<p>引用块里可以放列表、代码块、表格等任意元素。</p>
+<h3 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h3><p><strong>三个或更多的连字符、星号或下划线</strong>单独成行：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line"></span><br><span class="line">***</span><br><span class="line"></span><br><span class="line">___</span><br></pre></td></tr></table></figure>
+
+<p>三个写法渲染结果相同。推荐统一用 <code>---</code>。</p>
+<blockquote>
+<p><strong>易错点</strong>：如果上一行是文字且<strong>没有空行</strong>，<code>---</code> 会被解析成”二级标题的下划线”而不是分隔线：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">一些文字</span><br><span class="line">---          ← 这会被当成二级标题！</span><br><span class="line"></span><br><span class="line">一些文字</span><br><span class="line"></span><br><span class="line">---          ← 这样才是分隔线</span><br></pre></td></tr></table></figure></blockquote>
+<h3 id="转义"><a href="#转义" class="headerlink" title="转义"></a>转义</h3><p>需要显示 Markdown 特殊字符本身时，前面加反斜杠：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">\\* 这不是斜体的开始</span><br><span class="line">\\# 这不是标题</span><br><span class="line">\\[ 这不是链接</span><br></pre></td></tr></table></figure>
+
+<p>可转义的字符包括：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\\ ` * _ &#123; &#125; [ ] ( ) # + - . ! | &gt; ~</span><br></pre></td></tr></table></figure>
+
+<p><strong>方括号的实用场景</strong>：写 <code>数组[0]</code> 时，如果后面恰好接了括号可能被解析成链接，用 <code>数组\\[0\\]</code> 更保险。</p>
+<hr>
+<h2 id="7-代码块与语法高亮"><a href="#7-代码块与语法高亮" class="headerlink" title="7. 代码块与语法高亮"></a>7. 代码块与语法高亮</h2><h3 id="围栏代码块（推荐）"><a href="#围栏代码块（推荐）" class="headerlink" title="围栏代码块（推荐）"></a>围栏代码块（推荐）</h3><p>用三个反引号包裹，并在开头标注语言：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```javascript</span></span><br><span class="line"><span class="code">function hello(name) &#123;</span></span><br><span class="line"><span class="code">  return `Hello, $&#123;name&#125;`;</span></span><br><span class="line"><span class="code">&#125;</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>一定要标注语言</strong>。它带来三个好处：</p>
+<ol>
+<li>语法高亮（本项目使用 highlight.js）；</li>
+<li>部分平台会提供复制按钮、行号、折叠（本项目的主题支持这三项）；</li>
+<li>阅读者能立刻知道这段是哪种语言。</li>
+</ol>
+<h3 id="常用语言标识"><a href="#常用语言标识" class="headerlink" title="常用语言标识"></a>常用语言标识</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```bash          shell 命令</span></span><br><span class="line"><span class="code">```</span>javascript    JavaScript</span><br><span class="line"><span class="code">```typescript    TypeScript</span></span><br><span class="line"><span class="code">```</span>python        Python</span><br><span class="line"><span class="code">```java          Java</span></span><br><span class="line"><span class="code">```</span>sql           SQL</span><br><span class="line"><span class="code">```json          JSON</span></span><br><span class="line"><span class="code">```</span>yaml          YAML</span><br><span class="line"><span class="code">```html          HTML</span></span><br><span class="line"><span class="code">```</span>css           CSS</span><br><span class="line"><span class="code">```diff          差异对比</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="diff-高亮"><a href="#diff-高亮" class="headerlink" title="diff 高亮"></a>diff 高亮</h3><p>标注 <code>diff</code> 并给增删行加上 <code>+</code> &#x2F; <code>-</code> 前缀，会得到红绿高亮：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```diff</span></span><br><span class="line"><span class="code">- 旧的一行</span></span><br><span class="line"><span class="code">+ 新的一行</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="代码块里包含反引号怎么办"><a href="#代码块里包含反引号怎么办" class="headerlink" title="代码块里包含反引号怎么办"></a>代码块里包含反引号怎么办</h3><p>外层用<strong>更多数量的反引号</strong>包裹：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">````markdown</span></span><br><span class="line"><span class="code">```javascript</span></span><br><span class="line"><span class="code">console.log(&quot;嵌套示例&quot;);</span></span><br><span class="line"><span class="code">```</span></span><br><span class="line"><span class="code">````</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="缩进式代码块（不推荐）"><a href="#缩进式代码块（不推荐）" class="headerlink" title="缩进式代码块（不推荐）"></a>缩进式代码块（不推荐）</h3><p>四个空格缩进也能生成代码块，但<strong>无法标注语言</strong>，也没有语法高亮：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这是缩进式代码块</span><br><span class="line">没有语法高亮</span><br></pre></td></tr></table></figure>
+
+<p>新文档统一用围栏式。</p>
+<h3 id="行内代码-vs-代码块的选择"><a href="#行内代码-vs-代码块的选择" class="headerlink" title="行内代码 vs 代码块的选择"></a>行内代码 vs 代码块的选择</h3><ul>
+<li>只有一个标识符、命令名、文件名 → 行内代码 <code>`npm install`</code></li>
+<li>有换行、有多行、需要高亮 → 代码块</li>
+</ul>
+<p><strong>不要用行内代码写多行命令</strong>，那会让读者很难复制。</p>
+<hr>
+<h2 id="8-表格"><a href="#8-表格" class="headerlink" title="8. 表格"></a>8. 表格</h2><p>基本语法：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">| 左对齐 | 居中 | 右对齐 |</span><br><span class="line">| :--- | :---: | ---: |</span><br><span class="line">| 内容 | 内容 | 内容 |</span><br><span class="line">| 长内容 | 内容 | 内容 |</span><br></pre></td></tr></table></figure>
+
+<h3 id="对齐控制"><a href="#对齐控制" class="headerlink" title="对齐控制"></a>对齐控制</h3><p>分隔行里的冒号决定对齐方式：</p>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>对齐</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>:---</code></td>
+<td>左对齐</td>
+</tr>
+<tr>
+<td><code>:---:</code></td>
+<td>居中</td>
+</tr>
+<tr>
+<td><code>---:</code></td>
+<td>右对齐</td>
+</tr>
+<tr>
+<td><code>---</code></td>
+<td>默认（多数平台左对齐）</td>
+</tr>
+</tbody></table>
+<h3 id="表格的三个限制"><a href="#表格的三个限制" class="headerlink" title="表格的三个限制"></a>表格的三个限制</h3><ol>
+<li><strong>单元格里不能直接换行</strong>。需要多行内容时用 <code>&lt;br&gt;</code>：<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">| 项 | 说明 |</span><br><span class="line">|---|---|</span><br><span class="line">| 参数 | 第一行<span class="language-xml"><span class="tag">&lt;<span class="name">br</span>&gt;</span></span>第二行 |</span><br></pre></td></tr></table></figure></li>
+<li><strong>管道符需要转义</strong>。内容里有 <code>|</code> 时写成 <code>\\|</code>。</li>
+<li><strong>表格和上文之间必须有空行</strong>，否则不会被识别。</li>
+</ol>
+<h3 id="表格与列表的选择"><a href="#表格与列表的选择" class="headerlink" title="表格与列表的选择"></a>表格与列表的选择</h3><p><strong>两列、内容较长时，用列表或定义列表更好读</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 表格: 长文本会被挤成两行以上, 阅读体验差 --&gt;</span><br><span class="line">| 配置项 | 说明 |</span><br><span class="line">|---|---|</span><br><span class="line">| <span class="code">`theme.default`</span> | 设置默认主题模式，可选 style-light、style-dark、auto，其中 auto 表示跟随系统深浅色偏好 |</span><br><span class="line"></span><br><span class="line">&lt;!-- 列表: 同样的信息更易读 --&gt;</span><br><span class="line"><span class="bullet">-</span> <span class="strong">**`theme.default`**</span> — 设置默认主题模式。可选 <span class="code">`style-light`</span>、<span class="code">`style-dark`</span>、<span class="code">`auto`</span>，其中 <span class="code">`auto`</span> 表示跟随系统深浅色偏好。</span><br></pre></td></tr></table></figure>
+
+<h3 id="给表格加说明"><a href="#给表格加说明" class="headerlink" title="给表格加说明"></a>给表格加说明</h3><p>表格本身没有标题机制。习惯做法是在表格<strong>上方</strong>加一行粗体或斜体说明：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**表 1：常用 HTTP 状态码**</span></span><br><span class="line"></span><br><span class="line">| 状态码 | 含义 |</span><br><span class="line">|---|---|</span><br><span class="line">| 200 | 成功 |</span><br><span class="line">| 404 | 未找到 |</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-任务列表、脚注与其他扩展"><a href="#9-任务列表、脚注与其他扩展" class="headerlink" title="9. 任务列表、脚注与其他扩展"></a>9. 任务列表、脚注与其他扩展</h2><h3 id="任务列表（GFM）"><a href="#任务列表（GFM）" class="headerlink" title="任务列表（GFM）"></a>任务列表（GFM）</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> [x] 已完成的任务</span><br><span class="line"><span class="bullet">-</span> [ ] 未完成的任务</span><br><span class="line"><span class="bullet">-</span> [ ] 另一个待办</span><br></pre></td></tr></table></figure>
+
+<p>在 GitHub 的 issue &#x2F; PR 描述里，这是<strong>可直接点击勾选</strong>的交互式清单。</p>
+<h3 id="脚注"><a href="#脚注" class="headerlink" title="脚注"></a>脚注</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这句话需要引用来源[^1]。</span><br><span class="line"></span><br><span class="line">[<span class="symbol">^1</span>]: <span class="link">这里是脚注内容，会显示在文末。</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：脚注是扩展语法，GitHub 支持，但部分博客平台和解析器不支持。不确定时改用行内括号说明或文末”参考”章节。</p>
+<h3 id="定义列表"><a href="#定义列表" class="headerlink" title="定义列表"></a>定义列表</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">术语</span><br><span class="line">: 术语的解释</span><br></pre></td></tr></table></figure>
+
+<p>同样属于扩展语法，可移植性差。<strong>更稳的替代是粗体加冒号</strong>：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="strong">**术语**</span>：术语的解释</span><br></pre></td></tr></table></figure>
+
+<h3 id="折叠内容"><a href="#折叠内容" class="headerlink" title="折叠内容"></a>折叠内容</h3><p>Standard Markdown 没有折叠语法。GitHub 支持用 HTML <code>&lt;details&gt;</code> 实现：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">details</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">summary</span>&gt;</span></span>点击展开<span class="language-xml"><span class="tag">&lt;/<span class="name">summary</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">这里是被折叠的内容。</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">details</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p><strong><code>&lt;summary&gt;</code> 后必须有一个空行</strong>，否则里面的 Markdown 不会被解析。</p>
+<h3 id="目录-1"><a href="#目录-1" class="headerlink" title="目录"></a>目录</h3><p>CommonMark 没有自动目录语法。常见做法有三类：</p>
+<ol>
+<li><p><strong>手写锚点目录</strong>（可移植性最好，但要手动维护）：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">## 目录</span></span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> [<span class="string">第一节</span>](<span class="link">#1-第一节</span>)</span><br><span class="line"><span class="bullet">2.</span> [<span class="string">第二节</span>](<span class="link">#2-第二节</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>依赖平台自动生成</strong>。GitHub、GitLab、多数博客主题会自动给标题加 id 并支持 <code>[文字](#锚点)</code> 跳转。</p>
+</li>
+<li><p><strong>用工具生成</strong>，如 <code>markdown-toc</code>、VS Code 插件。</p>
+</li>
+</ol>
+<blockquote>
+<p><strong>本项目</strong>：主题的 <code>toc</code> 功能会自动读取 H1-H3 生成侧边目录，所以<strong>不需要在正文里手写目录</strong>。但像本文这样在开头放一份带链接的目录，能让读者快速了解结构——而且因为标题层级固定，锚点也比较稳定。</p>
+</blockquote>
+<h3 id="锚点命名规则"><a href="#锚点命名规则" class="headerlink" title="锚点命名规则"></a>锚点命名规则</h3><p>自动生成的锚点通常遵循这个规律：</p>
+<table>
+<thead>
+<tr>
+<th>原标题</th>
+<th>生成的锚点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>## 1. Git 到底解决什么问题</code></td>
+<td><code>#1-git-到底解决什么问题</code></td>
+</tr>
+<tr>
+<td><code>## 常见问题 FAQ</code></td>
+<td><code>#常见问题-faq</code></td>
+</tr>
+</tbody></table>
+<p>大致是：转小写、空格换成连字符、去掉大部分标点。<strong>含中文的锚点在不同平台上的处理不一致</strong>（有的保留中文，有的转成 URL 编码），所以跨平台引用时，手写目录里的锚点最好实测一次。</p>
+<hr>
+<h2 id="10-写作规范建议"><a href="#10-写作规范建议" class="headerlink" title="10. 写作规范建议"></a>10. 写作规范建议</h2><h3 id="结构层面"><a href="#结构层面" class="headerlink" title="结构层面"></a>结构层面</h3><ol>
+<li><strong>开头写一段导语</strong>。用两三句话说明”这篇文档解决什么问题、读者需要什么前置知识、读完能得到什么”。</li>
+<li><strong>先给结论，再给论证</strong>。技术文档不是悬疑小说。</li>
+<li><strong>每节聚焦一个主题</strong>。一节超过 300 行时考虑拆分。</li>
+<li><strong>用小标题当路标</strong>。读者是扫描式阅读的，标题要能独立传达信息。</li>
+</ol>
+<h3 id="句子与用词"><a href="#句子与用词" class="headerlink" title="句子与用词"></a>句子与用词</h3><ol>
+<li><strong>一句话一件事</strong>。长句拆成短句。</li>
+<li><strong>统一术语</strong>。同一概念不要一会儿叫”仓库”、一会儿叫”资源库”。</li>
+<li><strong>代码里的标识符用行内代码标注</strong>：<code>config.yml</code>、<code>npm run build</code>。</li>
+<li><strong>避免”显然””简单来说”</strong>。对读者来说可能一点都不显然。</li>
+<li><strong>中英文之间留空格</strong>（中文排版惯例）：”使用 Node.js 运行”而不是”使用Node.js运行”。</li>
+</ol>
+<h3 id="代码示例的规范"><a href="#代码示例的规范" class="headerlink" title="代码示例的规范"></a>代码示例的规范</h3><ol>
+<li><p><strong>必须能跑</strong>。给出完整可复制的最小示例，不要留 <code>// 省略</code> 之后就期待读者能补全。</p>
+</li>
+<li><p><strong>标注语言</strong>，见第 7 节。</p>
+</li>
+<li><p><strong>说明预期输出</strong>，让读者能自检：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```bash</span></span><br><span class="line"><span class="code">node -v</span></span><br><span class="line"><span class="code"># 输出示例: v20.11.0</span></span><br><span class="line"><span class="code">```</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>命令和输出分开</strong>。别把输出混在命令块里让人分不清哪行该敲。</p>
+</li>
+<li><p><strong>危险命令要标注警告</strong>。涉及删除、覆盖、重置历史的命令，明确写出后果。</p>
+</li>
+</ol>
+<h3 id="加粗的使用"><a href="#加粗的使用" class="headerlink" title="加粗的使用"></a>加粗的使用</h3><p><strong>整段都是粗体等于没有粗体</strong>。加粗应该留给”扫一眼就必须看到”的信息：</p>
+<ul>
+<li>关键结论</li>
+<li>危险警告</li>
+<li>与常见误解相反的要点</li>
+</ul>
+<h3 id="行长度"><a href="#行长度" class="headerlink" title="行长度"></a>行长度</h3><p>源码每行控制在 80-120 字符以内。好处：</p>
+<ul>
+<li>在窄编辑器里不用横向滚动；</li>
+<li>Git diff 更易读；</li>
+<li>评审时更容易定位改动。</li>
+</ul>
+<hr>
+<h2 id="11-工具链"><a href="#11-工具链" class="headerlink" title="11. 工具链"></a>11. 工具链</h2><h3 id="编辑器"><a href="#编辑器" class="headerlink" title="编辑器"></a>编辑器</h3><table>
+<thead>
+<tr>
+<th>工具</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>VS Code</strong></td>
+<td>免费、扩展生态最丰富，内置 Markdown 预览（<code>Ctrl+Shift+V</code>）</td>
+</tr>
+<tr>
+<td><strong>Typora</strong></td>
+<td>所见即所得，写作体验最接近 Word</td>
+</tr>
+<tr>
+<td><strong>Obsidian</strong></td>
+<td>双向链接 + 本地知识库，适合个人笔记</td>
+</tr>
+<tr>
+<td><strong>Vim &#x2F; Neovim</strong></td>
+<td>键盘驱动，配合插件可实时预览</td>
+</tr>
+</tbody></table>
+<h3 id="VS-Code-的实用扩展与设置"><a href="#VS-Code-的实用扩展与设置" class="headerlink" title="VS Code 的实用扩展与设置"></a>VS Code 的实用扩展与设置</h3><p>推荐的扩展：</p>
+<ul>
+<li><strong>Markdown All in One</strong> — 快捷键加粗、自动生成&#x2F;更新目录、列表自动续行；</li>
+<li><strong>markdownlint</strong> — 按规范检查，能自动修掉大部分格式问题；</li>
+<li><strong>Paste Image</strong> — 粘贴剪贴板图片并自动插入路径，写图文教程很省事；</li>
+<li><strong>Markdown Preview Enhanced</strong> — 支持数学公式、图表、导出 PDF。</li>
+</ul>
+<p>值得加进 <code>settings.json</code> 的配置：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;editor.wordWrap&quot;</span><span class="punctuation">:</span> <span class="string">&quot;on&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;markdown.preview.breaks&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;[markdown]&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;editor.rulers&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="number">100</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;editor.quickSuggestions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;other&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;comments&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;strings&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="预览与转换"><a href="#预览与转换" class="headerlink" title="预览与转换"></a>预览与转换</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 本项目: 本地起服务预览文章效果</span></span><br><span class="line">npx hexo server</span><br><span class="line"></span><br><span class="line"><span class="comment"># Pandoc: Markdown 转 Word / PDF / HTML</span></span><br><span class="line">pandoc input.md -o output.docx</span><br><span class="line">pandoc input.md -o output.pdf --pdf-engine=xelatex</span><br><span class="line"></span><br><span class="line"><span class="comment"># md-to-pdf: 直接生成 PDF</span></span><br><span class="line">npx md-to-pdf input.md</span><br></pre></td></tr></table></figure>
+
+<h3 id="检查与格式化"><a href="#检查与格式化" class="headerlink" title="检查与格式化"></a>检查与格式化</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 按规范检查(需先 npm i -D markdownlint-cli)</span></span><br><span class="line">npx markdownlint <span class="string">&quot;**/*.md&quot;</span> --ignore node_modules</span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动修复可修的问题</span></span><br><span class="line">npx markdownlint <span class="string">&quot;**/*.md&quot;</span> --ignore node_modules --fix</span><br><span class="line"></span><br><span class="line"><span class="comment"># Prettier 统一格式</span></span><br><span class="line">npx prettier --write <span class="string">&quot;**/*.md&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>把这几个命令接进 CI（本项目已有 GitHub Actions 工作流），能防止格式问题累积到难以收拾。</p>
+<h3 id="静态站点生成器"><a href="#静态站点生成器" class="headerlink" title="静态站点生成器"></a>静态站点生成器</h3><p>Markdown 最常见的用途是驱动静态站点：</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>语言生态</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Hexo</strong></td>
+<td>Node.js</td>
+<td>本项目使用，中文资料多</td>
+</tr>
+<tr>
+<td><strong>Hugo</strong></td>
+<td>Go</td>
+<td>构建速度极快</td>
+</tr>
+<tr>
+<td><strong>VitePress</strong></td>
+<td>Vue</td>
+<td>面向文档，开发体验好</td>
+</tr>
+<tr>
+<td><strong>Docusaurus</strong></td>
+<td>React</td>
+<td>社区文档常用，插件丰富</td>
+</tr>
+</tbody></table>
+<h3 id="写中文文档的两个细节"><a href="#写中文文档的两个细节" class="headerlink" title="写中文文档的两个细节"></a>写中文文档的两个细节</h3><ol>
+<li><strong>用 UTF-8 编码存文件</strong>，并在文件头或编辑器设置里明确。GBK 编码在跨平台协作时会显示乱码。</li>
+<li><strong>中英文标点不要混用</strong>。中文句子里用全角标点（，。：），代码、术语内部保持半角。混用会让排版很别扭。</li>
+</ol>
+<hr>
+<h2 id="12-常见问题-FAQ"><a href="#12-常见问题-FAQ" class="headerlink" title="12. 常见问题 FAQ"></a>12. 常见问题 FAQ</h2><p><strong>Q：为什么我的换行不生效？</strong></p>
+<p>Markdown 里单个换行不算换行。要么<strong>空一行</strong>分新段，要么在行尾加两个空格。另外可以开启解析器的 <code>breaks</code> 选项（GitHub 评论框就是这种模式），但源文件在其他平台渲染结果会不同，可移植性差。</p>
+<p><strong>Q：<code>*</code> 和 <code>_</code> 做强调有区别吗？</strong></p>
+<p>渲染结果一样。但 <code>_</code> 在 <code>snake_case</code> 这类标识符旁容易被误判，<strong>统一用 <code>*</code> 更安全</strong>。</p>
+<p><strong>Q：表格里的内容太长怎么办？</strong></p>
+<p>改用列表。或者用 <code>&lt;br&gt;</code> 手动断行，但单元格宽度是固定的，内容多了依然会很难读。</p>
+<p><strong>Q：怎么在 Markdown 里写 HTML？</strong></p>
+<p>直接写就行，多数平台允许。但注意：GitHub 会过滤部分标签和所有 <code>class</code>&#x2F;<code>style</code> 属性；有的平台完全禁用 HTML。<strong>HTML 越少，可移植性越好。</strong></p>
+<p><strong>Q：图片不显示，通常是什么原因？</strong></p>
+<p>按这个顺序查：</p>
+<ol>
+<li>路径大小写（Linux 服务器区分大小写，Windows 本地不区分——这是最常见的坑）；</li>
+<li>路径类型（绝对 <code>/images/a.png</code> 还是相对 <code>./a.png</code>，相对路径会随文章位置变化）；</li>
+<li>文件是否真的存在于输出目录；</li>
+<li>文件名里的空格或中文是否被正确编码。</li>
+</ol>
+<p><strong>Q：有序列表的编号必须连续吗？</strong></p>
+<p>不必。全部写 <code>1.</code> 也能正确渲染，这是推荐做法（调整顺序时 diff 更干净）。</p>
+<p><strong>Q：怎么让代码块里的反引号正常显示？</strong></p>
+<p>外层用更多的反引号包裹，见第 7 节。</p>
+<p><strong>Q：Markdown 能写数学公式吗？</strong></p>
+<p>标准 Markdown 不支持。但很多平台（GitHub、Jupyter、本项目的 KaTeX 集成）支持 <code>$...$</code> 和 <code>$$...$$</code>。这属于扩展，跨平台前先确认目标环境。</p>
+<p><strong>Q：文档之间怎么互相引用？</strong></p>
+<p>用相对路径的 Markdown 链接：<code>[另一篇](../guide/setup.md)</code>。如果用绝对 URL，部署到不同域名后就要全部改一遍。</p>
+<p><strong>Q：<code>README.md</code> 和 <code>README.rst</code> 有什么区别？</strong></p>
+<p><code>.md</code> 是 Markdown，<code>.rst</code> 是 reStructuredText。后者在 Python 生态（Sphinx 文档）里更常见，表达力更强但语法更啰嗦。<strong>非 Python 项目统一用 Markdown 就行。</strong></p>
+<p><strong>Q：写文档和写代码一样需要评审吗？</strong></p>
+<p>技术文档的准确性和代码同等重要——错误的文档会让人踩坑而且更隐蔽。建议文档走和代码一样的评审流程。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/23/curl-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/curl-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">curl 基础教程 — 命令行调试 HTTP 接口</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/23</li>
+                <li>10:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/22/regex-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/regex-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">正则表达式基础教程 — 语法、实战与避坑</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/22</li>
+                <li>10:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="Markdown 基础教程 — 语法、写作规范与工具链"><a rel="nofollow" class="trm-toc-link" href="#Markdown-基础教程-—-语法、写作规范与工具链"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">Markdown 基础教程 — 语法、写作规范与工具链</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="目录"><a rel="nofollow" class="trm-toc-link" href="#目录"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">目录</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1. Markdown 是什么，各平台差异在哪"><a rel="nofollow" class="trm-toc-link" href="#1-Markdown-是什么，各平台差异在哪"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">1. Markdown 是什么，各平台差异在哪</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="为什么会有”方言”"><a rel="nofollow" class="trm-toc-link" href="#为什么会有”方言”"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">为什么会有”方言”</span></a></li><li class="trm-toc-item trm-toc-level-3" title="一个自检清单"><a rel="nofollow" class="trm-toc-link" href="#一个自检清单"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">一个自检清单</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="2. 标题、段落与换行"><a rel="nofollow" class="trm-toc-link" href="#2-标题、段落与换行"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">2. 标题、段落与换行</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="标题"><a rel="nofollow" class="trm-toc-link" href="#标题"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">标题</span></a></li><li class="trm-toc-item trm-toc-level-3" title="三个实用约定"><a rel="nofollow" class="trm-toc-link" href="#三个实用约定"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">三个实用约定</span></a></li><li class="trm-toc-item trm-toc-level-3" title="段落与换行"><a rel="nofollow" class="trm-toc-link" href="#段落与换行"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">段落与换行</span></a></li><li class="trm-toc-item trm-toc-level-3" title="常见错误"><a rel="nofollow" class="trm-toc-link" href="#常见错误"><span class="trm-toc-number">1.3.4.</span> <span class="trm-toc-text">常见错误</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="3. 强调与行内代码"><a rel="nofollow" class="trm-toc-link" href="#3-强调与行内代码"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">3. 强调与行内代码</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="强调"><a rel="nofollow" class="trm-toc-link" href="#强调"><span class="trm-toc-number">1.4.1.</span> <span class="trm-toc-text">强调</span></a></li><li class="trm-toc-item trm-toc-level-3" title="为什么推荐用星号"><a rel="nofollow" class="trm-toc-link" href="#为什么推荐用星号"><span class="trm-toc-number">1.4.2.</span> <span class="trm-toc-text">为什么推荐用星号</span></a></li><li class="trm-toc-item trm-toc-level-3" title="行内代码"><a rel="nofollow" class="trm-toc-link" href="#行内代码"><span class="trm-toc-number">1.4.3.</span> <span class="trm-toc-text">行内代码</span></a></li><li class="trm-toc-item trm-toc-level-3" title="强调符号的边界规则"><a rel="nofollow" class="trm-toc-link" href="#强调符号的边界规则"><span class="trm-toc-number">1.4.4.</span> <span class="trm-toc-text">强调符号的边界规则</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="4. 列表与嵌套"><a rel="nofollow" class="trm-toc-link" href="#4-列表与嵌套"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">4. 列表与嵌套</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="无序列表"><a rel="nofollow" class="trm-toc-link" href="#无序列表"><span class="trm-toc-number">1.5.1.</span> <span class="trm-toc-text">无序列表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="有序列表"><a rel="nofollow" class="trm-toc-link" href="#有序列表"><span class="trm-toc-number">1.5.2.</span> <span class="trm-toc-text">有序列表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="嵌套列表"><a rel="nofollow" class="trm-toc-link" href="#嵌套列表"><span class="trm-toc-number">1.5.3.</span> <span class="trm-toc-text">嵌套列表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="列表里放代码块或段落"><a rel="nofollow" class="trm-toc-link" href="#列表里放代码块或段落"><span class="trm-toc-number">1.5.4.</span> <span class="trm-toc-text">列表里放代码块或段落</span></a></li><li class="trm-toc-item trm-toc-level-3" title="参考式链接"><a rel="nofollow" class="trm-toc-link" href="#参考式链接"><span class="trm-toc-number">1.5.5.</span> <span class="trm-toc-text">参考式链接</span></a></li><li class="trm-toc-item trm-toc-level-3" title="图片作为链接"><a rel="nofollow" class="trm-toc-link" href="#图片作为链接"><span class="trm-toc-number">1.5.6.</span> <span class="trm-toc-text">图片作为链接</span></a></li><li class="trm-toc-item trm-toc-level-3" title="图片路径的三种写法"><a rel="nofollow" class="trm-toc-link" href="#图片路径的三种写法"><span class="trm-toc-number">1.5.7.</span> <span class="trm-toc-text">图片路径的三种写法</span></a></li><li class="trm-toc-item trm-toc-level-3" title="自动链接"><a rel="nofollow" class="trm-toc-link" href="#自动链接"><span class="trm-toc-number">1.5.8.</span> <span class="trm-toc-text">自动链接</span></a></li><li class="trm-toc-item trm-toc-level-3" title="图片的可访问性"><a rel="nofollow" class="trm-toc-link" href="#图片的可访问性"><span class="trm-toc-number">1.5.9.</span> <span class="trm-toc-text">图片的可访问性</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="6. 引用、分隔线与转义"><a rel="nofollow" class="trm-toc-link" href="#6-引用、分隔线与转义"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">6. 引用、分隔线与转义</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="引用"><a rel="nofollow" class="trm-toc-link" href="#引用"><span class="trm-toc-number">1.6.1.</span> <span class="trm-toc-text">引用</span></a></li><li class="trm-toc-item trm-toc-level-3" title="嵌套引用"><a rel="nofollow" class="trm-toc-link" href="#嵌套引用"><span class="trm-toc-number">1.6.2.</span> <span class="trm-toc-text">嵌套引用</span></a></li><li class="trm-toc-item trm-toc-level-3" title="分隔线"><a rel="nofollow" class="trm-toc-link" href="#分隔线"><span class="trm-toc-number">1.6.3.</span> <span class="trm-toc-text">分隔线</span></a></li><li class="trm-toc-item trm-toc-level-3" title="转义"><a rel="nofollow" class="trm-toc-link" href="#转义"><span class="trm-toc-number">1.6.4.</span> <span class="trm-toc-text">转义</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="7. 代码块与语法高亮"><a rel="nofollow" class="trm-toc-link" href="#7-代码块与语法高亮"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">7. 代码块与语法高亮</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="围栏代码块（推荐）"><a rel="nofollow" class="trm-toc-link" href="#围栏代码块（推荐）"><span class="trm-toc-number">1.7.1.</span> <span class="trm-toc-text">围栏代码块（推荐）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="常用语言标识"><a rel="nofollow" class="trm-toc-link" href="#常用语言标识"><span class="trm-toc-number">1.7.2.</span> <span class="trm-toc-text">常用语言标识</span></a></li><li class="trm-toc-item trm-toc-level-3" title="diff 高亮"><a rel="nofollow" class="trm-toc-link" href="#diff-高亮"><span class="trm-toc-number">1.7.3.</span> <span class="trm-toc-text">diff 高亮</span></a></li><li class="trm-toc-item trm-toc-level-3" title="代码块里包含反引号怎么办"><a rel="nofollow" class="trm-toc-link" href="#代码块里包含反引号怎么办"><span class="trm-toc-number">1.7.4.</span> <span class="trm-toc-text">代码块里包含反引号怎么办</span></a></li><li class="trm-toc-item trm-toc-level-3" title="缩进式代码块（不推荐）"><a rel="nofollow" class="trm-toc-link" href="#缩进式代码块（不推荐）"><span class="trm-toc-number">1.7.5.</span> <span class="trm-toc-text">缩进式代码块（不推荐）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="行内代码 vs 代码块的选择"><a rel="nofollow" class="trm-toc-link" href="#行内代码-vs-代码块的选择"><span class="trm-toc-number">1.7.6.</span> <span class="trm-toc-text">行内代码 vs 代码块的选择</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="8. 表格"><a rel="nofollow" class="trm-toc-link" href="#8-表格"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">8. 表格</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="对齐控制"><a rel="nofollow" class="trm-toc-link" href="#对齐控制"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">对齐控制</span></a></li><li class="trm-toc-item trm-toc-level-3" title="表格的三个限制"><a rel="nofollow" class="trm-toc-link" href="#表格的三个限制"><span class="trm-toc-number">1.8.2.</span> <span class="trm-toc-text">表格的三个限制</span></a></li><li class="trm-toc-item trm-toc-level-3" title="表格与列表的选择"><a rel="nofollow" class="trm-toc-link" href="#表格与列表的选择"><span class="trm-toc-number">1.8.3.</span> <span class="trm-toc-text">表格与列表的选择</span></a></li><li class="trm-toc-item trm-toc-level-3" title="给表格加说明"><a rel="nofollow" class="trm-toc-link" href="#给表格加说明"><span class="trm-toc-number">1.8.4.</span> <span class="trm-toc-text">给表格加说明</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="9. 任务列表、脚注与其他扩展"><a rel="nofollow" class="trm-toc-link" href="#9-任务列表、脚注与其他扩展"><span class="trm-toc-number">1.9.</span> <span class="trm-toc-text">9. 任务列表、脚注与其他扩展</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="任务列表（GFM）"><a rel="nofollow" class="trm-toc-link" href="#任务列表（GFM）"><span class="trm-toc-number">1.9.1.</span> <span class="trm-toc-text">任务列表（GFM）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="脚注"><a rel="nofollow" class="trm-toc-link" href="#脚注"><span class="trm-toc-number">1.9.2.</span> <span class="trm-toc-text">脚注</span></a></li><li class="trm-toc-item trm-toc-level-3" title="定义列表"><a rel="nofollow" class="trm-toc-link" href="#定义列表"><span class="trm-toc-number">1.9.3.</span> <span class="trm-toc-text">定义列表</span></a></li><li class="trm-toc-item trm-toc-level-3" title="折叠内容"><a rel="nofollow" class="trm-toc-link" href="#折叠内容"><span class="trm-toc-number">1.9.4.</span> <span class="trm-toc-text">折叠内容</span></a></li><li class="trm-toc-item trm-toc-level-3" title="目录"><a rel="nofollow" class="trm-toc-link" href="#目录-1"><span class="trm-toc-number">1.9.5.</span> <span class="trm-toc-text">目录</span></a></li><li class="trm-toc-item trm-toc-level-3" title="锚点命名规则"><a rel="nofollow" class="trm-toc-link" href="#锚点命名规则"><span class="trm-toc-number">1.9.6.</span> <span class="trm-toc-text">锚点命名规则</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="10. 写作规范建议"><a rel="nofollow" class="trm-toc-link" href="#10-写作规范建议"><span class="trm-toc-number">1.10.</span> <span class="trm-toc-text">10. 写作规范建议</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="结构层面"><a rel="nofollow" class="trm-toc-link" href="#结构层面"><span class="trm-toc-number">1.10.1.</span> <span class="trm-toc-text">结构层面</span></a></li><li class="trm-toc-item trm-toc-level-3" title="句子与用词"><a rel="nofollow" class="trm-toc-link" href="#句子与用词"><span class="trm-toc-number">1.10.2.</span> <span class="trm-toc-text">句子与用词</span></a></li><li class="trm-toc-item trm-toc-level-3" title="代码示例的规范"><a rel="nofollow" class="trm-toc-link" href="#代码示例的规范"><span class="trm-toc-number">1.10.3.</span> <span class="trm-toc-text">代码示例的规范</span></a></li><li class="trm-toc-item trm-toc-level-3" title="加粗的使用"><a rel="nofollow" class="trm-toc-link" href="#加粗的使用"><span class="trm-toc-number">1.10.4.</span> <span class="trm-toc-text">加粗的使用</span></a></li><li class="trm-toc-item trm-toc-level-3" title="行长度"><a rel="nofollow" class="trm-toc-link" href="#行长度"><span class="trm-toc-number">1.10.5.</span> <span class="trm-toc-text">行长度</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="11. 工具链"><a rel="nofollow" class="trm-toc-link" href="#11-工具链"><span class="trm-toc-number">1.11.</span> <span class="trm-toc-text">11. 工具链</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="编辑器"><a rel="nofollow" class="trm-toc-link" href="#编辑器"><span class="trm-toc-number">1.11.1.</span> <span class="trm-toc-text">编辑器</span></a></li><li class="trm-toc-item trm-toc-level-3" title="VS Code 的实用扩展与设置"><a rel="nofollow" class="trm-toc-link" href="#VS-Code-的实用扩展与设置"><span class="trm-toc-number">1.11.2.</span> <span class="trm-toc-text">VS Code 的实用扩展与设置</span></a></li><li class="trm-toc-item trm-toc-level-3" title="预览与转换"><a rel="nofollow" class="trm-toc-link" href="#预览与转换"><span class="trm-toc-number">1.11.3.</span> <span class="trm-toc-text">预览与转换</span></a></li><li class="trm-toc-item trm-toc-level-3" title="检查与格式化"><a rel="nofollow" class="trm-toc-link" href="#检查与格式化"><span class="trm-toc-number">1.11.4.</span> <span class="trm-toc-text">检查与格式化</span></a></li><li class="trm-toc-item trm-toc-level-3" title="静态站点生成器"><a rel="nofollow" class="trm-toc-link" href="#静态站点生成器"><span class="trm-toc-number">1.11.5.</span> <span class="trm-toc-text">静态站点生成器</span></a></li><li class="trm-toc-item trm-toc-level-3" title="写中文文档的两个细节"><a rel="nofollow" class="trm-toc-link" href="#写中文文档的两个细节"><span class="trm-toc-number">1.11.6.</span> <span class="trm-toc-text">写中文文档的两个细节</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="12. 常见问题 FAQ"><a rel="nofollow" class="trm-toc-link" href="#12-常见问题-FAQ"><span class="trm-toc-number">1.12.</span> <span class="trm-toc-text">12. 常见问题 FAQ</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# pagination and in-site search index: no need to index (avoid duplicate content)
+Disallow: /page/
+Disallow: /archives/page/
+Disallow: /search.xml
+
+Sitemap: https://blog.tdcqcx.cn/sitemap.xml

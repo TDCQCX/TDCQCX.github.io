@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/pyviz/00-overview/">
+<meta name="description" content="本教程根据你的本科课程大纲（数据分析概念 → 数据集获取与存储 → NumPy → Pandas →数据预处理 → Matplotlib → 机器学习与数据挖掘 → 项目实践）重写并大幅扩充，面向完全零基础的读者，所有代码都已在你本机的 pyviz 环境中实际运行验证。   0. 你应该从哪里开始第一步：确认环境已就绪（如果你的电脑已经装好，跳过到”第二步”）。打开 Anaconda Promp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 数据分析与可视化 · 零基础完整学习教程">
+<meta property="og:url" content="https://blog.tdcqcx.cn/pyviz/00-overview/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="本教程根据你的本科课程大纲（数据分析概念 → 数据集获取与存储 → NumPy → Pandas →数据预处理 → Matplotlib → 机器学习与数据挖掘 → 项目实践）重写并大幅扩充，面向完全零基础的读者，所有代码都已在你本机的 pyviz 环境中实际运行验证。   0. 你应该从哪里开始第一步：确认环境已就绪（如果你的电脑已经装好，跳过到”第二步”）。打开 Anaconda Promp">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="数据分析与可视化">
+<meta property="article:tag" content="教程总览">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Python 数据分析, 数据可视化, Python 数据分析与可视化 · 零基础完整学习教程, Pandas, NumPy, Matplotlib, 教程">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"Python 数据分析与可视化 · 零基础完整学习教程","datePublished":"2026-09-26T02:00:00.000Z","dateModified":"2026-09-26T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/pyviz/00-overview/","image":"https://blog.tdcqcx.cn/post-covers/pyviz.jpg"}
+</script>
+
+
+<title >Python 数据分析与可视化 · 零基础完整学习教程</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-26 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/pyviz.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/pyviz.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            Python 数据分析与可视化 · 零基础完整学习教程
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            Python 数据分析与可视化 · 零基础完整学习教程
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        pyviz
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/26
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <blockquote>
+<p>本教程根据你的本科课程大纲（数据分析概念 → 数据集获取与存储 → NumPy → Pandas →<br>数据预处理 → Matplotlib → 机器学习与数据挖掘 → 项目实践）重写并大幅扩充，<br>面向<strong>完全零基础</strong>的读者，所有代码都已在你本机的 <code>pyviz</code> 环境中实际运行验证。</p>
+</blockquote>
+<hr>
+<h2 id="0-你应该从哪里开始"><a href="#0-你应该从哪里开始" class="headerlink" title="0. 你应该从哪里开始"></a>0. 你应该从哪里开始</h2><p><strong>第一步</strong>：确认环境已就绪（如果你的电脑已经装好，跳过到”第二步”）。<br>打开 Anaconda Prompt，执行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate pyviz</span><br><span class="line">python <span class="literal">-c</span> <span class="string">&quot;import pandas, matplotlib, seaborn, sklearn; print(&#x27;环境正常&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果输出 <code>环境正常</code>，说明环境没问题，直接看第二步。</p>
+<p><strong>第二步</strong>：按顺序读。<strong>不要跳章</strong>。第 3、4 章是整门课的地基，<br>第 5、6 章是你未来 80% 时间会反复用的内容，第 7~9 章是加分项。</p>
+<p><strong>第三步</strong>：每章的代码<strong>一定自己敲一遍</strong>，不要复制粘贴。<br>数据分析是手艺，看会 ≠ 会。每章末尾有练习题和参考答案，先自己做再看答案。</p>
+<hr>
+<h2 id="1-完整学习路径"><a href="#1-完整学习路径" class="headerlink" title="1. 完整学习路径"></a>1. 完整学习路径</h2><h3 id="1-1-路线图"><a href="#1-1-路线图" class="headerlink" title="1.1 路线图"></a>1.1 路线图</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">                      ┌─────────────────────────────────────┐</span><br><span class="line"> 第 0 阶段              │  00 学习路径总览（本章）             │</span><br><span class="line"> 准备期（1~2 天）       │  ├─ 环境搭建：conda + Jupyter        │</span><br><span class="line">                      │  └─ 数据准备：data/ 目录下 12 个数据集 │</span><br><span class="line">                      └────────────────┬────────────────────┘</span><br><span class="line">                                       │</span><br><span class="line">                      ┌────────────────▼────────────────────┐</span><br><span class="line"> 第 1 阶段              │  01 数据分析概念                     │</span><br><span class="line"> 建立认知（1 天）       │  数据→信息→知识、分析流程、方法体系、  │</span><br><span class="line">                      │  工具库全景图、数据思维               │</span><br><span class="line">                      └────────────────┬────────────────────┘</span><br><span class="line">                                       │</span><br><span class="line">                      ┌────────────────▼────────────────────┐</span><br><span class="line"> 第 2 阶段              │  02 数据获取与存储                   │</span><br><span class="line"> 学会拿数据（2 天）     │  CSV/Excel/JSON → SQL 数据库 →      │</span><br><span class="line">                      │  网页抓取 → API → 格式选型           │</span><br><span class="line">                      └────────────────┬────────────────────┘</span><br><span class="line">                                       │</span><br><span class="line">            ┌──────────────────────────┴──────────────────────────┐</span><br><span class="line">            │                                                     │</span><br><span class="line"> ┌──────────▼─────────────┐                    ┌──────────────────▼──────────┐</span><br><span class="line"> │ 03 NumPy 数组与矩阵     │                    │  （可先跳过，回头再学）        │</span><br><span class="line"> │ 3 天：ndarray、索引、   │                    │                              │</span><br><span class="line"> │ 广播、矩阵运算、随机数  │                    │                              │</span><br><span class="line"> └──────────┬─────────────┘                    └──────────────────────────────┘</span><br><span class="line">            │</span><br><span class="line"> ┌──────────▼─────────────┐</span><br><span class="line"> │ 04 Pandas 数据分析 ★★★  │  ← 全课程最重要的一章，占你未来 50% 工作量</span><br><span class="line"> │ 5 天：Series/DataFrame、│</span><br><span class="line"> │ 索引、筛选、分组聚合、  │</span><br><span class="line"> │ 合并、透视、时间序列    │</span><br><span class="line"> └──────────┬─────────────┘</span><br><span class="line">            │</span><br><span class="line"> ┌──────────▼─────────────┐</span><br><span class="line"> │ 05 数据预处理 ★★★       │  ← 真实工作 60% 时间在做这件事</span><br><span class="line"> │ 3 天：缺失值、异常值、  │</span><br><span class="line"> │ 类型转换、标准化、      │</span><br><span class="line"> │ 离散化、特征工程        │</span><br><span class="line"> └──────────┬─────────────┘</span><br><span class="line">            │</span><br><span class="line">            ├───────────────────────────────┐</span><br><span class="line">            │                               │</span><br><span class="line"> ┌──────────▼─────────────┐    ┌────────────▼────────────────┐</span><br><span class="line"> │ 06 Matplotlib 可视化 ★★★│    │ 07 Seaborn 与 Plotly 进阶   │</span><br><span class="line"> │ 3 天：绘图流程、11 类   │    │ 2 天：统计图、分面、热力图、 │</span><br><span class="line"> │ 图表、样式、子图、中文  │    │ 回归图、交互图、动态图       │</span><br><span class="line"> └──────────┬─────────────┘    └────────────┬────────────────┘</span><br><span class="line">            │                               │</span><br><span class="line">            └───────────────┬───────────────┘</span><br><span class="line">                            │</span><br><span class="line">               ┌────────────▼────────────────┐</span><br><span class="line">第 3 阶段        │ 08 机器学习与数据挖掘        │</span><br><span class="line">能力升级（8 天）  │ 8 天：sklearn 全流程、特征工程、│</span><br><span class="line">               │ 回归、分类、聚类、关联规则、  │</span><br><span class="line">               │ 降维、时间序列、调参、评估    │</span><br><span class="line">               └────────────┬────────────────┘</span><br><span class="line">                            │</span><br><span class="line">               ┌────────────▼────────────────┐</span><br><span class="line">第 4 阶段        │ 09 项目实战                  │</span><br><span class="line">综合运用（5 天）  │ 两个端到端项目 + 分析报告写法 │</span><br><span class="line">               └────────────┬────────────────┘</span><br><span class="line">                            │</span><br><span class="line">               ┌────────────▼────────────────┐</span><br><span class="line">随时查阅         │ 附录：速查表 / 报错手册 / 术语表│</span><br><span class="line">               └─────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-2-章节清单与预计时间"><a href="#1-2-章节清单与预计时间" class="headerlink" title="1.2 章节清单与预计时间"></a>1.2 章节清单与预计时间</h3><table>
+<thead>
+<tr>
+<th>章节</th>
+<th>文件</th>
+<th>难度</th>
+<th>预计时间</th>
+<th>学完你能做什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td><code>00_学习路径总览.md</code></td>
+<td>⭐</td>
+<td>0.5 h</td>
+<td>把环境和数据集准备好，知道整条路线怎么走</td>
+</tr>
+<tr>
+<td>1</td>
+<td><code>01_数据分析概念.md</code></td>
+<td>⭐</td>
+<td>3 h</td>
+<td>说清数据分析是什么、有哪些方法、用什么工具</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>02_数据获取与存储.md</code></td>
+<td>⭐⭐</td>
+<td>5 h</td>
+<td>从 CSV&#x2F;Excel&#x2F;数据库&#x2F;网页&#x2F;API 把数据拿到手</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>03_NumPy数组与矩阵.md</code></td>
+<td>⭐⭐</td>
+<td>8 h</td>
+<td>用数组做数值计算，理解向量化为什么比 for 快 100 倍</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>04_Pandas数据分析.md</code></td>
+<td>⭐⭐⭐</td>
+<td>15 h</td>
+<td>清洗、筛选、分组、聚合、合并、透视任意表格数据</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>05_数据预处理.md</code></td>
+<td>⭐⭐⭐</td>
+<td>8 h</td>
+<td>把脏数据变成能建模的数据</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>06_Matplotlib可视化.md</code></td>
+<td>⭐⭐⭐</td>
+<td>9 h</td>
+<td>画出规范、好看、能放进报告的中文图表</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>07_Seaborn与Plotly.md</code></td>
+<td>⭐⭐</td>
+<td>6 h</td>
+<td>一行画出统计图，做可交互的动态图表</td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>08_机器学习与数据挖掘.md</code></td>
+<td>⭐⭐⭐</td>
+<td>24 h</td>
+<td>用 sklearn 完成回归&#x2F;分类&#x2F;聚类&#x2F;关联规则&#x2F;PCA&#x2F;时间序列全流程</td>
+</tr>
+<tr>
+<td>9</td>
+<td><code>09_项目实战.md</code></td>
+<td>⭐⭐⭐</td>
+<td>15 h</td>
+<td>独立完成一个数据分析项目并写成报告</td>
+</tr>
+<tr>
+<td>附</td>
+<td><code>appendix/</code></td>
+<td>—</td>
+<td>随时查</td>
+<td>速查、报错排查、术语对照</td>
+</tr>
+</tbody></table>
+<p><strong>总计约 95 小时</strong>。按每天 2 小时算，大约 7 周。赶时间的话，<br>优先顺序是：<strong>4 → 6 → 5 → 3 → 2 → 7 → 8 → 9</strong>。</p>
+<h3 id="1-3-三条学习路径（按你的目标选）"><a href="#1-3-三条学习路径（按你的目标选）" class="headerlink" title="1.3 三条学习路径（按你的目标选）"></a>1.3 三条学习路径（按你的目标选）</h3><p><strong>路径 A：应付课程作业 &#x2F; 考试</strong><br><code>01 → 02 → 03 → 04 → 05 → 06</code>，每章的”练习”和”小结”必看，<br>机器学习章节只读 08 章的概念部分。</p>
+<p><strong>路径 B：做数据分析岗 &#x2F; 实习</strong><br>全读。重点砸在 04、05、06，08 章至少把回归和分类跑通一遍，<br>09 章项目要真正自己重做一遍（不看答案）。</p>
+<p><strong>路径 C：做科研 &#x2F; 毕设数据处理</strong><br><code>02 → 03 → 04 → 05 → 06 → 07</code>，然后跳到 08 章的”回归”和”聚类”两节，<br>时间序列那一节也建议看（很多实验数据是时间序列）。</p>
+<hr>
+<h2 id="2-环境搭建（详细版，零基础照做即可）"><a href="#2-环境搭建（详细版，零基础照做即可）" class="headerlink" title="2. 环境搭建（详细版，零基础照做即可）"></a>2. 环境搭建（详细版，零基础照做即可）</h2><h3 id="2-1-已经帮你做好的部分"><a href="#2-1-已经帮你做好的部分" class="headerlink" title="2.1 已经帮你做好的部分"></a>2.1 已经帮你做好的部分</h3><p>我在这台电脑上已经创建好了独立环境 <code>pyviz</code>：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>环境名</td>
+<td><code>pyviz</code></td>
+</tr>
+<tr>
+<td>位置</td>
+<td><code>D:\conda\miniconda3\envs\pyviz</code></td>
+</tr>
+<tr>
+<td>Python</td>
+<td>3.11.16</td>
+</tr>
+<tr>
+<td>已装库</td>
+<td>numpy 2.4.6、pandas 3.0.6、matplotlib 3.11.2、seaborn 0.13.2、scikit-learn 1.9.1、statsmodels、plotly、polars、mlxtend、jupyterlab 等</td>
+</tr>
+</tbody></table>
+<p><strong>为什么单独建一个环境？</strong> 你机器上还有 <code>yolov8</code>、<code>lenet</code> 两个用于深度学习的环境。<br>如果把数据科学的库直接装进它们，可能升级掉某个库、导致你原来的视觉项目跑不起来。<br>conda 环境就是”每个项目一个独立工具箱”，互相不干扰。</p>
+<p><strong>为什么不用 <code>D:\python\python.exe</code>？</strong> 那个是系统级 Python 3.12，装了 numpy，<br>但数据分析需要 matplotlib、pandas、scikit-learn 等十几个包，装到全局解释器里<br>以后很难清理。学习阶段一律用 conda 环境。</p>
+<h3 id="2-2-验证环境"><a href="#2-2-验证环境" class="headerlink" title="2.2 验证环境"></a>2.2 验证环境</h3><p>打开 <strong>Anaconda Prompt</strong>（开始菜单里搜 Anaconda），依次输入：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">conda activate pyviz</span><br><span class="line">python <span class="literal">-c</span> <span class="string">&quot;import sys, numpy, pandas, matplotlib, seaborn, sklearn; print(sys.version); print(&#x27;numpy&#x27;, numpy.__version__); print(&#x27;pandas&#x27;, pandas.__version__); print(&#x27;matplotlib&#x27;, matplotlib.__version__); print(&#x27;sklearn&#x27;, sklearn.__version__)&quot;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>输出：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">3.11.16 (main, ...) [MSC v.1938 64 bit (AMD64)]</span><br><span class="line">numpy 2.4.6</span><br><span class="line">pandas 3.0.6</span><br><span class="line">matplotlib 3.11.2</span><br><span class="line">sklearn 1.9.1</span><br></pre></td></tr></table></figure></blockquote>
+<p>看到这些版本号就说明环境完全正常。</p>
+<blockquote>
+<p>⚠️ <strong>常见报错</strong>：<code>&#39;conda&#39; 不是内部或外部命令</code><br><strong>原因</strong>：用的是普通 cmd 或 PowerShell，没有加载 conda。<br><strong>解决</strong>：改用 Anaconda Prompt；或者在 PowerShell 里先执行<br><code>&amp; D:\conda\miniconda3\shell\condabin\conda-hook.ps1</code>。</p>
+</blockquote>
+<h3 id="2-3-启动-Jupyter-并进入工作目录"><a href="#2-3-启动-Jupyter-并进入工作目录" class="headerlink" title="2.3 启动 Jupyter 并进入工作目录"></a>2.3 启动 Jupyter 并进入工作目录</h3><p>所有示例代码都假设你的工作目录是教程的 <code>code</code> 文件夹，因此：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda activate pyviz</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;&lt;教程目录&gt;\code&quot;</span></span><br><span class="line">jupyter lab</span><br></pre></td></tr></table></figure>
+
+<p>浏览器会自动打开 JupyterLab。第一次用的话：</p>
+<ol>
+<li>左侧文件列表里点 <strong>＋</strong> 或者 <code>File → New → Notebook</code>；</li>
+<li>选内核时选 <strong>Python 3 (ipykernel)</strong>；</li>
+<li>把文件名改成 <code>ch01_练习.ipynb</code> 之类；</li>
+<li>在单元格里敲代码，按 <strong>Shift + Enter</strong> 运行。</li>
+</ol>
+<blockquote>
+<p>📌 <strong>为什么要在 code 目录启动？</strong><br>因为教程里读数据统一写 <code>../data/sales_clean.csv</code>。<br><code>..</code> 表示”上一级目录”，从 <code>code</code> 上一级就是教程根目录，里面才有 <code>data</code> 文件夹。<br>如果你从别的地方启动 Jupyter，这句会报<br><code>FileNotFoundError: [Errno 2] No such file or directory: &#39;../data/sales_clean.csv&#39;</code>。</p>
+</blockquote>
+<h3 id="2-4-⚠️-conda-activate-报-CommandNotFoundError-怎么办（必读）"><a href="#2-4-⚠️-conda-activate-报-CommandNotFoundError-怎么办（必读）" class="headerlink" title="2.4 ⚠️ conda activate 报 CommandNotFoundError 怎么办（必读）"></a>2.4 ⚠️ <code>conda activate</code> 报 CommandNotFoundError 怎么办（必读）</h3><p><strong>症状</strong>：在普通 <code>cmd</code> 里敲 <code>conda activate pyviz</code>，出现：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">CommandNotFoundError: Your shell has not been properly configured to use &#x27;conda activate&#x27;.</span><br><span class="line">If using &#x27;conda activate&#x27; from a batch script, change your invocation to &#x27;CALL conda.bat activate&#x27;.</span><br><span class="line"></span><br><span class="line">To initialize your shell, run</span><br><span class="line">    $ conda init &lt;SHELL_NAME&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>原因</strong>：<strong>不是你的环境坏了</strong>，而是”这个终端窗口没有加载 conda 的初始化脚本”。<br><code>conda activate</code> 是一个<strong>由 conda 注入到 shell 里的函数</strong>，<br>不是独立的可执行程序。没初始化过的 cmd 里根本没有这个函数，所以报”找不到命令”。</p>
+<p><strong>为什么用 Anaconda Prompt 就没问题？</strong> 因为那个快捷方式在启动时会<br>自动做一次”初始化 + 激活 base”。</p>
+<p><strong>推荐：双击桌面的 <code>启动pyviz学习环境.bat</code>（已为你创建）</strong></p>
+<p>我在你桌面上建了一个启动器，双击它就会：</p>
+<ol>
+<li>自动激活 <code>pyviz</code> 环境；</li>
+<li>自动切到 <code>code</code> 目录；</li>
+<li>打印当前 Python 路径和工作目录；</li>
+<li>停留在一个已就绪的 cmd 窗口里。</li>
+</ol>
+<blockquote>
+<p>💡 <strong>这个 bat 里有个细节值得说明</strong>：教程目录名含中文<br>（<code>Python数据分析与可视化教程</code>），而 <code>.bat</code> 文件在某些控制台代码页下<br>会把中文路径读错。所以启动器里用的是 <strong>8.3 短路径</strong><br><code>&lt;教程目录&gt;\code</code>（纯 ASCII），<br>并且<strong>所有 <code>rem</code> 注释行都写成英文</strong>——避免文件编码导致的乱码。</p>
+</blockquote>
+<p><strong>方案 2：用 Anaconda Prompt（最标准）</strong></p>
+<p>开始菜单搜索 <code>Anaconda Prompt</code> 或 <code>Anaconda Powershell Prompt</code>，打开后直接：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda activate pyviz</span><br></pre></td></tr></table></figure>
+
+<p><strong>方案 3：在当前 cmd 里手动激活（不改任何配置）</strong></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">call</span> D:\conda\miniconda3\Scripts\activate.bat pyviz</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 注意是 <code>call ... activate.bat 环境名</code>，<strong>不用写 <code>conda activate</code></strong>。<br>也可以写成 <code>call D:\conda\miniconda3\condabin\conda.bat activate pyviz</code>，两种都实测可用。</p>
+</blockquote>
+<p><strong>方案 4：一劳永逸（会改注册表）</strong></p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conda init <span class="built_in">cmd</span>.exe</span><br></pre></td></tr></table></figure>
+
+<p>然后<strong>关闭当前窗口、重新打开</strong>一个新 cmd，之后 <code>conda activate pyviz</code> 就能直接用了。</p>
+<blockquote>
+<p>⚠️ 这一步会写入<br><code>HKEY_CURRENT_USER\Software\Microsoft\Command Processor\AutoRun</code>，<br>让<strong>每个新开的 cmd 窗口</strong>都自动加载 conda。如果你不想改注册表，用方案 1~3。</p>
+</blockquote>
+<p><strong>不管用哪个方案，激活成功的唯一判据是这一条</strong>：</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import sys; <span class="built_in">print</span>(sys.executable)&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>输出必须是</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">D:\conda\miniconda3\envs\pyviz\python.exe</span><br></pre></td></tr></table></figure>
+
+<p>如果输出是 <code>D:\python\python.exe</code> 或 <code>C:\...\Python313\...</code>，<br>说明<strong>还在用系统 Python，环境没激活成功</strong>。</p>
+<blockquote>
+<p>📌 <strong>为什么这一点极其重要？</strong><br>你的机器上有 4 个 Python：<code>D:\python\python.exe</code>(3.12)、<br><code>C:\...\Python313</code>(3.13)、conda base(3.8)、以及我们的 <code>pyviz</code>(3.11)。<br><strong>只有 <code>pyviz</code> 里装了 pandas 3.0.6 等全套库</strong>。<br>用错解释器最常见的症状就是：<br><code>ModuleNotFoundError: No module named &#39;pandas&#39;</code><br>——<strong>报这个错，先怀疑环境没激活，而不是去 pip install。</strong></p>
+</blockquote>
+<h3 id="2-5-Jupyter-必须会用的-8-个操作"><a href="#2-5-Jupyter-必须会用的-8-个操作" class="headerlink" title="2.5 Jupyter 必须会用的 8 个操作"></a>2.5 Jupyter 必须会用的 8 个操作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>快捷键</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>运行当前单元格</td>
+<td><code>Shift + Enter</code></td>
+<td>最常用，运行完自动跳到下一格</td>
+</tr>
+<tr>
+<td>运行当前单元格（不跳）</td>
+<td><code>Ctrl + Enter</code></td>
+<td>反复调同一段代码时用</td>
+</tr>
+<tr>
+<td>新增单元格（下方）</td>
+<td><code>B</code>（命令模式）</td>
+<td>先按 <code>Esc</code> 进命令模式</td>
+</tr>
+<tr>
+<td>删除单元格</td>
+<td><code>D D</code>（命令模式）</td>
+<td>连按两次 D</td>
+</tr>
+<tr>
+<td>切换代码&#x2F;文字</td>
+<td><code>Y</code> &#x2F; <code>M</code>（命令模式）</td>
+<td>Y&#x3D;代码，M&#x3D;Markdown 写笔记</td>
+</tr>
+<tr>
+<td>补全代码</td>
+<td><code>Tab</code></td>
+<td>输入 <code>df.gr</code> 按 Tab 会补全 <code>groupby</code></td>
+</tr>
+<tr>
+<td>看函数说明</td>
+<td><code>Shift + Tab</code></td>
+<td>光标放在函数名上，弹出参数文档</td>
+</tr>
+<tr>
+<td>重启内核</td>
+<td>菜单 <code>Kernel → Restart</code></td>
+<td>变量乱了、报错诡异时的万能解法</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>💡 <strong>新手最容易踩的坑</strong>：改了上面的单元格但没重新运行，<br>下面的代码用的是旧变量，结果数据对不上。<br>遇到”结果莫名其妙”就 <code>Kernel → Restart Kernel and Run All Cells</code>。</p>
+</blockquote>
+<h3 id="2-6-如果你要在别人电脑上重建这个环境"><a href="#2-6-如果你要在别人电脑上重建这个环境" class="headerlink" title="2.6 如果你要在别人电脑上重建这个环境"></a>2.6 如果你要在别人电脑上重建这个环境</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda create <span class="literal">-n</span> pyviz python=<span class="number">3.11</span> <span class="literal">-y</span></span><br><span class="line">conda activate pyviz</span><br><span class="line">pip install <span class="literal">-i</span> https://pypi.tuna.tsinghua.edu.cn/simple numpy pandas matplotlib seaborn scikit<span class="literal">-learn</span> statsmodels plotly polars mlxtend jupyterlab notebook openpyxl pyarrow missingno requests beautifulsoup4 lxml</span><br></pre></td></tr></table></figure>
+
+<p><code>-i https://pypi.tuna.tsinghua.edu.cn/simple</code> 是清华镜像，<br>不加的话从国外源下载会非常慢甚至超时。</p>
+<hr>
+<h2 id="3-配套数据集说明"><a href="#3-配套数据集说明" class="headerlink" title="3. 配套数据集说明"></a>3. 配套数据集说明</h2><p>所有数据都在 <code>data</code> 目录下，由 <code>code/gen_data.py</code> 用<strong>固定随机种子</strong>生成，<br>你随时可以重新跑一遍得到完全相同的数据：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda activate pyviz</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;&lt;教程目录&gt;\code&quot;</span></span><br><span class="line">python gen_data.py</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-1-数据集总览"><a href="#3-1-数据集总览" class="headerlink" title="3.1 数据集总览"></a>3.1 数据集总览</h3><p>所有数据都在 <code>data</code> 目录下。<strong>前 8 个由 <code>code/gen_data.py</code> 用固定随机种子生成</strong>，<br>你随时可以重新跑一遍得到完全相同的数据；后 3 个是公开数据集，已下载到本地<br>（避免联网失败）。</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>规模</th>
+<th>用于哪几章</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sales.csv</code></td>
+<td>1230 行 × 14 列</td>
+<td>第 5 章、项目一</td>
+<td><strong>故意做脏</strong>：8 类问题，见 3.3</td>
+</tr>
+<tr>
+<td><code>sales_clean.csv</code></td>
+<td>1064 行 × 14 列</td>
+<td>第 3、4 章</td>
+<td>已清洗，可直接练查询和分组</td>
+</tr>
+<tr>
+<td><code>students.csv</code></td>
+<td>300 行 × 12 列</td>
+<td>第 3、6、8 章</td>
+<td>成绩数据，含缺失和异常值，适合回归</td>
+</tr>
+<tr>
+<td><code>timeseries.csv</code></td>
+<td>1096 行 × 4 列</td>
+<td>第 4、6、8 章</td>
+<td>三年逐日数据，有趋势+年周期+周周期</td>
+</tr>
+<tr>
+<td><code>mall_members.csv</code></td>
+<td>500 行 × 7 列</td>
+<td>第 8 章</td>
+<td>会员消费数据，适合 K-Means 分群</td>
+</tr>
+<tr>
+<td><code>shopping_intent.csv</code></td>
+<td>800 行 × 6 列</td>
+<td>第 8 章、项目二</td>
+<td>购买意愿预测，<strong>正例率 23.88%</strong></td>
+</tr>
+<tr>
+<td><code>销售与会员.xlsx</code></td>
+<td>3 个工作表</td>
+<td>第 2 章</td>
+<td>Excel 多表读取，含”表头不在第一行”的坑</td>
+</tr>
+<tr>
+<td><code>company.db</code></td>
+<td>SQLite 3 张表</td>
+<td>第 2 章</td>
+<td>SQL 查询练习（<code>sales</code>&#x2F;<code>members</code>&#x2F;<code>products</code>）</td>
+</tr>
+<tr>
+<td><code>california_housing.csv</code></td>
+<td>20640 行 × 10 列</td>
+<td>第 8 章</td>
+<td>加州房价，经典回归数据集</td>
+</tr>
+<tr>
+<td><code>titanic.csv</code></td>
+<td>891 行 × 12 列</td>
+<td>第 8 章</td>
+<td>泰坦尼克生存预测，经典分类数据集</td>
+</tr>
+<tr>
+<td><code>gapminder.csv</code></td>
+<td>1704 行 × 6 列</td>
+<td>第 7 章</td>
+<td>各国历年寿命&#x2F;收入，适合动态图</td>
+</tr>
+</tbody></table>
+<p><strong>第 02 章另外用到的格式文件</strong>（也由 <code>gen_data.py</code> 生成）：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>orders.json</code></td>
+<td>嵌套 JSON（含数组嵌套），练 <code>json_normalize</code> 摊平</td>
+</tr>
+<tr>
+<td><code>logs.jsonl</code></td>
+<td>JSON Lines，练分块&#x2F;流式读取</td>
+</tr>
+<tr>
+<td><code>sales.parquet</code></td>
+<td>列式存储，练类型保留与只读部分列</td>
+</tr>
+<tr>
+<td><code>sales_gbk.csv</code></td>
+<td>GBK 编码，练编码问题</td>
+</tr>
+<tr>
+<td><code>sales_noheader.csv</code></td>
+<td>无表头 + 分号分隔，练 <code>header</code>&#x2F;<code>sep</code>&#x2F;<code>names</code></td>
+</tr>
+<tr>
+<td><code>demo_page.html</code></td>
+<td>本地网页，练表格抓取（<strong>不依赖外网</strong>）</td>
+</tr>
+</tbody></table>
+<p><strong>第 08 章关联规则专用</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>文件</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>grocery_baskets.json</code></td>
+<td>800 笔超市购物篮，<strong>有真实关联模式</strong>，能挖出 lift&gt;1 的规则</td>
+</tr>
+<tr>
+<td><code>grocery_baskets.csv</code></td>
+<td>同样的数据，CSV 形式</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>为什么关联规则要单独造一份数据？</strong><br>因为用销售订单表做关联规则<strong>没有意义</strong>——每笔订单几乎都涉及全部 5 个品类，<br>算出来的提升度（lift）全部等于 1.0。<strong>真实的购物篮分析必须用”每笔只买少数几件”的数据。</strong><br>这个”坑”本身在第 8 章是一个教学点。</p>
+</blockquote>
+<h3 id="3-2-数据字典（列名含义）"><a href="#3-2-数据字典（列名含义）" class="headerlink" title="3.2 数据字典（列名含义）"></a>3.2 数据字典（列名含义）</h3><p>主数据集 <code>sales.csv</code> &#x2F; <code>sales_clean.csv</code> 共 14 列：</p>
+<table>
+<thead>
+<tr>
+<th>列名</th>
+<th>类型</th>
+<th>含义</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>订单编号</td>
+<td>字符串</td>
+<td>订单唯一标识</td>
+<td><code>SO20230300508</code></td>
+</tr>
+<tr>
+<td>订单日期</td>
+<td>日期</td>
+<td>下单日期</td>
+<td><code>2023-03-01</code></td>
+</tr>
+<tr>
+<td>省份区域</td>
+<td>字符串</td>
+<td>所属大区</td>
+<td>华北&#x2F;华东&#x2F;华南&#x2F;华中&#x2F;西南&#x2F;西北</td>
+</tr>
+<tr>
+<td>城市</td>
+<td>字符串</td>
+<td>下单城市</td>
+<td>北京、上海……</td>
+</tr>
+<tr>
+<td>商品类别</td>
+<td>字符串</td>
+<td>一级品类</td>
+<td>手机数码、家用电器……</td>
+</tr>
+<tr>
+<td>商品名称</td>
+<td>字符串</td>
+<td>具体商品</td>
+<td>智能手机、空气炸锅……</td>
+</tr>
+<tr>
+<td>单价</td>
+<td>浮点数</td>
+<td>商品单价（元）</td>
+<td><code>3313.80</code></td>
+</tr>
+<tr>
+<td>数量</td>
+<td>整数</td>
+<td>购买件数</td>
+<td><code>2</code></td>
+</tr>
+<tr>
+<td>折扣</td>
+<td>浮点数</td>
+<td>折扣系数（0.7 表示打七折）</td>
+<td><code>0.9</code></td>
+</tr>
+<tr>
+<td>销售额</td>
+<td>浮点数</td>
+<td>实付金额 &#x3D; 单价 × 数量 × 折扣</td>
+<td><code>3313.80</code></td>
+</tr>
+<tr>
+<td>客户年龄</td>
+<td>浮点数</td>
+<td>客户年龄（18~69）</td>
+<td><code>32.0</code></td>
+</tr>
+<tr>
+<td>客户性别</td>
+<td>字符串</td>
+<td>男&#x2F;女</td>
+<td><code>男</code></td>
+</tr>
+<tr>
+<td>支付方式</td>
+<td>字符串</td>
+<td>支付宝&#x2F;微信支付&#x2F;银行卡&#x2F;花呗</td>
+<td><code>支付宝</code></td>
+</tr>
+<tr>
+<td>下单渠道</td>
+<td>字符串</td>
+<td>APP&#x2F;小程序&#x2F;网页&#x2F;线下门店</td>
+<td><code>线下门店</code></td>
+</tr>
+</tbody></table>
+<h3 id="3-3-sales-csv-里故意埋的-8-个坑（精确行数）"><a href="#3-3-sales-csv-里故意埋的-8-个坑（精确行数）" class="headerlink" title="3.3 sales.csv 里故意埋的 8 个坑（精确行数）"></a>3.3 <code>sales.csv</code> 里故意埋的 8 个坑（精确行数）</h3><p>第 5 章会逐个教你识别和修复。<strong>这些行数都验证过，可以放心引用</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>坑</th>
+<th>行数</th>
+<th>对应技能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><code>城市</code> 前后带空格</td>
+<td><strong>61 行</strong></td>
+<td><code>.str.strip()</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>数量</code> 混入 <code>&quot;3件&quot;</code> 这类带单位的字符串</td>
+<td><strong>25 行</strong></td>
+<td><code>pd.to_numeric(..., errors=&quot;coerce&quot;)</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>销售额</code> 缺失（真 NaN）</td>
+<td><strong>49 行</strong></td>
+<td>缺失值处理</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>客户年龄</code> 缺失</td>
+<td><strong>43 行</strong></td>
+<td>缺失值处理</td>
+</tr>
+<tr>
+<td>5</td>
+<td>负销售额（退货没标出来）</td>
+<td><strong>23 行</strong></td>
+<td>异常值识别 &#x2F; 业务标记</td>
+</tr>
+<tr>
+<td>6</td>
+<td>日期三种写法混在一起</td>
+<td>1205 + 62 + 25 行</td>
+<td>日期解析</td>
+</tr>
+<tr>
+<td>7</td>
+<td>完全重复行 29 行；<code>订单编号</code> 重复 <strong>30 行</strong></td>
+<td>—</td>
+<td><code>drop_duplicates()</code></td>
+</tr>
+<tr>
+<td>8</td>
+<td><code>客户性别</code> 是空字符串</td>
+<td><strong>21 行</strong></td>
+<td>空字符串 ≠ 缺失值</td>
+</tr>
+</tbody></table>
+<p><strong>清洗后的关键数字</strong>（项目一和文档里的报告都基于它）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">原始 1230 行</span><br><span class="line">  → 按订单编号去重 30 行</span><br><span class="line">  → 剔除不可用 113 行（销售额缺失 49 + 年龄缺失 43 + 性别空串 21，有重叠）</span><br><span class="line">  → 清洗后 1087 行（含 23 笔退货）</span><br><span class="line">  → 分析口径 1064 笔有效销售，总销售额 1,592,095.89 元</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>💡 <strong>注意”113 行”不等于”49 + 43 + 21 &#x3D; 113”</strong>——恰好相等是个巧合，<br>实际上三类问题有重叠（某一行可能同时缺金额和年龄）。<strong>真实清洗中不能简单相加。</strong></p>
+</blockquote>
+<p><strong>其他数据集的关键统计</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>数据集</th>
+<th>关键数字</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sales_clean.csv</code></td>
+<td>1064 行；销售额合计 1,592,095.89；区域：华南 50.96 万 &#x2F; 华东 43.70 万 &#x2F; 华北 32.41 万；品类：手机数码 56.8% &#x2F; 家用电器 33.5%</td>
+</tr>
+<tr>
+<td><code>students.csv</code></td>
+<td>300 行；<code>每周自习小时</code> 缺失 12 个；<code>期末成绩</code> 缺失 5 个；<code>总评成绩</code> 有 <strong>3 行等于 -1</strong>（表示缺考）</td>
+</tr>
+<tr>
+<td><code>timeseries.csv</code></td>
+<td>1096 行，2022-01-01 ~ 2024-12-31 逐日；ADF 检验 p&#x3D;0.84（不平稳），一阶差分后平稳</td>
+</tr>
+<tr>
+<td><code>mall_members.csv</code></td>
+<td>500 行；年消费金额 293 ~ 28,775；<strong>K-Means 必须先标准化</strong></td>
+</tr>
+<tr>
+<td><code>shopping_intent.csv</code></td>
+<td>800 行；正例率 <strong>23.88%</strong>；三模型 AUC 都在 0.64~0.67（<strong>特征信息量是瓶颈</strong>）</td>
+</tr>
+<tr>
+<td><code>california_housing.csv</code></td>
+<td>20640 行；<code>total_bedrooms</code> 缺失 207 个；<code>median_house_value</code> 有 965 个封顶值 500001（建模时应剔除）</td>
+</tr>
+<tr>
+<td><code>titanic.csv</code></td>
+<td>891 行；<code>Age</code> 缺失 177、<code>Cabin</code> 缺失 687、<code>Embarked</code> 缺失 2；生还率 38.38%</td>
+</tr>
+<tr>
+<td><code>gapminder.csv</code></td>
+<td>1704 行，1952~2007 每 5 年</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-使用建议"><a href="#4-使用建议" class="headerlink" title="4. 使用建议"></a>4. 使用建议</h2><h3 id="4-1-关于-pandas-版本"><a href="#4-1-关于-pandas-版本" class="headerlink" title="4.1 关于 pandas 版本"></a>4.1 关于 pandas 版本</h3><p>本环境是 <strong>pandas 3.0.6</strong>，而网上大量教程和教材是基于 pandas 1.x &#x2F; 2.x 的。<br>两者有若干<strong>不兼容</strong>的写法，照抄旧教程会直接报错。本教程统一使用 <strong>3.0 的正确写法</strong>，<br>并在每个受影响的地方用这个标记提示你差异：</p>
+<blockquote>
+<p>📌 <strong>pandas 2.x 与 3.0 差异</strong>：……</p>
+</blockquote>
+<p>完整差异清单见 <code>appendix/A3_版本差异与常见报错手册.md</code>。</p>
+<h3 id="4-2-关于”跑不通”"><a href="#4-2-关于”跑不通”" class="headerlink" title="4.2 关于”跑不通”"></a>4.2 关于”跑不通”</h3><p>教程里的所有代码都在你的 <code>pyviz</code> 环境实测通过。如果你跑出报错，先检查三件事：</p>
+<ol>
+<li><strong>工作目录对不对</strong>：<code>../data/xxx.csv</code> 能不能找到（用 <code>import os; os.getcwd()</code> 看）；</li>
+<li><strong>是不是没重启内核</strong>：改了上面的单元格却没重跑；</li>
+<li><strong>是不是漏了导入</strong>：常见的是忘了 <code>import matplotlib.pyplot as plt</code>。</li>
+</ol>
+<p>附录 A3 收录了本机实测会遇到的全部报错及解决方案。</p>
+<h3 id="4-3-不要做的事"><a href="#4-3-不要做的事" class="headerlink" title="4.3 不要做的事"></a>4.3 不要做的事</h3><ul>
+<li>❌ 不要在 <code>base</code> 环境或 <code>yolov8</code> &#x2F; <code>lenet</code> 环境里装这些包；</li>
+<li>❌ 不要用 <code>pip install</code> 装 conda 环境里已有的包（会搞乱依赖）；</li>
+<li>❌ 不要复制粘贴完就跑，代码要自己敲——手感是练出来的；</li>
+<li>❌ 不要跳过第 4 章直接学机器学习。没有 pandas 基础，机器学习章节你连数据都读不进来。</li>
+</ul>
+<hr>
+<h2 id="5-文件目录结构"><a href="#5-文件目录结构" class="headerlink" title="5. 文件目录结构"></a>5. 文件目录结构</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">Python数据分析与可视化教程/</span><br><span class="line">├── 00_学习路径总览.md            ← 你正在读的文件</span><br><span class="line">├── 01_数据分析概念.md</span><br><span class="line">├── 02_数据获取与存储.md</span><br><span class="line">├── 03_NumPy数组与矩阵.md</span><br><span class="line">├── 04_Pandas数据分析.md</span><br><span class="line">├── 05_数据预处理.md</span><br><span class="line">├── 06_Matplotlib可视化.md</span><br><span class="line">├── 07_Seaborn与Plotly.md</span><br><span class="line">├── 08_机器学习与数据挖掘.md</span><br><span class="line">├── 09_项目实战.md</span><br><span class="line">├── _写作规范与数据字典.md         ← 教程的施工图（数据口径以它为准）</span><br><span class="line">├── appendix/</span><br><span class="line">│   ├── A1_pandas速查表.md</span><br><span class="line">│   ├── A2_可视化速查表.md</span><br><span class="line">│   ├── A3_版本差异与常见报错手册.md      ← 遇到报错先来这里搜</span><br><span class="line">│   └── A4_术语表.md</span><br><span class="line">├── data/                        ← 所有数据集（19 个文件）</span><br><span class="line">│   ├── sales.csv                  脏数据（第 5 章、项目一）</span><br><span class="line">│   ├── sales_clean.csv            干净数据（第 3、4 章）</span><br><span class="line">│   ├── students.csv</span><br><span class="line">│   ├── timeseries.csv</span><br><span class="line">│   ├── mall_members.csv</span><br><span class="line">│   ├── shopping_intent.csv</span><br><span class="line">│   ├── 销售与会员.xlsx</span><br><span class="line">│   ├── company.db</span><br><span class="line">│   ├── sales.parquet / sales_gbk.csv / sales_noheader.csv   （第 2 章）</span><br><span class="line">│   ├── orders.json / logs.jsonl / demo_page.html            （第 2 章）</span><br><span class="line">│   ├── grocery_baskets.json / grocery_baskets.csv           （第 8 章关联规则）</span><br><span class="line">│   ├── california_housing.csv</span><br><span class="line">│   ├── titanic.csv</span><br><span class="line">│   └── gapminder.csv</span><br><span class="line">└── code/                        ← 在这里启动 Jupyter</span><br><span class="line">    ├── gen_data.py                生成全部数据集（可重复运行）</span><br><span class="line">    ├── viz_style.py               统一绘图风格（第 6 章起共用）</span><br><span class="line">    ├── probe.py / probe2.py / probe3.py / probe_ml.py   环境探测与实测脚本</span><br><span class="line">    ├── verify_docs.py             ★ 检查教程里所有代码块能否跑通</span><br><span class="line">    ├── check_outputs.py           比对文档输出与真实输出</span><br><span class="line">    ├── fix_outputs.py             ★ 把真实输出自动回填进文档</span><br><span class="line">    ├── check_fences.py            检查 Markdown 围栏配对</span><br><span class="line">    ├── normalize_blocks.py        统一输出块格式</span><br><span class="line">    ├── mark_timing_blocks.py      标记计时代码块（输出会变，不自动回填）</span><br><span class="line">    ├── dedupe_fences.py           清理重复围栏</span><br><span class="line">    ├── project1/                  ★ 项目一完整代码（clean/analysis/charts/run_all）</span><br><span class="line">    ├── project2/                  ★ 项目二完整代码（features/train/charts/run_all）</span><br><span class="line">    └── _test/                     各章验证脚本与中间产物</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="6-教程代码的验证机制（为什么你可以放心跟着敲）"><a href="#6-教程代码的验证机制（为什么你可以放心跟着敲）" class="headerlink" title="6. 教程代码的验证机制（为什么你可以放心跟着敲）"></a>6. 教程代码的验证机制（为什么你可以放心跟着敲）</h2><p>这套教程里<strong>每一个 Python 代码块都在你的 <code>pyviz</code> 环境里真实执行过</strong>，<br>而且<strong>文档里写的”输出”都是从真实运行结果自动回填的</strong>，不是手抄的。</p>
+<p>验证工具就在 <code>code/</code> 目录下，你也可以自己跑：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">conda activate pyviz</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;&lt;教程目录&gt;\code&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ① 检查所有教程里的代码能否跑通</span></span><br><span class="line">python verify_docs.py</span><br><span class="line"><span class="comment"># 预期看到：总计 646 块，失败 0 块</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ② 检查 Markdown 围栏是否配对（避免渲染错乱）</span></span><br><span class="line">python check_fences.py</span><br><span class="line"><span class="comment"># 预期看到：合计问题数 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ③ 检查文档输出和真实输出是否一致</span></span><br><span class="line">python fix_outputs.py <span class="number">04</span></span><br><span class="line"><span class="comment"># 预期看到：需更新 0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ④ 重新生成全部数据集（固定随机种子，结果可复现）</span></span><br><span class="line">python gen_data.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># ⑤ 跑两个完整项目</span></span><br><span class="line"><span class="built_in">cd</span> project1 &amp;&amp; python run_all.py</span><br><span class="line"><span class="built_in">cd</span> ../project2 &amp;&amp; python run_all.py</span><br></pre></td></tr></table></figure>
+
+<p><strong>为什么要有这套机制？</strong> 因为教程最坑人的不是讲错概念，<br>而是”<strong>照着敲却跑不通</strong>“，或者”<strong>运行结果和书上写的不一样</strong>“。<br>这套工具从根上消灭了这两类问题。</p>
+<hr>
+<h2 id="7-现在开始"><a href="#7-现在开始" class="headerlink" title="7. 现在开始"></a>7. 现在开始</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">conda activate pyviz</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;&lt;教程目录&gt;\code&quot;</span></span><br><span class="line">jupyter lab</span><br></pre></td></tr></table></figure>
+
+<p>然后打开本目录下的 <code>01_数据分析概念.md</code>，开始第一章。</p>
+<blockquote>
+<p>💡 建议：在 JupyterLab 里同时开一个 Notebook 和一个 Markdown 预览。<br>左边看教程，右边敲代码，学一章存一个 <code>.ipynb</code> 文件作为你的学习笔记。</p>
+</blockquote>
+<hr>
+<h2 id="8-学完之后：三个去处"><a href="#8-学完之后：三个去处" class="headerlink" title="8. 学完之后：三个去处"></a>8. 学完之后：三个去处</h2><ol>
+<li><strong>项目作品集</strong>：把第 09 章的”结课练习”认真做完，<br>放进简历或作品集。<strong>面试官不会问你”知不知道 groupby”，<br>他会问”你分析过什么数据、得出什么结论、产生了什么影响”。</strong></li>
+<li><strong>真实数据练手</strong>：Kaggle、天池，或者你自己的消费记录、运动数据、游戏战绩。<br><strong>真实数据永远是脏的</strong>，只有在脏数据上练过才算真会。</li>
+<li><strong>回来查手册</strong>：附录 A1~A4 是设计成”长期使用”的速查手册，<br>尤其是 <strong>A3 报错手册</strong>——你以后遇到的报错，八成能在里面找到答案。</li>
+</ol>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/01-concepts/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">01 数据分析概念</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-2" title="0. 你应该从哪里开始"><a rel="nofollow" class="trm-toc-link" href="#0-你应该从哪里开始"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">0. 你应该从哪里开始</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1. 完整学习路径"><a rel="nofollow" class="trm-toc-link" href="#1-完整学习路径"><span class="trm-toc-number">2.</span> <span class="trm-toc-text">1. 完整学习路径</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="1.1 路线图"><a rel="nofollow" class="trm-toc-link" href="#1-1-路线图"><span class="trm-toc-number">2.1.</span> <span class="trm-toc-text">1.1 路线图</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.2 章节清单与预计时间"><a rel="nofollow" class="trm-toc-link" href="#1-2-章节清单与预计时间"><span class="trm-toc-number">2.2.</span> <span class="trm-toc-text">1.2 章节清单与预计时间</span></a></li><li class="trm-toc-item trm-toc-level-3" title="1.3 三条学习路径（按你的目标选）"><a rel="nofollow" class="trm-toc-link" href="#1-3-三条学习路径（按你的目标选）"><span class="trm-toc-number">2.3.</span> <span class="trm-toc-text">1.3 三条学习路径（按你的目标选）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="2. 环境搭建（详细版，零基础照做即可）"><a rel="nofollow" class="trm-toc-link" href="#2-环境搭建（详细版，零基础照做即可）"><span class="trm-toc-number">3.</span> <span class="trm-toc-text">2. 环境搭建（详细版，零基础照做即可）</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="2.1 已经帮你做好的部分"><a rel="nofollow" class="trm-toc-link" href="#2-1-已经帮你做好的部分"><span class="trm-toc-number">3.1.</span> <span class="trm-toc-text">2.1 已经帮你做好的部分</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.2 验证环境"><a rel="nofollow" class="trm-toc-link" href="#2-2-验证环境"><span class="trm-toc-number">3.2.</span> <span class="trm-toc-text">2.2 验证环境</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.3 启动 Jupyter 并进入工作目录"><a rel="nofollow" class="trm-toc-link" href="#2-3-启动-Jupyter-并进入工作目录"><span class="trm-toc-number">3.3.</span> <span class="trm-toc-text">2.3 启动 Jupyter 并进入工作目录</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.4 ⚠️ conda activate 报 CommandNotFoundError 怎么办（必读）"><a rel="nofollow" class="trm-toc-link" href="#2-4-⚠️-conda-activate-报-CommandNotFoundError-怎么办（必读）"><span class="trm-toc-number">3.4.</span> <span class="trm-toc-text">2.4 ⚠️ conda activate 报 CommandNotFoundError 怎么办（必读）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.5 Jupyter 必须会用的 8 个操作"><a rel="nofollow" class="trm-toc-link" href="#2-5-Jupyter-必须会用的-8-个操作"><span class="trm-toc-number">3.5.</span> <span class="trm-toc-text">2.5 Jupyter 必须会用的 8 个操作</span></a></li><li class="trm-toc-item trm-toc-level-3" title="2.6 如果你要在别人电脑上重建这个环境"><a rel="nofollow" class="trm-toc-link" href="#2-6-如果你要在别人电脑上重建这个环境"><span class="trm-toc-number">3.6.</span> <span class="trm-toc-text">2.6 如果你要在别人电脑上重建这个环境</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="3. 配套数据集说明"><a rel="nofollow" class="trm-toc-link" href="#3-配套数据集说明"><span class="trm-toc-number">4.</span> <span class="trm-toc-text">3. 配套数据集说明</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="3.1 数据集总览"><a rel="nofollow" class="trm-toc-link" href="#3-1-数据集总览"><span class="trm-toc-number">4.1.</span> <span class="trm-toc-text">3.1 数据集总览</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.2 数据字典（列名含义）"><a rel="nofollow" class="trm-toc-link" href="#3-2-数据字典（列名含义）"><span class="trm-toc-number">4.2.</span> <span class="trm-toc-text">3.2 数据字典（列名含义）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="3.3 sales.csv 里故意埋的 8 个坑（精确行数）"><a rel="nofollow" class="trm-toc-link" href="#3-3-sales-csv-里故意埋的-8-个坑（精确行数）"><span class="trm-toc-number">4.3.</span> <span class="trm-toc-text">3.3 sales.csv 里故意埋的 8 个坑（精确行数）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="4. 使用建议"><a rel="nofollow" class="trm-toc-link" href="#4-使用建议"><span class="trm-toc-number">5.</span> <span class="trm-toc-text">4. 使用建议</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="4.1 关于 pandas 版本"><a rel="nofollow" class="trm-toc-link" href="#4-1-关于-pandas-版本"><span class="trm-toc-number">5.1.</span> <span class="trm-toc-text">4.1 关于 pandas 版本</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.2 关于”跑不通”"><a rel="nofollow" class="trm-toc-link" href="#4-2-关于”跑不通”"><span class="trm-toc-number">5.2.</span> <span class="trm-toc-text">4.2 关于”跑不通”</span></a></li><li class="trm-toc-item trm-toc-level-3" title="4.3 不要做的事"><a rel="nofollow" class="trm-toc-link" href="#4-3-不要做的事"><span class="trm-toc-number">5.3.</span> <span class="trm-toc-text">4.3 不要做的事</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="5. 文件目录结构"><a rel="nofollow" class="trm-toc-link" href="#5-文件目录结构"><span class="trm-toc-number">6.</span> <span class="trm-toc-text">5. 文件目录结构</span></a></li><li class="trm-toc-item trm-toc-level-2" title="6. 教程代码的验证机制（为什么你可以放心跟着敲）"><a rel="nofollow" class="trm-toc-link" href="#6-教程代码的验证机制（为什么你可以放心跟着敲）"><span class="trm-toc-number">7.</span> <span class="trm-toc-text">6. 教程代码的验证机制（为什么你可以放心跟着敲）</span></a></li><li class="trm-toc-item trm-toc-level-2" title="7. 现在开始"><a rel="nofollow" class="trm-toc-link" href="#7-现在开始"><span class="trm-toc-number">8.</span> <span class="trm-toc-text">7. 现在开始</span></a></li><li class="trm-toc-item trm-toc-level-2" title="8. 学完之后：三个去处"><a rel="nofollow" class="trm-toc-link" href="#8-学完之后：三个去处"><span class="trm-toc-number">9.</span> <span class="trm-toc-text">8. 学完之后：三个去处</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

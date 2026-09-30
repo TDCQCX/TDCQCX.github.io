@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/2026/09/21/npm-basics/">
+<meta name="description" content="npm 基础教程 — 包管理与依赖治理入门 Node.js 生态里几乎一切项目都从 npm install 开始。但”能装上”和”装得对、装得安全、别人也能装上”是三件事。这篇教程从 package.json 的结构讲到锁文件、依赖分层和供应链安全，读完你能看懂任何 Node 项目的依赖结构。  目录 npm 是什么，解决了什么问题 package.json：项目的身份证 依赖的四种类型 语义化版">
+<meta property="og:type" content="article">
+<meta property="og:title" content="npm 基础教程 — 包管理与依赖治理入门">
+<meta property="og:url" content="https://blog.tdcqcx.cn/2026/09/21/npm-basics/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="npm 基础教程 — 包管理与依赖治理入门 Node.js 生态里几乎一切项目都从 npm install 开始。但”能装上”和”装得对、装得安全、别人也能装上”是三件事。这篇教程从 package.json 的结构讲到锁文件、依赖分层和供应链安全，读完你能看懂任何 Node 项目的依赖结构。  目录 npm 是什么，解决了什么问题 package.json：项目的身份证 依赖的四种类型 语义化版">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-21T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-21T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="工具">
+<meta property="article:tag" content="npm">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="包管理">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="npm 教程, package.json, package-lock.json, 语义化版本, npm ci, 依赖管理, npx, 镜像源, 供应链安全">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"npm 基础教程 — 包管理与依赖治理入门","datePublished":"2026-09-21T02:00:00.000Z","dateModified":"2026-09-21T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/2026/09/21/npm-basics/","image":"https://blog.tdcqcx.cn/post-covers/npm-basics.jpg"}
+</script>
+
+
+<title >npm 基础教程 — 包管理与依赖治理入门</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-21 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/npm-basics.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/npm-basics.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            npm 基础教程 — 包管理与依赖治理入门
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            npm 基础教程 — 包管理与依赖治理入门
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2026
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/21
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="npm-基础教程-—-包管理与依赖治理入门"><a href="#npm-基础教程-—-包管理与依赖治理入门" class="headerlink" title="npm 基础教程 — 包管理与依赖治理入门"></a>npm 基础教程 — 包管理与依赖治理入门</h1><blockquote>
+<p>Node.js 生态里几乎一切项目都从 <code>npm install</code> 开始。但”能装上”和”装得对、装得安全、别人也能装上”是三件事。<br>这篇教程从 package.json 的结构讲到锁文件、依赖分层和供应链安全，读完你能看懂任何 Node 项目的依赖结构。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-npm-%E6%98%AF%E4%BB%80%E4%B9%88%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98">npm 是什么，解决了什么问题</a></li>
+<li><a href="#2-packagejson%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%BA%AB%E4%BB%BD%E8%AF%81">package.json：项目的身份证</a></li>
+<li><a href="#3-%E4%BE%9D%E8%B5%96%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%B1%BB%E5%9E%8B">依赖的四种类型</a></li>
+<li><a href="#4-%E8%AF%AD%E4%B9%89%E5%8C%96%E7%89%88%E6%9C%AC%E5%8F%B7-%E5%92%8C-%E5%88%B0%E5%BA%95%E5%B7%AE%E5%9C%A8%E5%93%AA">语义化版本号：^ 和 ~ 到底差在哪</a></li>
+<li><a href="#5-package-lockjson%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E6%8F%90%E4%BA%A4">package-lock.json：为什么必须提交</a></li>
+<li><a href="#6-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">常用命令速查</a></li>
+<li><a href="#7-npx%E4%B8%8D%E5%AE%89%E8%A3%85%E4%B9%9F%E8%83%BD%E8%BF%90%E8%A1%8C%E5%B7%A5%E5%85%B7">npx：不安装也能运行工具</a></li>
+<li><a href="#8-npm-scripts%E9%A1%B9%E7%9B%AE%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%85%A5%E5%8F%A3">npm scripts：项目任务的入口</a></li>
+<li><a href="#9-%E9%95%9C%E5%83%8F%E6%BA%90%E4%B8%8E%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98">镜像源与网络问题</a></li>
+<li><a href="#10-%E4%BE%9D%E8%B5%96%E5%AE%89%E5%85%A8%E4%BE%9B%E5%BA%94%E9%93%BE%E9%A3%8E%E9%99%A9%E4%B8%8E%E5%BA%94%E5%AF%B9">依赖安全：供应链风险与应对</a></li>
+<li><a href="#11-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98-faq">常见问题 FAQ</a></li>
+</ol>
+<hr>
+<h2 id="1-npm-是什么，解决了什么问题"><a href="#1-npm-是什么，解决了什么问题" class="headerlink" title="1. npm 是什么，解决了什么问题"></a>1. npm 是什么，解决了什么问题</h2><p>在 npm 出现之前，前端引入第三方库是这样：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 手动下载 js 文件, 放到项目里, 再手动引用 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;js/jquery-1.11.3.min.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>问题很明显：版本靠文件名记忆、更新要手动替换、库之间的依赖关系（jQuery 插件依赖特定版本的 jQuery）全靠人维护、文件散落在各处。</p>
+<p>npm 是随 Node.js 一起安装的<strong>包管理器</strong>，它做了三件事：</p>
+<ol>
+<li><strong>登记</strong>：用一个 <code>package.json</code> 声明”我的项目需要哪些库、什么版本”；</li>
+<li><strong>安装</strong>：把这些库连同它们自己的依赖，递归装进 <code>node_modules/</code>；</li>
+<li><strong>锁定</strong>：用 <code>package-lock.json</code> 记录”上次装成功时每个包的确切版本”，保证换台机器装出完全一样的结果。</li>
+</ol>
+<p>验证是否已安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">node -v     <span class="comment"># Node.js 版本</span></span><br><span class="line">npm -v      <span class="comment"># npm 版本, 随 Node.js 一起安装</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>注意</strong>：<code>npm</code> 是包管理器，<code>node</code> 是运行时，两者不是一回事。常见误区是”我装了 npm 所以能跑 JS”——实际执行 JS 文件的是 <code>node</code>。</p>
+</blockquote>
+<hr>
+<h2 id="2-package-json：项目的身份证"><a href="#2-package-json：项目的身份证" class="headerlink" title="2. package.json：项目的身份证"></a>2. package.json：项目的身份证</h2><p>在空目录里执行 <code>npm init -y</code> 会生成一份带默认值的 <code>package.json</code>：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my-project&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;main&quot;</span><span class="punctuation">:</span> <span class="string">&quot;index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;echo \\&quot;</span>Error<span class="punctuation">:</span> no test specified\\<span class="string">&quot; &amp;&amp; exit 1&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;keywords&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;author&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;license&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ISC&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="关键字段说明"><a href="#关键字段说明" class="headerlink" title="关键字段说明"></a>关键字段说明</h3><table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>name</code></td>
+<td>包名。发布到 npm 时必须全局唯一，只能用小写字母、数字、<code>-</code>、<code>_</code></td>
+</tr>
+<tr>
+<td><code>version</code></td>
+<td>版本号，遵循语义化版本（见第 4 节）</td>
+</tr>
+<tr>
+<td><code>scripts</code></td>
+<td>可复用的命令别名，用 <code>npm run 名字</code> 调用</td>
+</tr>
+<tr>
+<td><code>dependencies</code></td>
+<td>运行时需要的依赖</td>
+</tr>
+<tr>
+<td><code>devDependencies</code></td>
+<td>只在开发&#x2F;构建时需要的依赖</td>
+</tr>
+<tr>
+<td><code>private</code></td>
+<td>设为 <code>true</code> 可防止误发布到公共仓库，<strong>私有项目强烈建议加上</strong></td>
+</tr>
+<tr>
+<td><code>engines</code></td>
+<td>声明需要的 Node 版本，例如 <code>&#123;&quot;node&quot;: &quot;&gt;=18&quot;&#125;</code></td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>设为 <code>&quot;module&quot;</code> 后 <code>.js</code> 文件按 ES Module 解析</td>
+</tr>
+</tbody></table>
+<h3 id="一个更实用的模板"><a href="#一个更实用的模板" class="headerlink" title="一个更实用的模板"></a>一个更实用的模板</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;my-project&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.0.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;private&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;module&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;engines&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;node&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&gt;=18&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node --watch src/index.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node scripts/build.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eslint .&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-依赖的四种类型"><a href="#3-依赖的四种类型" class="headerlink" title="3. 依赖的四种类型"></a>3. 依赖的四种类型</h2><p>很多人只区分 <code>dependencies</code> 和 <code>devDependencies</code>，其实 npm 有四种：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>命令</th>
+<th>什么时候装</th>
+<th>典型例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>dependencies</code></td>
+<td><code>npm i 包名</code></td>
+<td>生产运行也装</td>
+<td>express、vue</td>
+</tr>
+<tr>
+<td><code>devDependencies</code></td>
+<td><code>npm i -D 包名</code></td>
+<td>只在开发时装</td>
+<td>eslint、vite、jest</td>
+</tr>
+<tr>
+<td><code>peerDependencies</code></td>
+<td>手动写</td>
+<td>由<strong>使用者</strong>提供</td>
+<td>插件声明”我需要 vue”</td>
+</tr>
+<tr>
+<td><code>optionalDependencies</code></td>
+<td><code>npm i -O 包名</code></td>
+<td>装不上也不报错</td>
+<td>特定平台的二进制加速包</td>
+</tr>
+</tbody></table>
+<h3 id="怎么判断该放哪一类"><a href="#怎么判断该放哪一类" class="headerlink" title="怎么判断该放哪一类"></a>怎么判断该放哪一类</h3><p>问自己一个问题：<strong>“部署到服务器后，运行时代码会 require 它吗？”</strong></p>
+<ul>
+<li>会 → <code>dependencies</code></li>
+<li>不会，只是构建&#x2F;测试&#x2F;格式化用 → <code>devDependencies</code></li>
+</ul>
+<p>放错的实际代价：把 eslint 放进 <code>dependencies</code>，生产环境的依赖体积会凭空增大几十 MB，还可能引入不必要的漏洞面。</p>
+<h3 id="安装命令速查"><a href="#安装命令速查" class="headerlink" title="安装命令速查"></a>安装命令速查</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">npm install                 <span class="comment"># 安装 package.json 里声明的全部依赖</span></span><br><span class="line">npm install 包名            <span class="comment"># 安装并写入 dependencies</span></span><br><span class="line">npm install -D 包名         <span class="comment"># 安装并写入 devDependencies</span></span><br><span class="line">npm install 包名@1.2.3      <span class="comment"># 安装指定版本</span></span><br><span class="line">npm install 包名@latest     <span class="comment"># 安装最新版</span></span><br><span class="line">npm uninstall 包名          <span class="comment"># 卸载并从 package.json 移除</span></span><br><span class="line">npm update                  <span class="comment"># 在版本范围内更新到最新</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><code>npm install</code> 可以简写成 <code>npm i</code>，<code>--save</code> 现在是默认行为，不用再写。</p>
+</blockquote>
+<hr>
+<h2 id="4-语义化版本号：-和-到底差在哪"><a href="#4-语义化版本号：-和-到底差在哪" class="headerlink" title="4. 语义化版本号：^ 和 ~ 到底差在哪"></a>4. 语义化版本号：^ 和 ~ 到底差在哪</h2><p>版本号写成 <code>主版本.次版本.修订号</code>（major.minor.patch），例如 <code>2.14.3</code>。语义化版本（SemVer）的约定是：</p>
+<ul>
+<li><strong>主版本号</strong>变化 → 有不兼容的改动（breaking change）</li>
+<li><strong>次版本号</strong>变化 → 新增功能，向后兼容</li>
+<li><strong>修订号</strong>变化 → 修 bug，向后兼容</li>
+</ul>
+<p><code>package.json</code> 里的前缀决定了<strong>允许自动升级到哪个范围</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>允许升级到</th>
+<th>示例：从 2.14.3 出发</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>^2.14.3</code></td>
+<td>主版本不变，次版本和修订任意</td>
+<td>可升到 2.99.9，<strong>不会</strong>到 3.0.0</td>
+</tr>
+<tr>
+<td><code>~2.14.3</code></td>
+<td>次版本不变，修订任意</td>
+<td>可升到 2.14.99，<strong>不会</strong>到 2.15.0</td>
+</tr>
+<tr>
+<td><code>2.14.3</code></td>
+<td>精确锁定</td>
+<td>只有 2.14.3</td>
+</tr>
+<tr>
+<td><code>&gt;=2.14.3</code></td>
+<td>大于等于均可</td>
+<td>可能装到 3.x，风险高</td>
+</tr>
+<tr>
+<td><code>*</code> 或 <code>latest</code></td>
+<td>任意版本</td>
+<td>不推荐用于生产</td>
+</tr>
+</tbody></table>
+<h3 id="实用建议"><a href="#实用建议" class="headerlink" title="实用建议"></a>实用建议</h3><ul>
+<li><strong>应用项目</strong>：用 <code>^</code>，享受安全补丁的自动更新。</li>
+<li><strong>库项目</strong>：<code>dependencies</code> 用 <code>^</code>，但要注意主版本升级会让下游用户被迫跟随。</li>
+<li><strong>生产环境</strong>：真正锁定版本的是 <code>package-lock.json</code>，它比 <code>package.json</code> 里的范围更精确。</li>
+</ul>
+<blockquote>
+<p><code>^</code> 的例外：当主版本号为 <code>0</code> 时（如 <code>0.2.3</code>），npm 认为 <code>^0.2.3</code> 只能升到 <code>0.2.x</code>——因为 0.x 阶段 API 还不稳定。这是很多人会忽略的细节。</p>
+</blockquote>
+<hr>
+<h2 id="5-package-lock-json：为什么必须提交"><a href="#5-package-lock-json：为什么必须提交" class="headerlink" title="5. package-lock.json：为什么必须提交"></a>5. package-lock.json：为什么必须提交</h2><p>这是依赖管理里最重要、也最常被误解的一件事。</p>
+<p><code>package.json</code> 写的是<strong>范围</strong>（<code>^1.2.3</code>），而 <code>package-lock.json</code> 记录的是<strong>确切结果</strong>——包括每个包的实际版本、下载地址、完整性哈希，以及完整的依赖树。</p>
+<p>为什么必须提交进版本库：</p>
+<ol>
+<li><strong>构建可复现</strong>。没有锁文件时，今天装到 <code>1.2.9</code>，下个月 <code>1.2.15</code> 发布后就装到 <code>1.2.15</code>，行为可能悄悄改变（”在我机器上是好的”大多源于此）。</li>
+<li><strong>安装更快</strong>。有了完整依赖树，npm 不必反复向仓库查询版本信息。</li>
+<li><strong>安全可审计</strong>。锁文件里的完整性哈希能发现被篡改的包。</li>
+</ol>
+<h3 id="npm-install-与-npm-ci-的区别"><a href="#npm-install-与-npm-ci-的区别" class="headerlink" title="npm install 与 npm ci 的区别"></a>npm install 与 npm ci 的区别</h3><table>
+<thead>
+<tr>
+<th></th>
+<th><code>npm install</code></th>
+<th><code>npm ci</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>读取</td>
+<td>package.json + lock，可能更新 lock</td>
+<td>只读 lock，<strong>绝不修改</strong></td>
+</tr>
+<tr>
+<td>node_modules</td>
+<td>增量更新</td>
+<td>先整体删除再安装</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>日常开发</td>
+<td>CI&#x2F;CD、生产部署</td>
+</tr>
+</tbody></table>
+<p>CI 流水线里应该用 <code>npm ci</code>。它要求 lock 文件与 package.json 完全一致，不一致会直接报错——这正是你想要的：<strong>尽早发现有人改了 package.json 却忘了更新锁文件</strong>。</p>
+<blockquote>
+<p><strong>团队约定</strong>：把 <code>package-lock.json</code> 提交进 Git。如果你的项目用 Yarn 或 pnpm，对应的 <code>yarn.lock</code>、<code>pnpm-lock.yaml</code> 同理，而且<strong>一个项目只应保留一种锁文件</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="6-常用命令速查"><a href="#6-常用命令速查" class="headerlink" title="6. 常用命令速查"></a>6. 常用命令速查</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 环境与诊断</span></span><br><span class="line">npm -v                        <span class="comment"># npm 版本</span></span><br><span class="line">npm outdated                  <span class="comment"># 列出可升级的依赖</span></span><br><span class="line">npm <span class="built_in">ls</span> --depth=0              <span class="comment"># 只看顶层依赖树</span></span><br><span class="line">npm why 包名                  <span class="comment"># 这个包为什么被装进来</span></span><br><span class="line">npm doctor                    <span class="comment"># 体检当前环境</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装与维护</span></span><br><span class="line">npm install                   <span class="comment"># 安装全部依赖</span></span><br><span class="line">npm ci                        <span class="comment"># 按锁文件精确安装(CI 用)</span></span><br><span class="line">npm prune                     <span class="comment"># 清掉 package.json 里没声明的包</span></span><br><span class="line">npm dedupe                    <span class="comment"># 尝试减少重复依赖</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安全</span></span><br><span class="line">npm audit                     <span class="comment"># 漏洞扫描</span></span><br><span class="line">npm audit fix                 <span class="comment"># 自动修复(可能改动版本范围)</span></span><br><span class="line">npm audit fix --dry-run       <span class="comment"># 先看会改什么</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 发布(仅库作者需要)</span></span><br><span class="line">npm login</span><br><span class="line">npm publish</span><br><span class="line">npm version patch             <span class="comment"># 自动改版本号并打 tag</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="npm-outdated-与-npm-audit-的区别"><a href="#npm-outdated-与-npm-audit-的区别" class="headerlink" title="npm outdated 与 npm audit 的区别"></a>npm outdated 与 npm audit 的区别</h3><ul>
+<li><code>npm outdated</code> 关心”有没有新版本”，输出的是版本对比；</li>
+<li><code>npm audit</code> 关心”有没有已知漏洞”，输出的是安全问题。</li>
+</ul>
+<p>两者都该定期跑，但优先级不同：<strong>先看 audit，再看 outdated</strong>。前者是风险，后者是维护。</p>
+<hr>
+<h2 id="7-npx：不安装也能运行工具"><a href="#7-npx：不安装也能运行工具" class="headerlink" title="7. npx：不安装也能运行工具"></a>7. npx：不安装也能运行工具</h2><p><code>npx</code> 随 npm 一起安装，用于<strong>临时运行一个命令行工具</strong>，而不用全局安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 不安装到全局, 直接运行一次</span></span><br><span class="line">npx create-vite my-app</span><br><span class="line">npx prettier --write src/</span><br><span class="line">npx serve public</span><br></pre></td></tr></table></figure>
+
+<p>它的行为规则：</p>
+<ol>
+<li>先在<strong>当前项目的</strong> <code>node_modules/.bin</code> 里找同名命令；</li>
+<li>找不到再去全局安装的包里找；</li>
+<li>还找不到就临时下载最新版执行，用完即弃。</li>
+</ol>
+<h3 id="为什么这比全局安装好"><a href="#为什么这比全局安装好" class="headerlink" title="为什么这比全局安装好"></a>为什么这比全局安装好</h3><ul>
+<li>全局安装的版本会”跟着你一辈子”，不同项目需要不同版本时就会冲突；</li>
+<li><code>npx</code> 用的往往是项目 <code>devDependencies</code> 里的版本，和团队其他人一致。</li>
+</ul>
+<h3 id="需要注意的两点"><a href="#需要注意的两点" class="headerlink" title="需要注意的两点"></a>需要注意的两点</h3><ul>
+<li>临时下载执行意味着<strong>你信任了那个包的最新版</strong>，在敏感环境里建议先用 <code>npm view 包名</code> 确认来源；</li>
+<li>想让 <code>npx</code> 明确只用本地版本，加 <code>--no-install</code>，本地没有就直接报错（CI 里更安全）。</li>
+</ul>
+<hr>
+<h2 id="8-npm-scripts：项目任务的入口"><a href="#8-npm-scripts：项目任务的入口" class="headerlink" title="8. npm scripts：项目任务的入口"></a>8. npm scripts：项目任务的入口</h2><p><code>scripts</code> 字段把长命令收进短别名：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;dev&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vite&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vite build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;preview&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vite preview&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;lint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;eslint src --ext .js,.vue&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;test&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vitest run&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>调用方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br><span class="line">npm run build</span><br><span class="line">npm run lint</span><br></pre></td></tr></table></figure>
+
+<h3 id="生命周期钩子"><a href="#生命周期钩子" class="headerlink" title="生命周期钩子"></a>生命周期钩子</h3><p>npm 会在特定命令前后自动执行同名钩子：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;prebuild&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node scripts/clean.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;build&quot;</span><span class="punctuation">:</span> <span class="string">&quot;vite build&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;postbuild&quot;</span><span class="punctuation">:</span> <span class="string">&quot;node scripts/report.js&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>执行 <code>npm run build</code> 时，实际顺序是 <code>prebuild</code> → <code>build</code> → <code>postbuild</code>。</p>
+<h3 id="三个实用细节"><a href="#三个实用细节" class="headerlink" title="三个实用细节"></a>三个实用细节</h3><ol>
+<li><p><strong><code>npm run</code> 会自动把 <code>node_modules/.bin</code> 加进 PATH</strong>，所以脚本里可以直接写 <code>vite</code> 而不用写 <code>./node_modules/.bin/vite</code>。</p>
+</li>
+<li><p><strong><code>test</code> 和 <code>start</code> 可以省略 <code>run</code></strong>：直接 <code>npm test</code>、<code>npm start</code>。</p>
+</li>
+<li><p><strong>传参用 <code>--</code></strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run lint -- --fix</span><br></pre></td></tr></table></figure>
+
+<p>这样 <code>--fix</code> 会传给 eslint 而不是被 npm 吞掉。</p>
+</li>
+</ol>
+<hr>
+<h2 id="9-镜像源与网络问题"><a href="#9-镜像源与网络问题" class="headerlink" title="9. 镜像源与网络问题"></a>9. 镜像源与网络问题</h2><p>国内网络直接访问 npm 官方源常常很慢或超时。可以切换镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 临时使用一次</span></span><br><span class="line">npm install --registry=https://registry.npmmirror.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 永久切换</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmmirror.com</span><br><span class="line"></span><br><span class="line"><span class="comment"># 看当前用的是哪个源</span></span><br><span class="line">npm config get registry</span><br><span class="line"></span><br><span class="line"><span class="comment"># 改回官方源</span></span><br><span class="line">npm config <span class="built_in">set</span> registry https://registry.npmjs.org/</span><br></pre></td></tr></table></figure>
+
+<p>也可以写进项目根目录的 <code>.npmrc</code>，让团队统一（这个文件应该提交）：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">registry</span>=https://registry.npmmirror.com</span><br><span class="line"><span class="attr">strict-ssl</span>=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="常用排查顺序"><a href="#常用排查顺序" class="headerlink" title="常用排查顺序"></a>常用排查顺序</h3><p>装不上依赖时按这个顺序查：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm config get registry      <span class="comment"># 1. 源对不对</span></span><br><span class="line">npm ping                     <span class="comment"># 2. 能不能通</span></span><br><span class="line">npm cache verify             <span class="comment"># 3. 缓存是否损坏</span></span><br><span class="line">npm cache clean --force      <span class="comment"># 4. 必要时清理后重装</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>安全提醒</strong>：使用第三方镜像时，确认镜像开启了 HTTPS 且校验完整性哈希。<code>package-lock.json</code> 里记录的 <code>integrity</code> 字段会在安装时校验，这是防止内容被替换的一道防线，<strong>不要用 <code>--no-verify</code> 之类参数绕过它</strong>。</p>
+</blockquote>
+<hr>
+<h2 id="10-依赖安全：供应链风险与应对"><a href="#10-依赖安全：供应链风险与应对" class="headerlink" title="10. 依赖安全：供应链风险与应对"></a>10. 依赖安全：供应链风险与应对</h2><p>现代项目平均有几十上百个间接依赖。任何一个环节被投毒，都可能让恶意代码进入你的构建产物——这就是<strong>供应链攻击</strong>。</p>
+<p>常见手法：</p>
+<ul>
+<li>抢注与知名包相似的名字（typosquatting），例如 <code>crossenv</code> 仿 <code>cross-env</code>；</li>
+<li>接管已废弃的包名，然后发布带恶意代码的新版本；</li>
+<li>在 <code>postinstall</code> 钩子里执行脚本，安装即触发。</li>
+</ul>
+<h3 id="日常防护清单"><a href="#日常防护清单" class="headerlink" title="日常防护清单"></a>日常防护清单</h3><ol>
+<li><p><strong>锁文件必须提交</strong>，CI 用 <code>npm ci</code>；</p>
+</li>
+<li><p><strong>定期审计</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm audit</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>审查新增依赖</strong>。安装前先看一眼：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm view 包名            <span class="comment"># 维护者、最近发布时间、仓库地址</span></span><br><span class="line">npm view 包名 dist.tarball   <span class="comment"># 下载地址</span></span><br></pre></td></tr></table></figure>
+
+<p>判断要点：下载量是否合理、最近是否还在维护、仓库地址是否真实、是否有大量可疑的 <code>postinstall</code>。</p>
+</li>
+<li><p><strong>谨慎使用 <code>--ignore-scripts</code></strong>。它能阻止安装脚本执行（降低风险），但某些包依赖脚本完成编译，可能装不上。在 CI 里可以先试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ci --ignore-scripts</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>不要把密钥写进代码</strong>。<code>.env</code>、<code>*.pem</code> 一律加进 <code>.gitignore</code>（参见 Git 教程第 9 节）。</p>
+</li>
+<li><p><strong>不在生产环境装 devDependencies</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ci --omit=dev</span><br></pre></td></tr></table></figure></li>
+</ol>
+<blockquote>
+<p><strong>如果发现漏洞</strong>：先看 <code>npm audit</code> 给出的修复建议版本，评估是否在主版本范围内（可安全升级），若必须跨主版本升级，先在自己的分支测试兼容性。<strong>不要盲目执行 <code>npm audit fix --force</code></strong>，它可能把你的依赖升到不兼容的大版本。</p>
+</blockquote>
+<hr>
+<h2 id="11-常见问题-FAQ"><a href="#11-常见问题-FAQ" class="headerlink" title="11. 常见问题 FAQ"></a>11. 常见问题 FAQ</h2><p><strong>Q：<code>node_modules</code> 要不要提交进 Git？</strong></p>
+<p>不要。它体积大、平台相关、而且完全可以从 <code>package.json</code> + 锁文件重建。务必写进 <code>.gitignore</code>。</p>
+<p><strong>Q：删掉 <code>node_modules</code> 重新装，能解决大部分诡异问题吗？</strong></p>
+<p>通常可以。这是最有效的”重启大法”：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf node_modules package-lock.json</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>注意这样会重置锁文件，<strong>在团队项目里更好的做法是只删 <code>node_modules</code> 并保留锁文件</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">rm</span> -rf node_modules</span><br><span class="line">npm ci</span><br></pre></td></tr></table></figure>
+
+<p><strong>Q：全局安装和本地安装有什么区别？</strong></p>
+<p>本地安装（<code>npm i 包名</code>）进项目的 <code>node_modules</code>，只有这个项目能用，版本随项目走；全局安装（<code>npm i -g 包名</code>）装到系统目录，所有项目共享，容易产生版本冲突。<strong>除命令行工具外都建议本地安装。</strong></p>
+<p><strong>Q：<code>npm install</code> 报 EACCES 权限错误怎么办？</strong></p>
+<p>不要用 <code>sudo npm install</code>，那会让文件属主变成 root，后续更麻烦。正确做法是把 npm 的全局目录改到用户目录下，或者用 Node 版本管理工具（nvm、fnm）安装 Node。</p>
+<p><strong>Q：怎么知道某个包为什么被安装了？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm why 包名</span><br></pre></td></tr></table></figure>
+
+<p>它会打印完整的依赖链路，告诉你”是 A 依赖 B，B 依赖了这个包”。</p>
+<p><strong>Q：<code>npm run</code> 和直接执行命令有什么区别？</strong></p>
+<p><code>npm run</code> 会自动把 <code>node_modules/.bin</code> 加进 PATH，并且支持 pre&#x2F;post 钩子。所以项目内的工具应该通过 scripts 调用，而不是要求每个人都全局安装。</p>
+<p><strong>Q：如何只安装生产依赖？</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ci --omit=dev</span><br></pre></td></tr></table></figure>
+
+<p>或临时跳过安装脚本：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm ci --omit=dev --ignore-scripts</span><br></pre></td></tr></table></figure>
+
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/21/sql-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/sql-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">SQL 基础教程 — 从查询语句到多表关联</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/21</li>
+                <li>14:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/20/git-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/git-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">Git 基础教程 — 从零开始掌握版本控制</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/20</li>
+                <li>10:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="npm 基础教程 — 包管理与依赖治理入门"><a rel="nofollow" class="trm-toc-link" href="#npm-基础教程-—-包管理与依赖治理入门"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">npm 基础教程 — 包管理与依赖治理入门</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="目录"><a rel="nofollow" class="trm-toc-link" href="#目录"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">目录</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1. npm 是什么，解决了什么问题"><a rel="nofollow" class="trm-toc-link" href="#1-npm-是什么，解决了什么问题"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">1. npm 是什么，解决了什么问题</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2. package.json：项目的身份证"><a rel="nofollow" class="trm-toc-link" href="#2-package-json：项目的身份证"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">2. package.json：项目的身份证</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="关键字段说明"><a rel="nofollow" class="trm-toc-link" href="#关键字段说明"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">关键字段说明</span></a></li><li class="trm-toc-item trm-toc-level-3" title="一个更实用的模板"><a rel="nofollow" class="trm-toc-link" href="#一个更实用的模板"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">一个更实用的模板</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="3. 依赖的四种类型"><a rel="nofollow" class="trm-toc-link" href="#3-依赖的四种类型"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">3. 依赖的四种类型</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="怎么判断该放哪一类"><a rel="nofollow" class="trm-toc-link" href="#怎么判断该放哪一类"><span class="trm-toc-number">1.4.1.</span> <span class="trm-toc-text">怎么判断该放哪一类</span></a></li><li class="trm-toc-item trm-toc-level-3" title="安装命令速查"><a rel="nofollow" class="trm-toc-link" href="#安装命令速查"><span class="trm-toc-number">1.4.2.</span> <span class="trm-toc-text">安装命令速查</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="4. 语义化版本号：^ 和 ~ 到底差在哪"><a rel="nofollow" class="trm-toc-link" href="#4-语义化版本号：-和-到底差在哪"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">4. 语义化版本号：^ 和 ~ 到底差在哪</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="实用建议"><a rel="nofollow" class="trm-toc-link" href="#实用建议"><span class="trm-toc-number">1.5.1.</span> <span class="trm-toc-text">实用建议</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="5. package-lock.json：为什么必须提交"><a rel="nofollow" class="trm-toc-link" href="#5-package-lock-json：为什么必须提交"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">5. package-lock.json：为什么必须提交</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="npm install 与 npm ci 的区别"><a rel="nofollow" class="trm-toc-link" href="#npm-install-与-npm-ci-的区别"><span class="trm-toc-number">1.6.1.</span> <span class="trm-toc-text">npm install 与 npm ci 的区别</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="6. 常用命令速查"><a rel="nofollow" class="trm-toc-link" href="#6-常用命令速查"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">6. 常用命令速查</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="npm outdated 与 npm audit 的区别"><a rel="nofollow" class="trm-toc-link" href="#npm-outdated-与-npm-audit-的区别"><span class="trm-toc-number">1.7.1.</span> <span class="trm-toc-text">npm outdated 与 npm audit 的区别</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="7. npx：不安装也能运行工具"><a rel="nofollow" class="trm-toc-link" href="#7-npx：不安装也能运行工具"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">7. npx：不安装也能运行工具</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="为什么这比全局安装好"><a rel="nofollow" class="trm-toc-link" href="#为什么这比全局安装好"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">为什么这比全局安装好</span></a></li><li class="trm-toc-item trm-toc-level-3" title="需要注意的两点"><a rel="nofollow" class="trm-toc-link" href="#需要注意的两点"><span class="trm-toc-number">1.8.2.</span> <span class="trm-toc-text">需要注意的两点</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="8. npm scripts：项目任务的入口"><a rel="nofollow" class="trm-toc-link" href="#8-npm-scripts：项目任务的入口"><span class="trm-toc-number">1.9.</span> <span class="trm-toc-text">8. npm scripts：项目任务的入口</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="生命周期钩子"><a rel="nofollow" class="trm-toc-link" href="#生命周期钩子"><span class="trm-toc-number">1.9.1.</span> <span class="trm-toc-text">生命周期钩子</span></a></li><li class="trm-toc-item trm-toc-level-3" title="三个实用细节"><a rel="nofollow" class="trm-toc-link" href="#三个实用细节"><span class="trm-toc-number">1.9.2.</span> <span class="trm-toc-text">三个实用细节</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="9. 镜像源与网络问题"><a rel="nofollow" class="trm-toc-link" href="#9-镜像源与网络问题"><span class="trm-toc-number">1.10.</span> <span class="trm-toc-text">9. 镜像源与网络问题</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="常用排查顺序"><a rel="nofollow" class="trm-toc-link" href="#常用排查顺序"><span class="trm-toc-number">1.10.1.</span> <span class="trm-toc-text">常用排查顺序</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="10. 依赖安全：供应链风险与应对"><a rel="nofollow" class="trm-toc-link" href="#10-依赖安全：供应链风险与应对"><span class="trm-toc-number">1.11.</span> <span class="trm-toc-text">10. 依赖安全：供应链风险与应对</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="日常防护清单"><a rel="nofollow" class="trm-toc-link" href="#日常防护清单"><span class="trm-toc-number">1.11.1.</span> <span class="trm-toc-text">日常防护清单</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="11. 常见问题 FAQ"><a rel="nofollow" class="trm-toc-link" href="#11-常见问题-FAQ"><span class="trm-toc-number">1.12.</span> <span class="trm-toc-text">11. 常见问题 FAQ</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>

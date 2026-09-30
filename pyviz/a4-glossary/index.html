@@ -1,0 +1,2961 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<!-- 允许双指缩放 (无障碍: 原 user-scalable=0 会禁用缩放) -->
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport">
+<!-- SEO: 规范链接, 避免 /path/ 与 /path/index.html 被当成两个页面重复收录 -->
+<link rel="canonical" href="https://blog.tdcqcx.cn/pyviz/a4-glossary/">
+<meta name="description" content="用法：读到不懂的词，来这里查。按主题分组，每条给”一句话白话解释 + 出现在哪一章”。最后附易混淆概念对照和各科常用符号表。   一、数据分析基础   中文 英文 一句话解释 章节    数据 Data 原始记录，本身没有意义 1   信息 Information 处理过、有上下文的数据 1   知识 Knowledge 从数据归纳出的可复用规律 1   智慧 Wisdom 在知识基础上形成的决">
+<meta property="og:type" content="article">
+<meta property="og:title" content="附录 A4 · 术语表">
+<meta property="og:url" content="https://blog.tdcqcx.cn/pyviz/a4-glossary/index.html">
+<meta property="og:site_name" content="浮生记">
+<meta property="og:description" content="用法：读到不懂的词，来这里查。按主题分组，每条给”一句话白话解释 + 出现在哪一章”。最后附易混淆概念对照和各科常用符号表。   一、数据分析基础   中文 英文 一句话解释 章节    数据 Data 原始记录，本身没有意义 1   信息 Information 处理过、有上下文的数据 1   知识 Knowledge 从数据归纳出的可复用规律 1   智慧 Wisdom 在知识基础上形成的决">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-26T02:00:00.000Z">
+<meta property="article:author" content="浮生记">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="数据分析与可视化">
+<meta property="article:tag" content="术语表">
+<meta name="twitter:card" content="summary">
+
+    <meta name="keywords" content="Python 数据分析, 数据可视化, 附录 A4 · 术语表, Pandas, NumPy, Matplotlib, 教程">
+
+
+
+
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"附录 A4 · 术语表","datePublished":"2026-09-26T02:00:00.000Z","dateModified":"2026-09-26T02:00:00.000Z","author":{"@type":"Person","name":"浮生记"},"publisher":{"@type":"Organization","name":"浮生记"},"mainEntityOfPage":"https://blog.tdcqcx.cn/pyviz/a4-glossary/","image":"https://blog.tdcqcx.cn/post-covers/pyviz.jpg"}
+</script>
+
+
+<title >附录 A4 · 术语表</title>
+
+<!-- Favicon -->
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/img/favicon.svg?v=2.2.4' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="/plugins/fancybox/fancybox.css">
+
+    
+    
+<link rel="stylesheet" href="/plugins/katex/katex.min.css">
+
+    
+<link rel="stylesheet" href="/plugins/fjgallery/fjGallery.css">
+
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"blog.tdcqcx.cn","author":"浮生记","root":"/","typed_text":["欢迎来到这！","我是TDCQCX！","这里有无限可能！","好像有什么神奇的事情发生了！","欢迎来到我的博客！"],"theme_version":"2.2.4","theme":{"switch":true,"default":"auto"},"favicon":{"logo":"/img/favicon.svg","icon16":"/img/favicon.svg","icon32":"/img/favicon.svg","apple_touch_icon":null,"webmanifest":null,"visibilitychange":true,"hidden":"/failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":true,"plugin":{"flickr_justified_gallery":"/plugins/fjgallery/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"mac","height_limit":200},"toc":{"post_title":true},"live_time":{"start_time":"01/03/2025 17:00:00","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":true,"el":".trm-banner","avatar":true,"delayRange":5000,"speed":80},"creative_commons":{"license":"by-nc-sa","language":"deed.zh-hans"},"notice_outdate":{"enable":true,"style":"flat","limit_day":365,"position":"top"},"search":{"enable":true,"type":"local","href":"https://www.google.com/search?q=site:","domain":null,"path":"search.xml"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2026-09-26 10:00:00"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.4" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="浮生记" type="application/atom+xml">
+</head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <!-- 性能: 不再初始 opacity:0. 原先内容要等 main.js 执行后才显示, 期间是纯白屏 -->
+        <div id="trm-scroll-container" class="trm-scroll-container">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/img/favicon.svg">
+    
+    
+        <div class="trm-logo-text">
+            浮生记<span>个人博客</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/archives/" target="">
+                    归档
+                </a>
+                
+                <ul>
+                    
+                    <li>
+                        <a  href="/categories/" target="">
+                            分类
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a  href="/tags/" target="">
+                            标签
+                        </a>
+                    </li>
+                    
+                </ul>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/about/" target="">
+                    关于
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/links/" target="">
+                    友链
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/project/" target="">
+                    项目
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/pyviz/" target="">
+                    系列
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/comment/" target="">
+                    留言板
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a data-no-swup href="/custom/" target="">
+                    资源
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+    
+    <div id="trm-search-btn" class="trm-search-btn">
+        <i class="iconfont fas fa-search"></i>
+    </div>
+     
+
+		</div>
+		<div class="trm-menu-btn" role="button" aria-label="打开菜单">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    
+    <link rel="preload" as="image" href="/post-banners/pyviz.jpg" fetchpriority="high">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/post-banners/pyviz.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            附录 A4 · 术语表
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            附录 A4 · 术语表
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        pyviz
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/images/index/avatar.jpg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        TDCQCX
+    </h5>
+    
+        <div class="trm-label">
+            你好！
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/TDCQCX" title="Github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+
+    
+        <a href="https://weibo.com/u/7495045812" title="微博" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-weibo"></i>
+        </a>
+
+    
+        <a href="mailto:tdcqcx@gmail.com" title="Gmail" rel="nofollow" target="_blank">
+            <i class="iconfont fas fa-envelope"></i>
+        </a>
+
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                Chengdu China
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                邮箱:
+            </div>
+            <div class="trm-label trm-label-light">
+                tdcqcx@gmail.com
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                QQ:
+            </div>
+            <div class="trm-label trm-label-light">
+                3290264220
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:tdcqcx@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            09/26
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:00
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            浮生记
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <blockquote>
+<p><strong>用法</strong>：读到不懂的词，来这里查。按主题分组，每条给”一句话白话解释 + 出现在哪一章”。<br>最后附<strong>易混淆概念对照</strong>和各科常用符号表。</p>
+</blockquote>
+<hr>
+<h2 id="一、数据分析基础"><a href="#一、数据分析基础" class="headerlink" title="一、数据分析基础"></a>一、数据分析基础</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据</td>
+<td>Data</td>
+<td>原始记录，本身没有意义</td>
+<td>1</td>
+</tr>
+<tr>
+<td>信息</td>
+<td>Information</td>
+<td>处理过、有上下文的数据</td>
+<td>1</td>
+</tr>
+<tr>
+<td>知识</td>
+<td>Knowledge</td>
+<td>从数据归纳出的可复用规律</td>
+<td>1</td>
+</tr>
+<tr>
+<td>智慧</td>
+<td>Wisdom</td>
+<td>在知识基础上形成的决策</td>
+<td>1</td>
+</tr>
+<tr>
+<td>描述性分析</td>
+<td>Descriptive Analytics</td>
+<td>回答”发生了什么”</td>
+<td>1</td>
+</tr>
+<tr>
+<td>诊断性分析</td>
+<td>Diagnostic Analytics</td>
+<td>回答”为什么发生”</td>
+<td>1</td>
+</tr>
+<tr>
+<td>预测性分析</td>
+<td>Predictive Analytics</td>
+<td>回答”将会发生什么”</td>
+<td>1</td>
+</tr>
+<tr>
+<td>指导性分析</td>
+<td>Prescriptive Analytics</td>
+<td>回答”该怎么做”</td>
+<td>1</td>
+</tr>
+<tr>
+<td>指标</td>
+<td>Metric</td>
+<td>用来衡量业务表现的量化值（如销售额、客单价）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>维度</td>
+<td>Dimension</td>
+<td>分析的角度（如时间、地域、品类）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>度量</td>
+<td>Measure</td>
+<td>被聚合的数值（如销售额、数量）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>口径</td>
+<td>Definition &#x2F; Caliber</td>
+<td>一个指标的<strong>确切算法和范围</strong>（含不含税？含不含退货？）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>同比</td>
+<td>Year-over-Year (YoY)</td>
+<td>和去年同期比</td>
+<td>1</td>
+</tr>
+<tr>
+<td>环比</td>
+<td>Month-over-Month (MoM)</td>
+<td>和上一个周期比</td>
+<td>1</td>
+</tr>
+<tr>
+<td>下钻</td>
+<td>Drill Down</td>
+<td>从汇总数据往更细的维度看（区域 → 城市 → 门店）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>漏斗</td>
+<td>Funnel</td>
+<td>描述用户逐步转化的各环节</td>
+<td>1</td>
+</tr>
+<tr>
+<td>留存</td>
+<td>Retention</td>
+<td>用户是否还会回来</td>
+<td>1</td>
+</tr>
+<tr>
+<td>幸存者偏差</td>
+<td>Survivorship Bias</td>
+<td>只看到”活下来”的样本，得出错误结论</td>
+<td>1</td>
+</tr>
+<tr>
+<td>辛普森悖论</td>
+<td>Simpson’s Paradox</td>
+<td>分组看都是 A 好，合起来却是 B 好（因结构不同）</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、统计学基础"><a href="#二、统计学基础" class="headerlink" title="二、统计学基础"></a>二、统计学基础</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>总体</td>
+<td>Population</td>
+<td>你关心的<strong>全部</strong>对象</td>
+<td>8</td>
+</tr>
+<tr>
+<td>样本</td>
+<td>Sample</td>
+<td>从总体里抽出来的一部分</td>
+<td>8</td>
+</tr>
+<tr>
+<td>变量</td>
+<td>Variable</td>
+<td>会变化的量（就是”列”）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>观测</td>
+<td>Observation</td>
+<td>一条记录（就是”行”）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>均值</td>
+<td>Mean</td>
+<td>所有值加起来除以个数，<strong>受极端值影响大</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td>中位数</td>
+<td>Median</td>
+<td>排序后正中间那个，<strong>抗极端值</strong></td>
+<td>1</td>
+</tr>
+<tr>
+<td>众数</td>
+<td>Mode</td>
+<td>出现次数最多的值</td>
+<td>1</td>
+</tr>
+<tr>
+<td>分位数</td>
+<td>Quantile &#x2F; Percentile</td>
+<td>把数据分成等份的切点（P25、P50、P75）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>四分位距</td>
+<td>IQR</td>
+<td>P75 − P25，衡量中间 50% 数据的分散程度</td>
+<td>5</td>
+</tr>
+<tr>
+<td>极差</td>
+<td>Range</td>
+<td>最大值 − 最小值</td>
+<td>3</td>
+</tr>
+<tr>
+<td>方差</td>
+<td>Variance</td>
+<td>各值偏离均值程度的平方的平均</td>
+<td>3</td>
+</tr>
+<tr>
+<td>标准差</td>
+<td>Standard Deviation</td>
+<td>方差的平方根，<strong>和原数据同单位</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>偏度</td>
+<td>Skewness</td>
+<td>分布不对称的程度。&gt;0 右偏（长尾在右）</td>
+<td>3</td>
+</tr>
+<tr>
+<td>峰度</td>
+<td>Kurtosis</td>
+<td>分布”尖”或”平”的程度</td>
+<td>3</td>
+</tr>
+<tr>
+<td>正态分布</td>
+<td>Normal Distribution</td>
+<td>钟形曲线，均值±1σ 含约 68% 数据</td>
+<td>5</td>
+</tr>
+<tr>
+<td>离群值</td>
+<td>Outlier</td>
+<td>明显偏离其他观测的值</td>
+<td>5</td>
+</tr>
+<tr>
+<td>3σ 法则</td>
+<td>3-Sigma Rule</td>
+<td>超出均值±3σ 的值视为异常（要求近正态）</td>
+<td>5</td>
+</tr>
+<tr>
+<td>z-score</td>
+<td>Standard Score</td>
+<td>(x − 均值) &#x2F; 标准差，表示”偏离几个标准差”</td>
+<td>5</td>
+</tr>
+<tr>
+<td>相关系数</td>
+<td>Correlation Coefficient</td>
+<td>−1~1，衡量线性相关强度和方向</td>
+<td>1</td>
+</tr>
+<tr>
+<td>协方差</td>
+<td>Covariance</td>
+<td>两个变量一起变化的程度（受量纲影响）</td>
+<td>3</td>
+</tr>
+<tr>
+<td>假设检验</td>
+<td>Hypothesis Testing</td>
+<td>用样本判断某个说法是否成立</td>
+<td>8</td>
+</tr>
+<tr>
+<td>显著性</td>
+<td>Statistical Significance</td>
+<td>差异不太可能是随机造成的</td>
+<td>8</td>
+</tr>
+<tr>
+<td>p 值</td>
+<td>p-value</td>
+<td>原假设成立时，观测到当前结果的概率</td>
+<td>8</td>
+</tr>
+<tr>
+<td>置信区间</td>
+<td>Confidence Interval</td>
+<td>参数可能落在的区间</td>
+<td>8</td>
+</tr>
+<tr>
+<td>抽样误差</td>
+<td>Sampling Error</td>
+<td>因为只看了样本而带来的误差</td>
+<td>8</td>
+</tr>
+<tr>
+<td>集中趋势</td>
+<td>Central Tendency</td>
+<td>数据”中心”在哪（均值&#x2F;中位数&#x2F;众数）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>离散程度</td>
+<td>Dispersion</td>
+<td>数据有多分散（方差&#x2F;标准差&#x2F;极差）</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、NumPy-相关"><a href="#三、NumPy-相关" class="headerlink" title="三、NumPy 相关"></a>三、NumPy 相关</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数组</td>
+<td>ndarray &#x2F; array</td>
+<td>NumPy 的核心数据结构，同类型元素的连续内存块</td>
+<td>3</td>
+</tr>
+<tr>
+<td>维度</td>
+<td>Dimension &#x2F; ndim</td>
+<td>数组有几个轴（一维、二维、三维）</td>
+<td>3</td>
+</tr>
+<tr>
+<td>形状</td>
+<td>Shape</td>
+<td>每个轴的长度，如 <code>(3, 4)</code> 表示 3 行 4 列</td>
+<td>3</td>
+</tr>
+<tr>
+<td>轴</td>
+<td>Axis</td>
+<td>数组的某个维度方向。聚合时 <strong>axis 是”被消掉的维度”</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>广播</td>
+<td>Broadcasting</td>
+<td>形状不同的数组运算时自动扩展对齐</td>
+<td>3</td>
+</tr>
+<tr>
+<td>向量化</td>
+<td>Vectorization</td>
+<td>用数组整体运算代替逐元素循环，<strong>快几十倍</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>视图</td>
+<td>View</td>
+<td>和原数组共享内存，改它会改到原数组</td>
+<td>3</td>
+</tr>
+<tr>
+<td>副本</td>
+<td>Copy</td>
+<td>独立的内存，改它不影响原数组</td>
+<td>3</td>
+</tr>
+<tr>
+<td>布尔索引</td>
+<td>Boolean Indexing</td>
+<td>用 True&#x2F;False 数组筛选，返回<strong>副本</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>花式索引</td>
+<td>Fancy Indexing</td>
+<td>用整数下标数组取多个元素，返回<strong>副本</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>数据类型</td>
+<td>dtype</td>
+<td>元素类型（int64 &#x2F; float64 &#x2F; str &#x2F; bool…）</td>
+<td>3</td>
+</tr>
+<tr>
+<td>轴方向</td>
+<td>—</td>
+<td><code>axis=0</code> 消掉行（按列算）；<code>axis=1</code> 消掉列（按行算）</td>
+<td>3</td>
+</tr>
+<tr>
+<td>缺失值</td>
+<td>NaN &#x2F; NA</td>
+<td>“不是一个数”，注意 <strong><code>nan != nan</code></strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>随机种子</td>
+<td>Random Seed</td>
+<td>固定随机数序列，让结果<strong>可复现</strong></td>
+<td>3</td>
+</tr>
+<tr>
+<td>伪随机数</td>
+<td>Pseudo-random Number</td>
+<td>由算法生成的”看起来随机”的数列</td>
+<td>3</td>
+</tr>
+<tr>
+<td>SIMD</td>
+<td>Single Instruction Multiple Data</td>
+<td>CPU 一条指令处理多个数据，NumPy 快的原因之一</td>
+<td>3</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、pandas-相关"><a href="#四、pandas-相关" class="headerlink" title="四、pandas 相关"></a>四、pandas 相关</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>序列</td>
+<td>Series</td>
+<td>带行标签的一维数据结构（相当于一列）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>数据框</td>
+<td>DataFrame</td>
+<td>带行列标签的二维表</td>
+<td>4</td>
+</tr>
+<tr>
+<td>索引</td>
+<td>Index</td>
+<td>行的”名字”，默认是 0,1,2…</td>
+<td>4</td>
+</tr>
+<tr>
+<td>列名</td>
+<td>Columns</td>
+<td>表的字段名</td>
+<td>4</td>
+</tr>
+<tr>
+<td>标签索引</td>
+<td><code>.loc</code></td>
+<td>按<strong>名字</strong>取数据，<strong>切片含结尾</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td>位置索引</td>
+<td><code>.iloc</code></td>
+<td>按<strong>位置编号</strong>取数据，<strong>切片不含结尾</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td>布尔筛选</td>
+<td>Boolean Selection</td>
+<td><code>df[df[&quot;列&quot;] &gt; 5]</code>，注意用 <code>&amp;</code> 不是 <code>and</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td>分组聚合</td>
+<td>groupby + agg</td>
+<td>按某维度切开、分别算指标、再合并</td>
+<td>4</td>
+</tr>
+<tr>
+<td>具名聚合</td>
+<td>Named Aggregation</td>
+<td><code>agg(新名字=(&quot;列&quot;, &quot;函数&quot;))</code>，推荐的写法</td>
+<td>4</td>
+</tr>
+<tr>
+<td>广播（分组）</td>
+<td><code>transform</code></td>
+<td>把组内统计量广播回原表的每一行（长度不变）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>透视表</td>
+<td>pivot_table</td>
+<td>类似 Excel 透视表，行列交叉汇总</td>
+<td>4</td>
+</tr>
+<tr>
+<td>交叉表</td>
+<td>crosstab</td>
+<td>专门统计频次的交叉表</td>
+<td>4</td>
+</tr>
+<tr>
+<td>宽表 &#x2F; 长表</td>
+<td>Wide &#x2F; Long Format</td>
+<td>宽表列多行少；长表列少行多（脏数据也长）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>变形</td>
+<td>melt</td>
+<td>宽表 → 长表</td>
+<td>4</td>
+</tr>
+<tr>
+<td>变形</td>
+<td>pivot &#x2F; unstack</td>
+<td>长表 → 宽表</td>
+<td>4</td>
+</tr>
+<tr>
+<td>连接</td>
+<td>merge</td>
+<td>按共同列把两张表拼起来（等价 SQL JOIN）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>内连接</td>
+<td>inner join</td>
+<td>只保留两边都有的（匹配不上就丢）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>左连接</td>
+<td>left join</td>
+<td><strong>保留左表全部</strong>（匹配不上补 NaN），<strong>默认推荐</strong></td>
+<td>4</td>
+</tr>
+<tr>
+<td>纵向拼接</td>
+<td>concat(axis&#x3D;0)</td>
+<td>上下摞起来（要求列相同）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>横向拼接</td>
+<td>concat(axis&#x3D;1)</td>
+<td>左右并排（按索引对齐）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>链式调用</td>
+<td>Method Chaining</td>
+<td>连续调用方法形成流水线</td>
+<td>4</td>
+</tr>
+<tr>
+<td>管道</td>
+<td>pipe</td>
+<td>把自己的函数插进链式调用</td>
+<td>4</td>
+</tr>
+<tr>
+<td>写时复制</td>
+<td>Copy-on-Write (CoW)</td>
+<td>pandas 3.0 起强制开启：切片永远是独立的</td>
+<td>4</td>
+</tr>
+<tr>
+<td>分类类型</td>
+<td>category</td>
+<td>只有少数几种取值的列，省内存、聚合更快</td>
+<td>4</td>
+</tr>
+<tr>
+<td>重采样</td>
+<td>resample</td>
+<td>按时间粒度重新聚合（<strong>3.0 用 “ME” 不用 “M”</strong>）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>分箱</td>
+<td>binning &#x2F; cut</td>
+<td>把连续值变成区间（<code>cut</code> 按数值、<code>qcut</code> 按分位数）</td>
+<td>4</td>
+</tr>
+<tr>
+<td>缺失值</td>
+<td>NaN &#x2F; NA &#x2F; None</td>
+<td>三种不同来源的”空”，语义有细微差别</td>
+<td>5</td>
+</tr>
+<tr>
+<td>空字符串</td>
+<td><code>&quot;&quot;</code></td>
+<td><strong>不是缺失值</strong>，但业务上常要当缺失处理</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="五、数据预处理"><a href="#五、数据预处理" class="headerlink" title="五、数据预处理"></a>五、数据预处理</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据清洗</td>
+<td>Data Cleaning</td>
+<td>把脏数据变成能用数据的过程</td>
+<td>5</td>
+</tr>
+<tr>
+<td>数据质量</td>
+<td>Data Quality</td>
+<td>完整性、准确性、一致性、时效性</td>
+<td>5</td>
+</tr>
+<tr>
+<td>缺失率</td>
+<td>Missing Rate</td>
+<td>某列缺失值占比</td>
+<td>5</td>
+</tr>
+<tr>
+<td>填补</td>
+<td>Imputation</td>
+<td>用某种规则填上缺失值</td>
+<td>5</td>
+</tr>
+<tr>
+<td>前向填充</td>
+<td>Forward Fill (ffill)</td>
+<td>用上一个非缺失值填</td>
+<td>5</td>
+</tr>
+<tr>
+<td>插值</td>
+<td>Interpolation</td>
+<td>按趋势估算中间的值（线性插值等）</td>
+<td>5</td>
+</tr>
+<tr>
+<td>异常值</td>
+<td>Outlier</td>
+<td>明显不合理的值</td>
+<td>5</td>
+</tr>
+<tr>
+<td>截断</td>
+<td>Clipping</td>
+<td>把超出范围的值压到边界（<code>clip</code>）</td>
+<td>5</td>
+</tr>
+<tr>
+<td>去重</td>
+<td>Deduplication</td>
+<td>去掉重复记录，注意 <code>subset</code> 的语义</td>
+<td>5</td>
+</tr>
+<tr>
+<td>标准化</td>
+<td>Standardization</td>
+<td>(x − 均值) &#x2F; 标准差，结果均值 0 标准差 1</td>
+<td>5</td>
+</tr>
+<tr>
+<td>归一化</td>
+<td>Normalization</td>
+<td>(x − min) &#x2F; (max − min)，压到 [0,1]</td>
+<td>5</td>
+</tr>
+<tr>
+<td>稳健标准化</td>
+<td>Robust Scaling</td>
+<td>用中位数和 IQR，<strong>抗异常值</strong></td>
+<td>5</td>
+</tr>
+<tr>
+<td>对数变换</td>
+<td>Log Transform</td>
+<td>压缩右偏分布，常用 <code>log1p</code>（能处理 0）</td>
+<td>5</td>
+</tr>
+<tr>
+<td>独热编码</td>
+<td>One-Hot Encoding</td>
+<td>把分类变成多个 0&#x2F;1 列</td>
+<td>5</td>
+</tr>
+<tr>
+<td>标签编码</td>
+<td>Label Encoding</td>
+<td>把分类映射成整数（<strong>注意有序 vs 无序</strong>）</td>
+<td>5</td>
+</tr>
+<tr>
+<td>特征工程</td>
+<td>Feature Engineering</td>
+<td>造出对预测更有用的输入变量</td>
+<td>5</td>
+</tr>
+<tr>
+<td>特征缩放</td>
+<td>Feature Scaling</td>
+<td>统一各特征量纲（标准化&#x2F;归一化的统称）</td>
+<td>5</td>
+</tr>
+<tr>
+<td>数据泄漏</td>
+<td>Data Leakage</td>
+<td>模型”偷看”了训练时不该看到的信息</td>
+<td>8</td>
+</tr>
+<tr>
+<td>数据体检</td>
+<td>Data Profiling</td>
+<td>分析前先检查数据质量</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、可视化"><a href="#六、可视化" class="headerlink" title="六、可视化"></a>六、可视化</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>图形对象</td>
+<td>Figure</td>
+<td>整张画布（可以含多个子图）</td>
+<td>6</td>
+</tr>
+<tr>
+<td>坐标轴对象</td>
+<td>Axes</td>
+<td>一张子图（<strong>不是”轴”，是”子图”</strong>）</td>
+<td>6</td>
+</tr>
+<tr>
+<td>轴</td>
+<td>Axis</td>
+<td>横轴&#x2F;纵轴</td>
+<td>6</td>
+</tr>
+<tr>
+<td>状态机接口</td>
+<td>pyplot Interface</td>
+<td><code>plt.plot(...)</code> 的简写风格</td>
+<td>6</td>
+</tr>
+<tr>
+<td>面向对象接口</td>
+<td>OO Interface</td>
+<td><code>fig, ax = plt.subplots()</code> 风格，<strong>推荐</strong></td>
+<td>6</td>
+</tr>
+<tr>
+<td>子图</td>
+<td>Subplot</td>
+<td>一张图里切分出的多个小图</td>
+<td>6</td>
+</tr>
+<tr>
+<td>分面</td>
+<td>Faceting</td>
+<td>按某个分类变量拆成多张子图</td>
+<td>7</td>
+</tr>
+<tr>
+<td>图例</td>
+<td>Legend</td>
+<td>说明各颜色&#x2F;线型代表什么</td>
+<td>6</td>
+</tr>
+<tr>
+<td>刻度</td>
+<td>Tick</td>
+<td>坐标轴上的标尺和标签</td>
+<td>6</td>
+</tr>
+<tr>
+<td>边框</td>
+<td>Spine</td>
+<td>子图四周的边框线</td>
+<td>6</td>
+</tr>
+<tr>
+<td>注释</td>
+<td>Annotation</td>
+<td>给图加文字说明&#x2F;箭头</td>
+<td>6</td>
+</tr>
+<tr>
+<td>色带</td>
+<td>Colormap (cmap)</td>
+<td>连续数据映射到的颜色序列</td>
+<td>6</td>
+</tr>
+<tr>
+<td>发散色带</td>
+<td>Diverging Colormap</td>
+<td>中间为中性色、两端相反的色带（如 <code>RdBu_r</code>），适合有正负的数据</td>
+<td>6</td>
+</tr>
+<tr>
+<td>顺序色带</td>
+<td>Sequential Colormap</td>
+<td>亮度单调变化（如 <code>viridis</code>），适合连续量</td>
+<td>6</td>
+</tr>
+<tr>
+<td>分辨率</td>
+<td>DPI</td>
+<td>每英寸点数，越高越清晰、文件越大</td>
+<td>6</td>
+</tr>
+<tr>
+<td>矢量图</td>
+<td>Vector Graphics</td>
+<td>SVG&#x2F;PDF，<strong>放大不模糊</strong>，适合论文插图</td>
+<td>6</td>
+</tr>
+<tr>
+<td>栅格图</td>
+<td>Raster Graphics</td>
+<td>PNG&#x2F;JPG，放大后模糊</td>
+<td>6</td>
+</tr>
+<tr>
+<td>核密度估计</td>
+<td>KDE</td>
+<td>用平滑曲线估计概率密度（直方图的连续版）</td>
+<td>7</td>
+</tr>
+<tr>
+<td>箱线图</td>
+<td>Box Plot</td>
+<td>用五数概括展示分布，<strong>能看出离群点</strong></td>
+<td>6</td>
+</tr>
+<tr>
+<td>小提琴图</td>
+<td>Violin Plot</td>
+<td>箱线图 + 密度曲线，比箱线图多看了”形状”</td>
+<td>7</td>
+</tr>
+<tr>
+<td>分位数</td>
+<td>Quartile</td>
+<td>把数据四等分的切点</td>
+<td>6</td>
+</tr>
+<tr>
+<td>误差棒</td>
+<td>Error Bar</td>
+<td>图上表示波动范围的竖线（常是 ±标准差）</td>
+<td>6</td>
+</tr>
+<tr>
+<td>双轴图</td>
+<td>Twin Axis</td>
+<td>两个量纲不同的指标画在一张图（有两个纵轴）</td>
+<td>6</td>
+</tr>
+<tr>
+<td>交互图</td>
+<td>Interactive Chart</td>
+<td>可缩放、悬浮显示数值的图（plotly）</td>
+<td>7</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、机器学习"><a href="#七、机器学习" class="headerlink" title="七、机器学习"></a>七、机器学习</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>机器学习</td>
+<td>Machine Learning</td>
+<td>让计算机从数据里自动找规律并预测</td>
+<td>8</td>
+</tr>
+<tr>
+<td>监督学习</td>
+<td>Supervised Learning</td>
+<td><strong>有标签</strong>，学”输入 → 输出”的映射</td>
+<td>8</td>
+</tr>
+<tr>
+<td>无监督学习</td>
+<td>Unsupervised Learning</td>
+<td><strong>没有标签</strong>，找数据的内在结构</td>
+<td>8</td>
+</tr>
+<tr>
+<td>半监督学习</td>
+<td>Semi-supervised Learning</td>
+<td>少量有标签 + 大量无标签</td>
+<td>—</td>
+</tr>
+<tr>
+<td>强化学习</td>
+<td>Reinforcement Learning</td>
+<td>通过奖励&#x2F;惩罚学习策略</td>
+<td>—</td>
+</tr>
+<tr>
+<td>分类</td>
+<td>Classification</td>
+<td>预测<strong>类别</strong>（买&#x2F;不买、是&#x2F;否）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>回归</td>
+<td>Regression</td>
+<td>预测<strong>连续数值</strong>（房价、销量）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>聚类</td>
+<td>Clustering</td>
+<td>无标签下把相似的样本分成组</td>
+<td>8</td>
+</tr>
+<tr>
+<td>降维</td>
+<td>Dimensionality Reduction</td>
+<td>用更少的维度表示原数据（PCA）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>关联规则</td>
+<td>Association Rules</td>
+<td>找”买 A 的人往往也买 B”</td>
+<td>8</td>
+</tr>
+<tr>
+<td>特征</td>
+<td>Feature</td>
+<td>用来预测的输入变量（X）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>标签 &#x2F; 目标</td>
+<td>Label &#x2F; Target</td>
+<td>要预测的值（y）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>样本</td>
+<td>Sample &#x2F; Instance</td>
+<td>一条数据（一行）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>Parameter</td>
+<td>模型<strong>自己从数据学</strong>出来的（如线性回归的斜率）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>超参数</td>
+<td>Hyperparameter</td>
+<td><strong>你手工设定</strong>的（如树深、K 值、学习率）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>训练集</td>
+<td>Training Set</td>
+<td>用来”学”的数据</td>
+<td>8</td>
+</tr>
+<tr>
+<td>测试集</td>
+<td>Test Set</td>
+<td>用来”考试”的数据，<strong>训练时绝对不能看</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>验证集</td>
+<td>Validation Set</td>
+<td>用来调超参数的数据</td>
+<td>8</td>
+</tr>
+<tr>
+<td>分层抽样</td>
+<td>Stratified Sampling</td>
+<td>划分时保持正例比例一致，<strong>不平衡数据必加</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>交叉验证</td>
+<td>Cross-Validation</td>
+<td>K 折轮流当验证集，结果更稳</td>
+<td>8</td>
+</tr>
+<tr>
+<td>网格搜索</td>
+<td>Grid Search</td>
+<td>穷举超参数组合找最优</td>
+<td>8</td>
+</tr>
+<tr>
+<td>随机搜索</td>
+<td>Random Search</td>
+<td>随机采样超参数组合，参数多时更高效</td>
+<td>8</td>
+</tr>
+<tr>
+<td>拟合</td>
+<td>Fit &#x2F; Train</td>
+<td>让模型从数据里学规律</td>
+<td>8</td>
+</tr>
+<tr>
+<td>预测</td>
+<td>Predict &#x2F; Inference</td>
+<td>用模型对新数据出结果</td>
+<td>8</td>
+</tr>
+<tr>
+<td>泛化</td>
+<td>Generalization</td>
+<td>在<strong>没见过的数据</strong>上表现好不好</td>
+<td>8</td>
+</tr>
+<tr>
+<td>过拟合</td>
+<td>Overfitting</td>
+<td>训练集极好、测试集差（背下了噪声）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>欠拟合</td>
+<td>Underfitting</td>
+<td>训练集和测试集都差（没学到规律）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>学习曲线</td>
+<td>Learning Curve</td>
+<td>得分随训练数据量的变化曲线，用来诊断拟合问题</td>
+<td>8</td>
+</tr>
+<tr>
+<td>正则化</td>
+<td>Regularization</td>
+<td>惩罚模型复杂度以缓解过拟合</td>
+<td>8</td>
+</tr>
+<tr>
+<td>L1 正则</td>
+<td>L1 &#x2F; Lasso</td>
+<td>加系数绝对值之和的惩罚，<strong>能自动做特征选择</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>L2 正则</td>
+<td>L2 &#x2F; Ridge</td>
+<td>加系数平方和的惩罚，让系数更平滑</td>
+<td>8</td>
+</tr>
+<tr>
+<td>早停</td>
+<td>Early Stopping</td>
+<td>验证集不再提升就停止训练</td>
+<td>8</td>
+</tr>
+<tr>
+<td>集成学习</td>
+<td>Ensemble Learning</td>
+<td>组合多个模型提升效果</td>
+<td>8</td>
+</tr>
+<tr>
+<td>装袋</td>
+<td>Bagging</td>
+<td>并行训练多个模型再投票（随机森林）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>提升</td>
+<td>Boosting</td>
+<td>串行训练，后一个修正前一个的错误（GBDT）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>混淆矩阵</td>
+<td>Confusion Matrix</td>
+<td>TP&#x2F;FP&#x2F;FN&#x2F;TN 四格表，其他指标都由它衍生</td>
+<td>8</td>
+</tr>
+<tr>
+<td>准确率</td>
+<td>Accuracy</td>
+<td>(TP+TN)&#x2F;总数，<strong>不平衡时会骗人</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>精确率</td>
+<td>Precision</td>
+<td>TP&#x2F;(TP+FP)，”预测为正的里有多少真的正”</td>
+<td>8</td>
+</tr>
+<tr>
+<td>召回率</td>
+<td>Recall</td>
+<td>TP&#x2F;(TP+FN)，”实际为正的里找出了多少”</td>
+<td>8</td>
+</tr>
+<tr>
+<td>F1 分数</td>
+<td>F1 Score</td>
+<td>精确率和召回率的调和平均</td>
+<td>8</td>
+</tr>
+<tr>
+<td>ROC 曲线</td>
+<td>ROC Curve</td>
+<td>横轴误报率、纵轴召回率的曲线</td>
+<td>8</td>
+</tr>
+<tr>
+<td>AUC</td>
+<td>Area Under ROC Curve</td>
+<td>曲线下面积，<strong>不受不平衡影响</strong>，二分类首选指标</td>
+<td>8</td>
+</tr>
+<tr>
+<td>分类阈值</td>
+<td>Threshold</td>
+<td>把概率变成”是&#x2F;否”的分界，<strong>决定成本收益</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>平均绝对误差</td>
+<td>MAE</td>
+<td>预测误差绝对值的平均，<strong>和 y 同单位</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>均方误差</td>
+<td>MSE</td>
+<td>误差平方的平均，放大对大误差的惩罚</td>
+<td>8</td>
+</tr>
+<tr>
+<td>均方根误差</td>
+<td>RMSE</td>
+<td>MSE 开方，和 MAE 同单位但更敏感于大误差</td>
+<td>8</td>
+</tr>
+<tr>
+<td>决定系数</td>
+<td>R²</td>
+<td>模型解释了目标变量多少比例的变异，≤1</td>
+<td>8</td>
+</tr>
+<tr>
+<td>KNN</td>
+<td>K-Nearest Neighbors</td>
+<td>看最近的 K 个邻居是谁来投票&#x2F;取均值</td>
+<td>8</td>
+</tr>
+<tr>
+<td>决策树</td>
+<td>Decision Tree</td>
+<td>一系列 if-else 规则，<strong>可解释但易过拟合</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>随机森林</td>
+<td>Random Forest</td>
+<td>多棵决策树投票（Bagging）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>梯度提升</td>
+<td>Gradient Boosting</td>
+<td>串行训练决策树，逐步修正残差</td>
+<td>8</td>
+</tr>
+<tr>
+<td>逻辑回归</td>
+<td>Logistic Regression</td>
+<td>名字叫”回归”，实际是<strong>分类</strong>（输出概率）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>支持向量机</td>
+<td>SVM</td>
+<td>找最大间隔的超平面；用核函数处理非线性</td>
+<td>8</td>
+</tr>
+<tr>
+<td>朴素贝叶斯</td>
+<td>Naive Bayes</td>
+<td>基于贝叶斯定理 + “特征独立”假设</td>
+<td>8</td>
+</tr>
+<tr>
+<td>K-Means</td>
+<td>K-Means</td>
+<td>迭代找 K 个质心的聚类算法</td>
+<td>8</td>
+</tr>
+<tr>
+<td>DBSCAN</td>
+<td>Density-Based Clustering</td>
+<td>基于密度的聚类，<strong>能自动定簇数、能识别噪声</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>层次聚类</td>
+<td>Hierarchical Clustering</td>
+<td>自底向上合并，得到一棵聚类树</td>
+<td>8</td>
+</tr>
+<tr>
+<td>轮廓系数</td>
+<td>Silhouette Score</td>
+<td>−1~1，衡量”簇内紧、簇间分”，聚类效果指标</td>
+<td>8</td>
+</tr>
+<tr>
+<td>肘部法</td>
+<td>Elbow Method</td>
+<td>看 SSE 下降曲线的”拐点”来定 K</td>
+<td>8</td>
+</tr>
+<tr>
+<td>主成分分析</td>
+<td>PCA</td>
+<td>把相关的多个特征压缩成少数几个”综合特征”</td>
+<td>8</td>
+</tr>
+<tr>
+<td>方差解释率</td>
+<td>Explained Variance Ratio</td>
+<td>每个主成分保留了原数据多少信息</td>
+<td>8</td>
+</tr>
+<tr>
+<td>载荷</td>
+<td>Loading</td>
+<td>主成分由哪些原始特征构成（绝对值越大贡献越大）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>支持度</td>
+<td>Support</td>
+<td>A 和 B 同时出现的比例（关联规则）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>置信度</td>
+<td>Confidence</td>
+<td>买了 A 的人里也买 B 的比例</td>
+<td>8</td>
+</tr>
+<tr>
+<td>提升度</td>
+<td>Lift</td>
+<td>有 A 之后买 B 的概率提升倍数，<strong>&gt;1 才有意义</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>频繁项集</td>
+<td>Frequent Itemset</td>
+<td>出现频率超过阈值的商品组合（apriori 的产物）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>平稳性</td>
+<td>Stationarity</td>
+<td>统计特征不随时间变化（时间序列建模前提）</td>
+<td>8</td>
+</tr>
+<tr>
+<td>ADF 检验</td>
+<td>Augmented Dickey-Fuller Test</td>
+<td>检验时间序列是否平稳，p&lt;0.05 表示平稳</td>
+<td>8</td>
+</tr>
+<tr>
+<td>差分</td>
+<td>Differencing</td>
+<td>后一个值减前一个值，用来让序列平稳</td>
+<td>8</td>
+</tr>
+<tr>
+<td>移动平均</td>
+<td>Moving Average</td>
+<td>用最近 N 期的均值平滑序列</td>
+<td>8</td>
+</tr>
+<tr>
+<td>趋势</td>
+<td>Trend</td>
+<td>长期的上升&#x2F;下降</td>
+<td>8</td>
+</tr>
+<tr>
+<td>季节性</td>
+<td>Seasonality</td>
+<td>固定周期的重复波动</td>
+<td>8</td>
+</tr>
+<tr>
+<td>残差</td>
+<td>Residual</td>
+<td>实际值减模型拟合值，剩下”没被解释”的部分</td>
+<td>8</td>
+</tr>
+<tr>
+<td>ARIMA</td>
+<td>ARIMA(p,d,q)</td>
+<td>经典时间序列模型：自回归+差分+移动平均</td>
+<td>8</td>
+</tr>
+<tr>
+<td>指数平滑</td>
+<td>Exponential Smoothing</td>
+<td>越近的数据权重越大；Holt-Winters 加趋势和季节</td>
+<td>8</td>
+</tr>
+<tr>
+<td>朴素基线</td>
+<td>Naive Baseline</td>
+<td>最简单的预测方法（如”用昨天&#x3D;今天”），用来对比</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="八、数据库与数据获取"><a href="#八、数据库与数据获取" class="headerlink" title="八、数据库与数据获取"></a>八、数据库与数据获取</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据库</td>
+<td>Database</td>
+<td>有组织地存储数据的系统</td>
+<td>2</td>
+</tr>
+<tr>
+<td>关系型数据库</td>
+<td>Relational Database</td>
+<td>数据存在多张表里，通过键关联</td>
+<td>2</td>
+</tr>
+<tr>
+<td>表</td>
+<td>Table</td>
+<td>相当于一个 DataFrame</td>
+<td>2</td>
+</tr>
+<tr>
+<td>字段 &#x2F; 列</td>
+<td>Field &#x2F; Column</td>
+<td>表的一个属性</td>
+<td>2</td>
+</tr>
+<tr>
+<td>记录 &#x2F; 行</td>
+<td>Record &#x2F; Row</td>
+<td>表的一条数据</td>
+<td>2</td>
+</tr>
+<tr>
+<td>主键</td>
+<td>Primary Key</td>
+<td>唯一标识一行的字段</td>
+<td>2</td>
+</tr>
+<tr>
+<td>外键</td>
+<td>Foreign Key</td>
+<td>指向另一张表主键的字段</td>
+<td>2</td>
+</tr>
+<tr>
+<td>索引</td>
+<td>Index (DB)</td>
+<td>加速查询的数据结构</td>
+<td>2</td>
+</tr>
+<tr>
+<td>查询</td>
+<td>Query</td>
+<td>用 SQL 从数据库取数</td>
+<td>2</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>Structured Query Language</td>
+<td>数据库查询语言</td>
+<td>2</td>
+</tr>
+<tr>
+<td>聚合函数</td>
+<td>Aggregate Function</td>
+<td>COUNT &#x2F; SUM &#x2F; AVG &#x2F; MAX &#x2F; MIN</td>
+<td>2</td>
+</tr>
+<tr>
+<td>编码</td>
+<td>Encoding</td>
+<td>字符到字节的映射规则（utf-8 &#x2F; gbk）</td>
+<td>2</td>
+</tr>
+<tr>
+<td>BOM</td>
+<td>Byte Order Mark</td>
+<td>文件开头的不可见标记，会导致列名带 <code>\ufeff</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td>Comma-Separated Values</td>
+<td>逗号分隔的纯文本表格</td>
+<td>2</td>
+</tr>
+<tr>
+<td>Parquet</td>
+<td>—</td>
+<td>列式存储格式，体积小、类型保留、适合大数据</td>
+<td>2</td>
+</tr>
+<tr>
+<td>行式存储</td>
+<td>Row-oriented Storage</td>
+<td>一行整块存（CSV&#x2F;MySQL 默认）</td>
+<td>2</td>
+</tr>
+<tr>
+<td>列式存储</td>
+<td>Column-oriented Storage</td>
+<td>一列整块存（Parquet），只读部分列时极快</td>
+<td>2</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>JavaScript Object Notation</td>
+<td>能表达嵌套结构的数据格式，接口事实标准</td>
+<td>2</td>
+</tr>
+<tr>
+<td>JSONL</td>
+<td>JSON Lines</td>
+<td>每行一个 JSON 对象，适合流式读取</td>
+<td>2</td>
+</tr>
+<tr>
+<td>嵌套结构</td>
+<td>Nested Structure</td>
+<td>值里还有对象或数组，需要摊平才能分析</td>
+<td>2</td>
+</tr>
+<tr>
+<td>摊平</td>
+<td>Flatten &#x2F; Normalize</td>
+<td>把嵌套 JSON 变成平面表（<code>json_normalize</code>）</td>
+<td>2</td>
+</tr>
+<tr>
+<td>网页抓取</td>
+<td>Web Scraping</td>
+<td>用程序从网页提取数据</td>
+<td>2</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>HyperText Markup Language</td>
+<td>网页的骨架标记语言</td>
+<td>2</td>
+</tr>
+<tr>
+<td>CSS 选择器</td>
+<td>CSS Selector</td>
+<td>用 <code>#id</code> &#x2F; <code>.class</code> &#x2F; 标签定位元素</td>
+<td>2</td>
+</tr>
+<tr>
+<td>API</td>
+<td>Application Programming Interface</td>
+<td>服务方提供的数据接口，通常返回 JSON</td>
+<td>2</td>
+</tr>
+<tr>
+<td>REST</td>
+<td>Representational State Transfer</td>
+<td>最常见的 API 设计风格</td>
+<td>2</td>
+</tr>
+<tr>
+<td>分页</td>
+<td>Pagination</td>
+<td>接口一次只返回一部分，需要翻页取全</td>
+<td>2</td>
+</tr>
+<tr>
+<td>请求头</td>
+<td>Header</td>
+<td>请求附带的元信息（认证 token 等）</td>
+<td>2</td>
+</tr>
+<tr>
+<td>状态码</td>
+<td>Status Code</td>
+<td>200 成功 &#x2F; 401 未认证 &#x2F; 404 不存在 &#x2F; 429 太频繁 &#x2F; 500 服务器错</td>
+<td>2</td>
+</tr>
+<tr>
+<td>频率限制</td>
+<td>Rate Limit</td>
+<td>服务方限制你的请求频率</td>
+<td>2</td>
+</tr>
+<tr>
+<td>requests</td>
+<td>—</td>
+<td>Python 的 HTTP 请求库</td>
+<td>2</td>
+</tr>
+<tr>
+<td>BeautifulSoup</td>
+<td>—</td>
+<td>Python 的 HTML 解析库</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="九、环境与工程"><a href="#九、环境与工程" class="headerlink" title="九、环境与工程"></a>九、环境与工程</h2><table>
+<thead>
+<tr>
+<th>中文</th>
+<th>英文</th>
+<th>一句话解释</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>虚拟环境</td>
+<td>Virtual Environment</td>
+<td>项目独立的依赖空间，互不干扰</td>
+<td>0</td>
+</tr>
+<tr>
+<td>conda</td>
+<td>—</td>
+<td>包与环境管理器（也能管非 Python 依赖）</td>
+<td>0</td>
+</tr>
+<tr>
+<td>pip</td>
+<td>Pip Installs Packages</td>
+<td>Python 官方包管理器</td>
+<td>0</td>
+</tr>
+<tr>
+<td>镜像源</td>
+<td>Mirror</td>
+<td>国内的 PyPI 镜像，下载更快</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Jupyter Notebook</td>
+<td>—</td>
+<td>单元格式交互编程环境</td>
+<td>0</td>
+</tr>
+<tr>
+<td>内核</td>
+<td>Kernel</td>
+<td>Notebook 背后真正跑 Python 的进程</td>
+<td>0</td>
+</tr>
+<tr>
+<td>工作目录</td>
+<td>Working Directory</td>
+<td>程序运行时”当前所在”的目录，<strong>决定相对路径的基准</strong></td>
+<td>2</td>
+</tr>
+<tr>
+<td>相对路径</td>
+<td>Relative Path</td>
+<td>相对于当前工作目录的路径（<code>../data/x.csv</code>）</td>
+<td>2</td>
+</tr>
+<tr>
+<td>绝对路径</td>
+<td>Absolute Path</td>
+<td>从盘符开始的完整路径</td>
+<td>2</td>
+</tr>
+<tr>
+<td>可复现性</td>
+<td>Reproducibility</td>
+<td>别人能跑出和你一样的结果（固定随机种子、写脚本）</td>
+<td>1</td>
+</tr>
+<tr>
+<td>随机种子</td>
+<td>Random Seed</td>
+<td>见”NumPy”节</td>
+<td>3</td>
+</tr>
+<tr>
+<td>硬编码</td>
+<td>Hardcoding</td>
+<td>把会变的值写死在代码里（<strong>坏习惯</strong>）</td>
+<td>9</td>
+</tr>
+<tr>
+<td>重构</td>
+<td>Refactoring</td>
+<td>不改变功能的前提下改善代码结构</td>
+<td>9</td>
+</tr>
+<tr>
+<td>单元测试</td>
+<td>Unit Test</td>
+<td>自动验证某个函数行为是否符合预期</td>
+<td>5</td>
+</tr>
+<tr>
+<td>数据管道</td>
+<td>Data Pipeline</td>
+<td>数据从源到分析结果的一系列处理步骤</td>
+<td>9</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十、易混淆概念对照（★重点）"><a href="#十、易混淆概念对照（★重点）" class="headerlink" title="十、易混淆概念对照（★重点）"></a>十、易混淆概念对照（★重点）</h2><h3 id="10-1-均值-vs-中位数-vs-众数"><a href="#10-1-均值-vs-中位数-vs-众数" class="headerlink" title="10.1 均值 vs 中位数 vs 众数"></a>10.1 均值 vs 中位数 vs 众数</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>均值 Mean</th>
+<th>中位数 Median</th>
+<th>众数 Mode</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义</td>
+<td>总和 ÷ 个数</td>
+<td>排序后正中间</td>
+<td>出现次数最多</td>
+</tr>
+<tr>
+<td>抗极端值</td>
+<td>❌ 差</td>
+<td>✅ 好</td>
+<td>✅ 好</td>
+</tr>
+<tr>
+<td>适用</td>
+<td>分布对称</td>
+<td><strong>分布偏斜</strong></td>
+<td>分类变量</td>
+</tr>
+<tr>
+<td>例子</td>
+<td>人均收入被富豪拉高</td>
+<td>房价用中位数更典型</td>
+<td>最畅销的尺码</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>判断口径</strong>：如果 <strong>均值和中位数差很多</strong>，说明数据偏斜，<br>报告里<strong>应该同时给两个</strong>，并用中位数描述”典型值”。</p>
+</blockquote>
+<h3 id="10-2-方差-vs-标准差"><a href="#10-2-方差-vs-标准差" class="headerlink" title="10.2 方差 vs 标准差"></a>10.2 方差 vs 标准差</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>方差 Variance</th>
+<th>标准差 Std</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单位</td>
+<td>原单位的<strong>平方</strong></td>
+<td><strong>和原数据同单位</strong></td>
+</tr>
+<tr>
+<td>可比性</td>
+<td>不直观</td>
+<td><strong>直观</strong>（”平均偏离多少”）</td>
+</tr>
+<tr>
+<td>用途</td>
+<td>数学推导</td>
+<td>描述和报告</td>
+</tr>
+</tbody></table>
+<h3 id="10-3-标准化-vs-归一化"><a href="#10-3-标准化-vs-归一化" class="headerlink" title="10.3 标准化 vs 归一化"></a>10.3 标准化 vs 归一化</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>标准化 Standardization</th>
+<th>归一化 Normalization</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>公式</td>
+<td>(x − 均值) &#x2F; 标准差</td>
+<td>(x − min) &#x2F; (max − min)</td>
+</tr>
+<tr>
+<td>结果范围</td>
+<td>约 ±3（不固定）</td>
+<td><strong>固定 [0, 1]</strong></td>
+</tr>
+<tr>
+<td>抗异常值</td>
+<td>一般</td>
+<td>❌ <strong>极差</strong>（一个异常值就能压扁所有数据）</td>
+</tr>
+<tr>
+<td>推荐默认</td>
+<td>✅ 用它</td>
+<td>需要固定范围时用</td>
+</tr>
+</tbody></table>
+<h3 id="10-4-相关系数-vs-R²"><a href="#10-4-相关系数-vs-R²" class="headerlink" title="10.4 相关系数 vs R²"></a>10.4 相关系数 vs R²</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>相关系数 r</th>
+<th>决定系数 R²</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>范围</td>
+<td>−1 ~ 1</td>
+<td>−∞ ~ 1（回归里通常 0~1）</td>
+</tr>
+<tr>
+<td>方向</td>
+<td><strong>有</strong>（正&#x2F;负）</td>
+<td>无</td>
+</tr>
+<tr>
+<td>含义</td>
+<td>线性相关强度和方向</td>
+<td>模型解释了目标多少比例的变异</td>
+</tr>
+<tr>
+<td>关系</td>
+<td><strong>一元线性回归中 R² &#x3D; r²</strong></td>
+<td>多元回归时 r 不适用</td>
+</tr>
+</tbody></table>
+<h3 id="10-5-准确率-vs-精确率-vs-召回率-vs-F1"><a href="#10-5-准确率-vs-精确率-vs-召回率-vs-F1" class="headerlink" title="10.5 准确率 vs 精确率 vs 召回率 vs F1"></a>10.5 准确率 vs 精确率 vs 召回率 vs F1</h3><table>
+<thead>
+<tr>
+<th>指标</th>
+<th>公式</th>
+<th>回答的问题</th>
+<th>什么时候看它</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>准确率</td>
+<td>(TP+TN)&#x2F;全部</td>
+<td>整体猜对多少</td>
+<td>类别<strong>平衡</strong>时</td>
+</tr>
+<tr>
+<td>精确率</td>
+<td>TP&#x2F;(TP+FP)</td>
+<td>说”是”的里面有多少真是</td>
+<td><strong>误报代价高</strong>（垃圾邮件拦截）</td>
+</tr>
+<tr>
+<td>召回率</td>
+<td>TP&#x2F;(TP+FN)</td>
+<td>真的”是”里找出多少</td>
+<td><strong>漏报代价高</strong>（癌症筛查、风控）</td>
+</tr>
+<tr>
+<td>F1</td>
+<td>2PR&#x2F;(P+R)</td>
+<td>两者的调和平均</td>
+<td>两者都重要</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>类别不平衡时，准确率会骗人。</strong><br>例：正例率 24% 时，”全猜负例”的准确率有 76%，但召回率是 0。</p>
+</blockquote>
+<h3 id="10-6-参数-vs-超参数"><a href="#10-6-参数-vs-超参数" class="headerlink" title="10.6 参数 vs 超参数"></a>10.6 参数 vs 超参数</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>参数 Parameter</th>
+<th>超参数 Hyperparameter</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>谁决定</td>
+<td><strong>模型自己学</strong></td>
+<td><strong>你手工设</strong></td>
+</tr>
+<tr>
+<td>例子</td>
+<td>线性回归的斜率&#x2F;截距、神经网络的权重</td>
+<td>树的最大深度、K-Means 的 K、随机森林的树数</td>
+</tr>
+<tr>
+<td>怎么找</td>
+<td>训练得到</td>
+<td>网格搜索&#x2F;随机搜索</td>
+</tr>
+<tr>
+<td>一句话</td>
+<td><strong>参数是”学”来的</strong></td>
+<td><strong>超参数是”设”的</strong></td>
+</tr>
+</tbody></table>
+<h3 id="10-7-过拟合-vs-欠拟合"><a href="#10-7-过拟合-vs-欠拟合" class="headerlink" title="10.7 过拟合 vs 欠拟合"></a>10.7 过拟合 vs 欠拟合</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>过拟合</th>
+<th>欠拟合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>训练集</td>
+<td><strong>极好</strong>（甚至 100%）</td>
+<td>差</td>
+</tr>
+<tr>
+<td>测试集</td>
+<td>差</td>
+<td>差</td>
+</tr>
+<tr>
+<td>原因</td>
+<td>模型太复杂 &#x2F; 数据太少 &#x2F; 噪声被当成规律</td>
+<td>模型太简单 &#x2F; 特征不够</td>
+</tr>
+<tr>
+<td>解决</td>
+<td>加数据、降复杂度、加正则化、早停</td>
+<td>加特征、换更复杂的模型、减少正则化</td>
+</tr>
+<tr>
+<td>诊断</td>
+<td>两条学习曲线<strong>有大缝</strong></td>
+<td>两条学习曲线<strong>都很低且贴着</strong></td>
+</tr>
+</tbody></table>
+<h3 id="10-8-特征-vs-维度-vs-样本"><a href="#10-8-特征-vs-维度-vs-样本" class="headerlink" title="10.8 特征 vs 维度 vs 样本"></a>10.8 特征 vs 维度 vs 样本</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">一个表格：</span><br><span class="line">        身高   体重   年龄   ← 3 个「特征」（也叫维度、变量、属性）</span><br><span class="line">张三    175    70     25    ← 1 个「样本」（也叫观测、记录、实例）</span><br><span class="line">李四    180    82     30    ← 又一个样本</span><br></pre></td></tr></table></figure>
+
+<p><strong>维度</strong>是特征的另一个说法（”高维数据”&#x3D; 特征很多）。</p>
+<h3 id="10-9-总体-vs-样本"><a href="#10-9-总体-vs-样本" class="headerlink" title="10.9 总体 vs 样本"></a>10.9 总体 vs 样本</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>总体 Population</th>
+<th>样本 Sample</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>定义</td>
+<td>你关心的全部对象</td>
+<td>实际观测到的一部分</td>
+</tr>
+<tr>
+<td>大小</td>
+<td>往往无法全部获取</td>
+<td>有限</td>
+</tr>
+<tr>
+<td>统计量</td>
+<td>参数（μ、σ）</td>
+<td>估计量（x̄、s）</td>
+</tr>
+<tr>
+<td>关系</td>
+<td><strong>用样本推断总体</strong></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="10-10-缺失值-vs-空字符串-vs-零值"><a href="#10-10-缺失值-vs-空字符串-vs-零值" class="headerlink" title="10.10 缺失值 vs 空字符串 vs 零值"></a>10.10 缺失值 vs 空字符串 vs 零值</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>真缺失 NaN</th>
+<th>空字符串 <code>&quot;&quot;</code></th>
+<th>零值 <code>0</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>含义</td>
+<td><strong>不知道</strong></td>
+<td>填了但没写内容</td>
+<td>明确的”零”</td>
+</tr>
+<tr>
+<td><code>isna()</code></td>
+<td>True</td>
+<td><strong>False</strong></td>
+<td>False</td>
+</tr>
+<tr>
+<td>算均值</td>
+<td>被忽略（用 nanmean）</td>
+<td>报错或变空</td>
+<td><strong>参与计算</strong></td>
+</tr>
+<tr>
+<td>处理</td>
+<td>填补或删行</td>
+<td>常需先 <code>.replace(&quot;&quot;, np.nan)</code></td>
+<td>视业务而定</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>⚠️ <strong>这三者经常被混用，是数据清洗的经典坑。</strong><br>我们的 <code>sales.csv</code> 里 <code>客户性别</code> 就有 22 个<strong>空字符串</strong>——<br>用 <code>isna()</code> 检查是查不出来的。</p>
+</blockquote>
+<h3 id="10-11-相关-vs-因果"><a href="#10-11-相关-vs-因果" class="headerlink" title="10.11 相关 vs 因果"></a>10.11 相关 vs 因果</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>相关 Correlation</th>
+<th>因果 Causation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>能说明</td>
+<td>两件事<strong>一起变</strong></td>
+<td>一件<strong>导致</strong>另一件</td>
+</tr>
+<tr>
+<td>怎么证明</td>
+<td>算相关系数</td>
+<td>需要实验（A&#x2F;B 测试）或因果推断方法</td>
+</tr>
+<tr>
+<td>陷阱</td>
+<td>伪相关（有共同原因）、反向因果、巧合</td>
+<td></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>数据能证明相关，不能单独证明因果。</strong> 这是数据分析最重要的纪律。</p>
+</blockquote>
+<h3 id="10-12-行式-vs-列式存储"><a href="#10-12-行式-vs-列式存储" class="headerlink" title="10.12 行式 vs 列式存储"></a>10.12 行式 vs 列式存储</h3><table>
+<thead>
+<tr>
+<th></th>
+<th>行式（CSV&#x2F;MySQL）</th>
+<th>列式（Parquet）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>一行</td>
+<td>整块连续存</td>
+<td>分散在各列块里</td>
+</tr>
+<tr>
+<td>读”某几列”</td>
+<td>必须全读再丢</td>
+<td><strong>只读那几列，极快</strong></td>
+</tr>
+<tr>
+<td>压缩率</td>
+<td>一般</td>
+<td><strong>高</strong>（同列类型相同、重复多）</td>
+</tr>
+<tr>
+<td>适合</td>
+<td>增删改单行（OLTP）</td>
+<td>分析查询（OLAP）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十一、常用数学与统计符号"><a href="#十一、常用数学与统计符号" class="headerlink" title="十一、常用数学与统计符号"></a>十一、常用数学与统计符号</h2><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>读法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x̄</code> &#x2F; <code>mean</code></td>
+<td>x bar</td>
+<td>样本均值</td>
+</tr>
+<tr>
+<td><code>μ</code></td>
+<td>mu</td>
+<td>总体均值</td>
+</tr>
+<tr>
+<td><code>σ</code></td>
+<td>sigma</td>
+<td>总体标准差</td>
+</tr>
+<tr>
+<td><code>s</code></td>
+<td>s</td>
+<td>样本标准差</td>
+</tr>
+<tr>
+<td><code>σ²</code></td>
+<td>sigma squared</td>
+<td>总体方差</td>
+</tr>
+<tr>
+<td><code>Σ</code></td>
+<td>sigma（大写）</td>
+<td>求和</td>
+</tr>
+<tr>
+<td><code>Π</code></td>
+<td>pi（大写）</td>
+<td>连乘</td>
+</tr>
+<tr>
+<td><code>Σx²</code></td>
+<td>—</td>
+<td>所有 x 的平方和</td>
+</tr>
+<tr>
+<td><code>(Σx)²</code></td>
+<td>—</td>
+<td>所有 x 之和的平方</td>
+</tr>
+<tr>
+<td><code>n</code></td>
+<td>n</td>
+<td>样本量</td>
+</tr>
+<tr>
+<td><code>N</code></td>
+<td>N</td>
+<td>总体量</td>
+</tr>
+<tr>
+<td><code>r</code></td>
+<td>r</td>
+<td>相关系数</td>
+</tr>
+<tr>
+<td><code>R²</code></td>
+<td>R squared</td>
+<td>决定系数</td>
+</tr>
+<tr>
+<td><code>P25 / P50 / P75</code></td>
+<td>—</td>
+<td>第 25&#x2F;50&#x2F;75 百分位数</td>
+</tr>
+<tr>
+<td><code>IQR</code></td>
+<td>—</td>
+<td>四分位距 &#x3D; P75 − P25</td>
+</tr>
+<tr>
+<td><code>z</code></td>
+<td>z</td>
+<td>z-score（标准分）</td>
+</tr>
+<tr>
+<td><code>p</code></td>
+<td>p</td>
+<td>p 值（显著性）</td>
+</tr>
+<tr>
+<td><code>α</code></td>
+<td>alpha</td>
+<td>显著性水平（常取 0.05）；正则化强度</td>
+</tr>
+<tr>
+<td><code>λ</code></td>
+<td>lambda</td>
+<td>特征值；正则化参数（部分教材用 λ 代替 α）</td>
+</tr>
+<tr>
+<td><code>β</code></td>
+<td>beta</td>
+<td>回归系数</td>
+</tr>
+<tr>
+<td><code>ε</code></td>
+<td>epsilon</td>
+<td>误差项</td>
+</tr>
+<tr>
+<td><code>H₀</code></td>
+<td>H zero</td>
+<td>原假设</td>
+</tr>
+<tr>
+<td><code>H₁</code></td>
+<td>H one</td>
+<td>备择假设</td>
+</tr>
+<tr>
+<td><code>x̄ ± s</code></td>
+<td>—</td>
+<td>均值 ± 标准差（常写成 <code>mean ± std</code>）</td>
+</tr>
+<tr>
+<td><code>∈</code></td>
+<td>属于</td>
+<td>元素属于集合</td>
+</tr>
+<tr>
+<td><code>∀</code> &#x2F; <code>∃</code></td>
+<td>任意&#x2F;存在</td>
+<td>逻辑量词</td>
+</tr>
+<tr>
+<td>&#96;</td>
+<td>x</td>
+<td>&#96;</td>
+</tr>
+<tr>
+<td><code>√x</code></td>
+<td>根号 x</td>
+<td>平方根</td>
+</tr>
+<tr>
+<td><code>log(x)</code></td>
+<td>—</td>
+<td>对数（numpy 里默认自然对数）</td>
+</tr>
+<tr>
+<td><code>e</code></td>
+<td>—</td>
+<td>自然常数 ≈ 2.71828</td>
+</tr>
+<tr>
+<td><code>π</code></td>
+<td>pi</td>
+<td>圆周率 ≈ 3.14159</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十二、机器学习指标公式速查"><a href="#十二、机器学习指标公式速查" class="headerlink" title="十二、机器学习指标公式速查"></a>十二、机器学习指标公式速查</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">【分类】混淆矩阵四格</span><br><span class="line">               预测正     预测负</span><br><span class="line">    实际正      TP         FN       ← FN = 漏报</span><br><span class="line">    实际负      FP         TN       ← FP = 误报</span><br><span class="line"></span><br><span class="line">准确率 Accuracy  = (TP + TN) / (TP + TN + FP + FN)</span><br><span class="line">精确率 Precision = TP / (TP + FP)          &quot;预测为正的里有多少真是正&quot;</span><br><span class="line">召回率 Recall    = TP / (TP + FN)          &quot;真正例里找出了多少&quot;</span><br><span class="line">特异度 Specificity = TN / (TN + FP)        &quot;真负例里正确排除了多少&quot;</span><br><span class="line">F1              = 2 × P × R / (P + R)</span><br><span class="line"></span><br><span class="line">【回归】</span><br><span class="line">MAE  = mean(|y - ŷ|)</span><br><span class="line">MSE  = mean((y - ŷ)²)</span><br><span class="line">RMSE = √MSE</span><br><span class="line">R²   = 1 - SS_res / SS_tot</span><br><span class="line">     其中 SS_res = Σ(y - ŷ)²      （残差平方和）</span><br><span class="line">          SS_tot = Σ(y - ȳ)²      （总平方和）</span><br><span class="line"></span><br><span class="line">【标准化 / 归一化】</span><br><span class="line">Z-score    z = (x - μ) / σ</span><br><span class="line">Min-Max    x&#x27; = (x - min) / (max - min)</span><br><span class="line">Robust     x&#x27; = (x - median) / IQR</span><br><span class="line"></span><br><span class="line">【聚类】</span><br><span class="line">轮廓系数 s(i) = (b(i) - a(i)) / max(a(i), b(i))</span><br><span class="line">    a(i) = i 到同簇其他点的平均距离（越小越好）</span><br><span class="line">    b(i) = i 到最近的其他簇的平均距离（越大越好）</span><br><span class="line">    s 范围 [-1, 1]，接近 1 表示分得好</span><br><span class="line">SSE (inertia) = Σ Σ ||x - μ_k||²   （簇内平方和，越小越紧凑）</span><br><span class="line"></span><br><span class="line">【关联规则】</span><br><span class="line">支持度 Support(A→B)      = P(A ∩ B) = 同时含 A 和 B 的交易数 / 总交易数</span><br><span class="line">置信度 Confidence(A→B)   = P(B|A)   = 支持度(A→B) / 支持度(A)</span><br><span class="line">提升度 Lift(A→B)         = 置信度(A→B) / 支持度(B)</span><br><span class="line">     lift &gt; 1 → 正相关（A 促进 B）★ 要找的</span><br><span class="line">     lift = 1 → 独立（无信息量）</span><br><span class="line">     lift &lt; 1 → 负相关（A 抑制 B）</span><br><span class="line"></span><br><span class="line">【PCA】</span><br><span class="line">方差解释率 = λ_k / Σλ_i        （第 k 个主成分保留的信息比例）</span><br><span class="line">累计解释率 = Σ_&#123;i≤k&#125; λ_i / Σλ_i</span><br><span class="line"></span><br><span class="line">【时间序列】</span><br><span class="line">一阶差分   Δy_t = y_t - y_&#123;t-1&#125;</span><br><span class="line">移动平均   MA_t = (y_t + y_&#123;t-1&#125; + ... + y_&#123;t-n+1&#125;) / n</span><br><span class="line">MAPE       = mean(|(y - ŷ) / y|) × 100%</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十三、怎么用这份术语表"><a href="#十三、怎么用这份术语表" class="headerlink" title="十三、怎么用这份术语表"></a>十三、怎么用这份术语表</h2><p><strong>三种用法</strong>：</p>
+<ol>
+<li><strong>查词</strong>：读到不懂的词，<code>Ctrl+F</code> 搜中文或英文；</li>
+<li><strong>复习</strong>：学完一章，回来扫一遍该章的术语，看能不能说出每个的含义；</li>
+<li><strong>面试准备</strong>：<strong>第十节”易混淆概念对照”是面试高频考点</strong>——<br>“均值和中位数的区别””准确率和召回率什么时候用哪个””参数和超参数的区别”，<br>这些都是必问的。</li>
+</ol>
+<blockquote>
+<p>💡 <strong>一个自测方法</strong>：随机挑 10 个术语，<br><strong>用一句话向不懂技术的朋友解释清楚</strong>。<br>如果你能做到，说明你真的懂了；<br>如果只能说”就是……那个东西”，说明还停留在”认得这个词”的阶段。</p>
+<p><strong>能把术语讲给外行听，是数据分析师最实用的能力之一</strong>——<br>因为你的汇报对象，绝大多数都不懂技术。</p>
+</blockquote>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/pyviz/09-project/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/pyviz.jpg">
+                </span>
+                <h6 class="trm-op-title">09 项目实战</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/26</li>
+                <li>10:00</li>
+                <li>数据分析与可视化</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-older-publications-card trm-scroll-animation trm-active-el">
+        <div class="trm-older-publication">
+            
+            
+            
+            <a class="trm-op-top trm-anima-link" href="/2026/09/25/vscode-basics/">
+                <span class="trm-op-cover">
+                    <img alt="cover" class="no-fancybox" loading="lazy" decoding="async" src="/post-thumbs/vscode-basics.jpg">
+                </span>
+                <h6 class="trm-op-title">VS Code 基础教程 — 快捷键、配置与高效工作流</h6>
+            </a>
+            <div class="trm-divider trm-mb-15 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>26/09/25</li>
+                <li>10:00</li>
+                <li>技术教程</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+    <div id="giscus-wrap" class="trm-card trm-scroll-animation comment-container"></div>
+<script data-swup-reload-script>
+    function loadGiscus() {
+        let nowTheme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+        const config = {
+            src: 'https://giscus.app/client.js',
+            "data-repo": 'TDCQCX/TDCQCX.github.io',
+            "data-repo-id": 'R_kgDONmfKPQ',
+            "data-category": 'Announcements',
+            "data-category-id": '',
+            "data-mapping": 'pathname',
+            "data-reactions-enabled": '1',
+            "data-emit-metadata": '0',
+            "data-theme": nowTheme,
+            "data-lang": 'zh-CN',
+            crossorigin: "anonymous",
+            async: true
+        }
+        let ele = document.createElement('script')
+        for (let key in config) {
+            ele.setAttribute(key, config[key])
+        }
+        document.getElementById('giscus-wrap').insertAdjacentElement('afterbegin', ele)
+    }
+
+    function changeGiscusTheme() {
+        let theme = document.documentElement.classList.contains('dark') ? 'transparent_dark' : 'light'
+
+        function sendMessage(message) {
+            const iframe = document.querySelector('iframe.giscus-frame');
+            if (!iframe) return;
+            iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+
+        sendMessage({
+            setConfig: {
+                theme: theme
+            }
+        });
+    }
+
+    // 缺少 repo-id / category-id 时, giscus 的 iframe 会一直空白。
+    // 这种情况直接给出可操作的提示, 而不是留一个空白评论框。
+    var GISCUS_REPO_ID = 'R_kgDONmfKPQ';
+    var GISCUS_CATEGORY_ID = '';
+    if (GISCUS_REPO_ID && GISCUS_CATEGORY_ID) {
+        loadGiscus();
+    } else {
+        document.getElementById('giscus-wrap').innerHTML =
+            '<div class="trm-note info" style="margin:0">' +
+            '<div class="trm-note-title">评论功能即将开放</div>' +
+            '<p>评论基于 GitHub Discussions（giscus），还需要在仓库里开启 Discussions 并补齐 '
+            + '<code>repo-id</code> / <code>category-id</code> 两个值。</p>' +
+            '<p>配置位置：<code>_config.async.yml</code> 的 <code>comment.giscus</code>；'
+            + '对应 id 可在 <a href="https://giscus.app/zh-CN" target="_blank" rel="noopener">giscus.app</a> 生成。</p>' +
+            '</div>';
+    }
+</script>
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+        <div class="trm-footer-item">
+            <a rel="noopener" href="https://beian.miit.gov.cn/" target="_blank">蜀ICP备87583212号</a>
+        </div>
+    
+
+    
+        <div class="trm-footer-item">
+            <span>© 2025 - 2026</span>
+            <span class="footer-separator"data-separator=" · "></span>
+            <span class="trm-accent-color">TDCQCX</span>
+        </div>
+    
+
+      
+
+    
+        <div class="trm-footer-item blog-run-long"></div>
+     
+
+    
+        <div class="trm-footer-item">
+            你已经看到这了，很累了，休息一下吧。
+        </div>
+     
+<script defer src="/live2d/autoload.js"></script>
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-2" title="一、数据分析基础"><a rel="nofollow" class="trm-toc-link" href="#一、数据分析基础"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">一、数据分析基础</span></a></li><li class="trm-toc-item trm-toc-level-2" title="二、统计学基础"><a rel="nofollow" class="trm-toc-link" href="#二、统计学基础"><span class="trm-toc-number">2.</span> <span class="trm-toc-text">二、统计学基础</span></a></li><li class="trm-toc-item trm-toc-level-2" title="三、NumPy 相关"><a rel="nofollow" class="trm-toc-link" href="#三、NumPy-相关"><span class="trm-toc-number">3.</span> <span class="trm-toc-text">三、NumPy 相关</span></a></li><li class="trm-toc-item trm-toc-level-2" title="四、pandas 相关"><a rel="nofollow" class="trm-toc-link" href="#四、pandas-相关"><span class="trm-toc-number">4.</span> <span class="trm-toc-text">四、pandas 相关</span></a></li><li class="trm-toc-item trm-toc-level-2" title="五、数据预处理"><a rel="nofollow" class="trm-toc-link" href="#五、数据预处理"><span class="trm-toc-number">5.</span> <span class="trm-toc-text">五、数据预处理</span></a></li><li class="trm-toc-item trm-toc-level-2" title="六、可视化"><a rel="nofollow" class="trm-toc-link" href="#六、可视化"><span class="trm-toc-number">6.</span> <span class="trm-toc-text">六、可视化</span></a></li><li class="trm-toc-item trm-toc-level-2" title="七、机器学习"><a rel="nofollow" class="trm-toc-link" href="#七、机器学习"><span class="trm-toc-number">7.</span> <span class="trm-toc-text">七、机器学习</span></a></li><li class="trm-toc-item trm-toc-level-2" title="八、数据库与数据获取"><a rel="nofollow" class="trm-toc-link" href="#八、数据库与数据获取"><span class="trm-toc-number">8.</span> <span class="trm-toc-text">八、数据库与数据获取</span></a></li><li class="trm-toc-item trm-toc-level-2" title="九、环境与工程"><a rel="nofollow" class="trm-toc-link" href="#九、环境与工程"><span class="trm-toc-number">9.</span> <span class="trm-toc-text">九、环境与工程</span></a></li><li class="trm-toc-item trm-toc-level-2" title="十、易混淆概念对照（★重点）"><a rel="nofollow" class="trm-toc-link" href="#十、易混淆概念对照（★重点）"><span class="trm-toc-number">10.</span> <span class="trm-toc-text">十、易混淆概念对照（★重点）</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="10.1 均值 vs 中位数 vs 众数"><a rel="nofollow" class="trm-toc-link" href="#10-1-均值-vs-中位数-vs-众数"><span class="trm-toc-number">10.1.</span> <span class="trm-toc-text">10.1 均值 vs 中位数 vs 众数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.2 方差 vs 标准差"><a rel="nofollow" class="trm-toc-link" href="#10-2-方差-vs-标准差"><span class="trm-toc-number">10.2.</span> <span class="trm-toc-text">10.2 方差 vs 标准差</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.3 标准化 vs 归一化"><a rel="nofollow" class="trm-toc-link" href="#10-3-标准化-vs-归一化"><span class="trm-toc-number">10.3.</span> <span class="trm-toc-text">10.3 标准化 vs 归一化</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.4 相关系数 vs R²"><a rel="nofollow" class="trm-toc-link" href="#10-4-相关系数-vs-R²"><span class="trm-toc-number">10.4.</span> <span class="trm-toc-text">10.4 相关系数 vs R²</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.5 准确率 vs 精确率 vs 召回率 vs F1"><a rel="nofollow" class="trm-toc-link" href="#10-5-准确率-vs-精确率-vs-召回率-vs-F1"><span class="trm-toc-number">10.5.</span> <span class="trm-toc-text">10.5 准确率 vs 精确率 vs 召回率 vs F1</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.6 参数 vs 超参数"><a rel="nofollow" class="trm-toc-link" href="#10-6-参数-vs-超参数"><span class="trm-toc-number">10.6.</span> <span class="trm-toc-text">10.6 参数 vs 超参数</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.7 过拟合 vs 欠拟合"><a rel="nofollow" class="trm-toc-link" href="#10-7-过拟合-vs-欠拟合"><span class="trm-toc-number">10.7.</span> <span class="trm-toc-text">10.7 过拟合 vs 欠拟合</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.8 特征 vs 维度 vs 样本"><a rel="nofollow" class="trm-toc-link" href="#10-8-特征-vs-维度-vs-样本"><span class="trm-toc-number">10.8.</span> <span class="trm-toc-text">10.8 特征 vs 维度 vs 样本</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.9 总体 vs 样本"><a rel="nofollow" class="trm-toc-link" href="#10-9-总体-vs-样本"><span class="trm-toc-number">10.9.</span> <span class="trm-toc-text">10.9 总体 vs 样本</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.10 缺失值 vs 空字符串 vs 零值"><a rel="nofollow" class="trm-toc-link" href="#10-10-缺失值-vs-空字符串-vs-零值"><span class="trm-toc-number">10.10.</span> <span class="trm-toc-text">10.10 缺失值 vs 空字符串 vs 零值</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.11 相关 vs 因果"><a rel="nofollow" class="trm-toc-link" href="#10-11-相关-vs-因果"><span class="trm-toc-number">10.11.</span> <span class="trm-toc-text">10.11 相关 vs 因果</span></a></li><li class="trm-toc-item trm-toc-level-3" title="10.12 行式 vs 列式存储"><a rel="nofollow" class="trm-toc-link" href="#10-12-行式-vs-列式存储"><span class="trm-toc-number">10.12.</span> <span class="trm-toc-text">10.12 行式 vs 列式存储</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="十一、常用数学与统计符号"><a rel="nofollow" class="trm-toc-link" href="#十一、常用数学与统计符号"><span class="trm-toc-number">11.</span> <span class="trm-toc-text">十一、常用数学与统计符号</span></a></li><li class="trm-toc-item trm-toc-level-2" title="十二、机器学习指标公式速查"><a rel="nofollow" class="trm-toc-link" href="#十二、机器学习指标公式速查"><span class="trm-toc-number">12.</span> <span class="trm-toc-text">十二、机器学习指标公式速查</span></a></li><li class="trm-toc-item trm-toc-level-2" title="十三、怎么用这份术语表"><a rel="nofollow" class="trm-toc-link" href="#十三、怎么用这份术语表"><span class="trm-toc-number">13.</span> <span class="trm-toc-text">十三、怎么用这份术语表</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn hidden-md" data-title="单栏和双栏切换" onclick="asyncFun.switchSingleColumn()">
+            <i class="iconfont fas fa-arrows-alt-h"></i>
+        </div>
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+    <div class="trm-search-popup">
+        <div class="trm-search-wrapper">
+            <div class="form trm-search-form">
+                <div class="trm-search-input-icon">
+                    <i class="iconfont fas fa-search"></i>
+                </div>
+                <input class="trm-search-input" type="text" placeholder="搜索文章...">
+                <div class="trm-search-btn-close">
+                    <i class="iconfont fas fa-times"></i>
+                </div>
+            </div>
+            <div class="trm-search-result-container">
+                <div class="trm-search-empty">
+                    请输入关键词进行搜索
+                </div>
+            </div>
+            <div class="trm-search-footer">
+                <div class="trm-search-stats"></div>
+                <ul class="trm-search-commands">
+                    <li>
+                        <kbd class="command-palette-commands-key">
+                            <svg width="15" height="15" aria-label="Escape key" role="img">
+                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="1.2">
+                                    <path
+                                        d="M13.6167 8.936c-.1065.3583-.6883.962-1.4875.962-.7993 0-1.653-.9165-1.653-2.1258v-.5678c0-1.2548.7896-2.1016 1.653-2.1016.8634 0 1.3601.4778 1.4875 1.0724M9 6c-.1352-.4735-.7506-.9219-1.46-.8972-.7092.0246-1.344.57-1.344 1.2166s.4198.8812 1.3445.9805C8.465 7.3992 8.968 7.9337 9 8.5c.032.5663-.454 1.398-1.4595 1.398C6.6593 9.898 6 9 5.963 8.4851m-1.4748.5368c-.2635.5941-.8099.876-1.5443.876s-1.7073-.6248-1.7073-2.204v-.4603c0-1.0416.721-2.131 1.7073-2.131.9864 0 1.6425 1.031 1.5443 2.2492h-2.956">
+                                    </path>
+                                </g>
+                            </svg>
+                        </kbd>
+                        <span class="command-palette-Label">to close</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+  <!-- Plugin -->
+
+
+
+
+    
+<script src="/plugins/swup/swup.min.js"></script>
+
+    
+<script src="/plugins/fancybox/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.4"></script>
+    
+
+    
+        
+<script src="/plugins/searchdb/search.js"></script>
+
+        <script src="/js/plugins/local_search.js?v=2.2.4"></script>
+    
+
+    <!-- 数学公式 -->
+    
+        
+<script src="/plugins/katex/katex.min.js" data-swup-reload-script></script>
+
+        
+            
+<script src="/plugins/katex/copy-tex.min.js" data-swup-reload-script></script>
+
+        
+        
+<script src="/plugins/katex/auto-render.min.js" data-swup-reload-script></script>
+
+        <script data-swup-reload-script>
+              window.renderMathInElement(document.body, {
+                delimiters: [
+                    { left: '$$', right: '$$', display: true },
+                    { left: '$', right: '$', display: false },
+                    { left: '\\(', right: '\\)', display: false },
+                    { left: '\\[', right: '\\]', display: true },
+                ],
+                ...{},
+            })
+        </script>
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+			<script src="/js/plugins/danmu.js?v=2.2.4"></script>
+		
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+    <script data-swup-reload-script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+
+
+<script id="async-script" src="/js/main.js?v=2.2.4"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>
